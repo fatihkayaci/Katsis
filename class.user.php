@@ -1,6 +1,8 @@
 <?php
 
 require_once 'dbconfig.php';
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 class USER
 { 
@@ -109,7 +111,13 @@ class USER
  
  function send_mail($email,$message,$subject)
  {      
-  require 'vendor/autoload.php';
+
+ 
+//required files
+require 'phpmailer/src/Exception.php';
+require 'phpmailer/src/PHPMailer.php';
+require 'phpmailer/src/SMTP.php';
+
   $mail = new PHPMailer();
   $mail->IsSMTP(); 
   $mail->SMTPDebug  = 1;                     
@@ -118,10 +126,10 @@ class USER
   $mail->Host       = "smtp.gmail.com";      
   $mail->Port       = 465;             
   $mail->AddAddress($email);
-  $mail->Username="celalyl555@gmail.com";  
-  $mail->Password="qcpnwelmoioogojz";            
-  $mail->SetFrom('celalyl555@gmail.com','Coding Cage');
-  $mail->AddReplyTo("celalyl555@gmail.com","Coding Cage");
+  $mail->Username="fatihkayaci5334@gmail.com";  
+  $mail->Password="zmqvgxixuapwkudd";            
+  $mail->SetFrom('fatihkayaci5334@gmail.com','Coding Cage');
+  $mail->AddReplyTo("fatihkayaci5334@gmail.com","Coding Cage");
   $mail->Subject    = $subject;
   $mail->MsgHTML($message);
   $mail->Send();
