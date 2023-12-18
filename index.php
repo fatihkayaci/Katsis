@@ -7,6 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <a href="#">login</a>
+    <a href="#">registar</a>
 </body>
 </html>
