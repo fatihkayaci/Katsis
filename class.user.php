@@ -112,7 +112,7 @@ class USER
   require_once('mailer/class.phpmailer.php');
   $mail = new PHPMailer();
   $mail->IsSMTP(); 
-  $mail->SMTPDebug  = 0;                     
+  $mail->SMTPDebug  = 1;                     
   $mail->SMTPAuth   = true;                  
   $mail->SMTPSecure = "ssl";                 
   $mail->Host       = "smtp.gmail.com";      
