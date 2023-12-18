@@ -118,10 +118,10 @@ class USER
   $mail->Host       = "smtp.gmail.com";      
   $mail->Port       = 465;             
   $mail->AddAddress($email);
-  $mail->Username="celalyl555@gmail.com";  
-  $mail->Password="qcpnwelmoioogojz";            
-  $mail->SetFrom('celalyl555@gmail.com','Coding Cage');
-  $mail->AddReplyTo("celalyl555@gmail.com","Coding Cage");
+  $mail->Username="fatihkayaci5334@gmail.com";  
+  $mail->Password="opkxknlhpcbmztwt";            
+  $mail->SetFrom('fatihkayaci5334@gmail.com','Coding Cage');
+  $mail->AddReplyTo("fatihkayaci5334@gmail.com","Coding Cage");
   $mail->Subject    = $subject;
   $mail->MsgHTML($message);
   $mail->Send();
