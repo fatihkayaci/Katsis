@@ -32,6 +32,8 @@ if(isset($_GET['id']) && isset($_GET['code']))
    }
    else
    {
+    $cpass =md5($cpass);
+
     $stmt = $user->runQuery("UPDATE tbl_users SET userPass=:upass WHERE userID=:uid");
     $stmt->execute(array(":upass"=>$cpass,":uid"=>$rows['userID']));
     
