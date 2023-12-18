@@ -19,15 +19,9 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
     
     <head>
         <title><?php echo $row['userEmail']; ?></title>
-        <!-- Bootstrap -->
         <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
         <link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
         <link href="assets/styles.css" rel="stylesheet" media="screen">
-        <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-        <!--[if lt IE 9]>
-            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
-        
     </head>
     
     <body>
@@ -52,27 +46,7 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
                                 </ul>
                             </li>
                         </ul>
-                        <ul class="nav">
-                            <li class="active">
-                                <a href="https://codingcage.com/">Coding Cage</a>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" data-toggle="dropdown" class="dropdown-toggle">Tutorials <b class="caret"></b>
-
-                                </a>
-                                <ul class="dropdown-menu" id="menu1">
-                                    <li><a href="https://codingcage.com/search/label/PHP OOP">PHP OOP</a></li>
-                                    <li><a href="https://codingcage.com/search/label/PDO">PHP PDO</a></li>
-                                    <li><a href="https://codingcage.com/search/label/jQuery">jQuery</a></li>
-                                    <li><a href="https://codingcage.com/search/label/Bootstrap">Bootstrap</a></li>
-                                    <li><a href="https://codingcage.com/search/label/CRUD">CRUD</a></li>
-                                </ul>
-                            </li>
-                            
-                            
-                        </ul>
                     </div>
-                    <!--/.nav-collapse -->
                 </div>
             </div>
         </div>
