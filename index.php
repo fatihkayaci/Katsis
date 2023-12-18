@@ -7,28 +7,49 @@ $message = "default";
 
 if($user_login->is_logged_in()!="")
 {
- $user_login->redirect('home.php');
+ $user_login->redirect('home');
 }
+
+if (isset($_COOKIE["cokkiemail"]) && isset($_COOKIE["cokkiepass"])){
+
+  $email = base64_decode($_COOKIE["cokkiemail"]);
+  $upass = base64_decode($_COOKIE["cokkiepass"]);
+  if($user_login->login($email,$upass))
+  {
+    $user_login->redirect('home');
+  }
+
+}
+
+
+
 
 if(isset($_POST['btn-login']))
 {
- $email = trim($_POST['txtemail']);
- $upass = trim($_POST['txtupass']);
- $remember = isset($_POST["remember"]);
+
+
+
+
+ $email = $_POST['txtemail'];
+ $upass = $_POST['txtupass'];
+ $remember =trim($_POST["remember"]);
  
- if($remember){
- ?>
- <script>alert("i")</script>;
- <?php
- }
+
+
  if($user_login->login($email,$upass))
  {
-  $emailcokkie= setcookie("cokkiemail",$email);
-  $passcokkie= setcookie("cokkiepass",$pass);
-  $user_login->redirect('home.php');
+  if($remember =="on"){
+
+   //decode64 çözmek için hee!!
+    $emailcokkie= setcookie("cokkiemail", base64_encode($email)
+    , time()+(86400*30));
+    $passcokkie= setcookie("cokkiepass", base64_encode($upass)
+    ,time()+(86400*30));
+  }
+  $user_login->redirect('home');
  }
 }
-?>
+?> 
 
 <!DOCTYPE html>
 <html>
@@ -80,7 +101,7 @@ if(isset($_POST['btn-login']))
         <input type="email" class="input-block-level" placeholder="Email address" name="txtemail" required />
         <input type="password" class="input-block-level" placeholder="Password" name="txtupass" required />
       <hr />
-        <input type="checkbox" name="rememberMe"/>
+        <input type="checkbox" name="remember" />
         <label>beni hatırla</label><br>
         <button class="btn btn-large btn-primary" type="submit" name="btn-login">Sign in</button>
       
