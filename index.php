@@ -18,18 +18,10 @@ if (isset($_COOKIE["cokkiemail"]) && isset($_COOKIE["cokkiepass"])){
   {
     $user_login->redirect('home');
   }
-
 }
-
-
-
 
 if(isset($_POST['btn-login']))
 {
-
-
-
-
  $email = $_POST['txtemail'];
  $upass = $_POST['txtupass'];
  $remember =trim($_POST["remember"]);
