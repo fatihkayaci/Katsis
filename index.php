@@ -5,18 +5,14 @@ require_once 'class.user.php';
 $user_login = new USER();
 $message = "default";
 
-if($user_login->is_logged_in()!="")
-{
- $user_login->redirect('home');
-}
-
+ h
 if (isset($_COOKIE["cokkiemail"]) && isset($_COOKIE["cokkiepass"])){
 
   $email = base64_decode($_COOKIE["cokkiemail"]);
   $upass = base64_decode($_COOKIE["cokkiepass"]);
   if($user_login->login($email,$upass))
   {
-    $user_login->redirect('home');
+    $user_login->redirect('Admin/index');
   }
 }
 
