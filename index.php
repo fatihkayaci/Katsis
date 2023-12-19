@@ -25,8 +25,6 @@ if(isset($_POST['btn-login']))
  $email = $_POST['txtemail'];
  $upass = $_POST['txtupass'];
  $remember =trim($_POST["remember"]);
- 
-
 
  if($user_login->login($email,$upass))
  {
@@ -38,7 +36,7 @@ if(isset($_POST['btn-login']))
     $passcokkie= setcookie("cokkiepass", base64_encode($upass)
     ,time()+(86400*30));
   }
-  $user_login->redirect('home');
+  $user_login->redirect('Admin/index');
  }
 }
 ?> 
