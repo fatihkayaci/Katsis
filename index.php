@@ -4,7 +4,6 @@ session_start();
 require_once 'class.user.php';
 $user_login = new USER();
 $message = "default";
-
  
 if (isset($_COOKIE["cokkiemail"]) && isset($_COOKIE["cokkiepass"])){
 
@@ -56,6 +55,7 @@ if(isset($_POST['btn-login']))
 
     <!-- Modernizr JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 
   <body id="login">
@@ -71,7 +71,7 @@ if(isset($_POST['btn-login']))
             <?php
   }
   ?>
-        <form class="form-signin" method="post">
+        <form action="validate.php" class="form-signin" method="post">
         <?php
         if(isset($_GET['error']))
   {
@@ -85,8 +85,11 @@ if(isset($_POST['btn-login']))
   ?>
         <h2 class="form-signin-heading">Sign In.</h2><hr />
         <input type="email" class="input-block-level" placeholder="Email address" name="txtemail" required />
-        <input type="password" class="input-block-level" placeholder="Password" name="txtupass" required />
-      <hr />
+        <input type="password" class="input-block-level" placeholder="Password" name="txtupass" required />,
+        <div class="g-recaptcha" data-sitekey="6Ld0njYpAAAAAC027yq47stnNrM7uKvoiGv6-Eud"></div>
+
+        <hr />
+
         <input type="checkbox" name="remember" />
         <label>beni hatırla</label><br>
         <button class="btn btn-large btn-primary" type="submit" name="btn-login">Sign in</button>

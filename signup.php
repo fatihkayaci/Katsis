@@ -16,16 +16,12 @@ if(isset($_POST['btn-signup']))
  $email = trim($_POST['txtemail']);
  $upass = trim($_POST['txtpass']);
  $confirmPassword = trim($_POST["confirm_password"]);
- $userCaptcha = $_POST["captcha"];
 
 
-
- if (empty($email) || empty($upass) || empty($confirmPassword) || empty($userCaptcha)) {
+ if (empty($email) || empty($upass) || empty($confirmPassword) ) {
   echo "Lütfen tüm alanları doldurun.";
 } else if ($upass != $confirmPassword) {
   echo "Parolalar eşleşmiyor.";
-}else if ($userCaptcha != $_SESSION['captcha']) {
-  echo "CAPTCHA yanlış.";
 }
 
  $code = md5(uniqid(rand()));
@@ -102,9 +98,7 @@ if(isset($_POST['btn-signup']))
         <input type="email" class="input-block-level" placeholder="Email address" name="txtemail" required />
         <input type="password" class="input-block-level" placeholder="Password" name="txtpass" required />
         <input type="password" class="input-block-level" placeholder="Password" name="confirm_password" required />
-        <label for="captcha">CAPTCHA:</label>
-        <img src="captcha.php" alt="CAPTCHA Image"><br>
-        <input type="text" name="captcha" required><br>
+        
       <hr />
         <button class="btn btn-large btn-primary" type="submit" name="btn-signup">Sign Up</button>
         <a href="index.php" style="float:right;" class="btn btn-large">Sign In</a>
