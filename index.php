@@ -5,7 +5,7 @@ require_once 'class.user.php';
 $user_login = new USER();
 $message = "default";
 
- h
+ 
 if (isset($_COOKIE["cokkiemail"]) && isset($_COOKIE["cokkiepass"])){
 
   $email = base64_decode($_COOKIE["cokkiemail"]);
