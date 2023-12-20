@@ -1,3 +1,4 @@
+
 <div class="form-popup">
 			<div class="container form-wrapper">
 				
@@ -10,7 +11,7 @@
 					<div class="row">
 						<div class="form-group col-md-6">
 							<label for="name">Apartman Adı</label>
-							<input type="text" class="form-control" id="name" name="name" required>
+							<input type="text" class="form-control" id="name" name="name"  required>
 						</div>
 						<div class="form-group col-md-6">
 							<label for="email"></label>
