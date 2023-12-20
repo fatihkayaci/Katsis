@@ -1,6 +1,7 @@
 
 <div class="form-popup">
-			<div class="container form-wrapper">
+
+<div class="container form-wrapper">
 				
 				<form id="my-form" novalidate="novalidate">
 					<div class="row">
@@ -13,9 +14,9 @@
 							<label for="name">Apartman Adı</label>
 							<input type="text" class="form-control" id="name" name="name"  required>
 						</div>
-						<div class="form-group col-md-6">
-							<label for="email"></label>
-							<input type="text" class="form-control" id="email" name="email" required>
+						<div class="form-group col-md-2">
+							<label for="name">blok sayısı</label>
+							<input type="number" class="form-control" id="name" name="name" required>
 						</div>
 					</div>
          
