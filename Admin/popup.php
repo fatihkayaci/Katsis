@@ -124,6 +124,7 @@ inputElement.addEventListener('input', function() {
     }
     // Alınan değeri konsola yazdır
     console.log('Girilen Sayı: ' + enteredNumber);
+    disablebtn(true);
 });
 
 
