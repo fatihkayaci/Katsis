@@ -21,13 +21,7 @@
                 </div>
             </div>
             <div class="row" id="table-container">
-                <p id="numberalert2"></p>
             </div>
-            <!--		<div class="form-check">
-						<label>
-						<input type="checkbox" name="formcheck" checked="" class="checkfz" required=""> Submit<br>
-						</label>
-					</div>  -->
             <button type="submit" class="btn send-form">Send</button>
         </form>
     </div>
@@ -39,6 +33,7 @@ $('.form-popup').show();
 // HTML sayfasındaki input alanını seç
 var inputElement = document.getElementById('blokSay');
 var numberalert = document.getElementById('numberalert');
+var numberalert2 = document.getElementById('numberalert2');
 var tableContainer = document.getElementById('table-container'); // oluşacak tabloyu çağırıyoruz
 var enteredNumber = inputElement.value;
 
@@ -89,6 +84,7 @@ function tableCreate(rowCount) {
         var blockCell = row.insertCell(0);
         blockCell.innerHTML = i;
 
+
         var apartmentCell = row.insertCell(1);
         var inputElement = document.createElement('input');
         inputElement.type = 'number';
@@ -99,6 +95,18 @@ function tableCreate(rowCount) {
         inputElement.id = 'row' + i;
         inputElement.required = true;
         apartmentCell.appendChild(inputElement);
+
+
+
+        var descreption = row.insertCell(2);
+        var descreptionElement = document.createElement('p');
+        inputElement.type = 'text';
+
+
+        descreptionElement.className = 'form-control' + 'form-group col-md-2';
+        descreptionElement.name = 'descreption';
+        descreptionElement.id = 'row2' + i;
+        descreption.appendChild(descreptionElement);
     }
 
     tableContainer.appendChild(table);
@@ -107,17 +115,34 @@ function tableCreate(rowCount) {
 
 function rowListin(enteredNumber) {
     console.log("entered number" + enteredNumber);
-    for (var i = 1; i <= enteredNumber; i++) {
-        var inputElement = document.getElementById('row' + i);
 
-        // 'row' + i ID'li elemanın var olduğundan emin olunmadan event listener eklenmesini önlemek için kontrol eklenmiştir
+    for (var i = 1; i <= enteredNumber; i++) {
+        addEventListenerToRow(i);
+    }
+
+    function addEventListenerToRow(index) {
+        var inputElement = document.getElementById('row' + index);
+
         if (inputElement) {
             inputElement.addEventListener('input', function() {
-                var girilenSayi2 = this
-                .value; // 'this', olayı tetikleyen giriş elemanına atıfta bulunmak için kullanılır
-                console.log(girilenSayi2);
+                var temp = 'row2' + index;
+                console.log("temp " + temp);
+                var descreptionElement2 = document.getElementById(temp);
+
+                var girilenSayi2 = this.value;
+
+                if (girilenSayi2 > 1000) {
+                    descreptionElement2.innerHTML = "Daire sayısı 1000'den fazla olması durumunda bizimle iletişime geçebilirsiniz.";
+                } else if (girilenSayi2 == "") {
+                    descreptionElement2.innerHTML = "";
+                } else if (girilenSayi2 <= 0) {
+                    descreptionElement2.innerHTML = "Daire sayısı 1'den küçük olamaz.";
+                } else {
+                    descreptionElement2.innerHTML = "";
+                }
             });
         }
     }
 }
+
 </script>
