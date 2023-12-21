@@ -2,7 +2,7 @@
 
     <div class="container form-wrapper">
 
-        <form id="my-form" novalidate="novalidate">
+        <form>
             <div class="row">
                 <div class="col-md-12 text-center">
                     <h1 class="form-title">Pop-up</h1>
@@ -10,8 +10,8 @@
             </div>
             <div class="row">
                 <div class="form-group col-md-6">
-                    <label for="name">Apartman Adı</label>
-                    <input type="text" class="form-control" id="name" name="name" required>
+                    <label for="apartman_adi">Apartman Adı</label>
+                    <input type="text" class="form-control" id="apartman_adi" name="apartman_adi" required>
                 </div>
                 <div class="form-group col-md-2">
                     <label for="blokSay">blok sayısı</label>
@@ -22,10 +22,60 @@
             </div>
             <div class="row" id="table-container">
             </div>
-            <button type="submit" class="btn send-form">Send</button>
+            <button class="btn send-form" onclick="kaydet()">Kaydet</button>
         </form>
     </div>
 </div>
+
+
+
+
+
+<script>
+function kaydet() {
+    // Prevent the default form submission and page refresh
+    event.preventDefault();
+
+    var apartman_adi = $('#apartman_adi').val();
+    var blokSay = $('#blokSay').val();
+
+    $.ajax({
+        url: 'Controller/popupController.php',
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            apartman_adi: apartman_adi,
+            blokSay: blokSay
+        },
+        success: function(response) {
+            if (response.success) {
+                console.log(response.message);
+                // Additional handling if needed
+            } else {
+                console.error('Error:', response.message);
+                // Handle error if needed
+            }
+        },
+        error: function(error) {
+            // Handle error here
+        }
+    });
+}
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <script>
 $('.form-popup').show();
@@ -132,7 +182,8 @@ function rowListin(enteredNumber) {
                 var girilenSayi2 = this.value;
 
                 if (girilenSayi2 > 1000) {
-                    descreptionElement2.innerHTML = "Daire sayısı 1000'den fazla olması durumunda bizimle iletişime geçebilirsiniz.";
+                    descreptionElement2.innerHTML =
+                        "Daire sayısı 1000'den fazla olması durumunda bizimle iletişime geçebilirsiniz.";
                 } else if (girilenSayi2 == "") {
                     descreptionElement2.innerHTML = "";
                 } else if (girilenSayi2 <= 0) {
@@ -144,5 +195,4 @@ function rowListin(enteredNumber) {
         }
     }
 }
-
 </script>
