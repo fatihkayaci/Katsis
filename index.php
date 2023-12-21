@@ -1,23 +1,26 @@
 <?php
+
 //message = '<div class ="alert alert-success" role="alert"> cookkie oluşturuldu</div>';
 session_start();
+
 require_once 'class.user.php';
 $user_login = new USER();
 $message = "default";
- 
+ echo "cella";
 if (isset($_COOKIE["cokkiemail"]) && isset($_COOKIE["cokkiepass"])){
 
   $email = base64_decode($_COOKIE["cokkiemail"]);
   $upass = base64_decode($_COOKIE["cokkiepass"]);
+  $_SESSION["mail"] =$email;
   if($user_login->login($email,$upass))
   {
+    $_SESSION["mail"] =$email;
     $user_login->redirect('Admin/index');
   }
 }
 
 if(isset($_POST['btn-login']))
 {
-
  $email = $_POST['txtemail'];
  $upass = $_POST['txtupass'];
  $remember =trim($_POST["remember"]);
@@ -46,6 +49,7 @@ if(isset($_POST['btn-login']))
     $passcokkie= setcookie("cokkiepass", base64_encode($upass)
     ,time()+(86400*30));
   }
+  $_SESSION["mail"] =$email;
   $user_login->redirect('Admin/index');
  }
     }
