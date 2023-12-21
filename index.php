@@ -17,14 +17,29 @@ if (isset($_COOKIE["cokkiemail"]) && isset($_COOKIE["cokkiepass"])){
 
 if(isset($_POST['btn-login']))
 {
+
  $email = $_POST['txtemail'];
  $upass = $_POST['txtupass'];
  $remember =trim($_POST["remember"]);
+ if(isset($_POST['g-recaptcha-response'])){
+      $captcha=$_POST['g-recaptcha-response'];
+    }
+    if(!$captcha){
+      echo '<h2>Lütfen captcha bölümünü kontrol ediniz!</h2>';
+      header('Location: '.'/katsis');
+    }
+    $secretKey = "6Ld0njYpAAAAAGByIPz8beq8vT-LAt19XUDR-5Hm";
+    $ip = $_SERVER['REMOTE_ADDR'];
+    $response=file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".$secretKey."&response=".$captcha."&remoteip=".$ip);
+    $responseKeys = json_decode($response,true);
 
  if($user_login->login($email,$upass))
  {
-  if($remember =="on"){
-
+  
+  if(intval($responseKeys["success"]) !== 1) {
+      echo '<h2>Spam? ! Tekrar kontrol etmelisin.</h2>';
+    }else{
+       if($remember =="on"){
    //decode64 çözmek için hee!!
     $emailcokkie= setcookie("cokkiemail", base64_encode($email)
     , time()+(86400*30));
@@ -33,6 +48,8 @@ if(isset($_POST['btn-login']))
   }
   $user_login->redirect('Admin/index');
  }
+    }
+ 
 }
 ?> 
 
@@ -71,7 +88,7 @@ if(isset($_POST['btn-login']))
             <?php
   }
   ?>
-        <form action="validate.php" class="form-signin" method="post">
+        <form class="form-signin" method="post">
         <?php
         if(isset($_GET['error']))
   {
