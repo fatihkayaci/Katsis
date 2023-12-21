@@ -5,8 +5,8 @@ session_start();
 
 require_once 'class.user.php';
 $user_login = new USER();
-$message = "default";
- echo "cella";
+
+
 if (isset($_COOKIE["cokkiemail"]) && isset($_COOKIE["cokkiepass"])){
 
   $email = base64_decode($_COOKIE["cokkiemail"]);
@@ -106,7 +106,7 @@ if(isset($_POST['btn-login']))
   ?>
         <h2 class="form-signin-heading">Sign In.</h2><hr />
         <input type="email" class="input-block-level" placeholder="Email address" name="txtemail" required />
-        <input type="password" class="input-block-level" placeholder="Password" name="txtupass" required />,
+        <input type="password" class="input-block-level" placeholder="Password" name="txtupass" required />
         <div class="g-recaptcha" data-sitekey="6Ld0njYpAAAAAC027yq47stnNrM7uKvoiGv6-Eud"></div>
 
         <hr />
@@ -118,9 +118,7 @@ if(isset($_POST['btn-login']))
         <a href="signup" style="float:right;" class="btn btn-large">Sign Up</a><hr />
         <a href="fpass">Lost your Password ? </a>
       </form>
-      <?php 
-          echo $message;
-        ?>
+      
     </div> <!-- /container -->
     <script src="bootstrap/js/jquery-1.9.1.min.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
