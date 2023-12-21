@@ -1,5 +1,6 @@
 
 <?php
+    session_start();
     include("../../DB/dbconfig.php");
 
     // Değişkenlere değerleri ata
@@ -22,7 +23,14 @@
     // Sorguyu çalıştır
     $stmt->execute();
 
-
+    $sql2 = "UPDATE tbl_users SET popup = 0 WHERE userEmail = :userEmail";
+    $stmt2 = $conn->prepare($sql2);
+    $stmt2->bindParam(":userEmail", $_SESSION["mail"]);
+    $stmt2->execute()
+  
+    
+    
+    
 
 
 ?>
