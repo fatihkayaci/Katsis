@@ -1,21 +1,28 @@
 
 <?php
-// popupController.php
+    include("../../DB/dbconfig.php");
 
-// Check if data is sent via POST
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Retrieve data from POST request
-    $apartman_adi = isset($_POST['apartman_adi']) ? $_POST['apartman_adi'] : null;
-    $blokSay = isset($_POST['blokSay']) ? $_POST['blokSay'] : null;
+    // Değişkenlere değerleri ata
+    $apartman_adi = $_POST['apartman_adi']; // Veya isteğe bağlı olarak $_GET kullanılabilir
+    $blokSay = $_POST['blokSay']; // Veya isteğe bağlı olarak $_GET kullanılabilir
 
-    // Your processing logic here...
 
-    // Example: You can send a response back
-    $response = array('success' => true, 'message' => 'Data received successfully');
-    echo json_encode($response);
-} else {
-    // Invalid request method
-    $response = array('success' => false, 'message' => 'Invalid request method');
-    echo json_encode($response);
-}
+
+
+
+    $sql = "INSERT INTO tbl_apartman (apartman_name, blok_sayisi) VALUES (:apartman_adi, :blokSay)";
+    $stmt = $conn->prepare($sql);
+
+    // Parametreleri bağla
+    $stmt->bindParam(':apartman_adi', $apartman_adi);
+    $stmt->bindParam(':blokSay', $blokSay);
+ 
+
+
+    // Sorguyu çalıştır
+    $stmt->execute();
+
+
+
+
 ?>

@@ -11,7 +11,7 @@
             <div class="row">
                 <div class="form-group col-md-6">
                     <label for="apartman_adi">Apartman Adı</label>
-                    <input type="text" class="form-control" id="apartman_adi" name="apartman_adi" required>
+                    <input type="text" class="form-control" id="apartman_adi"  name="apartman_adi" required>
                 </div>
                 <div class="form-group col-md-2">
                     <label for="blokSay">blok sayısı</label>
@@ -35,30 +35,24 @@
 function kaydet() {
     // Prevent the default form submission and page refresh
     event.preventDefault();
-
+alert("vjb");
     var apartman_adi = $('#apartman_adi').val();
     var blokSay = $('#blokSay').val();
 
     $.ajax({
         url: 'Controller/popupController.php',
         type: 'POST',
-        dataType: 'json',
         data: {
             apartman_adi: apartman_adi,
             blokSay: blokSay
         },
         success: function(response) {
-            if (response.success) {
-                console.log(response.message);
-                // Additional handling if needed
-            } else {
-                console.error('Error:', response.message);
-                // Handle error if needed
-            }
+           alert("wd"+response);
         },
-        error: function(error) {
-            // Handle error here
-        }
+        error: function(xhr, status, error) {
+    var errorMessage = xhr.status + ': ' + xhr.statusText + '\n' + error;
+    alert("sd"+errorMessage);
+}
     });
 }
 
