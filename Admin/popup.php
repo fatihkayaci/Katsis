@@ -78,7 +78,6 @@ var tableContainer = document.getElementById('table-container'); // oluşacak ta
 var oncekideger = 1;
 var enteredNumber = inputElement.value;
 
-
 tableCreate(enteredNumber);
 rowListin(enteredNumber);
 
@@ -107,6 +106,9 @@ function checkInputValue() {
 document.addEventListener('DOMContentLoaded', function() {
     checkInputValue();
 });
+inputElement.addEventListener("blur",function(){
+    listenNumber(inputElement);
+});
 // Input alanındaki değeri değiştikçe bu fonksiyonu çağır
 inputElement.addEventListener('input', function() {
 
@@ -130,7 +132,6 @@ inputElement.addEventListener('input', function() {
         disablebtn(false);
     }
     // Alınan değeri konsola yazdır
-    console.log('Girilen Sayı: ' + enteredNumber);
     enteredApartman = apartmanadi.value;
     if (enteredApartman == null || enteredApartman == "" || enteredApartman == " ") {
         if (enteredNumber != oncekideger) {
@@ -172,17 +173,17 @@ function tableCreate(rowCount) {
         inputElement.name = 'daireSayisi'; // inputun adını belirle
         inputElement.id = 'row' + i; // inputun benzersiz kimliğini belirle
         inputElement.value = 1; // başlangıç değerini belirle
-        inputElement.required = true; // zorunlu olup olmadığını belirle
+        inputElement.required = true; // zorunlu olup olmadığını belirle,
+        inputElement.addEventListener('change', function() {
+            var apartmentadivalue = apartmanadi.value;
+            if(apartmentadivalue == null || apartmentadivalue == "" || apartmentadivalue == " "){
+                disablebtn(true);
+            }
+        });
         apartmentCell.appendChild(inputElement); // hücreye input öğesini ekle
-
-
-
-
         var descreption = row.insertCell(2);
         var descreptionElement = document.createElement('p');
         inputElement.type = 'text';
-
-
         descreptionElement.className = 'form-control' + 'form-group col-md-2';
         descreptionElement.name = 'descreption';
         descreptionElement.id = 'row2' + i;
@@ -190,7 +191,6 @@ function tableCreate(rowCount) {
     }
 
     tableContainer.appendChild(table);
-
 }
 
 function rowListin(enteredNumber) {
@@ -204,7 +204,12 @@ function rowListin(enteredNumber) {
     function addEventListenerToRow(index) {
         var inputElement = document.getElementById('row' + index);
         inputElement.setAttribute('type', 'number');
+        
         if (inputElement) {
+            inputElement.addEventListener('blur', function() {
+                    var girilenSayi2 = this.value;
+                    listenNumber(this);
+                });
             inputElement.addEventListener('input', function() {
                 
                 enteredApartman = apartmanadi.value;
@@ -219,6 +224,7 @@ function rowListin(enteredNumber) {
                 var descreptionElement2 = document.getElementById(temp);
 
                 var girilenSayi2 = this.value;
+                
                 if (girilenSayi2 > 1000) {
 
                     descreptionElement2.innerHTML =
@@ -236,9 +242,15 @@ function rowListin(enteredNumber) {
                 }
             });
         }
+       
     }
 }
-
+function listenNumber(number1){
+    var number = number1.value;
+    if(number == null || number == "" || number == " "){
+        number1.value = 1;
+    }
+}
 function disablebtn(activite) {
     var kaydetbtn = document.getElementById("kaydetbtn");
     kaydetbtn.disabled = activite;
