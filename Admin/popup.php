@@ -75,7 +75,9 @@ var inputElement = document.getElementById('blokSay');
 var numberalert = document.getElementById('numberalert');
 var numberalert2 = document.getElementById('numberalert2');
 var tableContainer = document.getElementById('table-container'); // oluşacak tabloyu çağırıyoruz
+var oncekideger = 1;
 var enteredNumber = inputElement.value;
+
 
 tableCreate(enteredNumber);
 rowListin(enteredNumber);
@@ -89,10 +91,15 @@ apartmanadi.addEventListener('input', function() {
 // Silme işlemi de dahil olacak şekilde kontrol fonksiyonu
 function checkInputValue() {
     var enteredValue = apartmanadi.value.trim(); // Boşlukları temizleyerek değeri al
+    var enteredNumber = inputElement.value;
+
     if (enteredValue === "") {
         disablebtn(true);
     } else {
         disablebtn(false);
+    }
+    if (enteredNumber == null || enteredNumber == "" || enteredNumber == " ") {
+        disablebtn(true);
     }
 }
 
@@ -124,9 +131,15 @@ inputElement.addEventListener('input', function() {
     }
     // Alınan değeri konsola yazdır
     console.log('Girilen Sayı: ' + enteredNumber);
-    disablebtn(true);
-});
+    enteredApartman = apartmanadi.value;
+    if (enteredApartman == null || enteredApartman == "" || enteredApartman == " ") {
+        if (enteredNumber != oncekideger) {
+            disablebtn(true);
+            oncekideger = enteredNumber;
+        }
+    }
 
+});
 
 function tableCreate(rowCount) {
 
@@ -185,25 +198,31 @@ function rowListin(enteredNumber) {
 
     for (var i = 1; i <= enteredNumber; i++) {
         addEventListenerToRow(i);
+
     }
 
     function addEventListenerToRow(index) {
         var inputElement = document.getElementById('row' + index);
-
         inputElement.setAttribute('type', 'number');
         if (inputElement) {
             inputElement.addEventListener('input', function() {
-
+                
+                enteredApartman = apartmanadi.value;
+                if (enteredApartman == null || enteredApartman == "" || enteredApartman == " " ||
+                    enteredNumber == null || enteredNumber == "" || enteredNumber == " ") {
+                    disablebtn(true);
+                }
 
 
                 var temp = 'row2' + index;
                 console.log("temp " + temp);
                 var descreptionElement2 = document.getElementById(temp);
-               
+
                 var girilenSayi2 = this.value;
                 if (girilenSayi2 > 1000) {
 
-                    descreptionElement2.innerHTML ="Daire sayısı 1000'den fazla olması durumunda bizimle iletişime geçebilirsiniz.";
+                    descreptionElement2.innerHTML =
+                        "Daire sayısı 1000'den fazla olması durumunda bizimle iletişime geçebilirsiniz.";
                     disablebtn(true);
                 } else if (girilenSayi2 == "") {
                     descreptionElement2.innerHTML = "";
@@ -211,7 +230,7 @@ function rowListin(enteredNumber) {
                 } else if (girilenSayi2 <= 0) {
                     descreptionElement2.innerHTML = "Daire sayısı 1'den küçük olamaz.";
                     disablebtn(true);
-                } else {
+                } else if(girilenSayi2 != null || girilenSayi2 != ""  || girilenSayi2 != " "){
                     descreptionElement2.innerHTML = "";
                     disablebtn(false);
                 }
@@ -220,12 +239,12 @@ function rowListin(enteredNumber) {
     }
 }
 
-function disablebtn(activite){
+function disablebtn(activite) {
     var kaydetbtn = document.getElementById("kaydetbtn");
     kaydetbtn.disabled = activite;
-    if(activite){
+    if (activite) {
         kaydetbtn.style.backgroundColor = "red";
-    }else{
+    } else {
         kaydetbtn.style.backgroundColor = "green";
     }
 }
