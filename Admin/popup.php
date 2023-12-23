@@ -2,28 +2,28 @@
 
     <div class="container form-wrapper">
 
-        <form>
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <h1 class="form-title">Pop-up</h1>
-                </div>
+
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h1 class="form-title">Pop-up</h1>
             </div>
-            <div class="row">
-                <div class="form-group col-md-6">
-                    <label for="apartman_adi">Apartman Adı</label>
-                    <input type="text" class="form-control" id="apartman_adi" name="apartman_adi" required>
-                </div>
-                <div class="form-group col-md-2">
-                    <label for="blokSay">blok sayısı</label>
-                    <input type="number" class="form-control" id="blokSay" name="blokSay" value="1" max="20" min="1"
-                        required>
-                    <p id="numberalert"></p>
-                </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label for="apartman_adi">Apartman Adı</label>
+                <input type="text" class="form-control" id="apartman_adi" name="apartman_adi" required>
             </div>
-            <div class="row" id="table-container">
+            <div class="form-group col-md-2">
+                <label for="blokSay">blok sayısı</label>
+                <input type="number" class="form-control" id="blokSay" name="blokSay" value="1" max="20" min="1"
+                    required>
+                <p id="numberalert"></p>
             </div>
-            <button id="kaydetbtn" class="btn send-form" onclick="kaydet()">Kaydet</button>
-        </form>
+        </div>
+        <div class="row" id="table-container">
+        </div>
+        <button id="kaydetbtn" class="btn send-form" onclick="kaydet()">Kaydet</button>
+
     </div>
 </div>
 
@@ -33,27 +33,71 @@
 
 <script>
 function kaydet() {
-    // Prevent the default form submission and page refresh
-    event.preventDefault();
 
+    var tem = 1;
+    var tem1 = 1;
+    var tem2 = 1;
     var apartman_adi = $('#apartman_adi').val();
     var blokSay = $('#blokSay').val();
 
-    $.ajax({
-        url: 'Controller/popupController.php',
-        type: 'POST',
-        data: {
-            apartman_adi: apartman_adi,
-            blokSay: blokSay
-        },
-        success: function(response) {
-            alert(response);
-        },
-        error: function(xhr, status, error) {
-            var errorMessage = xhr.status + ': ' + xhr.statusText + '\n' + error;
-            alert("sd" + errorMessage);
+    /* x  */
+
+
+    var vall1 = document.getElementById('numberalert');
+
+    if (vall1.innerHTML == null || vall1.innerHTML == "" || vall1.innerHTML == " ") {
+        tem1 = 1;
+        for (var i = 1; i <= blokSay; i++) {
+            var vall = document.getElementById('row2' + i);
+
+            if (vall.innerHTML == null || vall.innerHTML == "" || vall.innerHTML == " ") {
+                tem = 1;
+
+            } else {
+                tem = 0;
+                break;
+            }
         }
-    });
+    } else {
+        tem1 = 0;
+
+    }
+
+    if (apartman_adi == "") {
+        tem2 = 0;
+    } else {
+        tem2 = 1;
+    }
+
+
+
+    if ((tem + tem1 + tem2) == 3) {
+        $.ajax({
+            url: 'Controller/popupController.php',
+            type: 'POST',
+            data: {
+                apartman_adi: apartman_adi,
+                blokSay: blokSay
+            },
+            success: function(response) {
+                $('.form-popup').hide();
+            },
+            error: function(xhr, status, error) {
+                var errorMessage = xhr.status + ': ' + xhr.statusText + '\n' + error;
+
+            }
+        });
+    } else {
+        alert("Eksik bilgiler oabilir");
+    }
+
+
+
+  
+
+
+
+
 }
 </script>
 
@@ -68,76 +112,44 @@ function kaydet() {
 
 <script>
 $('.form-popup').show();
-disablebtn(true);
+
 // HTML sayfasındaki input alanını seç
 var apartmanadi = document.getElementById('apartman_adi');
 var inputElement = document.getElementById('blokSay');
 var numberalert = document.getElementById('numberalert');
 var numberalert2 = document.getElementById('numberalert2');
 var tableContainer = document.getElementById('table-container'); // oluşacak tabloyu çağırıyoruz
-var oncekideger = 1;
+
 var enteredNumber = inputElement.value;
 
 tableCreate(enteredNumber);
 rowListin(enteredNumber);
 
 var apartmanadi = document.getElementById('apartman_adi'); // apartmanadi'nin doğru bir şekilde alındığından emin olun
-
-apartmanadi.addEventListener('input', function() {
-    checkInputValue();
-});
-
-// Silme işlemi de dahil olacak şekilde kontrol fonksiyonu
-function checkInputValue() {
-    var enteredValue = apartmanadi.value.trim(); // Boşlukları temizleyerek değeri al
-    var enteredNumber = inputElement.value;
-
-    if (enteredValue === "") {
-        disablebtn(true);
-    } else {
-        disablebtn(false);
-    }
-    if (enteredNumber == null || enteredNumber == "" || enteredNumber == " ") {
-        disablebtn(true);
-    }
-}
-
-// Sayfa yüklendiğinde de kontrol yapmak için
-document.addEventListener('DOMContentLoaded', function() {
-    checkInputValue();
-});
-inputElement.addEventListener("blur",function(){
+inputElement.addEventListener("blur", function() {
     listenNumber(inputElement);
 });
-// Input alanındaki değeri değiştikçe bu fonksiyonu çağır
-inputElement.addEventListener('input', function() {
 
+inputElement.addEventListener('input', function() {
+    var enteredValue = apartmanadi.value.trim();
     var enteredNumber = inputElement.value;
     if (enteredNumber > 20) {
         numberalert.innerHTML = "20'den fazla blok bulunuyorsa iletişime geçiniz";
         enteredNumber.innerHTML = 20;
         tableContainer.innerHTML = '';
-        disablebtn(true);
+
     } else if (enteredNumber == "") {
         numberalert.innerHTML = "";
-        disablebtn(true);
+
     } else if (enteredNumber <= 0) {
         numberalert.innerHTML = "En az 1 blok ekleyiniz.";
         tableContainer.innerHTML = '';
-        disablebtn(true);
+
     } else {
         numberalert.innerHTML = "";
         tableCreate(enteredNumber);
         rowListin(enteredNumber);
-        disablebtn(false);
-    }
-    // Alınan değeri konsola yazdır
-    enteredApartman = apartmanadi.value;
-    if (enteredApartman == null || enteredApartman == "" || enteredApartman == " ") {
-        if (enteredNumber != oncekideger) {
-            disablebtn(true);
-            oncekideger = enteredNumber;
-        }
+
     }
 
 });
@@ -176,8 +188,8 @@ function tableCreate(rowCount) {
         inputElement.required = true; // zorunlu olup olmadığını belirle,
         inputElement.addEventListener('change', function() {
             var apartmentadivalue = apartmanadi.value;
-            if(apartmentadivalue == null || apartmentadivalue == "" || apartmentadivalue == " "){
-                disablebtn(true);
+            if (apartmentadivalue == null || apartmentadivalue == "" || apartmentadivalue == " ") {
+
             }
         });
         apartmentCell.appendChild(inputElement); // hücreye input öğesini ekle
@@ -194,7 +206,7 @@ function tableCreate(rowCount) {
 }
 
 function rowListin(enteredNumber) {
-    console.log("entered number" + enteredNumber);
+
 
     for (var i = 1; i <= enteredNumber; i++) {
         addEventListenerToRow(i);
@@ -204,60 +216,49 @@ function rowListin(enteredNumber) {
     function addEventListenerToRow(index) {
         var inputElement = document.getElementById('row' + index);
         inputElement.setAttribute('type', 'number');
-        
+
         if (inputElement) {
             inputElement.addEventListener('blur', function() {
-                    var girilenSayi2 = this.value;
-                    listenNumber(this);
-                });
+                var girilenSayi2 = this.value;
+                listenNumber(this);
+            });
             inputElement.addEventListener('input', function() {
-                
-                enteredApartman = apartmanadi.value;
-                if (enteredApartman == null || enteredApartman == "" || enteredApartman == " " ||
-                    enteredNumber == null || enteredNumber == "" || enteredNumber == " ") {
-                    disablebtn(true);
-                }
+
+
 
 
                 var temp = 'row2' + index;
-                console.log("temp " + temp);
+
                 var descreptionElement2 = document.getElementById(temp);
 
                 var girilenSayi2 = this.value;
-                
+
                 if (girilenSayi2 > 1000) {
 
                     descreptionElement2.innerHTML =
                         "Daire sayısı 1000'den fazla olması durumunda bizimle iletişime geçebilirsiniz.";
-                    disablebtn(true);
+
                 } else if (girilenSayi2 == "") {
                     descreptionElement2.innerHTML = "";
-                    disablebtn(true);
+
                 } else if (girilenSayi2 <= 0) {
                     descreptionElement2.innerHTML = "Daire sayısı 1'den küçük olamaz.";
-                    disablebtn(true);
-                } else if(girilenSayi2 != null || girilenSayi2 != ""  || girilenSayi2 != " "){
+
+                } else if (girilenSayi2 != null || girilenSayi2 != "" || girilenSayi2 != " ") {
                     descreptionElement2.innerHTML = "";
-                    disablebtn(false);
+
                 }
             });
         }
-       
+
     }
 }
-function listenNumber(number1){
+
+function listenNumber(number1) {
     var number = number1.value;
-    if(number == null || number == "" || number == " "){
+    if (number == null || number == "" || number == " ") {
         number1.value = 1;
-    }
-}
-function disablebtn(activite) {
-    var kaydetbtn = document.getElementById("kaydetbtn");
-    kaydetbtn.disabled = activite;
-    if (activite) {
-        kaydetbtn.style.backgroundColor = "red";
-    } else {
-        kaydetbtn.style.backgroundColor = "green";
+        tableCreate(1);
     }
 }
 </script>
