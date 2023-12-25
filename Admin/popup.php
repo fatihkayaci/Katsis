@@ -117,7 +117,7 @@ function kaydet() {
             },
             success: function(response) {
                 $('.form-popup').hide();
-                alert(response);
+                
             },
             error: function(xhr, status, error) {
                 var errorMessage = xhr.status + ': ' + xhr.statusText + '\n' + error;
