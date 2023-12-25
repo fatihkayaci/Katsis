@@ -3,9 +3,10 @@ session_start();
 
 include("../DB/dbconfig.php");
 
+$indexx= "";
 
 if(isset($_GET['parametre'])){
-    $indexx = $_GET['parametre'];
+    $indexx = $_GET['p  arametre'];
 }
 
 
