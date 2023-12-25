@@ -6,7 +6,7 @@ include("../DB/dbconfig.php");
 $indexx= "";
 
 if(isset($_GET['parametre'])){
-    $indexx = $_GET['p  arametre'];
+    $indexx = $_GET['parametre'];
 }
 
 
