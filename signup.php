@@ -48,16 +48,16 @@ if(isset($_POST['btn-signup']))
    $id = $key;
    
    $message = "     
-      Hello $uname,
+      Merhaba $uname,
       <br /><br />
-      Welcome to Coding Cage!<br/>
-      To complete your registration  please , just click following link<br/>
+      Katsis'e Hoşgeldiniz.<br/>
+      Kaydınızı tamamlamak için aşağıdaki bağlantıya tıklamanız yeterlidir.<br/>
       <br /><br />
-      <a href='http://localhost/katsis/verify.php?id=$id&code=$code'>Click HERE to Activate :)</a>
+      <a href='http://localhost/katsis/verify.php?id=$id&code=$code'>Etkinleştirmek için BURAYA tıklayın</a>
       <br /><br />
-      Thanks,";
+      Teşekkürler,";
       
-   $subject = "Confirm Registration";
+   $subject = "Kaydınızı doğrulayınız";
       
    $reg_user->send_mail($email,$message,$subject); 
    $msg = "
