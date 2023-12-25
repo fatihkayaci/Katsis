@@ -37,6 +37,9 @@ function kaydet() {
     var tem = 1;
     var tem1 = 1;
     var tem2 = 1;
+    var tem3 = 1;
+    var BlokArray = [];
+    var BloknameArray = [];
     var apartman_adi = $('#apartman_adi').val();
     var blokSay = $('#blokSay').val();
 
@@ -50,6 +53,7 @@ function kaydet() {
         for (var i = 1; i <= blokSay; i++) {
             var vall = document.getElementById('row2' + i);
 
+
             if (vall.innerHTML == null || vall.innerHTML == "" || vall.innerHTML == " ") {
                 tem = 1;
 
@@ -58,10 +62,40 @@ function kaydet() {
                 break;
             }
         }
+
+        for (var i = 1; i <= blokSay; i++) {
+            var elements = document.getElementsByName('inputText' + i);
+
+            for (var j = 0; j < elements.length; j++) {
+                var value = elements[j].value.trim(); // Boşlukları temizle
+                BloknameArray.push(value);
+                if (value === null || value === "") {
+                    tem3 = 0;
+                    break;
+                }
+            }
+        }
+
+
     } else {
         tem1 = 0;
 
     }
+
+    // row1 id'li input elementini seç
+
+
+
+
+
+
+    for (var i = 1; i <= blokSay; i++) {
+        var daireSayisiInput = document.getElementById('row' + i);
+        BlokArray.push(daireSayisiInput.value);
+    }
+
+
+
 
     if (apartman_adi == "") {
         tem2 = 0;
@@ -71,29 +105,33 @@ function kaydet() {
 
 
 
-    if ((tem + tem1 + tem2) == 3) {
+    if ((tem + tem1 + tem2 + tem3) == 4) {
         $.ajax({
             url: 'Controller/popupController.php',
             type: 'POST',
             data: {
                 apartman_adi: apartman_adi,
-                blokSay: blokSay
+                blokSay: blokSay,
+                BlokArray: BlokArray,
+                BloknameArray: BloknameArray
             },
             success: function(response) {
                 $('.form-popup').hide();
+                alert(response);
             },
             error: function(xhr, status, error) {
                 var errorMessage = xhr.status + ': ' + xhr.statusText + '\n' + error;
-
+                alert(errorMessage);
             }
         });
+
     } else {
-        alert("Eksik bilgiler oabilir");
+        alert("hatalı bilgiler. Kontrol ediniz.")
     }
 
 
 
-  
+
 
 
 
@@ -172,9 +210,21 @@ function tableCreate(rowCount) {
 
     // Satırları oluşturma
     for (var i = 1; i <= rowCount; i++) {
+
+
         var row = table.insertRow(i);
+        var input = document.createElement("input");
+        input.className = 'form-group form-group col-md-2';
+        input.type = "text";
+        input.maxLength = 5;
+        input.name = "inputText" + i; // Set a unique name for each input if needed
+        input.id = 'row3' + i;
+        // Insert the text input element into the first cell of the row
         var blockCell = row.insertCell(0);
-        blockCell.innerHTML = i;
+        blockCell.appendChild(input);
+
+
+
 
 
         var apartmentCell = row.insertCell(1); // Satırın ikinci hücresine erişim sağla
@@ -186,12 +236,10 @@ function tableCreate(rowCount) {
         inputElement.id = 'row' + i; // inputun benzersiz kimliğini belirle
         inputElement.value = 1; // başlangıç değerini belirle
         inputElement.required = true; // zorunlu olup olmadığını belirle,
-        inputElement.addEventListener('change', function() {
-            var apartmentadivalue = apartmanadi.value;
-            if (apartmentadivalue == null || apartmentadivalue == "" || apartmentadivalue == " ") {
 
-            }
-        });
+
+
+
         apartmentCell.appendChild(inputElement); // hücreye input öğesini ekle
         var descreption = row.insertCell(2);
         var descreptionElement = document.createElement('p');
