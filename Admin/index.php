@@ -3,7 +3,11 @@ session_start();
 
 include("../DB/dbconfig.php");
 
-$indexx = $_GET['parametre'];
+
+if(isset($_GET['parametre'])){
+    $indexx = $_GET['parametre'];
+}
+
 
 include('header.php');
 
@@ -11,8 +15,7 @@ include('leftbar.php');
 
 
 
-
-if($indexx == 'Accounts'){
+ if($indexx == 'Accounts'){
     include ("Accounts/index.php");
 }
 
