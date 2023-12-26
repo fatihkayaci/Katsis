@@ -82,20 +82,11 @@ function kaydet() {
 
     }
 
-    // row1 id'li input elementini seç
-
-
-
-
-
 
     for (var i = 1; i <= blokSay; i++) {
         var daireSayisiInput = document.getElementById('row' + i);
         BlokArray.push(daireSayisiInput.value);
     }
-
-
-
 
     if (apartman_adi == "") {
         tem2 = 0;
