@@ -1,3 +1,4 @@
+ 
 
 
 <?php
@@ -13,16 +14,19 @@ try {
         echo '<table id="example" class="display" style="width:100%">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Email</th>
+                        
+                        <th>Blok Adı</th>
+                        <th>Kapı No</th>
+                        <th>Kiracı</th>
+                        <th>Kat Maliki</th>
+                        <th>Bakiye</th>
                     </tr>
                 </thead>
                 <tbody>';
 
         foreach ($result as $row) {
             echo '<tr>
-                    <td contenteditable="true">' . $row["userID"] . '</td>
+                   
                     <td contenteditable="true">' . $row["userName"] . '</td>
                     <td contenteditable="true">' . $row["userEmail"] . '</td>
                 </tr>';
@@ -65,3 +69,4 @@ try {
     }
 });
 </script>
+

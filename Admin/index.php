@@ -14,8 +14,10 @@ include('header.php');
 
 include('leftbar.php');
 
- if($indexx == 'Accounts'){
+if($indexx == 'Accounts'){
     include ("Accounts/index.php");
+}else if($indexx == 'Sections'){
+    include ("Sections/index.php");
 }
 
 

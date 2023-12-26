@@ -66,7 +66,17 @@ try{
   echo "Hata: " . $e->getMessage();
 }
 
-// Veritabanı bağlantısını kapat
+
+
+
+$sql3 = "UPDATE tbl_users SET apartman_id = :apartman_id WHERE userEmail = :userEmail";
+$stmt4 = $conn->prepare($sql3);
+$stmt4->bindParam(":apartman_id", $lastInsertedRow["apartman_id"]);
+$stmt4->bindParam(":userEmail", $_SESSION["mail"]);
+$stmt4->execute();
+
+
+
 $conn = null;
 
 
