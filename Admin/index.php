@@ -14,30 +14,9 @@ include('header.php');
 
 include('leftbar.php');
 
-
-
  if($indexx == 'Accounts'){
     include ("Accounts/index.php");
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
