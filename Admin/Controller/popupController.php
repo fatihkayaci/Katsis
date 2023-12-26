@@ -43,29 +43,34 @@
 
     
 try{
-  // Veritabanına veri eklemek için SQL sorgusu
-  $sql = "INSERT INTO tbl_daireler (apartman_id, daire_sayisi, blok_adi) VALUES (:apartman_id, :daire_sayisi, :blok_adi)";
-  $stmt = $conn->prepare($sql);
+  $sql = "INSERT INTO tbl_daireler (apartman_id, daire_sayisi, blok_adi) VALUES ";
 
-  // Her bir öğe için veri ekleyin
-  for ($i = 0; $i < count($BlokArray); $i++) {
-      $daire_sayisi = $BlokArray[$i];
-      $blok_adi = $BloknameArray[$i];
+$values = array();
 
-    for($j =1; $j <=  $daire_sayisi;$j++ ){
-    // Parametreleri bağla
-    $stmt->bindParam(':apartman_id', $lastInsertedRow["apartman_id"]);
-    $stmt->bindParam(':daire_sayisi', $j);
-    $stmt->bindParam(':blok_adi', $blok_adi);
+for ($i = 0; $i < count($BlokArray); $i++) {
+    $daire_sayisi = $BlokArray[$i];
+    $blok_adi = $BloknameArray[$i];
 
- // Sorguyu çalıştır
- $stmt->execute();
-
+    for ($j = 1; $j <= $daire_sayisi; $j++) {
+        $values[] = "(:apartman_id, $j, :blok_adi)";
     }
+}
+
+$sql .= implode(", ", $values);
+
+$stmt = $conn->prepare($sql);
+
+for ($i = 0; $i < count($BlokArray); $i++) {
+    $stmt->bindParam(':apartman_id', $lastInsertedRow["apartman_id"]);
+    $stmt->bindParam(':blok_adi', $BloknameArray[$i]);
+}
+
+$stmt->execute();
+
 
 
        
-  }
+  
 
   echo "Veri başarıyla eklendi";
 } catch (PDOException $e) {

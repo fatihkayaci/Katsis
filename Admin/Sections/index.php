@@ -3,7 +3,7 @@
 
 <?php
 try {
-    $sql = "SELECT * FROM tbl_users";
+    $sql = "SELECT * FROM tbl_daireler where apartman_id=198";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
 
@@ -28,10 +28,10 @@ try {
             echo '<tr>
                    
                     <td>' . $row["userName"] . '</td>
-                    <td contenteditable="true">' . $row["userEmail"] . '</td>
-                    <td contenteditable="true">' . $row["userName"] . '</td>
-                    <td contenteditable="true">' . $row["userEmail"] . '</td>
-                    <td contenteditable="true">' . $row["userName"] . '</td>
+                    <td contenteditable="true">' . $row["blok_adi"] . '</td>
+                    <td contenteditable="true">' . $row["daire_sayisi"] . '</td>
+                    <td contenteditable="true">' . $row["blok_adi"] . '</td>
+                    <td contenteditable="true">' . $row["daire_sayisi"] . '</td>
                   
                 </tr>';
         }
