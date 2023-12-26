@@ -13,11 +13,22 @@
         padding: 3px;
         box-sizing: border-box;
     }
+
+    #popup {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 20px;
+        background: #fff;
+        z-index: 1000;
+    }
     </style>
 </head>
 
-
 <body>
+    <button class="adduser">Add User</button>
     <?php
 try {
     $sql = "SELECT * FROM tbl_kullanici";
@@ -61,50 +72,87 @@ try {
     echo "Bağlantı hatası: " . $e->getMessage();
 }
 ?>
-    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-    <script>
-    new DataTable('#example', {
-        initComplete: function() {
-            this.api()
-                .columns()
-                .every(function() {
-                    let column = this;
-                    let title = column.footer().textContent;
 
-                    // Create input element
-                    let input = document.createElement('input');
-                    input.placeholder = title;
-                    column.footer().replaceChildren(input);
+    <!-- Popup Form -->
+    <div id="popup">
+        <form id="userForm">
+            <label for="fullName">Full Name:</label>
+            <input type="text" name="fullName" required><br>
 
-                    // Event listener for user input
-                    input.addEventListener('keyup', () => {
-                        if (column.search() !== this.value) {
-                            column.search(input.value).draw();
-                        }
+            <label for="TC">TC:</label>
+            <input type="text" name="TC" required><br>
+
+            <label for="phoneNumber">Phone Number:</label>
+            <input type="text" name="phoneNumber" required><br>
+
+            <label for="email">Email:</label>
+            <input type="text" name="email" required><br>
+
+            <label for="vehiclePlate">Vehicle Plate:</label>
+            <input type="text" name="vehiclePlate" required><br>
+
+            <label for="gender">Gender:</label>
+            <input type="text" name="gender" required><br>
+
+            <button type="button" onclick="closePopup()">Close</button>
+            <button type="button" id="saveButton">Save</button>
+        </form>
+    </div>
+
+    <body>
+        <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+        <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <script type="text/javascript">
+        $('.adduser').click(function() {
+            $('#popup').show();
+        });
+
+        function closePopup() {
+            $('#popup').hide();
+        }
+
+        var saveButton = document.getElementById('saveButton');
+
+    
+        saveButton.addEventListener('click', function() {
+            $.ajax({
+                url: '../Controller/popupController.php', 
+                type: 'POST',
+                success: function(response) {
+                    alert(response);
+                },
+                error: function(error) {
+                    console.error(error);
+                }
+            });
+        });
+
+        function saveUser() {
+       
+           
+        }
+
+        new DataTable('#example', {
+            initComplete: function() {
+                this.api()
+                    .columns()
+                    .every(function() {
+                        let column = this;
+                        let title = column.footer().textContent;
+
+                        // Create input element
+                        let input = document.createElement('input');
+                        input.placeholder = title;
+                        column.footer().replaceChildren(input);
+
+                        // Event listener for user input
+                        input.addEventListener('keyup', () => {
+                            if (column.search() !== this.value) {
+                                column.search(input.value).draw();
+                            }
+                        });
                     });
-                });
-        }
-    });
-    // DataTable initialization ve diğer scriptler burada kalsın
-
-    // Açma butonuna tıklanınca modalı açan JavaScript kodu
-    document.getElementById('openModalBtn').addEventListener('click', function() {
-        // Modalı görünür yap
-        document.getElementById('myModal').style.display = 'block';
-    });
-
-    // Modalın kapatılmasını sağlayan JavaScript kodu
-    document.querySelector('.close').addEventListener('click', function() {
-        // Modalı gizle
-        document.getElementById('myModal').style.display = 'none';
-    });
-
-    // Kullanıcının modal dışındaki bir yere tıkladığında modalı kapatma
-    window.addEventListener('click', function(event) {
-        var modal = document.getElementById('myModal');
-        if (event.target == modal) {
-            modal.style.display = 'none';
-        }
-    });
-    </script>
+            }
+        });
+        </script>
