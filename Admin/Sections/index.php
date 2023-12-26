@@ -27,8 +27,12 @@ try {
         foreach ($result as $row) {
             echo '<tr>
                    
+                    <td>' . $row["userName"] . '</td>
+                    <td contenteditable="true">' . $row["userEmail"] . '</td>
                     <td contenteditable="true">' . $row["userName"] . '</td>
                     <td contenteditable="true">' . $row["userEmail"] . '</td>
+                    <td contenteditable="true">' . $row["userName"] . '</td>
+                  
                 </tr>';
         }
 

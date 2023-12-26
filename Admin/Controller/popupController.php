@@ -52,19 +52,26 @@ try{
       $daire_sayisi = $BlokArray[$i];
       $blok_adi = $BloknameArray[$i];
 
-      // Parametreleri bağla
-      $stmt->bindParam(':apartman_id', $lastInsertedRow["apartman_id"]);
-      $stmt->bindParam(':daire_sayisi', $daire_sayisi);
-      $stmt->bindParam(':blok_adi', $blok_adi);
+    for($j =1; $j <=  $daire_sayisi;$j++ ){
+    // Parametreleri bağla
+    $stmt->bindParam(':apartman_id', $lastInsertedRow["apartman_id"]);
+    $stmt->bindParam(':daire_sayisi', $j);
+    $stmt->bindParam(':blok_adi', $blok_adi);
 
-      // Sorguyu çalıştır
-      $stmt->execute();
+ // Sorguyu çalıştır
+ $stmt->execute();
+
+    }
+
+
+       
   }
 
   echo "Veri başarıyla eklendi";
 } catch (PDOException $e) {
   echo "Hata: " . $e->getMessage();
 }
+
 
 
 
