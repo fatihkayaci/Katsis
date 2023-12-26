@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,16 +8,79 @@
     <title>Document</title>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
     <style>
-        tfoot input {
-            width: 100%;
-            padding: 3px;
-            box-sizing: border-box;
-        }
+    tfoot input {
+        width: 100%;
+        padding: 3px;
+        box-sizing: border-box;
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 20%;
+    }
+
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    #openModalBtn {
+        padding: 10px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
     </style>
 </head>
-<body>
 
-<?php
+<!-- Açma butonu ekleyelim -->
+<button id="openModalBtn">Aç</button>
+
+<!-- Modal yapısı -->
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <form id="popform" >
+            <label>Full Name</label>
+            <input type="text" id="full_Name" />
+            <label>TC</label>
+            <input type="number" id="TC" />
+            <button type="button" onclick="Kaydet()">Kaydet</button>
+            <button type="button" class="close" onclick="kapat()">close</button>
+        </form>
+    </div>
+</div>
+<div id="sonuc"></div>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="script.js"></script>
+
+<body>
+    <?php
 try {
     $sql = "SELECT * FROM tbl_kullanici";
     $stmt = $conn->prepare($sql);
