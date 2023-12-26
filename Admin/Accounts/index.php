@@ -117,7 +117,7 @@ try {
     
         saveButton.addEventListener('click', function() {
             $.ajax({
-                url: '../Controller/popupController.php', 
+                url: 'Controller/save_user.php', 
                 type: 'POST',
                 success: function(response) {
                     alert(response);

@@ -1,6 +1,4 @@
 <?php
-echo "celal beni sikti";
-/*
 try {
     // POST verilerini al
     $fullName = $_POST['fullName'];
@@ -28,5 +26,5 @@ try {
 } catch (PDOException $e) {
     echo "Bağlantı hatası: " . $e->getMessage();
 }
-*/
+
 ?>
