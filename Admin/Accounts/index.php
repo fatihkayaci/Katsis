@@ -1,14 +1,3 @@
-<<<<<<< HEAD
-
-
-
-
-
-
-
-
-
-=======
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,24 +17,15 @@
 <body>
 
 <?php
-
-$host = "45.10.151.41";
-$db_name = "katsis";
-$username = "root";
-$password = "ELlggUcQi62HjoAZ";
-
 try {
-    $conn = new PDO("mysql:host=$host;dbname=$db_name", $username, $password);
-    // PDO hata modunu ayarla
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    // Veritabanından veri çekme
-    $stmt = $conn->prepare("SELECT * FROM tbl_users");
+    $sql = "SELECT * FROM tbl_users";
+    $stmt = $conn->prepare($sql);
     $stmt->execute();
 
     // Sonuç kümesinin satır sayısını kontrol etme
-    $rowCount = $stmt->rowCount();
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    if ($rowCount > 0) {
+    if ($result) {
         echo '<table id="example" class="display" style="width:100%">
                 <thead>
                     <tr>
@@ -56,7 +36,7 @@ try {
                 </thead>
                 <tbody>';
 
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        foreach ($result as $row) {
             echo '<tr>
                     <td contenteditable="true">' . $row["userID"] . '</td>
                     <td contenteditable="true">' . $row["userName"] . '</td>
@@ -72,10 +52,8 @@ try {
 } catch (PDOException $e) {
     echo "Bağlantı hatası: " . $e->getMessage();
 }
-
-// Bağlantıyı kapat
-$conn = null;
 ?>
+
 
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
@@ -103,6 +81,3 @@ $conn = null;
     }
 });
 </script>
-</body>
-</html>
->>>>>>> 393bda5336bb34889b1c082a2a517448520f2394
