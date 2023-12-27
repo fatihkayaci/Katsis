@@ -1,5 +1,7 @@
 <?php
+include("../../DB/dbconfig.php"); 
 try {
+    echo "buraya girdim haberin olsun";
     // POST verilerini al
     $fullName = $_POST['fullName'];
     $TC = $_POST['TC'];
@@ -11,7 +13,6 @@ try {
     // SQL sorgusunu hazırla
     $sql = "INSERT INTO tbl_kullanici (fullName, TC, phoneNumber, email, vehiclePlate, gender) VALUES 
     (:fullName, :TC, :phoneNumber, :email, :vehiclePlate, :gender)";
-    
     // PDO sorgusunu hazırla ve çalıştır
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':fullName', $fullName);
@@ -25,6 +26,6 @@ try {
     echo "Veri başarıyla kaydedildi";
 } catch (PDOException $e) {
     echo "Bağlantı hatası: " . $e->getMessage();
+    echo "Veri kaydedilirken bir hata oluştu";
 }
-
 ?>

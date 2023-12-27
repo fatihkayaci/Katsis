@@ -114,12 +114,27 @@ try {
 
         var saveButton = document.getElementById('saveButton');
 
-    
+
         saveButton.addEventListener('click', function() {
+            var fullName = $('input[name="fullName"]').val();
+            var TC = $('input[name="TC"]').val();
+            var phoneNumber = $('input[name="phoneNumber"]').val();
+            var email = $('input[name="email"]').val();
+            var vehiclePlate = $('input[name="vehiclePlate"]').val();
+            var gender = $('input[name="gender"]').val();
             $.ajax({
-                url: 'Controller/save_user.php', 
+                url: 'Controller/save_user.php',
                 type: 'POST',
+                data: {
+                    fullName: fullName,
+                    TC: TC,
+                    phoneNumber: phoneNumber,
+                    email: email,
+                    vehiclePlate: vehiclePlate,
+                    gender: gender
+                },
                 success: function(response) {
+                    alert("buraya girdim");
                     alert(response);
                 },
                 error: function(error) {
@@ -129,8 +144,8 @@ try {
         });
 
         function saveUser() {
-       
-           
+
+
         }
 
         new DataTable('#example', {
