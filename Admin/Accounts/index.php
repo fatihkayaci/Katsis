@@ -49,6 +49,7 @@ try {
                         <th>Vehicle Plate</th>
                         <th>Gender</th>
                         <th>Action</th>
+                        <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody>';
@@ -62,6 +63,7 @@ try {
                             <td contenteditable="true">' . $row["vehiclePlate"] . '</td>
                             <td contenteditable="true">' . $row["gender"] . '</td>
                             <td><button class="updateButton">update</button></td>
+                            <td><button class="deleteButton">delete</button></td>
                         </tr>';
                     }
                 
@@ -80,22 +82,25 @@ try {
     <div id="popup">
         <form id="userForm">
             <label for="fullName">Full Name:</label>
-            <input type="text" name="fullName" required><br>
+            <input type="text" name="fullName" placeholder="İsminizi Giriniz." required><br>
 
             <label for="TC">TC:</label>
-            <input type="text" name="TC" required><br>
+            <input type="text" name="TC" placeholder="T.C. giriniz." required><br>
 
             <label for="phoneNumber">Phone Number:</label>
-            <input type="text" name="phoneNumber" required><br>
+            <input type="tel" name="phoneNumber" pattern="[0-9]{10}" placeholder="e.g., 5551234567" required><br>
 
             <label for="email">Email:</label>
-            <input type="text" name="email" required><br>
+            <input type="email" name="email" placeholder="Email adresi(opsiyonel)"><br>
 
             <label for="vehiclePlate">Vehicle Plate:</label>
-            <input type="text" name="vehiclePlate" required><br>
+            <input type="text" name="vehiclePlate" placeholder="Araba plakası(opsiyonel)"><br>
 
-            <label for="gender">Gender:</label>
-            <input type="text" name="gender" required><br>
+            <label for="gender">gender</label>
+            <select id="gender">
+                <option value="Erkek">Erkek</option>
+                <option value="Kadın">Kadın</option>
+            </select>
 
             <button type="button" onclick="closePopup()">Close</button>
             <button type="button" id="saveButton">Save</button>
@@ -116,6 +121,27 @@ try {
             $('#popup').hide();
         }
 
+        //kısıtlama ile ilgili fonksiyonlar başlangıç...
+        function validateFullName(fullName) {
+            const regex = /^[A-Za-zÇçĞğİıÖöŞşÜü\s]+$/;
+            return regex.test(fullName);
+            event.preventDefault(); // Formun gönderimini engelle
+        }
+
+        function validateEmail(email) {
+            const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return regex.test(email);
+            event.preventDefault(); // Formun gönderimini engelle
+        }
+
+        function validateVehiclePlate(vehiclePlate) {
+            //const regex = /^\d{2}\s[A-ZÇĞİÖŞÜ]{1,3}\s\d{2,3}\s?[A-ZÇĞİÖŞÜ]{0,1}\s?[0-9]{0,3}$/; BOŞLUKLU İSTERSEK.
+            const regex = /^\d{2}[A-ZÇĞİÖŞÜ]{1,3}\d{2,3}?[A-ZÇĞİÖŞÜ]{0,1}?[0-9]{0,3}$/;
+            return regex.test(vehiclePlate);
+            event.preventDefault(); // Formun gönderimini engelle
+        }
+        //kısıtlama ile ilgili fonksiyonlar bitiş...
+
         var saveButton = document.getElementById('saveButton');
         saveButton.addEventListener('click', function() {
             var fullName = $('input[name="fullName"]').val();
@@ -123,7 +149,48 @@ try {
             var phoneNumber = $('input[name="phoneNumber"]').val();
             var email = $('input[name="email"]').val();
             var vehiclePlate = $('input[name="vehiclePlate"]').val();
-            var gender = $('input[name="gender"]').val();
+            var gender = $('select#gender').val(); // Gender bilgisini al
+            //kısıtlamalar.
+            //fullname
+            if (fullName.length < 3) {
+                alert('Full Name en az 3 karakter olmalıdır.');
+                return;
+            }
+            if (fullName.length > 100) {
+                alert('Full Name 100den fazla karakter olamaz.');
+                return;
+            }
+            if (!validateFullName(fullName)) {
+                alert('Lütfen yalnızca harf karakterleri içeren geçerli bir tam ad girin.');
+                return;
+            }
+            //tc kısıtlamaları
+            if (TC.length !== 11) {
+                alert('TC numarı 11 haneli olmalıdır.');
+                return; // Fonksiyondan çık
+            }
+
+            //telefon kısıtlamaları
+            if (phoneNumber.length !== 10) {
+                alert('Telefon numarası 10 haneli olmalıdır.');
+                return;
+            }
+            //email kısıtlamaları
+            if (email !== null && email.trim() !== "") {
+                if (!validateEmail(email)) {
+                    alert('Lütfen geçerli bir e-posta adresi girin.');
+                    return;
+                }
+            }
+            //araba plakası kısıtlamaları.
+            if (vehiclePlate !== null && vehiclePlate.trim() !== "") {
+                if (!validateVehiclePlate(vehiclePlate)) {
+                    alert('Lütfen geçerli bir araba plakası giriniz.');
+                    return;
+                }
+            }
+
+
             $.ajax({
                 url: 'Controller/save_user.php',
                 type: 'POST',
@@ -158,6 +225,47 @@ try {
                 var vehiclePlate = row.querySelector('td:nth-child(5)').textContent;
                 var gender = row.querySelector('td:nth-child(6)').textContent;
                 var kullanıcıID = row.getAttribute('data-userid');
+
+                //KISITLAMALAR BAŞLANGIÇ...
+                //fullname
+                if (fullName.length < 3) {
+                    alert('Full Name en az 3 karakter olmalıdır.');
+                    return;
+                }
+                if (fullName.length > 100) {
+                    alert('Full Name 100den fazla karakter olamaz.');
+                    return;
+                }
+                if (!validateFullName(fullName)) {
+                    alert('Lütfen yalnızca harf karakterleri içeren geçerli bir tam ad girin.');
+                    return;
+                }
+                //tc kısıtlamaları
+                if (TC.length !== 11) {
+                    alert('TC numarı 11 haneli olmalıdır.');
+                    return; // Fonksiyondan çık
+                }
+
+                //telefon kısıtlamaları
+                if (phoneNumber.length !== 10) {
+                    alert('Telefon numarası 10 haneli olmalıdır.');
+                    return;
+                }
+                //email kısıtlamaları
+                if (email !== null && email.trim() !== "") {
+                    if (!validateEmail(email)) {
+                        alert('Lütfen geçerli bir e-posta adresi girin.');
+                        return;
+                    }
+                }
+                //araba plakası kısıtlamaları.
+                if (vehiclePlate !== null && vehiclePlate.trim() !== "") {
+                    if (!validateVehiclePlate(vehiclePlate)) {
+                        alert('Lütfen geçerli bir araba plakası giriniz.');
+                        return;
+                    }
+                }
+                //KISITLAMALAR BİTİŞ...
                 $.ajax({
                     url: 'Controller/update_user.php',
                     type: 'POST',
@@ -171,7 +279,43 @@ try {
                         gender: gender
                     },
                     success: function(response) {
-                        if(response == 1){
+                        if (response == 1) {
+                            alert("güncellendi" + response);
+                            //location.reload();
+                        }
+                    },
+                    error: function(error) {
+                        console.error(error);
+                    }
+                });
+            });
+        });
+        var deleteButtons = document.querySelectorAll('.deleteButton');
+
+        deleteButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                var row = this.closest('tr'); // Güncellenen satırı bul
+                var fullName = row.querySelector('td:nth-child(1)').textContent;
+                var TC = row.querySelector('td:nth-child(2)').textContent;
+                var phoneNumber = row.querySelector('td:nth-child(3)').textContent;
+                var email = row.querySelector('td:nth-child(4)').textContent;
+                var vehiclePlate = row.querySelector('td:nth-child(5)').textContent;
+                var gender = row.querySelector('td:nth-child(6)').textContent;
+                var kullanıcıID = row.getAttribute('data-userid');
+                $.ajax({
+                    url: 'Controller/delete_user.php',
+                    type: 'POST',
+                    data: {
+                        kullanıcıID: kullanıcıID,
+                        fullName: fullName,
+                        TC: TC,
+                        phoneNumber: phoneNumber,
+                        email: email,
+                        vehiclePlate: vehiclePlate,
+                        gender: gender
+                    },
+                    success: function(response) {
+                        if (response == 1) {
                             //alert("güncellendi"+response);
                             location.reload();
                         }
@@ -182,6 +326,7 @@ try {
                 });
             });
         });
+
 
 
 
