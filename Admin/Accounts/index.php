@@ -48,7 +48,7 @@ try {
                         <th>Email</th>
                         <th>Vehicle Plate</th>
                         <th>Gender</th>
-                        <th>Action</th>
+                        <th>update</th>
                         <th>Delete</th>
                     </tr>
                 </thead>
@@ -61,7 +61,13 @@ try {
                             <td contenteditable="true">' . $row["phoneNumber"] . '</td>
                             <td contenteditable="true">' . $row["email"] . '</td>
                             <td contenteditable="true">' . $row["vehiclePlate"] . '</td>
-                            <td contenteditable="true">' . $row["gender"] . '</td>
+                            <td contenteditable="true">
+                            <select>
+                                <option value="Erkek" ' . ($row["gender"] == "Erkek" ? 'selected' : '') . '>Erkek</option>
+                                <option value="Kadın" ' . ($row["gender"] == "Kadın" ? 'selected' : '') . '>Kadın</option>
+                            </select>
+                            </td>
+
                             <td><button class="updateButton">update</button></td>
                             <td><button class="deleteButton">delete</button></td>
                         </tr>';
@@ -218,13 +224,14 @@ try {
         updateButtons.forEach(function(button) {
             button.addEventListener('click', function() {
                 var row = this.closest('tr'); // Güncellenen satırı bul
+                var kullanıcıID = row.getAttribute('data-userid');
                 var fullName = row.querySelector('td:nth-child(1)').textContent;
                 var TC = row.querySelector('td:nth-child(2)').textContent;
                 var phoneNumber = row.querySelector('td:nth-child(3)').textContent;
                 var email = row.querySelector('td:nth-child(4)').textContent;
                 var vehiclePlate = row.querySelector('td:nth-child(5)').textContent;
-                var gender = row.querySelector('td:nth-child(6)').textContent;
-                var kullanıcıID = row.getAttribute('data-userid');
+                var gender = row.querySelector('td:nth-child(6) select').value; // Gender'ı seçili değerden al
+                
 
                 //KISITLAMALAR BAŞLANGIÇ...
                 //fullname
