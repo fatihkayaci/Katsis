@@ -1,3 +1,8 @@
+<!--
+    sonradan eklenecekler işlemler kısmı eklenecek.
+    icra durumu
+    bakiye.
+-->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,6 +34,7 @@
 
 <body>
     <button class="adduser">Add User</button>
+    
     <?php
 try {
     $sql = "SELECT * FROM tbl_kullanici";
@@ -333,9 +339,6 @@ try {
                 });
             });
         });
-
-
-
 
         new DataTable('#example', {
             initComplete: function() {
