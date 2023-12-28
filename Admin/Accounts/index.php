@@ -48,20 +48,23 @@ try {
                         <th>Email</th>
                         <th>Vehicle Plate</th>
                         <th>Gender</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>';
 
-        foreach ($result as $row) {
-            echo '<tr>
-                    <td contenteditable="true">' . $row["fullName"] . '</td>
-                    <td contenteditable="true">' . $row["TC"] . '</td>
-                    <td contenteditable="true">' . $row["phoneNumber"] . '</td>
-                    <td contenteditable="true">' . $row["email"] . '</td>
-                    <td contenteditable="true">' . $row["vehiclePlate"] . '</td>
-                    <td contenteditable="true">' . $row["gender"] . '</td>
-                </tr>';
-        }
+                foreach ($result as $row) {
+                    echo '<tr data-userid="' . $row["kullanıcıID"] . '">
+                            <td contenteditable="true">' . $row["fullName"] . '</td>
+                            <td contenteditable="true">' . $row["TC"] . '</td>
+                            <td contenteditable="true">' . $row["phoneNumber"] . '</td>
+                            <td contenteditable="true">' . $row["email"] . '</td>
+                            <td contenteditable="true">' . $row["vehiclePlate"] . '</td>
+                            <td contenteditable="true">' . $row["gender"] . '</td>
+                            <td><button class="updateButton">update</button></td>
+                        </tr>';
+                    }
+                
 
         echo '</tbody>
             </table>';
@@ -102,6 +105,7 @@ try {
     <body>
         <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
         <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <script type="text/javascript">
         $('.adduser').click(function() {
@@ -113,8 +117,6 @@ try {
         }
 
         var saveButton = document.getElementById('saveButton');
-
-
         saveButton.addEventListener('click', function() {
             var fullName = $('input[name="fullName"]').val();
             var TC = $('input[name="TC"]').val();
@@ -134,8 +136,9 @@ try {
                     gender: gender
                 },
                 success: function(response) {
-                    alert("buraya girdim");
-                    alert(response);
+                    if (response == 1) {
+                        location.reload();
+                    }
                 },
                 error: function(error) {
                     console.error(error);
@@ -143,10 +146,44 @@ try {
             });
         });
 
-        function saveUser() {
+        var updateButtons = document.querySelectorAll('.updateButton');
+
+        updateButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                var row = this.closest('tr'); // Güncellenen satırı bul
+                var fullName = row.querySelector('td:nth-child(1)').textContent;
+                var TC = row.querySelector('td:nth-child(2)').textContent;
+                var phoneNumber = row.querySelector('td:nth-child(3)').textContent;
+                var email = row.querySelector('td:nth-child(4)').textContent;
+                var vehiclePlate = row.querySelector('td:nth-child(5)').textContent;
+                var gender = row.querySelector('td:nth-child(6)').textContent;
+                var kullanıcıID = row.getAttribute('data-userid');
+                $.ajax({
+                    url: 'Controller/update_user.php',
+                    type: 'POST',
+                    data: {
+                        kullanıcıID: kullanıcıID,
+                        fullName: fullName,
+                        TC: TC,
+                        phoneNumber: phoneNumber,
+                        email: email,
+                        vehiclePlate: vehiclePlate,
+                        gender: gender
+                    },
+                    success: function(response) {
+                        if(response == 1){
+                            //alert("güncellendi"+response);
+                            location.reload();
+                        }
+                    },
+                    error: function(error) {
+                        console.error(error);
+                    }
+                });
+            });
+        });
 
 
-        }
 
         new DataTable('#example', {
             initComplete: function() {
