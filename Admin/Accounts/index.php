@@ -49,7 +49,7 @@ try {
                 <thead>
                     <tr>
                         <th>Full Name</th>
-                        <th>TC</th>
+                        <th>tc</th>
                         <th>Phone Number</th>
                         <th>Email</th>
                         <th>Vehicle Plate</th>
@@ -61,9 +61,9 @@ try {
                 <tbody>';
 
                 foreach ($result as $row) {
-                    echo '<tr data-userid="' . $row["kullanıcıID"] . '">
+                    echo '<tr data-userid="' . $row["kullaniciID"] . '">
                             <td contenteditable="true">' . $row["fullName"] . '</td>
-                            <td contenteditable="true">' . $row["TC"] . '</td>
+                            <td contenteditable="true">' . $row["tc"] . '</td>
                             <td contenteditable="true">' . $row["phoneNumber"] . '</td>
                             <td contenteditable="true">' . $row["email"] . '</td>
                             <td contenteditable="true">' . $row["vehiclePlate"] . '</td>
@@ -96,14 +96,14 @@ try {
             <label for="fullName">Full Name:</label>
             <input type="text" name="fullName" placeholder="İsminizi Giriniz." required><br>
 
-            <label for="TC">TC:</label>
-            <input type="text" name="TC" placeholder="T.C. giriniz." required><br>
+            <label for="tc">TC:</label>
+            <input type="text" name="tc" placeholder="T.C. giriniz." required><br>
 
             <label for="phoneNumber">Phone Number:</label>
-            <input type="tel" name="phoneNumber" pattern="[0-9]{10}" placeholder="e.g., 5551234567" required><br>
+            <input type="text" name="phoneNumber" pattern="[0-9]{10}" placeholder="e.g., 5551234567" required><br>
 
             <label for="email">Email:</label>
-            <input type="email" name="email" placeholder="Email adresi(opsiyonel)"><br>
+            <input type="text" name="email" placeholder="Email adresi(opsiyonel)"><br>
 
             <label for="vehiclePlate">Vehicle Plate:</label>
             <input type="text" name="vehiclePlate" placeholder="Araba plakası(opsiyonel)"><br>
@@ -157,11 +157,12 @@ try {
         var saveButton = document.getElementById('saveButton');
         saveButton.addEventListener('click', function() {
             var fullName = $('input[name="fullName"]').val();
-            var TC = $('input[name="TC"]').val();
+            var tc = $('input[name="tc"]').val();
             var phoneNumber = $('input[name="phoneNumber"]').val();
             var email = $('input[name="email"]').val();
             var vehiclePlate = $('input[name="vehiclePlate"]').val();
             var gender = $('select#gender').val(); // Gender bilgisini al
+            
             //kısıtlamalar.
             //fullname
             if (fullName.length < 3) {
@@ -201,14 +202,13 @@ try {
                     return;
                 }
             }
-
-
+            alert(fullName+","+tc+","+phoneNumber+","+email+","+vehiclePlate+""+gender);
             $.ajax({
                 url: 'Controller/save_user.php',
                 type: 'POST',
                 data: {
                     fullName: fullName,
-                    TC: TC,
+                    tc: tc,
                     phoneNumber: phoneNumber,
                     email: email,
                     vehiclePlate: vehiclePlate,
@@ -230,9 +230,9 @@ try {
         updateButtons.forEach(function(button) {
             button.addEventListener('click', function() {
                 var row = this.closest('tr'); // Güncellenen satırı bul
-                var kullanıcıID = row.getAttribute('data-userid');
+                var kullaniciID = row.getAttribute('data-userid');
                 var fullName = row.querySelector('td:nth-child(1)').textContent;
-                var TC = row.querySelector('td:nth-child(2)').textContent;
+                var tc = row.querySelector('td:nth-child(2)').textContent;
                 var phoneNumber = row.querySelector('td:nth-child(3)').textContent;
                 var email = row.querySelector('td:nth-child(4)').textContent;
                 var vehiclePlate = row.querySelector('td:nth-child(5)').textContent;
@@ -254,7 +254,7 @@ try {
                     return;
                 }
                 //tc kısıtlamaları
-                if (TC.length !== 11) {
+                if (tc.length !== 11) {
                     alert('TC numarı 11 haneli olmalıdır.');
                     return; // Fonksiyondan çık
                 }
@@ -279,13 +279,14 @@ try {
                     }
                 }
                 //KISITLAMALAR BİTİŞ...
+
                 $.ajax({
                     url: 'Controller/update_user.php',
                     type: 'POST',
                     data: {
-                        kullanıcıID: kullanıcıID,
+                        kullaniciID: kullaniciID,
                         fullName: fullName,
-                        TC: TC,
+                        tc: tc,
                         phoneNumber: phoneNumber,
                         email: email,
                         vehiclePlate: vehiclePlate,
@@ -314,12 +315,12 @@ try {
                 var email = row.querySelector('td:nth-child(4)').textContent;
                 var vehiclePlate = row.querySelector('td:nth-child(5)').textContent;
                 var gender = row.querySelector('td:nth-child(6)').textContent;
-                var kullanıcıID = row.getAttribute('data-userid');
+                var kullaniciID = row.getAttribute('data-userid');
                 $.ajax({
                     url: 'Controller/delete_user.php',
                     type: 'POST',
                     data: {
-                        kullanıcıID: kullanıcıID,
+                        kullaniciID: kullaniciID,
                         fullName: fullName,
                         TC: TC,
                         phoneNumber: phoneNumber,

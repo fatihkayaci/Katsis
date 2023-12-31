@@ -2,28 +2,30 @@
 include("../../DB/dbconfig.php");
 try {
     // POST verilerini al
-    $kullanıcıID = $_POST['kullanıcıID'];
+    $kullaniciID = $_POST['kullaniciID'];
     $fullName = $_POST['fullName'];
-    $TC = $_POST['TC'];
+    $tc = $_POST['tc'];
     $phoneNumber = $_POST['phoneNumber'];
     $email = $_POST['email'];
     $vehiclePlate = $_POST['vehiclePlate'];
     $gender = $_POST['gender'];
+    
+
     // SQL sorgusunu hazırla
     $sql = "UPDATE tbl_kullanici SET 
             fullName = :fullName,
-            TC = :TC,
+            tc = :tc,
             phoneNumber = :phoneNumber,
             email = :email,
             vehiclePlate = :vehiclePlate,
             gender = :gender
-            WHERE kullanıcıID = :kullaniciID";
+            WHERE kullaniciID = :kullaniciID";
 
     // PDO sorgusunu hazırla ve çalıştır
     $stmt = $conn->prepare($sql);
-    $stmt->bindParam(':kullaniciID', $kullanıcıID);
+    $stmt->bindParam(':kullaniciID', $kullaniciID);
     $stmt->bindParam(':fullName', $fullName);
-    $stmt->bindParam(':TC', $TC);
+    $stmt->bindParam(':tc', $tc);
     $stmt->bindParam(':phoneNumber', $phoneNumber);
     $stmt->bindParam(':email', $email);
     $stmt->bindParam(':vehiclePlate', $vehiclePlate);
