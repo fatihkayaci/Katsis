@@ -34,7 +34,7 @@
 
 <body>
     <button class="adduser">Add User</button>
-    
+
     <?php
 try {
     $sql = "SELECT * FROM tbl_kullanici";
@@ -52,6 +52,7 @@ try {
                         <th>tc</th>
                         <th>Phone Number</th>
                         <th>Email</th>
+                        <th>Password</th>
                         <th>Vehicle Plate</th>
                         <th>Gender</th>
                         <th>update</th>
@@ -66,6 +67,7 @@ try {
                             <td contenteditable="true">' . $row["tc"] . '</td>
                             <td contenteditable="true">' . $row["phoneNumber"] . '</td>
                             <td contenteditable="true">' . $row["email"] . '</td>
+                            <td contenteditable="true">' . $row["password"] . '</td>
                             <td contenteditable="true">' . $row["vehiclePlate"] . '</td>
                             <td contenteditable="true">
                             <select>
@@ -152,6 +154,30 @@ try {
             return regex.test(vehiclePlate);
             event.preventDefault(); // Formun gönderimini engelle
         }
+        //parola için kısıtlama
+        function validatePassword(password) {
+            // Parola en az 8 karakterden oluşmalıdır.
+            if (password.length < 8) {
+                alert('Parola en az 8 karakterden oluşmalıdır.');
+                return false;
+            }
+
+            // Parola 50 karakterden fazla olmamalıdır.
+            if (password.length > 50) {
+                alert('Parola 50 karakterden fazla olamaz.');
+                return false;
+            }
+
+            // Parolada en az bir büyük harf, bir küçük harf, bir sayı ve bir özel karakter olmalıdır.
+            if (!/(?=.*[a-zÇçĞğİıÖöŞşÜü])(?=.*[A-ZÇçĞğİıÖöŞşÜü])(?=.*\d)[A-Za-zÇçĞğİıÖöŞşÜü\d]/.test(password)) {
+                alert('Parola güçlü değil. Lütfen en az bir büyük harf, bir küçük harf ve bir sayı içersin.');
+                return false;
+            }
+
+
+            // Tüm kısıtlamalar geçildiyse true döndür
+            return true;
+        }
         //kısıtlama ile ilgili fonksiyonlar bitiş...
 
         var saveButton = document.getElementById('saveButton');
@@ -160,9 +186,10 @@ try {
             var tc = $('input[name="tc"]').val();
             var phoneNumber = $('input[name="phoneNumber"]').val();
             var email = $('input[name="email"]').val();
+            var password = $('input[name="password"]').val();
             var vehiclePlate = $('input[name="vehiclePlate"]').val();
             var gender = $('select#gender').val(); // Gender bilgisini al
-            
+
             //kısıtlamalar.
             //fullname
             if (fullName.length < 3) {
@@ -178,7 +205,7 @@ try {
                 return;
             }
             //tc kısıtlamaları
-            if (TC.length !== 11) {
+            if (tc.length !== 11) {
                 alert('TC numarı 11 haneli olmalıdır.');
                 return; // Fonksiyondan çık
             }
@@ -189,11 +216,9 @@ try {
                 return;
             }
             //email kısıtlamaları
-            if (email !== null && email.trim() !== "") {
-                if (!validateEmail(email)) {
-                    alert('Lütfen geçerli bir e-posta adresi girin.');
-                    return;
-                }
+            if (!validateEmail(email)) {
+                alert('Lütfen geçerli bir e-posta adresi girin.');
+                return;
             }
             //araba plakası kısıtlamaları.
             if (vehiclePlate !== null && vehiclePlate.trim() !== "") {
@@ -202,7 +227,11 @@ try {
                     return;
                 }
             }
-            alert(fullName+","+tc+","+phoneNumber+","+email+","+vehiclePlate+""+gender);
+
+
+
+            alert(fullName + "," + tc + "," + phoneNumber + "," + email + "," + password + "," + vehiclePlate +
+                "" + gender);
             $.ajax({
                 url: 'Controller/save_user.php',
                 type: 'POST',
@@ -235,9 +264,11 @@ try {
                 var tc = row.querySelector('td:nth-child(2)').textContent;
                 var phoneNumber = row.querySelector('td:nth-child(3)').textContent;
                 var email = row.querySelector('td:nth-child(4)').textContent;
-                var vehiclePlate = row.querySelector('td:nth-child(5)').textContent;
-                var gender = row.querySelector('td:nth-child(6) select').value; // Gender'ı seçili değerden al
-                
+                var password = row.querySelector('td:nth-child(5)').textContent;
+                var vehiclePlate = row.querySelector('td:nth-child(6)').textContent;
+                var gender = row.querySelector('td:nth-child(7) select')
+                    .value; // Gender'ı seçili değerden al
+                alert("girdimm");
 
                 //KISITLAMALAR BAŞLANGIÇ...
                 //fullname
@@ -265,11 +296,9 @@ try {
                     return;
                 }
                 //email kısıtlamaları
-                if (email !== null && email.trim() !== "") {
-                    if (!validateEmail(email)) {
-                        alert('Lütfen geçerli bir e-posta adresi girin.');
-                        return;
-                    }
+                if (!validateEmail(email)) {
+                    alert('Lütfen geçerli bir e-posta adresi girin.');
+                    return;
                 }
                 //araba plakası kısıtlamaları.
                 if (vehiclePlate !== null && vehiclePlate.trim() !== "") {
@@ -278,6 +307,10 @@ try {
                         return;
                     }
                 }
+                if (!validatePassword(password)) {
+                    return; // Kısıtlamaları geçemezse işlemi durdur
+                }
+
                 //KISITLAMALAR BİTİŞ...
 
                 $.ajax({
@@ -289,6 +322,7 @@ try {
                         tc: tc,
                         phoneNumber: phoneNumber,
                         email: email,
+                        password: password,
                         vehiclePlate: vehiclePlate,
                         gender: gender
                     },
@@ -299,7 +333,7 @@ try {
                         }
                     },
                     error: function(error) {
-                        console.error(error);
+                        console.error('Gönderim hatası:', error);
                     }
                 });
             });
@@ -310,11 +344,12 @@ try {
             button.addEventListener('click', function() {
                 var row = this.closest('tr'); // Güncellenen satırı bul
                 var fullName = row.querySelector('td:nth-child(1)').textContent;
-                var TC = row.querySelector('td:nth-child(2)').textContent;
+                var tc = row.querySelector('td:nth-child(2)').textContent;
                 var phoneNumber = row.querySelector('td:nth-child(3)').textContent;
                 var email = row.querySelector('td:nth-child(4)').textContent;
-                var vehiclePlate = row.querySelector('td:nth-child(5)').textContent;
-                var gender = row.querySelector('td:nth-child(6)').textContent;
+                var password = row.querySelector('td:nth-child(5)').textContent;
+                var vehiclePlate = row.querySelector('td:nth-child(6)').textContent;
+                var gender = row.querySelector('td:nth-child(7)').textContent;
                 var kullaniciID = row.getAttribute('data-userid');
                 $.ajax({
                     url: 'Controller/delete_user.php',
@@ -322,9 +357,10 @@ try {
                     data: {
                         kullaniciID: kullaniciID,
                         fullName: fullName,
-                        TC: TC,
+                        tc: tc,
                         phoneNumber: phoneNumber,
                         email: email,
+                        password: password,
                         vehiclePlate: vehiclePlate,
                         gender: gender
                     },

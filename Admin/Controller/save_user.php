@@ -1,25 +1,41 @@
 <?php
-include("../../DB/dbconfig.php"); 
+include("../../DB/dbconfig.php");
+
+function randomPassword($length = 8) {
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $password = '';
+
+    for ($i = 0; $i < $length; $i++) {
+        $password .= $characters[rand(0, strlen($characters) - 1)];
+    }
+
+    return $password;
+}
+
 try {
     // POST verilerini al
     $fullName = $_POST['fullName'];
     $tc = $_POST['tc'];
     $phoneNumber = $_POST['phoneNumber'];
     $email = $_POST['email'];
+    
+    // Rastgele şifre oluştur
+    $password = randomPassword();
+    
     $vehiclePlate = $_POST['vehiclePlate'];
     $gender = $_POST['gender'];
 
+    // SQL sorgusunu hazırla
+    $sql = "INSERT INTO tbl_kullanici (fullName, tc, phoneNumber, email, password, vehiclePlate, gender) VALUES 
+    (:fullName, :tc, :phoneNumber, :email, :password, :vehiclePlate, :gender)";
 
-
-    // SQL sorgusunu    hazırla
-    $sql = "INSERT INTO tbl_kullanici (fullName, tc, phoneNumber, email, vehiclePlate, gender) VALUES 
-    (:fullName, :tc, :phoneNumber, :email, :vehiclePlate, :gender)";
     // PDO sorgusunu hazırla ve çalıştır
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':fullName', $fullName);
     $stmt->bindParam(':tc', $tc);
     $stmt->bindParam(':phoneNumber', $phoneNumber);
     $stmt->bindParam(':email', $email);
+    $stmt->bindParam(':password', $password);
     $stmt->bindParam(':vehiclePlate', $vehiclePlate);
     $stmt->bindParam(':gender', $gender);
     $stmt->execute();
@@ -28,3 +44,4 @@ try {
     echo 0;
 }
 ?>
+    
