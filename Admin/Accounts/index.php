@@ -37,7 +37,7 @@
 
     <?php
 try {
-    $sql = "SELECT * FROM tbl_kullanici";
+    $sql = "SELECT * FROM tbl_kullanici WHERE apartmanID = " .$_SESSION["apartID"]  ;
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     
@@ -109,6 +109,10 @@ try {
 
             <label for="vehiclePlate">Vehicle Plate:</label>
             <input type="text" name="vehiclePlate" placeholder="Araba plakası(opsiyonel)"><br>
+
+            <input type="text" name="apartID" value = <?php echo $_SESSION["apartID"];   ?> hidden>
+
+
 
             <label for="gender">gender</label>
             <select id="gender">
@@ -189,12 +193,12 @@ try {
             var email = $('input[name="email"]').val();
             var vehiclePlate = $('input[name="vehiclePlate"]').val();
             var gender = $('select#gender').val(); // Gender bilgisini al
-
+            var apartID = $('input[name="apartID"]').val();
         
-         
+         alert(apartID);
+            
 
-
-
+/*
             if (fullName.length < 3) {
                 alert('Full Name en az 3 karakter olmalıdır.');
                 return;
@@ -230,7 +234,7 @@ try {
                     return;
                 }
             }
-
+*/
 
 
            
@@ -243,7 +247,8 @@ try {
                     phoneNumber: phoneNumber,
                     email: email,
                     vehiclePlate: vehiclePlate,
-                    gender: gender
+                    gender: gender,
+                    apartID: apartID
                 },
                 success: function(response) {
                     alert(response);

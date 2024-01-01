@@ -18,7 +18,10 @@ try {
     $tc = $_POST['tc'];
     $phoneNumber = $_POST['phoneNumber'];
     $email = $_POST['email'];
+    $apartID = $_POST['apartID'];
+
     
+
     // Rastgele şifre oluştur
     $sifre = randomPassword();
     
@@ -26,8 +29,8 @@ try {
     $gender = $_POST['gender'];
 
     // SQL sorgusunu hazırla
-    $sql = "INSERT INTO tbl_kullanici (fullName, tc, phoneNumber, email, sifre, vehiclePlate, gender) VALUES 
-    (:fullName, :tc, :phoneNumber, :email, :sifre, :vehiclePlate, :gender)";
+    $sql = "INSERT INTO tbl_kullanici (fullName, tc, phoneNumber, email, sifre, vehiclePlate, gender,apartmanID) VALUES 
+    (:fullName, :tc, :phoneNumber, :email, :sifre, :vehiclePlate, :gender,:apartmanID)";
 
     // PDO sorgusunu hazırla ve çalıştır
     $stmt = $conn->prepare($sql);
@@ -38,6 +41,7 @@ try {
     $stmt->bindParam(':sifre', $sifre);
     $stmt->bindParam(':vehiclePlate', $vehiclePlate);
     $stmt->bindParam(':gender', $gender);
+    $stmt->bindParam(':apartmanID', $apartID);
     $stmt->execute();
     echo 1;
 } catch (PDOException $e) {

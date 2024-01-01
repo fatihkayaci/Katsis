@@ -11,8 +11,8 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 }
 
 
-echo "celal" .$idApartman;
 
+$_SESSION["apartID"] =$idApartman;
 
 $indexx= "";
 
