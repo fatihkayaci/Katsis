@@ -40,7 +40,7 @@ try {
     $sql = "SELECT * FROM tbl_kullanici";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
-
+    
     // Sonuç kümesinin satır sayısını kontrol etme
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 

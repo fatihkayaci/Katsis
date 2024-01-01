@@ -1,6 +1,3 @@
- 
-
-
 <?php
 try {
     $sql = "SELECT * FROM tbl_daireler where apartman_id=198";
@@ -27,12 +24,11 @@ try {
         foreach ($result as $row) {
             echo '<tr>
                    
-                    <td>' . $row["userName"] . '</td>
                     <td contenteditable="true">' . $row["blok_adi"] . '</td>
                     <td contenteditable="true">' . $row["daire_sayisi"] . '</td>
                     <td contenteditable="true">' . $row["blok_adi"] . '</td>
                     <td contenteditable="true">' . $row["daire_sayisi"] . '</td>
-                  
+                    <td> </td>
                 </tr>';
         }
 

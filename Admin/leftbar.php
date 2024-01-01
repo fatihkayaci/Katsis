@@ -51,7 +51,7 @@
                 </g>
               </svg>
             </div>
-            <span class="nav-link-text ms-1">Accounts</span>
+            <span class="nav-link-text ms-1">Kullanıcı</span>
           </a>
         </li>
         <li class="nav-item">
