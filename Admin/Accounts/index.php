@@ -198,7 +198,7 @@ try {
          alert(apartID);
             
 
-/*
+
             if (fullName.length < 3) {
                 alert('Full Name en az 3 karakter olmalıdır.');
                 return;
@@ -234,7 +234,7 @@ try {
                     return;
                 }
             }
-*/
+
 
 
            
