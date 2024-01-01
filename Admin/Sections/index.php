@@ -23,13 +23,10 @@ try {
 
         foreach ($result as $row) {
             echo '<tr>
-                   
-                
                     <td>' . $row["blok_adi"] . '</td>
                     <td>' . $row["daire_sayisi"] . '</td>
                     <td>' . $row["blok_adi"] . '</td>
                     <td>' . $row["daire_sayisi"] . '</td>
-                  
                 </tr>';
         }
 
