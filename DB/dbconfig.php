@@ -1,6 +1,4 @@
-<?php 
-
-
+<?php
 $host = "45.10.151.41";
 $db_name = "katsis";
 $username = "root";
@@ -14,9 +12,3 @@ try {
     
 }
 ?>
-
-
-
-
-
-

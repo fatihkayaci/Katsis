@@ -116,6 +116,7 @@ if(isset($_POST['btn-login']))
         <button class="btn btn-large btn-primary" type="submit" name="btn-login">Sign in</button>
       
         <a href="signup" style="float:right;" class="btn btn-large">Sign Up</a><hr />
+        <a href="Kullanici/index.php" style="float:right;" class="btn btn-large">Kullanici login</a><hr />
         <a href="fpass">Lost your Password ? </a>
       </form>
       

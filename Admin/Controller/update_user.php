@@ -7,7 +7,7 @@ try {
     $tc = $_POST['tc'];
     $phoneNumber = $_POST['phoneNumber'];
     $email = $_POST['email'];
-    $password = $_POST['password'];
+    $sifre = $_POST['sifre'];
     $vehiclePlate = $_POST['vehiclePlate'];
     $gender = $_POST['gender'];
     
@@ -18,7 +18,7 @@ try {
             tc = :tc,
             phoneNumber = :phoneNumber,
             email = :email,
-            password = :password,
+            sifre = :sifre,
             vehiclePlate = :vehiclePlate,
             gender = :gender
             WHERE kullaniciID = :kullaniciID";
@@ -30,7 +30,7 @@ try {
     $stmt->bindParam(':tc', $tc);
     $stmt->bindParam(':phoneNumber', $phoneNumber);
     $stmt->bindParam(':email', $email);
-    $stmt->bindParam(':password', $password);
+    $stmt->bindParam(':sifre', $sifre);
     $stmt->bindParam(':vehiclePlate', $vehiclePlate);
     $stmt->bindParam(':gender', $gender);
     $stmt->execute();

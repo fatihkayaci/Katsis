@@ -3,13 +3,13 @@ include("../../DB/dbconfig.php");
 
 function randomPassword($length = 8) {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    $password = '';
+    $sifre = '';
 
     for ($i = 0; $i < $length; $i++) {
-        $password .= $characters[rand(0, strlen($characters) - 1)];
+        $sifre .= $characters[rand(0, strlen($characters) - 1)];
     }
 
-    return $password;
+    return $sifre;
 }
 
 try {
@@ -20,14 +20,14 @@ try {
     $email = $_POST['email'];
     
     // Rastgele şifre oluştur
-    $password = randomPassword();
+    $sifre = randomPassword();
     
     $vehiclePlate = $_POST['vehiclePlate'];
     $gender = $_POST['gender'];
 
     // SQL sorgusunu hazırla
-    $sql = "INSERT INTO tbl_kullanici (fullName, tc, phoneNumber, email, password, vehiclePlate, gender) VALUES 
-    (:fullName, :tc, :phoneNumber, :email, :password, :vehiclePlate, :gender)";
+    $sql = "INSERT INTO tbl_kullanici (fullName, tc, phoneNumber, email, sifre, vehiclePlate, gender) VALUES 
+    (:fullName, :tc, :phoneNumber, :email, :sifre, :vehiclePlate, :gender)";
 
     // PDO sorgusunu hazırla ve çalıştır
     $stmt = $conn->prepare($sql);
@@ -35,13 +35,13 @@ try {
     $stmt->bindParam(':tc', $tc);
     $stmt->bindParam(':phoneNumber', $phoneNumber);
     $stmt->bindParam(':email', $email);
-    $stmt->bindParam(':password', $password);
+    $stmt->bindParam(':sifre', $sifre);
     $stmt->bindParam(':vehiclePlate', $vehiclePlate);
     $stmt->bindParam(':gender', $gender);
     $stmt->execute();
     echo 1;
 } catch (PDOException $e) {
-    echo 0;
+    echo $e;
 }
 ?>
     
