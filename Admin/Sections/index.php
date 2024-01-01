@@ -24,11 +24,12 @@ try {
         foreach ($result as $row) {
             echo '<tr>
                    
-                    <td contenteditable="true">' . $row["blok_adi"] . '</td>
-                    <td contenteditable="true">' . $row["daire_sayisi"] . '</td>
-                    <td contenteditable="true">' . $row["blok_adi"] . '</td>
-                    <td contenteditable="true">' . $row["daire_sayisi"] . '</td>
-                    <td> </td>
+                
+                    <td>' . $row["blok_adi"] . '</td>
+                    <td>' . $row["daire_sayisi"] . '</td>
+                    <td>' . $row["blok_adi"] . '</td>
+                    <td>' . $row["daire_sayisi"] . '</td>
+                  
                 </tr>';
         }
 
