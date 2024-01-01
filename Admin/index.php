@@ -1,7 +1,18 @@
 <?php
 session_start();
-
 include("../DB/dbconfig.php");
+
+$sql = "SELECT * FROM tbl_users WHERE userEmail = :userEmail";
+$stmt = $conn->prepare($sql);
+$stmt->bindParam(":userEmail", $_SESSION["mail"]);
+$stmt->execute();
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    $idApartman= $row['apartman_id'];
+}
+
+
+echo "celal" .$idApartman;
+
 
 $indexx= "";
 

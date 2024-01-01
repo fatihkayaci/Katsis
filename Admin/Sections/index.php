@@ -27,12 +27,12 @@ try {
         foreach ($result as $row) {
             echo '<tr>
                    
-                    <td>' . $row["userName"] . '</td>
-                    <td contenteditable="true">' . $row["blok_adi"] . '</td>
-                    <td contenteditable="true">' . $row["daire_sayisi"] . '</td>
-                    <td contenteditable="true">' . $row["blok_adi"] . '</td>
-                    <td contenteditable="true">' . $row["daire_sayisi"] . '</td>
-                  
+                    
+                    <td >' . $row["blok_adi"] . '</td>
+                    <td >' . $row["daire_sayisi"] . '</td>
+                    <td >' . $row["blok_adi"] . '</td>
+                    <td >' . $row["daire_sayisi"] . '</td>
+                    <td></td>
                 </tr>';
         }
 
