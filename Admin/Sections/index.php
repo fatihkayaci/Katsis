@@ -25,8 +25,9 @@ try {
             echo '<tr>
                     <td>' . $row["blok_adi"] . '</td>
                     <td>' . $row["daire_sayisi"] . '</td>
-                    <td>' . $row["blok_adi"] . '</td>
-                    <td>' . $row["daire_sayisi"] . '</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                 </tr>';
         }
 

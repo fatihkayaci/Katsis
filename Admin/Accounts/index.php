@@ -194,9 +194,6 @@ try {
             var vehiclePlate = $('input[name="vehiclePlate"]').val();
             var gender = $('select#gender').val(); // Gender bilgisini al
             var apartID = $('input[name="apartID"]').val();
-        
-         alert(apartID);
-            
 
 
             if (fullName.length < 3) {
