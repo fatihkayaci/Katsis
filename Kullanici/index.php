@@ -1,48 +1,101 @@
 <?php
-// Formdan gelen verileri al
-$email = $_POST['email'];
-$password = $_POST['password'];
+session_start();
 
-// Şifreyi güvenli bir şekilde hashle ve veritabanındaki ile karşılaştır
-$sql = "SELECT * FROM users WHERE email = '$email'";
-$result = $conn->query($sql);
+include("../DB/dbconfig.php");
 
-if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-    // Şifreyi kontrol et
-    if (password_verify($password, $row['password'])) {
-        // Giriş başarılı
-        echo "Giriş başarılı!";
-    } else {
-        // Şifre yanlış
-        echo "Hatalı şifre!";
+// Çerezleri kontrol et ve otomatik giriş yap
+if (isset($_COOKIE['email']) && isset($_COOKIE['sifre'])) {
+    $cookieEmail = $_COOKIE['email'];
+    $cookieSifre = $_COOKIE['sifre'];
+
+    $email = $cookieEmail;
+    $sifre = $cookieSifre;
+
+    // Otomatik giriş yapma işlemleri
+    if ($email && $sifre) {
+        $sql = "SELECT * FROM tbl_kullanici WHERE email = :email AND sifre = :sifre";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+        $stmt->bindParam(':sifre', $sifre, PDO::PARAM_STR);
+        $stmt->execute();
+
+        $rowCount = $stmt->rowCount();
+
+        if ($rowCount > 0) {
+            $_SESSION['email'] = $email;
+
+            // Hatırla işareti varsa, çerez oluştur
+            if ($hatirla) {
+                setcookie('email', $email, time() + (86400 * 30), "/"); // 30 gün süreyle geçerli çerez
+                setcookie('sifre', $sifre, time() + (86400 * 30), "/"); // 30 gün süreyle geçerli çerez
+            }
+
+            // Kullanıcı bulundu, giriş başarılı
+            // Başka bir sayfaya yönlendir
+            header("Location: giris.php");
+            exit();
+        }
     }
-} else {
-    // Kullanıcı bulunamadı
-    echo "Kullanıcı bulunamadı!";
 }
 
-// Veritabanı bağlantısını kapat
-$conn->close();
+// Otomatik giriş yapılmadıysa, diğer giriş kontrollerini yap
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $email = $_POST["email"];
+    $sifre = $_POST["sifre"];
+    $hatirla = isset($_POST["hatirla"]) ? true : false;
+    
+
+    $sql = "SELECT * FROM tbl_kullanici WHERE email = :email AND sifre = :sifre";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+    $stmt->bindParam(':sifre', $sifre, PDO::PARAM_STR);
+    $stmt->execute();
+
+    $rowCount = $stmt->rowCount();
+
+    if ($rowCount > 0) {
+        $_SESSION['email'] = $email;
+
+        // Hatırla işareti varsa, çerez oluştur
+        if ($hatirla) {
+            setcookie('email', $email, time() + (86400 * 30), "/"); // 30 gün süreyle geçerli çerez
+            setcookie('sifre', $sifre, time() + (86400 * 30), "/"); // 30 gün süreyle geçerli çerez
+        }
+
+        // Kullanıcı bulundu, giriş başarılı
+        // Başka bir sayfaya yönlendir
+        header("Location: giris.php");
+        exit();
+    } else {
+        // Kullanıcı bulunamadı, hata mesajı
+        echo "Kullanıcı adı veya şifre hatalı.";
+    }
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Form</title>
+    <title>Kiracı Girişi</title>
 </head>
+
 <body>
-    <h2>Login</h2>
-    <form action="login.php" method="post">
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required><br>
+    <h2>Kiracı Girişi</h2>
+    <form method="post">
+        <label for="email">email:</label>
+        <input type="email" id="email" name="email" required><br><br>
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required><br>
+        <label for="sifre">Şifre:</label>
+        <input type="password" id="sifre" name="sifre" required><br><br>
 
-        <input type="submit" value="Login">
+        <input type="checkbox" id="hatirla" name="hatirla">
+        <label for="hatirla">Beni Hatırla</label><br><br>
+
+        <input type="submit" value="Giriş Yap">
     </form>
 </body>
+
 </html>
