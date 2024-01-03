@@ -52,6 +52,7 @@ try {
                         <th>Full Name</th>
                         <th>tc</th>
                         <th>Phone Number</th>
+                        <th>Durum</th>
                         <th>Email</th>
                         <th>Şifre</th>
                         <th>Vehicle Plate</th>
@@ -68,6 +69,12 @@ try {
                             <td contenteditable="true">' . $row["fullName"] . '</td>
                             <td contenteditable="true">' . $row["tc"] . '</td>
                             <td contenteditable="true">' . $row["phoneNumber"] . '</td>
+                            <td contenteditable="true">
+                            <select>
+                                <option value="katmaliki" ' . ($row["durum"] == "katmaliki" ? 'selected' : '') . '>katmaliki</option>
+                                <option value="kiracı" ' . ($row["durum"] == "kiracı" ? 'selected' : '') . '>kiracı</option>
+                            </select>
+                            </td>
                             <td contenteditable="true">' . $row["email"] . '</td>
                             <td contenteditable="true">' . $row["sifre"] . '</td>
                             <td contenteditable="true">' . $row["vehiclePlate"] . '</td>
@@ -105,7 +112,13 @@ try {
 
             <label for="phoneNumber">Phone Number:</label>
             <input type="text" name="phoneNumber" pattern="[0-9]{10}" placeholder="e.g., 5551234567" required><br>
-
+            
+            <label for="durum">durum</label>
+            <select id="durum">
+                <option value="katmaliki">kat Maliki</option>
+                <option value="kiracı">kiracı</option>
+            </select>
+            
             <label for="email">Email:</label>
             <input type="text" name="email" placeholder="Email adresi(opsiyonel)"><br>
 
@@ -113,8 +126,6 @@ try {
             <input type="text" name="vehiclePlate" placeholder="Araba plakası(opsiyonel)"><br>
 
             <input type="text" name="apartID" value = <?php echo $_SESSION["apartID"];   ?> hidden>
-
-
 
             <label for="gender">gender</label>
             <select id="gender">
@@ -192,9 +203,10 @@ try {
             var fullName = $('input[name="fullName"]').val();
             var tc = $('input[name="tc"]').val();
             var phoneNumber = $('input[name="phoneNumber"]').val();
+            var durum = $('select#durum').val();
             var email = $('input[name="email"]').val();
             var vehiclePlate = $('input[name="vehiclePlate"]').val();
-            var gender = $('select#gender').val(); // Gender bilgisini al
+            var gender = $('select#gender').val();
             var apartID = $('input[name="apartID"]').val();
 
 
@@ -233,9 +245,6 @@ try {
                     return;
                 }
             }
-
-
-
            
             $.ajax({
                 url: 'Controller/save_user.php',
@@ -244,6 +253,7 @@ try {
                     fullName: fullName,
                     tc: tc,
                     phoneNumber: phoneNumber,
+                    durum: durum,
                     email: email,
                     vehiclePlate: vehiclePlate,
                     gender: gender,
@@ -270,11 +280,11 @@ try {
                 var fullName = row.querySelector('td:nth-child(1)').textContent;
                 var tc = row.querySelector('td:nth-child(2)').textContent;
                 var phoneNumber = row.querySelector('td:nth-child(3)').textContent;
-                var email = row.querySelector('td:nth-child(4)').textContent;
-                var sifre = row.querySelector('td:nth-child(5)').textContent;
-                var vehiclePlate = row.querySelector('td:nth-child(6)').textContent;
-                var gender = row.querySelector('td:nth-child(7) select')
-                    .value; // Gender'ı seçili değerden al
+                var durum = row.querySelector('td:nth-child(4) select').value;
+                var email = row.querySelector('td:nth-child(5)').textContent;
+                var sifre = row.querySelector('td:nth-child(6)').textContent;
+                var vehiclePlate = row.querySelector('td:nth-child(7)').textContent;
+                var gender = row.querySelector('td:nth-child(8) select').value;
 
                 //KISITLAMALAR BAŞLANGIÇ...
                 //fullname
@@ -327,14 +337,16 @@ try {
                         fullName: fullName,
                         tc: tc,
                         phoneNumber: phoneNumber,
+                        durum: durum,
                         email: email,
                         sifre: sifre,
                         vehiclePlate: vehiclePlate,
                         gender: gender
                     },
                     success: function(response) {
+                        alert(response);
                         if (response == 1) {
-                            alert("güncellendi" + response);
+                            alert("güncellendi");
                             //location.reload();
                         }
                     },

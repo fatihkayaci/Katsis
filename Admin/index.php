@@ -32,10 +32,6 @@ if($indexx == 'Accounts'){
 }
 
 
-
-
-
-
 $sql = "SELECT * FROM tbl_users WHERE userEmail = :userEmail";
 $stmt = $conn->prepare($sql);
 $stmt->bindParam(":userEmail", $_SESSION["mail"]);
@@ -50,12 +46,4 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         include('popup.php');
     } 
 }
-
-
-
-
-
-
-
-
 ?>

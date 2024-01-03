@@ -17,35 +17,42 @@ try {
     $fullName = $_POST['fullName'];
     $tc = $_POST['tc'];
     $phoneNumber = $_POST['phoneNumber'];
+    $durum = $_POST['durum'];
     $email = $_POST['email'];
     $apartID = $_POST['apartID'];
-
-    
-
-    // Rastgele şifre oluştur
-    $sifre = randomPassword();
-    
     $vehiclePlate = $_POST['vehiclePlate'];
     $gender = $_POST['gender'];
 
-    // SQL sorgusunu hazırla
-    $sql = "INSERT INTO tbl_kullanici (fullName, tc, phoneNumber, email, sifre, vehiclePlate, gender,apartmanID) VALUES 
-    (:fullName, :tc, :phoneNumber, :email, :sifre, :vehiclePlate, :gender,:apartmanID)";
+    // E-posta adresinin varlığını kontrol et
+    $emailCheckSQL = "SELECT COUNT(*) FROM tbl_kullanici WHERE email = :email";
+    $emailCheckStmt = $conn->prepare($emailCheckSQL);
+    $emailCheckStmt->bindParam(':email', $email);
+    $emailCheckStmt->execute();
+    
+    if ($emailCheckStmt->fetchColumn() > 0) {
+        echo "bu email zaten var. lütfen email adresini kontrol edip tekrar deneyiniz.";
+    } else {
+        // Rastgele şifre oluştur
+        $sifre = randomPassword();
+        // SQL sorgusunu hazırla
+        $sql = "INSERT INTO tbl_kullanici (fullName, tc, phoneNumber,durum ,email, sifre, vehiclePlate, gender, apartmanID) VALUES 
+        (:fullName, :tc, :phoneNumber, :durum, :email, :sifre, :vehiclePlate, :gender, :apartmanID)";
 
-    // PDO sorgusunu hazırla ve çalıştır
-    $stmt = $conn->prepare($sql);
-    $stmt->bindParam(':fullName', $fullName);
-    $stmt->bindParam(':tc', $tc);
-    $stmt->bindParam(':phoneNumber', $phoneNumber);
-    $stmt->bindParam(':email', $email);
-    $stmt->bindParam(':sifre', $sifre);
-    $stmt->bindParam(':vehiclePlate', $vehiclePlate);
-    $stmt->bindParam(':gender', $gender);
-    $stmt->bindParam(':apartmanID', $apartID);
-    $stmt->execute();
-    echo 1;
+        // PDO sorgusunu hazırla ve çalıştır
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':fullName', $fullName);
+        $stmt->bindParam(':tc', $tc);
+        $stmt->bindParam(':phoneNumber', $phoneNumber);
+        $stmt->bindParam(':durum', $durum);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':sifre', $sifre);
+        $stmt->bindParam(':vehiclePlate', $vehiclePlate);
+        $stmt->bindParam(':gender', $gender);
+        $stmt->bindParam(':apartmanID', $apartID);
+        $stmt->execute();
+        echo 1;
+    }
 } catch (PDOException $e) {
     echo $e;
 }
 ?>
-    
