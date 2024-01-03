@@ -27,7 +27,11 @@ include('leftbar.php');
 
 if($indexx == 'Accounts'){
     include ("Accounts/index.php");
-}else if($indexx == 'Sections'){
+}
+else if($indexx == 'custom'){
+    include ("Accounts/ozellestir.php");
+}
+else if($indexx == 'Sections'){
     include ("Sections/index.php");
 }
 

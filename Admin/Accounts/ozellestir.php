@@ -1,8 +1,3 @@
-<!--
-    sonradan eklenecekler işlemler kısmı eklenecek.
-    icra durumu
-    bakiye.
--->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,9 +26,7 @@
     }
     </style>
 </head>
-
 <body>
-    <button class="adduser">Add User</button>
 
     <?php
 try {
@@ -57,8 +50,6 @@ try {
                         <th>Vehicle Plate</th>
                         <th>Gender</th>
                         <th>update</th>
-                        <th>Delete</th>
-                        <th>Özelleştir</th>
                     </tr>
                 </thead>
                 <tbody>';
@@ -85,8 +76,6 @@ try {
                             </td>
 
                             <td><button class="updateButton">update</button></td>
-                            <td><button class="deleteButton">delete</button></td>
-                            <td><a href="index?parametre=custom"><button class="ozellestirButton">ozellestir</button></a></td>
                         </tr>';
                     }
                 
@@ -100,57 +89,12 @@ try {
     echo "Bağlantı hatası: " . $e->getMessage();
 }
 ?>
-
-    <!-- Popup Form -->
-    <div id="popup">
-        <form id="userForm">
-            <label for="fullName">Full Name:</label>
-            <input type="text" name="fullName" placeholder="İsminizi Giriniz." required><br>
-
-            <label for="tc">TC:</label>
-            <input type="text" name="tc" placeholder="T.C. giriniz." required><br>
-
-            <label for="phoneNumber">Phone Number:</label>
-            <input type="text" name="phoneNumber" pattern="[0-9]{10}" placeholder="e.g., 5551234567" required><br>
-
-            <label for="durum">durum</label>
-            <select id="durum">
-                <option value="katmaliki">kat Maliki</option>
-                <option value="kiracı">kiracı</option>
-            </select>
-
-            <label for="email">Email:</label>
-            <input type="text" name="email" placeholder="Email adresi(opsiyonel)"><br>
-
-            <label for="vehiclePlate">Vehicle Plate:</label>
-            <input type="text" name="vehiclePlate" placeholder="Araba plakası(opsiyonel)"><br>
-
-            <input type="text" name="apartID" value=<?php echo $_SESSION["apartID"];   ?> hidden>
-
-            <label for="gender">gender</label>
-            <select id="gender">
-                <option value="Erkek">Erkek</option>
-                <option value="Kadın">Kadın</option>
-            </select>
-
-            <button type="button" onclick="closePopup()">Close</button>
-            <button type="button" id="saveButton">Save</button>
-        </form>
-    </div>
-
-    <body>
+<body>
         <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
         <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <script type="text/javascript">
-        $('.adduser').click(function() {
-            $('#popup').show();
-        });
-
-        function closePopup() {
-            $('#popup').hide();
-        }
 
         //kısıtlama ile ilgili fonksiyonlar başlangıç...
         function validateFullName(fullName) {
@@ -196,80 +140,6 @@ try {
             return true;
         }
         //kısıtlama ile ilgili fonksiyonlar bitiş...
-
-        var saveButton = document.getElementById('saveButton');
-        saveButton.addEventListener('click', function() {
-
-            var fullName = $('input[name="fullName"]').val();
-            var tc = $('input[name="tc"]').val();
-            var phoneNumber = $('input[name="phoneNumber"]').val();
-            var durum = $('select#durum').val();
-            var email = $('input[name="email"]').val();
-            var vehiclePlate = $('input[name="vehiclePlate"]').val();
-            var gender = $('select#gender').val();
-            var apartID = $('input[name="apartID"]').val();
-
-
-            if (fullName.length < 3) {
-                alert('Full Name en az 3 karakter olmalıdır.');
-                return;
-            }
-            if (fullName.length > 100) {
-                alert('Full Name 100den fazla karakter olamaz.');
-                return;
-            }
-            if (!validateFullName(fullName)) {
-                alert('Lütfen yalnızca harf karakterleri içeren geçerli bir tam ad girin.');
-                return;
-            }
-            //tc kısıtlamaları
-            if (tc.length !== 11) {
-                alert('TC numarı 11 haneli olmalıdır.');
-                return; // Fonksiyondan çık
-            }
-
-            //telefon kısıtlamaları
-            if (phoneNumber.length !== 10) {
-                alert('Telefon numarası 10 haneli olmalıdır.');
-                return;
-            }
-            //email kısıtlamaları
-            if (!validateEmail(email)) {
-                alert('Lütfen geçerli bir e-posta adresi girin.');
-                return;
-            }
-            //araba plakası kısıtlamaları.
-            if (vehiclePlate !== null && vehiclePlate.trim() !== "") {
-                if (!validateVehiclePlate(vehiclePlate)) {
-                    alert('Lütfen geçerli bir araba plakası giriniz.');
-                    return;
-                }
-            }
-
-            $.ajax({
-                url: 'Controller/save_user.php',
-                type: 'POST',
-                data: {
-                    fullName: fullName,
-                    tc: tc,
-                    phoneNumber: phoneNumber,
-                    durum: durum,
-                    email: email,
-                    vehiclePlate: vehiclePlate,
-                    gender: gender,
-                    apartID: apartID
-                },
-                success: function(response) {
-                    alert(response);
-                    if (response == 1) {
-                        location.reload();
-                    }
-                },
-                error: function(error) {
-                    console.error(error);
-                }
-            });
-        });
 
         var updateButtons = document.querySelectorAll('.updateButton');
 
@@ -357,42 +227,6 @@ try {
         });
         var deleteButtons = document.querySelectorAll('.deleteButton');
 
-        deleteButtons.forEach(function(button) {
-            button.addEventListener('click', function() {
-                var row = this.closest('tr'); // Güncellenen satırı bul
-                var fullName = row.querySelector('td:nth-child(1)').textContent;
-                var tc = row.querySelector('td:nth-child(2)').textContent;
-                var phoneNumber = row.querySelector('td:nth-child(3)').textContent;
-                var email = row.querySelector('td:nth-child(4)').textContent;
-                var sifre = row.querySelector('td:nth-child(5)').textContent;
-                var vehiclePlate = row.querySelector('td:nth-child(6)').textContent;
-                var gender = row.querySelector('td:nth-child(7)').textContent;
-                var kullaniciID = row.getAttribute('data-userid');
-                $.ajax({
-                    url: 'Controller/delete_user.php',
-                    type: 'POST',
-                    data: {
-                        kullaniciID: kullaniciID,
-                        fullName: fullName,
-                        tc: tc,
-                        phoneNumber: phoneNumber,
-                        email: email,
-                        sifre: sifre,
-                        vehiclePlate: vehiclePlate,
-                        gender: gender
-                    },
-                    success: function(response) {
-                        if (response == 1) {
-                            //alert("güncellendi"+response);
-                            location.reload();
-                        }
-                    },
-                    error: function(error) {
-                        console.error(error);
-                    }
-                });
-            });
-        });
         new DataTable('#example', {
             initComplete: function() {
                 this.api()
