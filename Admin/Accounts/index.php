@@ -48,6 +48,7 @@ try {
         echo '<table id="example" class="display" style="width:100%">
                 <thead>
                     <tr>
+                        <th><input type="checkbox"/></th>
                         <th>Full Name</th>
                         <th>tc</th>
                         <th>Phone Number</th>
@@ -63,6 +64,7 @@ try {
 
                 foreach ($result as $row) {
                     echo '<tr data-userid="' . $row["kullaniciID"] . '">
+                            <td> <input type="checkbox"/></td>
                             <td contenteditable="true">' . $row["fullName"] . '</td>
                             <td contenteditable="true">' . $row["tc"] . '</td>
                             <td contenteditable="true">' . $row["phoneNumber"] . '</td>
@@ -404,3 +406,23 @@ try {
             }
         });
         </script>
+
+<script type="text/javascript">
+$.fn.extend({
+ alterCheck:function(tablo){
+  if($(""+tablo+" input[type='checkbox']:first").is(":checked")){
+   return this.each(function(){
+	this.checked=true;
+   });
+  }else{
+   return this.each(function(){
+    this.checked=false;
+   });
+  }		
+ }	
+});
+
+$("#example input[type='checkbox']:first").click(function(){
+ $("#example input[type='checkbox']").alterCheck('#example');
+});
+</script>
