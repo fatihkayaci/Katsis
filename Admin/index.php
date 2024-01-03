@@ -26,9 +26,11 @@ include('header.php');
 include('leftbar.php');
 
 if($indexx == 'Accounts'){
-    include ("Accounts/index.php");
-}else if($indexx == 'Sections'){
-    include ("Sections/index.php");
+        include ("Accounts/index.php");
+}   else if($indexx == 'Sections'){
+        include ("Sections/index.php");
+}   else if($indexx == 'dashboard'){
+        include ("Dashboard/index.php");
 }
 
 
