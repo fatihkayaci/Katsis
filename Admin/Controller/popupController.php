@@ -56,19 +56,9 @@
               $values[] = "( $apartman_id, $j,'" . "$blok_adi')";
           }
       }
-  
+      
       $sql .= implode(", ", $values);
-  echo $sql;
       $stmt = $conn->prepare($sql);
-  
-      for ($i = 0; $i < count($BlokArray); $i++) {
-          $blok_adi = $BloknameArray[$i];
-  
-          for ($j = 1; $j <= $BlokArray[$i]; $j++) {
-        
-          }
-      }
-  
       $stmt->execute();
   
       echo "Veri başarıyla eklendi";
