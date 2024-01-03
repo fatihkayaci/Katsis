@@ -107,6 +107,7 @@ function kaydet() {
                 BloknameArray: BloknameArray
             },
             success: function(response) {
+                alert(response);
                 $('.form-popup').hide();
                 
             },

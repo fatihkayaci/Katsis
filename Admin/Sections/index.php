@@ -1,6 +1,7 @@
 <?php
+$idapartman =$_SESSION["apartID"];
 try {
-    $sql = "SELECT * FROM tbl_daireler where apartman_id=198";
+    $sql = "SELECT * FROM tbl_daireler where apartman_id=$idapartman";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
 
@@ -25,7 +26,14 @@ try {
             echo '<tr>
                     <td>' . $row["blok_adi"] . '</td>
                     <td>' . $row["daire_sayisi"] . '</td>
-                    <td></td>
+                    <td>    </td>
+                   
+                     
+                       
+                          
+                     
+                     	
+                
                     <td></td>
                     <td></td>
                 </tr>';
