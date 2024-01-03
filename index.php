@@ -38,7 +38,6 @@ if(isset($_POST['btn-login']))
 
  if($user_login->login($email,$upass))
  {
-  
   if(intval($responseKeys["success"]) !== 1) {
       echo '<h2>Spam? ! Tekrar kontrol etmelisin.</h2>';
     }else{
@@ -53,7 +52,6 @@ if(isset($_POST['btn-login']))
   $user_login->redirect('Admin/index');
  }
     }
- 
 }
 ?> 
 
