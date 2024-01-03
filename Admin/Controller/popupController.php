@@ -42,40 +42,40 @@
      
 
     
-try{
-  $sql = "INSERT INTO tbl_daireler (apartman_id, daire_sayisi, blok_adi) VALUES ";
-
-$values = array();
-
-for ($i = 0; $i < count($BlokArray); $i++) {
-    $daire_sayisi = $BlokArray[$i];
-    $blok_adi = $BloknameArray[$i];
-
-    for ($j = 1; $j <= $daire_sayisi; $j++) {
-        $values[] = "(:apartman_id, $j, :blok_adi)";
-    }
-}
-
-$sql .= implode(", ", $values);
-
-$stmt = $conn->prepare($sql);
-
-for ($i = 0; $i < count($BlokArray); $i++) {
-    $stmt->bindParam(':apartman_id', $lastInsertedRow["apartman_id"]);
-    $stmt->bindParam(':blok_adi', $BloknameArray[$i]);
-}
-
-$stmt->execute();
-
-
-
-       
+    try {
+      $sql = "INSERT INTO tbl_daireler (apartman_id, daire_sayisi, blok_adi) VALUES ";
+      $values = array();
   
-
-  echo "Veri başarıyla eklendi";
-} catch (PDOException $e) {
-  echo "Hata: " . $e->getMessage();
-}
+      $apartman_id = $lastInsertedRow["apartman_id"];
+  
+      for ($i = 0; $i < count($BlokArray); $i++) {
+          $daire_sayisi = $BlokArray[$i];
+          $blok_adi = $BloknameArray[$i];
+  
+          for ($j = 1; $j <= $daire_sayisi; $j++) {
+              $values[] = "( $apartman_id, $j,'" . "$blok_adi')";
+          }
+      }
+  
+      $sql .= implode(", ", $values);
+  echo $sql;
+      $stmt = $conn->prepare($sql);
+  
+      for ($i = 0; $i < count($BlokArray); $i++) {
+          $blok_adi = $BloknameArray[$i];
+  
+          for ($j = 1; $j <= $BlokArray[$i]; $j++) {
+        
+          }
+      }
+  
+      $stmt->execute();
+  
+      echo "Veri başarıyla eklendi";
+  } catch (PDOException $e) {
+      echo "Hata: " . $e->getMessage();
+  }
+  
 
 
 
