@@ -1,3 +1,4 @@
+
 <?php
 
 //message = '<div class ="alert alert-success" role="alert"> cookkie oluşturuldu</div>';
@@ -56,16 +57,18 @@ if(isset($_POST['btn-login']))
 ?> 
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Login | Coding Cage</title>
-    
-    <!-- Bootstrap CSS -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giriş Yap | Katsis</title>
+
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
 
     <!-- Your custom styles -->
-    <link href="assets/styles.css" rel="stylesheet" media="screen">
+    
+    <link href="assets/css/style.css" rel="stylesheet" media="screen">
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -73,53 +76,84 @@ if(isset($_POST['btn-login']))
     <![endif]-->
 
     <!-- Modernizr JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script> -->
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
 </head>
 
-  <body id="login">
-    <div class="container">
-  <?php 
-  if(isset($_GET['inactive']))
-  {
-   ?>
-            <div class='alert alert-error'>
-    <button class='close' data-dismiss='alert'>&times;</button>
-    <strong>Sorry!</strong> This Account is not Activated Go to your Inbox and Activate it. 
-   </div>
-            <?php
-  }
-  ?>
-        <form class="form-signin" method="post">
-        <?php
-        if(isset($_GET['error']))
-  {
-   ?>
-            <div class='alert alert-success'>
-    <button class='close' data-dismiss='alert'>&times;</button>
-    <strong>Wrong Details!</strong> 
-   </div>
-            <?php
-  }
-  ?>
-        <h2 class="form-signin-heading">Sign In.</h2><hr />
-        <input type="email" class="input-block-level" placeholder="Email address" name="txtemail" required />
-        <input type="password" class="input-block-level" placeholder="Password" name="txtupass" required />
+<body id="login" class="loginbody">
+  
+  <div class="container">
+      
+    <div class="login-box">
+
+      <form class="login-form" method="post">
+
+        <h2 class="form-signin-heading">Giriş Yap</h2>
+
+        <div class="hr"></div>
+
+        <?php 
+      if(isset($_GET['inactive']))
+      {
+       ?>
+        <div class='alert alert-error'>
+          <strong>Sorry!</strong> This Account is not Activated Go to your Inbox and Activate it. 
+        </div>
+      <?php
+      }
+      ?>
+
+      <?php
+      if(isset($_GET['error']))
+      {
+      ?>
+      <div class='alert alert-danger'>
+        <strong>E-posta adresiniz veya şifreniz hatalı.</strong> 
+      </div>
+      <?php
+      }
+      ?>
+
+        <input type="email" class="input-block-level" placeholder="E-posta adresi" name="txtemail" required />
+
+        <input type="password" class="input-block-level1" placeholder="Şifre" name="txtupass" required />
+
+        <div class="remember-div">
+
+          <div class="checkbox-wrapper-4">
+            <input class="inp-cbx" type="checkbox" name="remember" id="remember"/>
+            <label class="cbx" for="remember"><span>
+            <svg width="12px" height="10px">
+              <use xlink:href="#check-4"></use>
+            </svg></span><span>Oturumum açık kalsın</span></label>
+            <svg class="inline-svg">
+              <symbol id="check-4" viewbox="0 0 12 10">
+                <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+              </symbol>
+            </svg>
+          </div>
+
+          <a class="fpass" href="fpass">Şifremi unuttum</a>
+
+        </div>
+
         <div class="g-recaptcha" data-sitekey="6Ld0njYpAAAAAC027yq47stnNrM7uKvoiGv6-Eud"></div>
 
-        <hr />
+        <button class="btn btn-large btn-primary" type="submit" name="btn-login">Giriş yap</button>
 
-        <input type="checkbox" name="remember" />
-        <label>beni hatırla</label><br>
-        <button class="btn btn-large btn-primary" type="submit" name="btn-login">Sign in</button>
-      
-        <a href="signup" style="float:right;" class="btn btn-large">Sign Up</a><hr />
-        <a href="Kullanici/index.php" style="float:right;" class="btn btn-large">Kullanici login</a><hr />
-        <a href="fpass">Lost your Password ? </a>
+        <a href="signup" class="btn btn-large olusturbtn">Hesap Oluştur</a>
+        <div class="hr"></div>
+        <a href="Kullanici/index.php" class="btn btn-large olusturbtn1">Kiracı Girişi</a>
+
       </form>
-      
-    </div> <!-- /container -->
-    <script src="bootstrap/js/jquery-1.9.1.min.js"></script>
-    <script src="bootstrap/js/bootstrap.min.js"></script>
-  </body>
+
+    </div>
+
+  </div> <!-- /container -->
+  
+  <script src="bootstrap/js/jquery-1.9.1.min.js"></script>
+  <script src="bootstrap/js/bootstrap.min.js"></script>
+
+</body>
 </html>
