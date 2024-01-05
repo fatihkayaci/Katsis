@@ -33,7 +33,6 @@ else if($indexx == 'custom'){
 }
 else if($indexx == 'Sections'){
     include ("Sections/index.php");
-        include ("Accounts/index.php");
 }   else if($indexx == 'Sections'){
         include ("Sections/index.php");
 }   else if($indexx == 'dashboard'){
