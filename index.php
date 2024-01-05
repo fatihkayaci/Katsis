@@ -84,7 +84,11 @@ if(isset($_POST['btn-login']))
 <body id="login" class="loginbody">
   
   <div class="container">
-      
+
+    <div class="logo-box">
+      <img src="assets/img/siyah.png" alt="">
+    </div> 
+
     <div class="login-box">
 
       <form class="login-form" method="post">
@@ -97,8 +101,8 @@ if(isset($_POST['btn-login']))
       if(isset($_GET['inactive']))
       {
        ?>
-        <div class='alert alert-error'>
-          <strong>Sorry!</strong> This Account is not Activated Go to your Inbox and Activate it. 
+        <div class='alert alert-warning'>
+          <strong>Üzgünüz!</strong> Hesap henüz aktive edilmemiş. Lütfen gelen kutunuzu kontrol edin ve hesabınızı aktifleştirin.
         </div>
       <?php
       }
@@ -143,8 +147,8 @@ if(isset($_POST['btn-login']))
         <button class="btn btn-large btn-primary" type="submit" name="btn-login">Giriş yap</button>
 
         <a href="signup" class="btn btn-large olusturbtn">Hesap Oluştur</a>
+
         <div class="hr"></div>
-        <a href="Kullanici/index.php" class="btn btn-large olusturbtn1">Kiracı Girişi</a>
 
       </form>
 
