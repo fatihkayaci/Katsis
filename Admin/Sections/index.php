@@ -1,3 +1,21 @@
+<style>
+    tfoot input {
+        width: 100%;
+        padding: 3px;
+        box-sizing: border-box;
+    }
+
+    #popup {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 20px;
+        background: #fff;
+        z-index: 1000;
+    }
+    </style>
 <?php
 $idapartman =$_SESSION["apartID"];
 try {
@@ -27,8 +45,12 @@ try {
                     <td> <input type="checkbox"/></td>
                     <td>' . $row["blok_adi"] . '</td>
                     <td>' . $row["daire_sayisi"] . '</td>
-                    <td><button type="button" class="btn btn-outline-danger btn-sm">Kiracı ekle + </button></td>
-                    <td><button type="button" class="btn btn-outline-warning btn-sm">Kat Maliki ekle +</button></td>
+                    <td><button type="button" class="btn btn-outline-danger btn-sm" onclick="openPopup('.$row["daire_sayisi"].','.$row["daire_id"].')">Kiracı ekle + </button></td>
+
+
+                    <td><button type="button" class="btn btn-outline-danger btn-sm" onclick="openPopup('.$row["daire_sayisi"].','.$row["blok_adi"].','.$row["daire_id"].')">Kiracı ekle + </button></td>
+
+
                     <td></td>
 
                 </tr>';
@@ -45,11 +67,54 @@ try {
 ?>
 
 
+  <!-- Popup Form -->
+  <div id="popup">
+        <form id="userForm">
+        
+            <label for="durum">durum</label>
+            <select id="durum">
+                <option value="katmaliki">kat Maliki</option>
+                <option value="kiracı">kiracı</option>
+            </select>
+            <input type="text" list="cars" />
+<datalist id="cars">
+  <option>Volvo</option>
+  <option>Saab</option>
+  <option>Mercedes</option>
+  <option>Audi</option>
+</datalist>
+           
+
+
+          
+
+          
+
+            <button type="button" onclick="closePopup()">Close</button>
+            <button type="button" id="saveButton">Save</button>
+        </form>
+    </div>
+
+
+
+
+
+
+
+
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 
 
 <script>
+     function openPopup(daire_sayisi, blok_adi, daire_id) {
+            $('#popup').show();
+        }
+
+        function closePopup() {
+            $('#popup').hide();
+        }
+
    new DataTable('#example', {
     initComplete: function () {
         this.api()
