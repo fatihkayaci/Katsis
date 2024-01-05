@@ -27,16 +27,10 @@ try {
                     <td> <input type="checkbox"/></td>
                     <td>' . $row["blok_adi"] . '</td>
                     <td>' . $row["daire_sayisi"] . '</td>
-                    <td>    </td>
-                   
-                     
-                       
-                          
-                     
-                     	
-                
+                    <td><button type="button" class="btn btn-outline-danger btn-sm">Kiracı ekle + </button></td>
+                    <td><button type="button" class="btn btn-outline-warning btn-sm">Kat Maliki ekle +</button></td>
                     <td></td>
-                    <td></td>
+
                 </tr>';
         }
 
@@ -53,6 +47,8 @@ try {
 
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+
+
 <script>
    new DataTable('#example', {
     initComplete: function () {
@@ -75,15 +71,21 @@ try {
                 });
             });
     }
-});
+       });
 </script>
+
+
+
+
 
 <script type="text/javascript">
 $.fn.extend({
  alterCheck:function(tablo){
   if($(""+tablo+" input[type='checkbox']:first").is(":checked")){
    return this.each(function(){
+
 	this.checked=true;
+    
    });
   }else{
    return this.each(function(){
