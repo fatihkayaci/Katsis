@@ -173,7 +173,7 @@ body {
 
 .g-recaptcha {
     width: 80%;
-    margin-top: 10px;
+    margin-top: 15px;
 }
 
 .btn {
@@ -345,4 +345,24 @@ body {
     .remember-div, .g-recaptcha, .alert, .input-block-level, .input-block-level1, .btn, .olusturbtn, .olusturbtn1 {
         width: 100%;
     }
+}
+
+.login-box1 {
+  width: 40%;
+  min-width: 350px;
+  min-height: 450px;
+  background-color: var(--white);
+  box-shadow: 0 20px 27px 0 rgba(0, 0, 0, 0.05);
+  border: 1px solid #e5e5e5;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.alert-area-password {
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
