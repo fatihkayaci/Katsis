@@ -74,8 +74,10 @@ if(isset($_POST['btn-signup']))
 }
 ?>
 <!DOCTYPE html>
-<html>
-  <head>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hesap Oluştur | Katsis</title>
 
     <!-- Bootstrap -->
@@ -110,20 +112,24 @@ if(isset($_POST['btn-signup']))
 
             <?php if(isset($msg)){
              echo $msg; 
-            }  ?>
+            }  
+            ?>
             
-            <input type="text" class="input-block-level" placeholder="Kullanıcı Adı" name="txtuname" required />
+            <input type="text" class="input-block-level" placeholder="Ad ve Soyad" name="txtuname" required />
             <input type="email" class="input-block-level" placeholder="E-Posta Adresi" name="txtemail" required />
             <input type="password" class="input-block-level" placeholder="Parola" name="txtpass" required />
             <input type="password" class="input-block-level" placeholder="Parola Tekrarı" name="confirm_password" required />
           
             <button class="btn btn-large btn-primary" type="submit" name="btn-signup">Hesap Oluştur</button>
+            
             <a href="index.php" class="btn btn-large olusturbtn">Giriş Yap</a>
+          
+            <div class="hr"></div>
+
           </form>
 
-          <div class="hr"></div>
-
       </div>
+      
     </div> <!-- /container -->
 
     <script src="vendors/jquery-1.9.1.min.js"></script>

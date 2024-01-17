@@ -59,7 +59,7 @@ body {
 
 .logo-box {
   width: 40%;
-  height: 120px;
+  max-height: 120px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -76,7 +76,7 @@ body {
 .login-box {
     width: 40%;
     min-width: 350px;
-    min-height: 550px;
+    min-height: 350px;
     background-color: var(--white);
     box-shadow: 0 20px 27px 0 rgba(0, 0, 0, 0.05);
     border: 1px solid #e5e5e5;
@@ -130,7 +130,7 @@ body {
 
 .input-block-level {
     width: 80%;
-    height: 60px;
+    height: 50px;
     margin-top: 20px;
     border: none;
     background-color: #EEEEEE;
@@ -144,7 +144,7 @@ body {
 
 .input-block-level1 {
     width: 80%;
-    height: 60px;
+    height: 50px;
     margin-top: 40px;
     margin-bottom: 15px;
 
@@ -365,4 +365,15 @@ body {
 .alert-area-password {
   margin-top: 20px;
   margin-bottom: 20px;
+}
+
+@media screen and (max-width: 360px) {
+  .login-box1, .login-box {
+      min-width: 300px;
+  }
+
+  .g-recaptcha {
+    transform:scale(0.77);
+    transform-origin:0 0;
+  }
 }

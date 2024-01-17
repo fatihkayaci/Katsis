@@ -53,8 +53,10 @@ if(isset($_POST['btn-submit']))
 ?>
 
 <!DOCTYPE html>
-<html>
-  <head>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Şifremi Unuttum | Katsis</title>
     <!-- Bootstrap -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" media="screen">
@@ -80,32 +82,34 @@ if(isset($_POST['btn-submit']))
 
       <form class="login-form" method="post">
 
-          <h2 class="form-signin-heading">Şifremi Unuttum</h2>
-          
-          <div class="hr"></div>
+        <h2 class="form-signin-heading">Şifremi Unuttum</h2>
+        
+        <div class="hr"></div>
 
-          <?php
-          if(isset($msg))
-          {
-           echo $msg;
-          }
-          else
-          {
-           ?>
-           <div class='alert alert-info alert-area-password'>
-           Lütfen kayıt olduğunuz e-posta adresinizi yazınız. E-posta adresinize şifre sıfırlama linki gönderilecektir.
-           </div>  
-          <?php
-          }
-          ?>
+        <?php
+        if(isset($msg))
+        {
+         echo $msg;
+        }
+        else
+        {
+        ?>
+
+        <div class='alert alert-info alert-area-password'>
+        Lütfen kayıt olduğunuz e-posta adresinizi yazınız. E-posta adresinize şifre sıfırlama linki gönderilecektir.
+        </div>  
+
+        <?php
+        }
+        ?>
 
         <input type="email" class="input-block-level" placeholder="E-posta Hesabınız" name="txtemail" required />
         <hr />
-
+        
         <button class="btn btn-danger btn-primary" type="submit" name="btn-submit">Parolamı Sıfırla</button>
         
         <a href="index.php" class="btn btn-large olusturbtn">Giriş Yap</a>
-
+        
         <div class="hr"></div>
 
       </form>

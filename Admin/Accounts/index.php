@@ -12,28 +12,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
-    <style>
-    tfoot input {
-        width: 100%;
-        padding: 3px;
-        box-sizing: border-box;
-    }
-
-    #popup {
-        display: none;
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        padding: 20px;
-        background: #fff;
-        z-index: 1000;
-    }
-    </style>
 </head>
 
 <body>
-    <button class="adduser">Add User</button>
+    <button class="adduser btn btn-primary">Kullanıcı Ekle</button>
 
     <?php
 try {
@@ -103,38 +85,75 @@ try {
 
     <!-- Popup Form -->
     <div id="popup">
-        <form id="userForm">
-            <label for="fullName">Full Name:</label>
-            <input type="text" name="fullName" placeholder="İsminizi Giriniz." required><br>
+        <form class="login-form" id="userForm">
+            
+            <h2 class="form-signin-heading">Kullanıcı Ekleme</h2>
+            
+            <hr class="horizontal dark mt-0 w-100">
 
-            <label for="tc">TC:</label>
-            <input type="text" name="tc" placeholder="T.C. giriniz." required><br>
+            <div class="row">
+                <div class="col-md-6 col">
+                    <label for="fullName">Ad Soyad :</label>
+                    <input class="input" type="text" name="fullName" placeholder="İsminizi Giriniz." required><br>
+                </div>
 
-            <label for="phoneNumber">Phone Number:</label>
-            <input type="text" name="phoneNumber" pattern="[0-9]{10}" placeholder="e.g., 5551234567" required><br>
+                <div class="col-md-6 col">
+                    <label for="tc">T.C. Kimlik No :</label>
+                    <input class="input" type="text" name="tc" placeholder="T.C. giriniz." required><br>
+                </div>  
+            </div>
 
-            <label for="durum">durum</label>
-            <select id="durum">
-                <option value="katmaliki">kat Maliki</option>
-                <option value="kiracı">kiracı</option>
-            </select>
+            <div class="row">
+                <div class="col-md-6 col">
+                    <label for="phoneNumber">Telefon Numarası :</label>
+                    <input class="input" type="text" name="phoneNumber" pattern="[0-9]{10}" placeholder="e.g., 5551234567" required><br>
+                </div>
 
-            <label for="email">Email:</label>
-            <input type="text" name="email" placeholder="Email adresi(opsiyonel)"><br>
+                <div class="col-md-6 col">
+                    <label for="durum">Durum :</label>
+                    <select class="input" id="durum">
+                        <option value="katmaliki">kat Maliki</option>
+                        <option value="kiracı">kiracı</option>
+                    </select>
+                </div>
+            </div>
 
-            <label for="vehiclePlate">Vehicle Plate:</label>
-            <input type="text" name="vehiclePlate" placeholder="Araba plakası(opsiyonel)"><br>
+            <div class="row">
+                <div class="col-md-6 col margint">
+                    <label for="email">E-Posta (opsiyonel) :</label>
+                    <input class="input" type="text" name="email" placeholder="Email adresi (opsiyonel)"><br>
+                </div>
 
-            <input type="text" name="apartID" value=<?php echo $_SESSION["apartID"];   ?> hidden>
+                <div class="col-md-6 col">
+                    <label for="vehiclePlate">Araba Plakası (opsiyonel) :</label>
+                    <input class="input" type="text" name="vehiclePlate" placeholder="Araba plakası (opsiyonel)"><br>
+                </div>
+            </div>
 
-            <label for="gender">gender</label>
-            <select id="gender">
-                <option value="Erkek">Erkek</option>
-                <option value="Kadın">Kadın</option>
-            </select>
+            <div class="row">
+                <div class="col-md-6 col">
+                    <label for="apartID">sadsad :</label>
+                    <input class="input" type="text" name="apartID" value=<?php echo $_SESSION["apartID"];   ?> hidden>
+                </div>
 
-            <button type="button" onclick="closePopup()">Close</button>
-            <button type="button" id="saveButton">Save</button>
+                <div class="col-md-6 col margint">
+                    <label for="gender">Cinsiyet :</label>
+                    <select class="input" id="gender">
+                        <option value="Erkek">Erkek</option>
+                        <option value="Kadın">Kadın</option>
+                    </select>
+                </div>
+            </div>
+
+            <hr class="horizontal dark mt-4 w-100">
+
+            <div class="row row-btns">
+                    <button type="button" class="btn btn-secondary btn-size" onclick="closePopup()">Kapat</button>
+                    <button type="button" class="btn btn-primary btn-size" id="saveButton">Kaydet</button>
+            </div>
+
+            
+
         </form>
     </div>
 
@@ -146,10 +165,12 @@ try {
         <script type="text/javascript">
         $('.adduser').click(function() {
             $('#popup').show();
+            $('#popup').css('display', 'flex');
         });
 
         function closePopup() {
             $('#popup').hide();
+            $('#popup').css('display', 'none');
         }
 
         //kısıtlama ile ilgili fonksiyonlar başlangıç...
