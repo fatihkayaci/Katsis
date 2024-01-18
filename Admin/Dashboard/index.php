@@ -1,3 +1,3 @@
 <?php 
-echo "ben mal bir fatihim teşekkürler.";
+echo "ben bir fatihim teşekkürler.";
 ?>

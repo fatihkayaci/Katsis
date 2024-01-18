@@ -65,7 +65,7 @@ tfoot input {
 
 .col {
     width: 50%;
-    min-width: 300px;
+    min-width: 200px;
     display: flex;
     flex-direction: column;
     justify-content: baseline;
@@ -83,7 +83,7 @@ label {
     justify-content: center;
     align-items: center;
     width: 80%;
-    min-width: 250px;
+    min-width: 200px;
     margin-top: 0px;
     margin-bottom: 20px;
 }
@@ -95,7 +95,7 @@ label {
 
 .input {
     width: 80%;
-    min-width: 300px;
+    min-width: 200px;
     height: 50px;
     margin-top: 10px;
     border: none;
@@ -114,8 +114,8 @@ label {
 
 
 
-@media screen and (max-width: 1540px) {
-    .input, .btn, label, .col, .row {
+@media screen and (max-width: 1040px) {
+    .input, label, .col, .row {
         width: 100%;
     }
     .btn-size {
@@ -123,6 +123,12 @@ label {
     }
     .margint {
         margin-top: 20px;
+    }
+    .input1 {
+        min-width: 100px;
+    }
+    .btnx {
+        width: 80%;
     }
 }
 
@@ -150,10 +156,6 @@ label {
   border-radius: 50px;
 }
 
-.login-form::-webkit-scrollbar-button:start:decrement,
-.login-form::-webkit-scrollbar-button:end:increment {
-  height: 10px;
-}
 
 /* Handle on hover */
 .login-form::-webkit-scrollbar-thumb:hover {
