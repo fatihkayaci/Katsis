@@ -132,6 +132,7 @@ require 'phpmailer/src/SMTP.php';
   $mail->AddReplyTo("fatihkayaci5334@gmail.com","Katsis");
   $mail->Subject    = $subject;
   $mail->MsgHTML($message);
+  $mail->CharSet    = 'utf-8';
   $mail->Send();
  } 
 }
