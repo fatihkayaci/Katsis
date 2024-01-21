@@ -24,74 +24,96 @@ if(isset($_POST['btn-submit']))
   $stmt->execute(array(":token"=>$code,"email"=>$email));
   
   $message= "
-       Hello , $email
+       Merhaba , $email
        <br /><br />
-       We got requested to reset your password, if you do this then just click the following link to reset your password, if not just ignore                   this email,
+       Parola değiştirme talebinizi aldık. Eğer bu işlemi siz yapmadıysanız hesap bilgilerini değiştiriniz ve bizimle iletişime geçiniz.
        <br /><br />
-       Click Following Link To Reset Your Password 
+       Parolanızı değiştirmek için link'e tıklayınız.
        <br /><br />
-       <a href='http://localhost/katsis/resetpass.php?id=$id&code=$code'>click here to reset your password</a>
+       <a href='http://localhost/katsis/resetpass.php?id=$id&code=$code'>Parolayı değiştirmek için tıklayınız.</a>
        <br /><br />
-       thank you :)
+       Teşekkürler :)
        ";
   $subject = "Password Reset";
   
   $user->send_mail($email,$message,$subject);
   
-  $msg = "<div class='alert alert-success'>
-     <button class='close' data-dismiss='alert'>&times;</button>
-     We've sent an email to $email.
-                    Please click on the password reset link in the email to generate new password. 
+  $msg = "<div class='alert alert-success alert-area-password'>
+     Talebinizi aldık. Yeni parolanızı oluşturmak için, $email Postanıza parola yenileme postası gönderdik.
+                  Yeni parolanızı oluşturmak için postanıza gelen maildeki adımları takip ediniz.
       </div>";
  }
  else
  {
-  $msg = "<div class='alert alert-danger'>
-     <button class='close' data-dismiss='alert'>&times;</button>
-     <strong>Sorry!</strong>  this email not found. 
+  $msg = "<div class='alert alert-danger alert-area-password'>
+     <strong>Üzgünüz!</strong>  Kayıtlı Bir E-Posta Bulunamadı. 
        </div>";
  }
 }
 ?>
 
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Forgot Password</title>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Şifremi Unuttum | Katsis</title>
     <!-- Bootstrap -->
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
-    <link href="assets/styles.css" rel="stylesheet" media="screen">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
+
+    <!-- Your custom styles -->
+    
+    <link href="assets/css/style.css" rel="stylesheet" media="screen">
      <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
   </head>
-  <body id="login">
+  <body id="login" class="loginbody">
+
     <div class="container">
 
-      <form class="form-signin" method="post">
-        <h2 class="form-signin-heading">Forgot Password</h2><hr />
+      <div class="logo-box">
+        <img src="assets/img/siyah.png" alt="">
+      </div> 
+
+      <div class="login-box1">
+
+      <form class="login-form" method="post">
+
+        <h2 class="form-signin-heading">Şifremi Unuttum</h2>
         
-         <?php
-   if(isset($msg))
-   {
-    echo $msg;
-   }
-   else
-   {
-    ?>
-               <div class='alert alert-info'>
-    Please enter your email address. You will receive a link to create a new password via email.!
-    </div>  
-                <?php
-   }
-   ?>
+        <div class="hr"></div>
+
+        <?php
+        if(isset($msg))
+        {
+         echo $msg;
+        }
+        else
+        {
+        ?>
+
+        <div class='alert alert-info alert-area-password'>
+        Lütfen kayıt olduğunuz e-posta adresinizi yazınız. E-posta adresinize şifre sıfırlama linki gönderilecektir.
+        </div>  
+
+        <?php
+        }
+        ?>
+
+        <input type="email" class="input-block-level" placeholder="E-posta Hesabınız" name="txtemail" required />
+        <hr />
         
-        <input type="email" class="input-block-level" placeholder="Email address" name="txtemail" required />
-      <hr />
-        <button class="btn btn-danger btn-primary" type="submit" name="btn-submit">Generate new Password</button>
+        <button class="btn btn-danger btn-primary" type="submit" name="btn-submit">Parolamı Sıfırla</button>
+        
+        <a href="index.php" class="btn btn-large olusturbtn">Giriş Yap</a>
+        
+        <div class="hr"></div>
+
       </form>
+    </div> 
 
     </div> <!-- /container -->
     <script src="bootstrap/js/jquery-1.9.1.min.js"></script>

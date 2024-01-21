@@ -97,12 +97,12 @@ if(isset($_POST['btn-login']))
 
         <div class="hr"></div>
 
-        <?php 
+      <?php
       if(isset($_GET['inactive']))
       {
        ?>
         <div class='alert alert-warning'>
-          <strong>Üzgünüz!</strong> Hesap henüz aktive edilmemiş. Lütfen gelen kutunuzu kontrol edin ve hesabınızı aktifleştirin.
+          <strong>Uyarı!</strong> Hesap henüz aktive edilmemiş. Lütfen gelen kutunuzu kontrol edin ve hesabınızı aktifleştirin.
         </div>
       <?php
       }

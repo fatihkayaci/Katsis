@@ -1,30 +1,43 @@
 <div class="form-popup">
 
-    <div class="container form-wrapper">
+    <div class="login-form">
 
+        <h2 class="form-signin-heading">Apartman Kayıt</h2>
+            
+        <hr class="horizontal dark mt-0 w-100">
 
         <div class="row">
-            <div class="col-md-12 text-center">
-                <h1 class="form-title">Pop-up</h1>
-            </div>
-        </div>
-        <div class="row">
-            <div class="form-group col-md-6">
+            <div class="col-md-6 col">
                 <label for="apartman_adi">Apartman Adı</label>
-                <input type="text" class="form-control" id="apartman_adi" name="apartman_adi" required>
+                <input type="text" class="form-control input" id="apartman_adi" name="apartman_adi" required>
             </div>
-            <div class="form-group col-md-2">
+            <div class="col-md-6 col margint">
                 <label for="blokSay">blok sayısı</label>
-                <input type="number" class="form-control" id="blokSay" name="blokSay" value="1" max="20" min="1"
-                    required>
-                <p id="numberalert"></p>
+                <input type="number" class="form-control input" id="blokSay" name="blokSay" value="1" max="20" min="1" required>
+                
             </div>
         </div>
-        <div class="row" id="table-container">
+
+        <hr class="horizontal dark mt-4 w-100">
+        
+        <h2 class="form-signin-heading1">Oluşturulan Bloklar</h2>
+
+        <p id="numberalert"></p>
+
+        <div class="row daire-area" id="table-container">
+            <div class="col-md-6 col1">
+
+
+            </div>
+        
         </div>
-        <button id="kaydetbtn" class="btn send-form" onclick="kaydet()">Kaydet</button>
+
+        <hr class="horizontal dark mt-4 w-100">
+
+        <button id="kaydetbtn" class="btn btnx btn-primary send-form" onclick="kaydet()">Kaydet</button>
 
     </div>
+
 </div>
 
 
@@ -190,15 +203,14 @@ function tableCreate(rowCount) {
 
     // Tablo oluşturma
     var table = document.createElement('table');
-    table.setAttribute('border', '1');
 
     // Başlık satırı ekleme
     var headerRow = table.insertRow(0);
     var blockHeader = headerRow.insertCell(0);
-    blockHeader.innerHTML = '<b>Blok</b>';
+    blockHeader.innerHTML = '<label>Blok</label>';
 
     var apartmentHeader = headerRow.insertCell(1);
-    apartmentHeader.innerHTML = '<b>Daire Sayısı</b>';
+    apartmentHeader.innerHTML = '<label>Daire Sayısı</label>';
 
     // Satırları oluşturma
     for (var i = 1; i <= rowCount; i++) {
@@ -206,7 +218,7 @@ function tableCreate(rowCount) {
 
         var row = table.insertRow(i);
         var input = document.createElement("input");
-        input.className = 'form-group form-group col-md-2';
+        input.className = 'form-group form-group input1';
         input.type = "text";
         input.maxLength = 5;
         input.name = "inputText" + i; // Set a unique name for each input if needed
@@ -223,7 +235,7 @@ function tableCreate(rowCount) {
         var inputElement = document.createElement('input'); // input öğesi oluştur
         inputElement.max = 1000;
         inputElement.min = 1;
-        inputElement.className = 'form-group form-group col-md-2'; // class adını belirle, boşluğu unutma
+        inputElement.className = 'form-group form-group input1'; // class adını belirle, boşluğu unutma
         inputElement.name = 'daireSayisi'; // inputun adını belirle
         inputElement.id = 'row' + i; // inputun benzersiz kimliğini belirle
         inputElement.value = 1; // başlangıç değerini belirle
@@ -236,7 +248,7 @@ function tableCreate(rowCount) {
         var descreption = row.insertCell(2);
         var descreptionElement = document.createElement('p');
         inputElement.type = 'text';
-        descreptionElement.className = 'form-control' + 'form-group col-md-2';
+        descreptionElement.className = 'form-control' + 'form-group form-control1';
         descreptionElement.name = 'descreption';
         descreptionElement.id = 'row2' + i;
         descreption.appendChild(descreptionElement);
@@ -276,7 +288,7 @@ function rowListin(enteredNumber) {
                 if (girilenSayi2 > 1000) {
 
                     descreptionElement2.innerHTML =
-                        "Daire sayısı 1000'den fazla olması durumunda bizimle iletişime geçebilirsiniz.";
+                        "Daire sayısı 1000'den fazla ise bizimle iletişime geçiniz.";
 
                 } else if (girilenSayi2 == "") {
                     descreptionElement2.innerHTML = "";

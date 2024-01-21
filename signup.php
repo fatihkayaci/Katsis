@@ -33,11 +33,10 @@ if(isset($_POST['btn-signup']))
  if($stmt->rowCount() > 0)
  {
   $msg = "
-        <div class='alert alert-error'>
-    <button class='close' data-dismiss='alert'>&times;</button>
-     <strong>Sorry !</strong>  email allready exists , Please Try another one
-     </div>
-     ";
+        <div class='alert alert-danger'>
+        <strong>Uyarı!</strong>  Bu E-Posta Zaten Kayıtlı, Başka Bir E-Posta Deneyiniz.
+        </div>
+        ";
  }
  else
  {
@@ -49,22 +48,21 @@ if(isset($_POST['btn-signup']))
    
    $message = "     
       Merhaba $uname,
-      <br /><br />
+      <br/><br/>
       Katsis'e Hoşgeldiniz.<br/>
       Kaydınızı tamamlamak için aşağıdaki bağlantıya tıklamanız yeterlidir.<br/>
-      <br /><br />
+      <br/>
       <a href='http://localhost/katsis/verify.php?id=$id&code=$code'>Etkinleştirmek için BURAYA tıklayın</a>
-      <br /><br />
-      Teşekkürler,";
+      <br/><br/>
+      Teşekkürler.";
       
    $subject = "Kaydınızı doğrulayınız";
       
    $reg_user->send_mail($email,$message,$subject); 
    $msg = "
      <div class='alert alert-success'>
-      <button class='close' data-dismiss='alert'>&times;</button>
-      <strong>Success!</strong>  We've sent an email to $email.
-                    Please click on the confirmation link in the email to create your account. 
+      <strong>Kaydınız Başarılı!</strong> $email E-Posta Adresinize Doğrulama Maili Göderdik.
+                    Lütfen Mail Hesabınızı kontrol Ediniz. 
        </div>
      ";
   }
@@ -76,36 +74,66 @@ if(isset($_POST['btn-signup']))
 }
 ?>
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Signup | Coding Cage</title>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hesap Oluştur | Katsis</title>
+
     <!-- Bootstrap -->
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
-    <link href="assets/styles.css" rel="stylesheet" media="screen">
+    
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
+
+    <!-- Your custom styles -->
+    
+    <link href="assets/css/style.css" rel="stylesheet" media="screen">
      <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
   </head>
-  <body id="login">
-    <div class="container">
-    <?php if(isset($msg)) echo $msg;  ?>
-      <form class="form-signin" method="post">
-        <h2 class="form-signin-heading">Sign Up</h2><hr />
-        <input type="text" class="input-block-level" placeholder="Username" name="txtuname" required />
-        <input type="email" class="input-block-level" placeholder="Email address" name="txtemail" required />
-        <input type="password" class="input-block-level" placeholder="Password" name="txtpass" required />
-        <input type="password" class="input-block-level" placeholder="Password" name="confirm_password" required />
-        
-      <hr />
-        <button class="btn btn-large btn-primary" type="submit" name="btn-signup">Sign Up</button>
-        <a href="index.php" style="float:right;" class="btn btn-large">Sign In</a>
-      </form>
+  <body id="login" class="loginbody">
 
+    <div class="container">
+
+      <div class="logo-box">
+        <img src="assets/img/siyah.png" alt="">
+      </div> 
+
+      <div class="login-box">
+        
+          <form class="login-form" method="post">
+
+            <h2 class="form-signin-heading">Hesap Oluştur</h2>
+            
+            <div class="hr"></div>
+
+            <?php if(isset($msg)){
+             echo $msg; 
+            }  
+            ?>
+            
+            <input type="text" class="input-block-level" placeholder="Ad ve Soyad" name="txtuname" required />
+            <input type="email" class="input-block-level" placeholder="E-Posta Adresi" name="txtemail" required />
+            <input type="password" class="input-block-level" placeholder="Parola" name="txtpass" required />
+            <input type="password" class="input-block-level" placeholder="Parola Tekrarı" name="confirm_password" required />
+          
+            <button class="btn btn-large btn-primary" type="submit" name="btn-signup">Hesap Oluştur</button>
+            
+            <a href="index.php" class="btn btn-large olusturbtn">Giriş Yap</a>
+          
+            <div class="hr"></div>
+
+          </form>
+
+      </div>
+      
     </div> <!-- /container -->
+
     <script src="vendors/jquery-1.9.1.min.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
+
   </body>
 </html>
