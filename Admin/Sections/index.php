@@ -41,14 +41,14 @@ try {
                 <tbody>';
 
         foreach ($result as $row) {
-            echo '<tr>
+            echo '<tr id='.$row["daire_id"].'>
                     <td> <input type="checkbox"/></td>
                     <td>' . $row["blok_adi"] . '</td>
                     <td>' . $row["daire_sayisi"] . '</td>
-                    <td><button type="button" class="btn btn-outline-danger btn-sm" onclick="openPopup('.$row["daire_sayisi"].','.$row["daire_id"].')">Kiracı ekle + </button></td>
+                    
+                    <td><button type="button" class="btn btn-outline-danger btn-sm" onclick="openPopup('.$row["daire_id"].',0)">Kiracı ekle + </button></td>
+                    <td><button type="button" class="btn btn-outline-danger btn-sm" onclick="openPopup('.$row["daire_id"].',1)">Kat Maliki ekle + </button></td>
 
-
-                    <td><button type="button" class="btn btn-outline-danger btn-sm" onclick="openPopup('.$row["daire_sayisi"].','.$row["blok_adi"].','.$row["daire_id"].')">Kiracı ekle + </button></td>
 
 
                     <td></td>
@@ -107,7 +107,22 @@ try {
 
 
 <script>
-     function openPopup(daire_sayisi, blok_adi, daire_id) {
+     function openPopup(daire_id, tur) {
+        // Belirli bir ID'ye sahip <tr> elementini seç
+        var trElement = document.getElementById(daire_id);
+
+        // <td> elemanlarını seç
+        var tdElements = trElement.getElementsByTagName('td');
+
+        // İlgili <td> elemanlarının içeriğini al
+        var valueA = tdElements[1].innerText; // A
+        var value1 = tdElements[2].innerText; // 1
+
+        // Değerleri konsola yazdır (isteğe bağlı)
+        console.log('Value of A:', valueA);
+        console.log('Value of 1:', value1);
+        console.log('tur :', tur);
+
             $('#popup').show();
         }
 

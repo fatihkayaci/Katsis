@@ -24,7 +24,7 @@ try {
     $gender = $_POST['gender'];
 
     // E-posta adresinin varlığını kontrol et
-    $emailCheckSQL = "SELECT COUNT(*) FROM tbl_kullanici WHERE email = :email";
+    $emailCheckSQL = "SELECT COUNT(*) FROM tbl_users WHERE userEmail = :email";
     $emailCheckStmt = $conn->prepare($emailCheckSQL);
     $emailCheckStmt->bindParam(':email', $email);
     $emailCheckStmt->execute();
@@ -35,8 +35,8 @@ try {
         // Rastgele şifre oluştur
         $sifre = randomPassword();
         // SQL sorgusunu hazırla
-        $sql = "INSERT INTO tbl_kullanici (fullName, tc, phoneNumber,durum ,email, sifre, vehiclePlate, gender, apartmanID) VALUES 
-        (:fullName, :tc, :phoneNumber, :durum, :email, :sifre, :vehiclePlate, :gender, :apartmanID)";
+        $sql = "INSERT INTO tbl_users (userName, tc, phoneNumber,durum ,userEmail, userPass, plate, gender, apartman_id, rol, popup) VALUES 
+        (:fullName, :tc, :phoneNumber, :durum, :email, :sifre, :vehiclePlate, :gender, :apartmanID, :rol, :popup)";
 
         // PDO sorgusunu hazırla ve çalıştır
         $stmt = $conn->prepare($sql);
@@ -49,6 +49,8 @@ try {
         $stmt->bindParam(':vehiclePlate', $vehiclePlate);
         $stmt->bindParam(':gender', $gender);
         $stmt->bindParam(':apartmanID', $apartID);
+        $stmt->bindParam(':rol', 3);
+        $stmt->bindParam(':popup', 0);
         $stmt->execute();
         echo 1;
     }
