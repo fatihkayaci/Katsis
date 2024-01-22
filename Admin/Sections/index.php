@@ -53,7 +53,7 @@ try {
   <!-- Popup Form -->
     <div id="popup" class="form-popup">
 
-        <form id="userForm" class="login-form">
+        <form id="userForm" class="login-form1">
         
         <h2 class="form-signin-heading">Kiracı Ekle</h2>
 
@@ -117,6 +117,7 @@ try {
         console.log('tur :', tur);
 
             $('#popup').show();
+            $('#popup').css('display', 'flex');
         }
 
         function closePopup() {
