@@ -2,10 +2,10 @@
 class Database
 {
      
-    private $host = "45.10.151.41";
-    private $db_name = "katsis2";
+    private $host = "185.92.2.129";
+    private $db_name = "katsis";
     private $username = "roott";
-    private $password = "PW2jnY5T8v6eHWRc";
+    private $password = "LnHgM5o-0WtltVCH";
     public $conn;
      
     public function dbConnection()
