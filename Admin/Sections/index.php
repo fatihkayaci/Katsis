@@ -1,3 +1,21 @@
+<style>
+    tfoot input {
+        width: 100%;
+        padding: 3px;
+        box-sizing: border-box;
+    }
+
+    #popup {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 20px;
+        background: #fff;
+        z-index: 1000;
+    }
+    </style>
 <?php
 $idapartman =$_SESSION["apartID"];
 try {
@@ -23,12 +41,16 @@ try {
                 <tbody>';
 
         foreach ($result as $row) {
-            echo '<tr>
+            echo '<tr id='.$row["daire_id"].'>
                     <td> <input type="checkbox"/></td>
                     <td>' . $row["blok_adi"] . '</td>
                     <td>' . $row["daire_sayisi"] . '</td>
-                    <td><button type="button" class="btn btn-outline-danger btn-sm">Kiracı ekle + </button></td>
-                    <td><button type="button" class="btn btn-outline-warning btn-sm">Kat Maliki ekle +</button></td>
+                    
+                    <td><button type="button" class="btn btn-outline-danger btn-sm" onclick="openPopup('.$row["daire_id"].',0)">Kiracı ekle + </button></td>
+                    <td><button type="button" class="btn btn-outline-danger btn-sm" onclick="openPopup('.$row["daire_id"].',1)">Kat Maliki ekle + </button></td>
+
+
+
                     <td></td>
 
                 </tr>';
@@ -45,11 +67,69 @@ try {
 ?>
 
 
+  <!-- Popup Form -->
+  <div id="popup">
+        <form id="userForm">
+        
+            <label for="durum">durum</label>
+            <select id="durum">
+                <option value="katmaliki">kat Maliki</option>
+                <option value="kiracı">kiracı</option>
+            </select>
+            <input type="text" list="cars" />
+<datalist id="cars">
+  <option>Volvo</option>
+  <option>Saab</option>
+  <option>Mercedes</option>
+  <option>Audi</option>
+</datalist>
+           
+
+
+          
+
+          
+
+            <button type="button" onclick="closePopup()">Close</button>
+            <button type="button" id="saveButton">Save</button>
+        </form>
+    </div>
+
+
+
+
+
+
+
+
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 
 
 <script>
+     function openPopup(daire_id, tur) {
+        // Belirli bir ID'ye sahip <tr> elementini seç
+        var trElement = document.getElementById(daire_id);
+
+        // <td> elemanlarını seç
+        var tdElements = trElement.getElementsByTagName('td');
+
+        // İlgili <td> elemanlarının içeriğini al
+        var valueA = tdElements[1].innerText; // A
+        var value1 = tdElements[2].innerText; // 1
+
+        // Değerleri konsola yazdır (isteğe bağlı)
+        console.log('Value of A:', valueA);
+        console.log('Value of 1:', value1);
+        console.log('tur :', tur);
+
+            $('#popup').show();
+        }
+
+        function closePopup() {
+            $('#popup').hide();
+        }
+
    new DataTable('#example', {
     initComplete: function () {
         this.api()
