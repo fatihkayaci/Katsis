@@ -5,7 +5,7 @@ class Database
     private $host = "185.92.2.129";
     private $db_name = "katsis";
     private $username = "roott";
-    private $password = "LnHgM5o-0WtltVCH";
+    private $password = "S2Ukh3jTsd_4mHug";
     public $conn;
      
     public function dbConnection()
