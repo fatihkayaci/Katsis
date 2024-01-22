@@ -1,4 +1,4 @@
-<?php
+<?php 
 $host = "185.92.2.129";
 $db_name = "katsis";
 $username = "roott";
@@ -11,4 +11,3 @@ try {
 } catch (PDOException $e) {
     
 }
-?>
