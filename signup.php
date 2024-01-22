@@ -48,13 +48,13 @@ if(isset($_POST['btn-signup']))
    
    $message = "     
       Merhaba $uname,
-      <br /><br />
+      <br/><br/>
       Katsis'e Hoşgeldiniz.<br/>
       Kaydınızı tamamlamak için aşağıdaki bağlantıya tıklamanız yeterlidir.<br/>
-      <br /><br />
+      <br/>
       <a href='http://localhost/katsis/verify.php?id=$id&code=$code'>Etkinleştirmek için BURAYA tıklayın</a>
-      <br /><br />
-      Teşekkürler,";
+      <br/><br/>
+      Teşekkürler.";
       
    $subject = "Kaydınızı doğrulayınız";
       

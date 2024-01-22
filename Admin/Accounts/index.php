@@ -131,11 +131,7 @@ try {
             </div>
 
             <div class="row">
-                <div class="col-md-6 col">
-                    <label for="apartID">sadsad :</label>
-                    <input class="input" type="text" name="apartID" value=<?php echo $_SESSION["apartID"];   ?> hidden>
-                </div>
-
+                
                 <div class="col-md-6 col margint">
                     <label for="gender">Cinsiyet :</label>
                     <select class="input" id="gender">
@@ -143,13 +139,17 @@ try {
                         <option value="Kadın">Kadın</option>
                     </select>
                 </div>
+
+                <div class="col-md-6 col">
+                    <input class="input" type="text" name="apartID" value=<?php echo $_SESSION["apartID"];   ?> hidden >
+                </div>
             </div>
 
             <hr class="horizontal dark mt-4 w-100">
 
             <div class="row row-btns">
-                    <button type="button" class="btn btn-secondary btn-size" onclick="closePopup()">Kapat</button>
-                    <button type="button" class="btn btn-primary btn-size" id="saveButton">Kaydet</button>
+                    <button type="button" class="btn btnx btn-secondary btn-size" onclick="closePopup()">Kapat</button>
+                    <button type="button" class="btn btnx btn-primary btn-size" id="saveButton">Kaydet</button>
             </div>
 
             

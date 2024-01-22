@@ -112,7 +112,7 @@
           <ul class="navbar-nav  justify-content-end">
           <li class="nav-item dropdown pe-2 d-flex align-items-center">
               <a href="javascript:;" class="nav-link text-body nav-link font-weight-bold btn btn-outline-primary mb-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fa-solid fa-user me-sm-1"></i>
+                <i class="fa-solid fa-user avatar avatar-xs bg-gradient-dark me-3 me-sm-1"></i>
                 <span class="d-sm-inline d-none">Celal Yılmaz</span>
               </a>
               <ul class="dropdown-menu dropdown-menu-end px-2" aria-labelledby="dropdownMenuButton">
@@ -158,12 +158,12 @@
             </li>
             <li class="nav-item px-3 d-flex align-items-center">
               <a href="../logout" class="nav-link text-body p-0">
-                <i class="fa-solid fa-right-from-bracket fixed-plugin-button-nav cursor-pointer"></i>
+                <i class="fa-solid fa-right-from-bracket avatar avatar-sm bg-gradient-light i-color fixed-plugin-button-nav cursor-pointer"></i>
               </a>
             </li>
             <li class="nav-item dropdown pe-2 d-flex align-items-center">
               <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fa fa-bell cursor-pointer"></i>
+                <i class="fa fa-bell cursor-pointer avatar avatar-sm bg-gradient-light i-color"></i>
               </a>
               <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
                 <li class="mb-2">
