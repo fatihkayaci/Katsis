@@ -19,7 +19,8 @@
 
     <?php
 try {
-    $sql = "SELECT * FROM tbl_users WHERE apartman_id = " .$_SESSION["apartID"];
+    $sql = "SELECT * FROM tbl_users WHERE apartman_id = " . $_SESSION["apartID"] . " AND rol = 3";
+
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     
