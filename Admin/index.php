@@ -11,7 +11,6 @@ $stmt->execute();
 
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     $idApartman= $row['userID'];
-    echo $row['userID'];
 }
 
 
