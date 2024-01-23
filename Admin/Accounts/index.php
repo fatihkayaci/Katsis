@@ -326,7 +326,7 @@ try {
                         gender: gender
                     },
                     success: function(response) {
-                        alert(response);
+                        //alert(response);
                         if (response == 1) {
                             alert("güncellendi");
                             //location.reload();
