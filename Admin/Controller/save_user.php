@@ -33,9 +33,11 @@ try {
     } else {
         // Rastgele şifre oluştur
         $userPass = randomPassword();
+        $userPass = md5($userPass);
+        $t ="Y";
         // SQL sorgusunu hazırla
-        $sql = "INSERT INTO tbl_users (userName, tc, phoneNumber,durum ,userEmail, userPass, plate, gender, apartman_id, rol, popup) VALUES 
-        (:userName, :tc, :phoneNumber, :durum, :userEmail, :userPass, :plate, :gender, :apartman_id, :rol, :popup)";
+        $sql = "INSERT INTO tbl_users (userName, tc, phoneNumber,durum ,userEmail, userPass, plate, gender, apartman_id, rol, popup, userStatus) VALUES 
+        (:userName, :tc, :phoneNumber, :durum, :userEmail, :userPass, :plate, :gender, :apartman_id, :rol, :popup, :userStatus)";
 
         // PDO sorgusunu hazırla ve çalıştır
         $stmt = $conn->prepare($sql);
@@ -47,6 +49,7 @@ try {
         $stmt->bindParam(':userPass', $userPass);
         $stmt->bindParam(':plate', $plate);
         $stmt->bindParam(':gender', $gender);
+        $stmt->bindParam(':userStatus', $t);
         $stmt->bindParam(':apartman_id', $apartman_id);
         $rol = 3;
         $popup = 0;

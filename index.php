@@ -50,7 +50,17 @@ if(isset($_POST['btn-login']))
     ,time()+(86400*30));
   }
   $_SESSION["mail"] =$email;
-  $user_login->redirect('Admin/index');
+
+  if($_SESSION['rol'] ==1 ){
+    $user_login->redirect('Admin/index');
+  }else if($_SESSION['rol'] ==3){
+    $user_login->redirect('Kullanici/giris');
+  }
+
+
+
+
+
  }
     }
 }

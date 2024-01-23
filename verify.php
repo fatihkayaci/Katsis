@@ -33,6 +33,7 @@ if(isset($_GET['id']) && isset($_GET['code']))
        <strong>WoW !</strong>  Your Account is Now Activated : <a href='index.php'>Login here</a>
           </div>
           "; 
+        
   }
   else
   {
@@ -42,6 +43,7 @@ if(isset($_GET['id']) && isset($_GET['code']))
        <strong>sorry !</strong>  Your Account is allready Activated : <a href='index.php'>Login here</a>
           </div>
           ";
+       
   }
  }
  else
@@ -52,6 +54,7 @@ if(isset($_GET['id']) && isset($_GET['code']))
       <strong>sorry !</strong>  No Account Found : <a href='signup.php'>Signup here</a>
       </div>
       ";
+      
  } 
 }
 
