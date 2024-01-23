@@ -47,49 +47,65 @@ class USER
    echo $ex->getMessage();
   }
  }
- 
- public function login($email,$upass)
- {
-  try
-  {
-   $stmt = $this->conn->prepare("SELECT * FROM tbl_users WHERE userEmail=:email_id");
-   $stmt->execute(array(":email_id"=>$email));
-   $userRow=$stmt->fetch(PDO::FETCH_ASSOC);
-   
-   if($stmt->rowCount() == 1)
-   {
-    if($userRow['userStatus']=="Y")
+ // ...
+
+public function login($email, $upass)
+{
+    try
     {
-     if($userRow['userPass']==md5($upass))
-     {
-      $_SESSION['userSession'] = $userRow['userID'];
-      return true;
-     }
-     else
-     {
-      header("Location: index.php?error");
-      exit;
-     }
+        $stmt = $this->conn->prepare("SELECT * FROM tbl_users WHERE userEmail=:email_id");
+        $stmt->execute(array(":email_id" => $email));
+        $userRow = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($stmt->rowCount() == 1)
+        {
+            if ($userRow['userStatus'] == "Y")
+            {
+                if ($userRow['userPass'] == md5($upass))
+                {
+                    // Kullanıcı girişi başarılı, kullanıcı rolüne göre yönlendirme yapılmaktadır.
+                    if ($userRow['rol'] == 1)
+                    {
+                        $_SESSION['userSession'] = $userRow['userID'];
+                        $this->redirect('Admin/index.php');
+                    }
+                    elseif ($userRow['rol'] == 3)
+                    {
+                        $_SESSION['userSession'] = $userRow['userID'];
+                        $this->redirect('Kullanici/giris.php');
+                    }
+                    else
+                    {
+                        // Bilinmeyen bir rol varsa, hata sayfasına yönlendirme yapabilirsiniz
+                        $this->redirect('hata.php');
+                    }
+                }
+                else
+                {
+                    header("Location: index.php?error");
+                    exit;
+                }
+            }
+            else
+            {
+                header("Location: index.php?inactive");
+                exit;
+            }
+        }
+        else
+        {
+            header("Location: index.php?error");
+            exit;
+        }
     }
-    else
+    catch (PDOException $ex)
     {
-     header("Location: index.php?inactive");
-     exit;
-    } 
-   }
-   else
-   {
-    header("Location: index.php?error");
-    exit;
-   }  
-  }
-  catch(PDOException $ex)
-  {
-   echo $ex->getMessage();
-  }
- }
- 
- 
+        echo $ex->getMessage();
+    }
+}
+
+// ...
+
  public function is_logged_in()
  {
   if(isset($_SESSION['userSession']))
@@ -105,9 +121,11 @@ class USER
  
  public function logout()
  {
-  session_destroy();
-  $_SESSION['userSession'] = false;
+     session_destroy();
+     $_SESSION['userSession'] = false;
+     $this->redirect('index.php');
  }
+ 
  
  function send_mail($email,$message,$subject)
  {      

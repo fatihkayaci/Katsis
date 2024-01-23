@@ -310,7 +310,7 @@ try {
                 var userPass = row.querySelector('td:nth-child(6)').textContent;
                 var plate = row.querySelector('td:nth-child(7)').textContent;
                 var gender = row.querySelector('td:nth-child(8) select').value;
-                alert(userName+","+  tc+","+phoneNumber+","+durum+","+userEmail+","+userID+","+plate+","+gender);
+                //alert(userName+","+  tc+","+phoneNumber+","+durum+","+userEmail+","+userID+","+plate+","+gender);
                 if(kisitlamalar(userName,tc,phoneNumber,userEmail,plate)){
                     $.ajax({
                     url: 'Controller/update_user.php',
@@ -340,7 +340,6 @@ try {
             }else{
                 return;
             }
-                
             });
         });
         var deleteButtons = document.querySelectorAll('.deleteButton');
