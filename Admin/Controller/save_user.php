@@ -53,7 +53,7 @@ try {
         $stmt->bindParam(':rol', $rol);
         $stmt->bindParam(':popup', $popup);
         $stmt->execute();
-       
+       echo 1;
     }
 } catch (PDOException $e) {
     echo $e;

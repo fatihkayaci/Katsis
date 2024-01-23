@@ -264,7 +264,7 @@ try {
             var plate = $('input[name="plate"]').val();
             var gender = $('select#gender').val();
             var apartman_id = $('input[name="apartman_id"]').val();
-            alert(userName+","+  tc+","+phoneNumber+","+durum+","+userEmail+","+apartman_id+","+plate+","+gender);
+            //alert(userName+","+  tc+","+phoneNumber+","+durum+","+userEmail+","+apartman_id+","+plate+","+gender);
             if(kisitlamalar(userName,tc,phoneNumber,userEmail,plate)){
                 $.ajax({
                 url: 'Controller/save_user.php',
@@ -280,10 +280,10 @@ try {
                     apartman_id: apartman_id
                 },
                 success: function(response) {
-                    alert(response);
-                   /* if (response == 1) {
+                    //alert(response);
+                    if (response == 1) {
                         location.reload();
-                    }*/
+                    }
                 },
                 error: function(error) {
                     console.error(error);
