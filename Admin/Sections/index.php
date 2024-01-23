@@ -1,22 +1,5 @@
-<style>
-    tfoot input {
-        width: 100%;
-        padding: 3px;
-        box-sizing: border-box;
-    }
-
-    #popup {
-        display: none;
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        padding: 20px;
-        background: #fff;
-        z-index: 1000;
-    }
-    </style>
 <?php
+
 $idapartman =$_SESSION["apartID"];
 try {
     $sql = "SELECT * FROM tbl_daireler where apartman_id=$idapartman";
@@ -68,31 +51,41 @@ try {
 
 
   <!-- Popup Form -->
-  <div id="popup">
-        <form id="userForm">
+    <div id="popup" class="form-popup">
+
+        <form id="userForm" class="login-form1">
         
-            <label for="durum">durum</label>
-            <select id="durum">
-                <option value="katmaliki">kat Maliki</option>
-                <option value="kiracı">kiracı</option>
-            </select>
-            <input type="text" list="cars" />
-<datalist id="cars">
-  <option>Volvo</option>
-  <option>Saab</option>
-  <option>Mercedes</option>
-  <option>Audi</option>
-</datalist>
+        <h2 class="form-signin-heading">Kiracı Ekle</h2>
+
+        <hr class="horizontal dark mt-0 w-100">
+
+        <div class="row">
+            <div class="col-md-6 col">
+                <select class="input" id="durum">
+                    <option value="katmaliki">kat Maliki</option>
+                    <option value="kiracı">kiracı</option>
+                </select>
+            </div>
+            <div class="col-md-6 col">
+                <input  class="input" type="text" list="cars" />
+                <datalist id="cars">
+                  <option>Volvo</option>
+                  <option>Saab</option>
+                  <option>Mercedes</option>
+                  <option>Audi</option>
+                </datalist>
+            </div>
+        </div>
+
+        <hr class="horizontal dark w-100">
            
-
-
-          
-
-          
-
-            <button type="button" onclick="closePopup()">Close</button>
-            <button type="button" id="saveButton">Save</button>
+        <div class="row row-btns">
+                <button type="button" class="btn btnx btn-secondary btn-size" onclick="closePopup()">Kapat</button>       
+                <button type="button" class="btn btnx btn-primary btn-size" id="saveButton">Kaydet</button>
+        </div>
+        
         </form>
+
     </div>
 
 
@@ -124,6 +117,7 @@ try {
         console.log('tur :', tur);
 
             $('#popup').show();
+            $('#popup').css('display', 'flex');
         }
 
         function closePopup() {

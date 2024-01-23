@@ -23,14 +23,6 @@
 
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
   
-    <style>
-        tfoot input {
-            width: 100%;
-            padding: 3px;
-            box-sizing: border-box;
-        }
-    </style>
-
   
   <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
 </head>
