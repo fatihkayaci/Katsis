@@ -19,7 +19,8 @@
 
     <?php
 try {
-    $sql = "SELECT * FROM tbl_kullanici WHERE apartmanID = " .$_SESSION["apartID"]  ;
+    $sql = "SELECT * FROM tbl_users WHERE apartman_id = " . $_SESSION["apartID"] . " AND rol = 3";
+
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     
@@ -46,8 +47,8 @@ try {
                 <tbody>';
 
                 foreach ($result as $row) {
-                    echo '<tr data-userid="' . $row["kullaniciID"] . '">
-                            <td contenteditable="true">' . $row["fullName"] . '</td>
+                    echo '<tr data-userid="' . $row["userID"] . '">
+                            <td contenteditable="true">' . $row["userName"] . '</td>
                             <td contenteditable="true">' . $row["tc"] . '</td>
                             <td contenteditable="true">' . $row["phoneNumber"] . '</td>
                             <td contenteditable="true">
@@ -56,9 +57,9 @@ try {
                                 <option value="kiracı" ' . ($row["durum"] == "kiracı" ? 'selected' : '') . '>kiracı</option>
                             </select>
                             </td>
-                            <td contenteditable="true">' . $row["email"] . '</td>
-                            <td contenteditable="true">' . $row["sifre"] . '</td>
-                            <td contenteditable="true">' . $row["vehiclePlate"] . '</td>
+                            <td contenteditable="true">' . $row["userEmail"] . '</td>
+                            <td contenteditable="true">' . $row["userPass"] . '</td>
+                            <td contenteditable="true">' . $row["plate"] . '</td>
                             <td contenteditable="true">
                             <select>
                                 <option value="Erkek" ' . ($row["gender"] == "Erkek" ? 'selected' : '') . '>Erkek</option>
@@ -93,8 +94,8 @@ try {
 
             <div class="row">
                 <div class="col-md-6 col">
-                    <label for="fullName">Ad Soyad :</label>
-                    <input class="input" type="text" name="fullName" placeholder="İsminizi Giriniz." required><br>
+                    <label for="userName">Ad Soyad :</label>
+                    <input class="input" type="text" name="userName" placeholder="İsminizi Giriniz." required><br>
                 </div>
 
                 <div class="col-md-6 col">
@@ -120,13 +121,13 @@ try {
 
             <div class="row">
                 <div class="col-md-6 col margint">
-                    <label for="email">E-Posta (opsiyonel) :</label>
-                    <input class="input" type="text" name="email" placeholder="Email adresi (opsiyonel)"><br>
+                    <label for="userEmail">E-Posta (opsiyonel) :</label>
+                    <input class="input" type="text" name="userEmail" placeholder="Email adresi"><br>
                 </div>
 
                 <div class="col-md-6 col">
-                    <label for="vehiclePlate">Araba Plakası (opsiyonel) :</label>
-                    <input class="input" type="text" name="vehiclePlate" placeholder="Araba plakası (opsiyonel)"><br>
+                    <label for="plate">Araba Plakası (opsiyonel) :</label>
+                    <input class="input" type="text" name="plate" placeholder="Araba plakası (opsiyonel)"><br>
                 </div>
             </div>
 
@@ -141,7 +142,7 @@ try {
                 </div>
 
                 <div class="col-md-6 col">
-                    <input class="input" type="text" name="apartID" value=<?php echo $_SESSION["apartID"];   ?> hidden >
+                    <input class="input" type="text" name="apartman_id" value=<?php echo $_SESSION["apartID"];   ?> hidden >
                 </div>
             </div>
 
@@ -174,22 +175,22 @@ try {
         }
 
         //kısıtlama ile ilgili fonksiyonlar başlangıç...
-        function validateFullName(fullName) {
+        function validateFullName(userName) {
             const regex = /^[A-Za-zÇçĞğİıÖöŞşÜü\s]+$/;
-            return regex.test(fullName);
+            return regex.test(userName);
             event.preventDefault(); // Formun gönderimini engelle
         }
 
-        function validateEmail(email) {
+        function validateEmail(userEmail) {
             const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return regex.test(email);
+            return regex.test(userEmail);
             event.preventDefault(); // Formun gönderimini engelle
         }
 
-        function validateVehiclePlate(vehiclePlate) {
+        function validateVehiclePlate(plate) {
             //const regex = /^\d{2}\s[A-ZÇĞİÖŞÜ]{1,3}\s\d{2,3}\s?[A-ZÇĞİÖŞÜ]{0,1}\s?[0-9]{0,3}$/; BOŞLUKLU İSTERSEK.
             const regex = /^\d{2}[A-ZÇĞİÖŞÜ]{1,3}\d{2,3}?[A-ZÇĞİÖŞÜ]{0,1}?[0-9]{0,3}$/;
-            return regex.test(vehiclePlate);
+            return regex.test(plate);
             event.preventDefault(); // Formun gönderimini engelle
         }
         //parola için kısıtlama
@@ -207,39 +208,23 @@ try {
             }
 
             // Parolada en az bir büyük harf, bir küçük harf, bir sayı ve bir özel karakter olmalıdır.
-            if (!/(?=.*[a-zÇçĞğİıÖöŞşÜü])(?=.*[A-ZÇçĞğİıÖöŞşÜü])(?=.*\d)[A-Za-zÇçĞğİıÖöŞşÜü\d]/.test(sifre)) {
+            if (!/(?=.[a-zÇçĞğİıÖöŞşÜü])(?=.[A-ZÇçĞğİıÖöŞşÜü])(?=.*\d)[A-Za-zÇçĞğİıÖöŞşÜü\d]/.test(sifre)) {
                 alert('Parola güçlü değil. Lütfen en az bir büyük harf, bir küçük harf ve bir sayı içersin.');
                 return false;
             }
-
-
             // Tüm kısıtlamalar geçildiyse true döndür
             return true;
         }
-        //kısıtlama ile ilgili fonksiyonlar bitiş...
-
-        var saveButton = document.getElementById('saveButton');
-        saveButton.addEventListener('click', function() {
-
-            var fullName = $('input[name="fullName"]').val();
-            var tc = $('input[name="tc"]').val();
-            var phoneNumber = $('input[name="phoneNumber"]').val();
-            var durum = $('select#durum').val();
-            var email = $('input[name="email"]').val();
-            var vehiclePlate = $('input[name="vehiclePlate"]').val();
-            var gender = $('select#gender').val();
-            var apartID = $('input[name="apartID"]').val();
-
-
-            if (fullName.length < 3) {
+        function kisitlamalar(userName,tc,phoneNumber,userEmail,plate){
+            if (userName.length < 3) {
                 alert('Full Name en az 3 karakter olmalıdır.');
                 return;
             }
-            if (fullName.length > 100) {
+            if (userName.length > 100) {
                 alert('Full Name 100den fazla karakter olamaz.');
                 return;
             }
-            if (!validateFullName(fullName)) {
+            if (!validateFullName(userName)) {
                 alert('Lütfen yalnızca harf karakterleri içeren geçerli bir tam ad girin.');
                 return;
             }
@@ -255,33 +240,48 @@ try {
                 return;
             }
             //email kısıtlamaları
-            if (!validateEmail(email)) {
+            if (!validateEmail(userEmail)) {
                 alert('Lütfen geçerli bir e-posta adresi girin.');
                 return;
             }
             //araba plakası kısıtlamaları.
-            if (vehiclePlate !== null && vehiclePlate.trim() !== "") {
-                if (!validateVehiclePlate(vehiclePlate)) {
+            if (plate !== null && plate.trim() !== "") {
+                if (!validateVehiclePlate(plate)) {
                     alert('Lütfen geçerli bir araba plakası giriniz.');
                     return;
                 }
             }
+            return true;
+        }
+        //kısıtlama ile ilgili fonksiyonlar bitiş...
 
-            $.ajax({
+        var saveButton = document.getElementById('saveButton');
+        saveButton.addEventListener('click', function() {
+            var userName = $('input[name="userName"]').val();
+            var tc = $('input[name="tc"]').val();
+            var phoneNumber = $('input[name="phoneNumber"]').val();
+            var durum = $('select#durum').val();
+            var userEmail = $('input[name="userEmail"]').val();
+            var plate = $('input[name="plate"]').val();
+            var gender = $('select#gender').val();
+            var apartman_id = $('input[name="apartman_id"]').val();
+            //alert(userName+","+  tc+","+phoneNumber+","+durum+","+userEmail+","+apartman_id+","+plate+","+gender);
+            if(kisitlamalar(userName,tc,phoneNumber,userEmail,plate)){
+                $.ajax({
                 url: 'Controller/save_user.php',
                 type: 'POST',
                 data: {
-                    fullName: fullName,
+                    userName: userName,
                     tc: tc,
                     phoneNumber: phoneNumber,
                     durum: durum,
-                    email: email,
-                    vehiclePlate: vehiclePlate,
+                    userEmail: userEmail,
+                    plate: plate,
                     gender: gender,
-                    apartID: apartID
+                    apartman_id: apartman_id
                 },
                 success: function(response) {
-                    alert(response);
+                    //alert(response);
                     if (response == 1) {
                         location.reload();
                     }
@@ -290,6 +290,10 @@ try {
                     console.error(error);
                 }
             });
+            }else{
+                return;
+            }
+
         });
 
         var updateButtons = document.querySelectorAll('.updateButton');
@@ -297,74 +301,33 @@ try {
         updateButtons.forEach(function(button) {
             button.addEventListener('click', function() {
                 var row = this.closest('tr'); // Güncellenen satırı bul
-                var kullaniciID = row.getAttribute('data-userid');
-                var fullName = row.querySelector('td:nth-child(1)').textContent;
+                var userID = row.getAttribute('data-userid');
+                var userName = row.querySelector('td:nth-child(1)').textContent;
                 var tc = row.querySelector('td:nth-child(2)').textContent;
                 var phoneNumber = row.querySelector('td:nth-child(3)').textContent;
                 var durum = row.querySelector('td:nth-child(4) select').value;
-                var email = row.querySelector('td:nth-child(5)').textContent;
-                var sifre = row.querySelector('td:nth-child(6)').textContent;
-                var vehiclePlate = row.querySelector('td:nth-child(7)').textContent;
+                var userEmail = row.querySelector('td:nth-child(5)').textContent;
+                var userPass = row.querySelector('td:nth-child(6)').textContent;
+                var plate = row.querySelector('td:nth-child(7)').textContent;
                 var gender = row.querySelector('td:nth-child(8) select').value;
-                //KISITLAMALAR BAŞLANGIÇ...
-                //fullname
-                if (fullName.length < 3) {
-                    alert('Full Name en az 3 karakter olmalıdır.');
-                    return;
-                }
-                if (fullName.length > 100) {
-                    alert('Full Name 100den fazla karakter olamaz.');
-                    return;
-                }
-                if (!validateFullName(fullName)) {
-                    alert('Lütfen yalnızca harf karakterleri içeren geçerli bir tam ad girin.');
-                    return;
-                }
-                //tc kısıtlamaları
-                if (tc.length !== 11) {
-                    alert('TC numarı 11 haneli olmalıdır.');
-                    return; // Fonksiyondan çık
-                }
-
-                //telefon kısıtlamaları
-                if (phoneNumber.length !== 10) {
-                    alert('Telefon numarası 10 haneli olmalıdır.');
-                    return;
-                }
-                //email kısıtlamaları
-                if (!validateEmail(email)) {
-                    alert('Lütfen geçerli bir e-posta adresi girin.');
-                    return;
-                }
-                //araba plakası kısıtlamaları.
-                if (vehiclePlate !== null && vehiclePlate.trim() !== "") {
-                    if (!validateVehiclePlate(vehiclePlate)) {
-                        alert('Lütfen geçerli bir araba plakası giriniz.');
-                        return;
-                    }
-                }
-                if (!validatePassword(sifre)) {
-                    return; // Kısıtlamaları geçemezse işlemi durdur
-                }
-
-                //KISITLAMALAR BİTİŞ...
-
-                $.ajax({
+                alert(userName+","+  tc+","+phoneNumber+","+durum+","+userEmail+","+userID+","+plate+","+gender);
+                if(kisitlamalar(userName,tc,phoneNumber,userEmail,plate)){
+                    $.ajax({
                     url: 'Controller/update_user.php',
                     type: 'POST',
                     data: {
-                        kullaniciID: kullaniciID,
-                        fullName: fullName,
+                        userID: userID,
+                        userName: userName,
                         tc: tc,
                         phoneNumber: phoneNumber,
                         durum: durum,
-                        email: email,
-                        sifre: sifre,
-                        vehiclePlate: vehiclePlate,
+                        userEmail: userEmail,
+                        userPass: userPass,
+                        plate: plate,
                         gender: gender
                     },
                     success: function(response) {
-                        alert(response);
+                        //alert(response);
                         if (response == 1) {
                             alert("güncellendi");
                             //location.reload();
@@ -374,6 +337,10 @@ try {
                         console.error('Gönderim hatası:', error);
                     }
                 });
+            }else{
+                return;
+            }
+                
             });
         });
         var deleteButtons = document.querySelectorAll('.deleteButton');
@@ -381,25 +348,25 @@ try {
         deleteButtons.forEach(function(button) {
             button.addEventListener('click', function() {
                 var row = this.closest('tr'); // Güncellenen satırı bul
-                var fullName = row.querySelector('td:nth-child(1)').textContent;
+                var userName = row.querySelector('td:nth-child(1)').textContent;
                 var tc = row.querySelector('td:nth-child(2)').textContent;
                 var phoneNumber = row.querySelector('td:nth-child(3)').textContent;
-                var email = row.querySelector('td:nth-child(4)').textContent;
-                var sifre = row.querySelector('td:nth-child(5)').textContent;
-                var vehiclePlate = row.querySelector('td:nth-child(6)').textContent;
+                var userEmail = row.querySelector('td:nth-child(4)').textContent;
+                var userPass = row.querySelector('td:nth-child(5)').textContent;
+                var plate = row.querySelector('td:nth-child(6)').textContent;
                 var gender = row.querySelector('td:nth-child(7)').textContent;
-                var kullaniciID = row.getAttribute('data-userid');
+                var userID = row.getAttribute('data-userid');
                 $.ajax({
                     url: 'Controller/delete_user.php',
                     type: 'POST',
                     data: {
-                        kullaniciID: kullaniciID,
-                        fullName: fullName,
+                        userID: userID,
+                        userName: userName,
                         tc: tc,
                         phoneNumber: phoneNumber,
-                        email: email,
-                        sifre: sifre,
-                        vehiclePlate: vehiclePlate,
+                        userEmail: userEmail,
+                        userPass: userPass,
+                        plate: plate,
                         gender: gender
                     },
                     success: function(response) {
