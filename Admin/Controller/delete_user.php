@@ -1,14 +1,14 @@
 <?php
 include("../../DB/dbconfig.php");
 try {
-    $kullaniciID = $_POST['kullaniciID'];
+    $userID = $_POST['userID'];
     
     // SQL sorgusunu hazırla
-    $sql = "DELETE FROM tbl_kullanici WHERE kullaniciID = :kullaniciID";
+    $sql = "DELETE FROM tbl_users WHERE userID = :userID";
 
     // PDO sorgusunu hazırla ve çalıştır
     $stmt = $conn->prepare($sql);
-    $stmt->bindParam(':kullaniciID', $kullaniciID);
+    $stmt->bindParam(':userID', $userID);
     $stmt->execute();
     
     echo 1;

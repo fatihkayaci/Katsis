@@ -19,7 +19,7 @@
 
     <?php
 try {
-    $sql = "SELECT * FROM tbl_users WHERE apartman_id = " .$_SESSION["apartID"]  ;
+    $sql = "SELECT * FROM tbl_users WHERE apartman_id = " .$_SESSION["apartID"];
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     
@@ -141,7 +141,7 @@ try {
                 </div>
 
                 <div class="col-md-6 col">
-                    <input class="input" type="text" name="apartID" value=<?php echo $_SESSION["apartID"];   ?> hidden >
+                    <input class="input" type="text" name="apartman_id" value=<?php echo $_SESSION["apartID"];   ?> hidden >
                 </div>
             </div>
 
@@ -207,30 +207,14 @@ try {
             }
 
             // Parolada en az bir büyük harf, bir küçük harf, bir sayı ve bir özel karakter olmalıdır.
-            if (!/(?=.*[a-zÇçĞğİıÖöŞşÜü])(?=.*[A-ZÇçĞğİıÖöŞşÜü])(?=.*\d)[A-Za-zÇçĞğİıÖöŞşÜü\d]/.test(sifre)) {
+            if (!/(?=.[a-zÇçĞğİıÖöŞşÜü])(?=.[A-ZÇçĞğİıÖöŞşÜü])(?=.*\d)[A-Za-zÇçĞğİıÖöŞşÜü\d]/.test(sifre)) {
                 alert('Parola güçlü değil. Lütfen en az bir büyük harf, bir küçük harf ve bir sayı içersin.');
                 return false;
             }
-
-
             // Tüm kısıtlamalar geçildiyse true döndür
             return true;
         }
-        //kısıtlama ile ilgili fonksiyonlar bitiş...
-
-        var saveButton = document.getElementById('saveButton');
-        saveButton.addEventListener('click', function() {
-
-            var userName = $('input[name="userName"]').val();
-            var tc = $('input[name="tc"]').val();
-            var phoneNumber = $('input[name="phoneNumber"]').val();
-            var durum = $('select#durum').val();
-            var userEmail = $('input[name="userEmail"]').val();
-            var plate = $('input[name="plate"]').val();
-            var gender = $('select#gender').val();
-            var apartID = $('input[name="apartID"]').val();
-
-/*
+        function kisitlamalar(userName,tc,phoneNumber,userEmail,plate){
             if (userName.length < 3) {
                 alert('Full Name en az 3 karakter olmalıdır.');
                 return;
@@ -266,8 +250,23 @@ try {
                     return;
                 }
             }
-*/
-            $.ajax({
+            return true;
+        }
+        //kısıtlama ile ilgili fonksiyonlar bitiş...
+
+        var saveButton = document.getElementById('saveButton');
+        saveButton.addEventListener('click', function() {
+            var userName = $('input[name="userName"]').val();
+            var tc = $('input[name="tc"]').val();
+            var phoneNumber = $('input[name="phoneNumber"]').val();
+            var durum = $('select#durum').val();
+            var userEmail = $('input[name="userEmail"]').val();
+            var plate = $('input[name="plate"]').val();
+            var gender = $('select#gender').val();
+            var apartman_id = $('input[name="apartman_id"]').val();
+            alert(userName+","+  tc+","+phoneNumber+","+durum+","+userEmail+","+apartman_id+","+plate+","+gender);
+            if(kisitlamalar(userName,tc,phoneNumber,userEmail,plate)){
+                $.ajax({
                 url: 'Controller/save_user.php',
                 type: 'POST',
                 data: {
@@ -278,18 +277,22 @@ try {
                     userEmail: userEmail,
                     plate: plate,
                     gender: gender,
-                    apartID: apartID
+                    apartman_id: apartman_id
                 },
                 success: function(response) {
                     alert(response);
-                    if (response == 1) {
+                   /* if (response == 1) {
                         location.reload();
-                    }
+                    }*/
                 },
                 error: function(error) {
                     console.error(error);
                 }
             });
+            }else{
+                return;
+            }
+
         });
 
         var updateButtons = document.querySelectorAll('.updateButton');
@@ -297,69 +300,28 @@ try {
         updateButtons.forEach(function(button) {
             button.addEventListener('click', function() {
                 var row = this.closest('tr'); // Güncellenen satırı bul
-                var kullaniciID = row.getAttribute('data-userid');
+                var userID = row.getAttribute('data-userid');
                 var userName = row.querySelector('td:nth-child(1)').textContent;
                 var tc = row.querySelector('td:nth-child(2)').textContent;
                 var phoneNumber = row.querySelector('td:nth-child(3)').textContent;
                 var durum = row.querySelector('td:nth-child(4) select').value;
                 var userEmail = row.querySelector('td:nth-child(5)').textContent;
-                var sifre = row.querySelector('td:nth-child(6)').textContent;
+                var userPass = row.querySelector('td:nth-child(6)').textContent;
                 var plate = row.querySelector('td:nth-child(7)').textContent;
                 var gender = row.querySelector('td:nth-child(8) select').value;
-                //KISITLAMALAR BAŞLANGIÇ...
-                //fullname
-                if (userName.length < 3) {
-                    alert('Full Name en az 3 karakter olmalıdır.');
-                    return;
-                }
-                if (userName.length > 100) {
-                    alert('Full Name 100den fazla karakter olamaz.');
-                    return;
-                }
-                if (!validateFullName(userName)) {
-                    alert('Lütfen yalnızca harf karakterleri içeren geçerli bir tam ad girin.');
-                    return;
-                }
-                //tc kısıtlamaları
-                if (tc.length !== 11) {
-                    alert('TC numarı 11 haneli olmalıdır.');
-                    return; // Fonksiyondan çık
-                }
-
-                //telefon kısıtlamaları
-                if (phoneNumber.length !== 10) {
-                    alert('Telefon numarası 10 haneli olmalıdır.');
-                    return;
-                }
-                //email kısıtlamaları
-                if (!validateEmail(userEmail)) {
-                    alert('Lütfen geçerli bir e-posta adresi girin.');
-                    return;
-                }
-                //araba plakası kısıtlamaları.
-                if (plate !== null && plate.trim() !== "") {
-                    if (!validateVehiclePlate(plate)) {
-                        alert('Lütfen geçerli bir araba plakası giriniz.');
-                        return;
-                    }
-                }
-                if (!validatePassword(sifre)) {
-                    return; // Kısıtlamaları geçemezse işlemi durdur
-                }
-
-                //KISITLAMALAR BİTİŞ...
-
-                $.ajax({
+                alert(userName+","+  tc+","+phoneNumber+","+durum+","+userEmail+","+userID+","+plate+","+gender);
+                if(kisitlamalar(userName,tc,phoneNumber,userEmail,plate)){
+                    $.ajax({
                     url: 'Controller/update_user.php',
                     type: 'POST',
                     data: {
-                        kullaniciID: kullaniciID,
+                        userID: userID,
                         userName: userName,
                         tc: tc,
                         phoneNumber: phoneNumber,
                         durum: durum,
                         userEmail: userEmail,
-                        sifre: sifre,
+                        userPass: userPass,
                         plate: plate,
                         gender: gender
                     },
@@ -374,6 +336,10 @@ try {
                         console.error('Gönderim hatası:', error);
                     }
                 });
+            }else{
+                return;
+            }
+                
             });
         });
         var deleteButtons = document.querySelectorAll('.deleteButton');
@@ -385,20 +351,20 @@ try {
                 var tc = row.querySelector('td:nth-child(2)').textContent;
                 var phoneNumber = row.querySelector('td:nth-child(3)').textContent;
                 var userEmail = row.querySelector('td:nth-child(4)').textContent;
-                var sifre = row.querySelector('td:nth-child(5)').textContent;
+                var userPass = row.querySelector('td:nth-child(5)').textContent;
                 var plate = row.querySelector('td:nth-child(6)').textContent;
                 var gender = row.querySelector('td:nth-child(7)').textContent;
-                var kullaniciID = row.getAttribute('data-userid');
+                var userID = row.getAttribute('data-userid');
                 $.ajax({
                     url: 'Controller/delete_user.php',
                     type: 'POST',
                     data: {
-                        kullaniciID: kullaniciID,
+                        userID: userID,
                         userName: userName,
                         tc: tc,
                         phoneNumber: phoneNumber,
                         userEmail: userEmail,
-                        sifre: sifre,
+                        userPass: userPass,
                         plate: plate,
                         gender: gender
                     },
