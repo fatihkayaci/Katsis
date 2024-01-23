@@ -1,7 +1,11 @@
 <?php
 session_start();
 include("../DB/dbconfig.php");
-
+require_once '../class.user.php';
+$user_login = new USER();
+if (!isset($_SESSION["mail"]) || empty($_SESSION["mail"])) {
+    $user_login->redirect('../index');
+} 
 $sql = "SELECT * FROM tbl_users WHERE userEmail = :userEmail";
 
 $stmt = $conn->prepare($sql);
