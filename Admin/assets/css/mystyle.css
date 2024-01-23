@@ -204,3 +204,16 @@ label {
   background: #555; 
   border-radius: 50px;
 }
+
+.min-height-vh-100 {
+    min-height: 100vh;
+}
+
+
+
+/* Bolumler tablo kodları */
+
+.btn1 {
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
+}
