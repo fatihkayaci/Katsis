@@ -29,8 +29,8 @@ try {
                     <td>' . $row["blok_adi"] . '</td>
                     <td>' . $row["daire_sayisi"] . '</td>
                     
-                    <td><button type="button" class="btn btn-outline-danger btn-sm" onclick="openPopup('.$row["daire_id"].',0)">Kiracı ekle + </button></td>
-                    <td><button type="button" class="btn btn-outline-danger btn-sm" onclick="openPopup('.$row["daire_id"].',1)">Kat Maliki ekle + </button></td>
+                    <td><button type="button" class="btn btn-primary btn-sm btn1" onclick="openPopup('.$row["daire_id"].',0)">Kiracı ekle + </button></td>
+                    <td><button type="button" class="btn btn-primary btn-sm btn1" onclick="openPopup('.$row["daire_id"].',1)">Kat Maliki ekle + </button></td>
 
 
 
