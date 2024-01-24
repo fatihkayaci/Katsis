@@ -33,7 +33,6 @@ try {
     } else {
         // Rastgele şifre oluştur
         $userPass = randomPassword();
-        echo $userPass;
         $hashedPassword = base64_encode($userPass);
         $t ="Y";
 
@@ -58,6 +57,7 @@ try {
         $stmt->bindParam(':rol', $rol);
         $stmt->bindParam(':popup', $popup);
         $stmt->execute();
+        echo 1;
     }
 } catch (PDOException $e) {
     echo $e;

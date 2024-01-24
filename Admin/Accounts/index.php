@@ -281,10 +281,10 @@ try {
                     apartman_id: apartman_id
                 },
                 success: function(response) {
-                    alert(response);
-                    /*if (response == 1) {
+                    //alert(response);
+                    if (response == 1) {
                         location.reload();
-                    }*/
+                    }
                 },
                 error: function(error) {
                     console.error(error);
