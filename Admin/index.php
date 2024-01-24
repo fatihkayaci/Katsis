@@ -15,11 +15,11 @@ $stmt->execute();
 
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     $idApartman= $row['apartman_id'];
+    $userName = $row['userName'];
 }
 
 
-
-
+$_SESSION["userName"] =$userName;
 $_SESSION["apartID"] =$idApartman;
 
 $indexx= "";
