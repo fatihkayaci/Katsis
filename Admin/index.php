@@ -14,7 +14,7 @@ $stmt->bindParam(":userEmail", $_SESSION["mail"]);
 $stmt->execute();
 
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-    $idApartman= $row['userID'];
+    $idApartman= $row['apartman_id'];
 }
 
 
