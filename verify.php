@@ -30,7 +30,7 @@ if(isset($_GET['id']) && isset($_GET['code']))
    $msg = "
              <div class='alert alert-success'>
        <button class='close' data-dismiss='alert'>&times;</button>
-       <strong>WoW !</strong>  Your Account is Now Activated : <a href='index.php'>Login here</a>
+       <strong>WoW !</strong>  Your Account is Now Activated : <a class='btn-a' href='index '>Login here</a>
           </div>
           "; 
         
@@ -40,7 +40,7 @@ if(isset($_GET['id']) && isset($_GET['code']))
    $msg = "
              <div class='alert alert-error'>
        <button class='close' data-dismiss='alert'>&times;</button>
-       <strong>sorry !</strong>  Your Account is allready Activated : <a href='index.php'>Login here</a>
+       <strong>sorry !</strong>  Your Account is allready Activated : <a class='btn-a' href='index'>Login here</a>
           </div>
           ";
        
@@ -51,7 +51,7 @@ if(isset($_GET['id']) && isset($_GET['code']))
   $msg = "
          <div class='alert alert-error'>
       <button class='close' data-dismiss='alert'>&times;</button>
-      <strong>sorry !</strong>  No Account Found : <a href='signup.php'>Signup here</a>
+      <strong>sorry !</strong>  No Account Found : <a class='btn-a' href='signup'>Signup here</a>
       </div>
       ";
       
@@ -81,3 +81,10 @@ if(isset($_GET['id']) && isset($_GET['code']))
     <script src="bootstrap/js/bootstrap.min.js"></script>
   </body>
 </html>
+
+
+<script>
+document.getElementsByClassName('btn-a')[0].click();
+
+
+</script>
