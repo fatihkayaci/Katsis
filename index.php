@@ -56,11 +56,6 @@ if(isset($_POST['btn-login']))
   }else if($_SESSION['rol'] ==3){
     $user_login->redirect('Kullanici/giris');
   }
-
-
-
-
-
  }
     }
 }

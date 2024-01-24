@@ -8,7 +8,6 @@ function randomPassword($length = 8) {
     for ($i = 0; $i < $length; $i++) {
         $userPass .= $characters[rand(0, strlen($characters) - 1)];
     }
-
     return $userPass;
 }
 
@@ -22,21 +21,24 @@ try {
     $apartman_id = $_POST['apartman_id'];
     $plate = $_POST['plate'];
     $gender = $_POST['gender'];
+
     // E-posta adresinin varlığını kontrol et
     $emailCheckSQL = "SELECT COUNT(*) FROM tbl_users WHERE userEmail = :userEmail";
     $emailCheckStmt = $conn->prepare($emailCheckSQL);
     $emailCheckStmt->bindParam(':userEmail', $userEmail);
     $emailCheckStmt->execute();
-    
+
     if ($emailCheckStmt->fetchColumn() > 0) {
         echo "bu email zaten var. lütfen email adresini kontrol edip tekrar deneyiniz.";
     } else {
         // Rastgele şifre oluştur
         $userPass = randomPassword();
-        $userPass = md5($userPass);
+        echo $userPass;
+        $hashedPassword = password_hash($userPass, PASSWORD_DEFAULT);
         $t ="Y";
+
         // SQL sorgusunu hazırla
-        $sql = "INSERT INTO tbl_users (userName, tc, phoneNumber,durum ,userEmail, userPass, plate, gender, apartman_id, rol, popup, userStatus) VALUES 
+        $sql = "INSERT INTO tbl_users (userName, tc, phoneNumber, durum, userEmail, userPass, plate, gender, apartman_id, rol, popup, userStatus) VALUES 
         (:userName, :tc, :phoneNumber, :durum, :userEmail, :userPass, :plate, :gender, :apartman_id, :rol, :popup, :userStatus)";
 
         // PDO sorgusunu hazırla ve çalıştır
@@ -46,7 +48,7 @@ try {
         $stmt->bindParam(':phoneNumber', $phoneNumber);
         $stmt->bindParam(':durum', $durum);
         $stmt->bindParam(':userEmail', $userEmail);
-        $stmt->bindParam(':userPass', $userPass);
+        $stmt->bindParam(':userPass', $hashedPassword);
         $stmt->bindParam(':plate', $plate);
         $stmt->bindParam(':gender', $gender);
         $stmt->bindParam(':userStatus', $t);
@@ -56,7 +58,6 @@ try {
         $stmt->bindParam(':rol', $rol);
         $stmt->bindParam(':popup', $popup);
         $stmt->execute();
-       echo 1;
     }
 } catch (PDOException $e) {
     echo $e;
