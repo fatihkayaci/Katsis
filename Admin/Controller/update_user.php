@@ -12,6 +12,7 @@ try {
     $userPass = $_POST['userPass'];
     $plate = $_POST['plate'];
     $gender = $_POST['gender'];
+    $userPass  = base64_encode($userPass);
     // Eğer e-posta adresi değişmişse ve yeni e-posta adresiyle aynı olan bir kullanıcı varsa güncelleme yapma
     $checkExistingEmailSQL = "SELECT COUNT(*) FROM tbl_users WHERE userEmail = :userEmail AND userID != :userID";
     $checkExistingEmailStmt = $conn->prepare($checkExistingEmailSQL);

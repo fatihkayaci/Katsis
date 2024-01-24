@@ -34,7 +34,7 @@ try {
         // Rastgele şifre oluştur
         $userPass = randomPassword();
         echo $userPass;
-        $hashedPassword = password_hash($userPass, PASSWORD_DEFAULT);
+        $hashedPassword = base64_encode($userPass);
         $t ="Y";
 
         // SQL sorgusunu hazırla

@@ -58,7 +58,7 @@ try {
                             </select>
                             </td>
                             <td contenteditable="true">' . $row["userEmail"] . '</td>
-                            <td contenteditable="true">' . $row["userPass"] . '</td>
+                            <td contenteditable="true">' .base64_decode($row["userPass"]) . '</td>
                             <td contenteditable="true">' . $row["plate"] . '</td>
                             <td contenteditable="true">
                             <select>

@@ -32,7 +32,7 @@ class USER
  {
   try
   {       
-   $password = md5($upass);
+   $password = base64_encode($upass);
    $stmt = $this->conn->prepare("INSERT INTO tbl_users(userName,userEmail,userPass,tokenCode) 
                                                 VALUES(:user_name, :user_mail, :user_pass, :active_code)");
    $stmt->bindparam(":user_name",$uname);
@@ -60,7 +60,7 @@ class USER
    {
     if($userRow['userStatus']=="Y")
     {
-     if($userRow['userPass']==md5($upass))
+     if($userRow['userPass']==base64_encode($upass))
      {
       $_SESSION['userSession'] = $userRow['userID'];
       $_SESSION['rol'] = $userRow['rol'];
