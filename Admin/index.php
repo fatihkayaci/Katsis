@@ -1,66 +1,65 @@
 <?php
-include("../../DB/dbconfig.php");
+session_start();
+include("../DB/dbconfig.php");
+require_once '../class.user.php';
+$user_login = new USER();
+if (!isset($_SESSION["mail"]) || empty($_SESSION["mail"])) {
+    $user_login->redirect('../index');
+} 
+$sql = "SELECT * FROM tbl_users WHERE userEmail = :userEmail";
 
-function randomPassword($length = 8) {
-    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    $userPass = '';
+$stmt = $conn->prepare($sql);
 
-    for ($i = 0; $i < $length; $i++) {
-        $userPass .= $characters[rand(0, strlen($characters) - 1)];
-    }
+$stmt->bindParam(":userEmail", $_SESSION["mail"]);
+$stmt->execute();
 
-    return $userPass;
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    $idApartman= $row['userID'];
 }
 
-try {
-    // POST verilerini al
-    $userName = $_POST['userName'];
-    $tc = $_POST['tc'];
-    $phoneNumber = $_POST['phoneNumber'];
-    $durum = $_POST['durum'];
-    $userEmail = $_POST['userEmail'];
-    $apartman_id = $_POST['apartman_id'];
-    $plate = $_POST['plate'];
-    $gender = $_POST['gender'];
 
-    // E-posta adresinin varlığını kontrol et
-    $emailCheckSQL = "SELECT COUNT(*) FROM tbl_users WHERE userEmail = :userEmail";
-    $emailCheckStmt = $conn->prepare($emailCheckSQL);
-    $emailCheckStmt->bindParam(':userEmail', $userEmail);
-    $emailCheckStmt->execute();
 
-    if ($emailCheckStmt->fetchColumn() > 0) {
-        echo "bu email zaten var. lütfen email adresini kontrol edip tekrar deneyiniz.";
-    } else {
-        // Rastgele şifre oluştur
-        $userPass = randomPassword();
-        echo $userPass;
-        $hashedPassword = password_hash($userPass, PASSWORD_DEFAULT);
-        $t ="Y";
 
-        // SQL sorgusunu hazırla
-        $sql = "INSERT INTO tbl_users (userName, tc, phoneNumber, durum, userEmail, userPass, plate, gender, apartman_id, rol, popup, userStatus) VALUES 
-        (:userName, :tc, :phoneNumber, :durum, :userEmail, :userPass, :plate, :gender, :apartman_id, :rol, :popup, :userStatus)";
+$_SESSION["apartID"] =$idApartman;
 
-        // PDO sorgusunu hazırla ve çalıştır
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':userName', $userName);
-        $stmt->bindParam(':tc', $tc);
-        $stmt->bindParam(':phoneNumber', $phoneNumber);
-        $stmt->bindParam(':durum', $durum);
-        $stmt->bindParam(':userEmail', $userEmail);
-        $stmt->bindParam(':userPass', $hashedPassword);
-        $stmt->bindParam(':plate', $plate);
-        $stmt->bindParam(':gender', $gender);
-        $stmt->bindParam(':userStatus', $t);
-        $stmt->bindParam(':apartman_id', $apartman_id);
-        $rol = 3;
-        $popup = 0;
-        $stmt->bindParam(':rol', $rol);
-        $stmt->bindParam(':popup', $popup);
-        $stmt->execute();
-    }
-} catch (PDOException $e) {
-    echo $e;
+$indexx= "";
+
+if(isset($_GET['parametre'])){
+    $indexx = $_GET['parametre'];
+}
+
+
+include('header.php');
+
+include('leftbar.php');
+
+if($indexx == 'Accounts'){
+    include ("Accounts/index.php");
+}
+else if($indexx == 'custom'){
+    include ("Accounts/ozellestir.php");
+}
+else if($indexx == 'Sections'){
+    include ("Sections/index.php");
+}   else if($indexx == 'Sections'){
+        include ("Sections/index.php");
+}   else if($indexx == 'dashboard'){
+        include ("Dashboard/index.php");
+}
+
+
+$sql = "SELECT * FROM tbl_users WHERE userEmail = :userEmail";
+$stmt = $conn->prepare($sql);
+$stmt->bindParam(":userEmail", $_SESSION["mail"]);
+$stmt->execute();
+
+// Sonuçları al
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    // "popup" sütunundaki değeri al
+    $popupValue = $row['popup'];
+
+    if($popupValue ==1){
+        include('popup.php');
+    } 
 }
 ?>
