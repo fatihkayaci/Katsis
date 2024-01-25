@@ -4,10 +4,7 @@ require_once 'class.user.php';
 
 $reg_user = new USER();
 
-if($reg_user->is_logged_in()!="")
-{
- $reg_user->redirect('home.php');
-}
+
 
 
 if(isset($_POST['btn-signup']))
@@ -40,7 +37,7 @@ if(isset($_POST['btn-signup']))
  }
  else
  {
-  if($reg_user->register($uname,$email,$upass,$code))
+  if($reg_user->register($uname,$email,$upass,$code,$confirmPassword))
   {   
    $id = $reg_user->lasdID();  
    $key = base64_encode($id);

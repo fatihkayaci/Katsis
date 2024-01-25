@@ -28,24 +28,28 @@ class USER
   return $stmt;
  }
  
- public function register($uname,$email,$upass,$code)
+ public function register($uname,$email,$upass,$code,$confirmPassword)
  {
-  try
-  {       
-   $password = base64_encode($upass);
-   $stmt = $this->conn->prepare("INSERT INTO tbl_users(userName,userEmail,userPass,tokenCode) 
-                                                VALUES(:user_name, :user_mail, :user_pass, :active_code)");
-   $stmt->bindparam(":user_name",$uname);
-   $stmt->bindparam(":user_mail",$email);
-   $stmt->bindparam(":user_pass",$password);
-   $stmt->bindparam(":active_code",$code);
-   $stmt->execute(); 
-   return $stmt;
-  }
-  catch(PDOException $ex)
-  {
-   echo $ex->getMessage();
-  }
+    if($upass == $confirmPassword){
+      try
+      {       
+       $password = base64_encode($upass);
+       $stmt = $this->conn->prepare("INSERT INTO tbl_users(userName,userEmail,userPass,tokenCode) 
+                                                    VALUES(:user_name, :user_mail, :user_pass, :active_code)");
+       $stmt->bindparam(":user_name",$uname);
+       $stmt->bindparam(":user_mail",$email);
+       $stmt->bindparam(":user_pass",$password);
+       $stmt->bindparam(":active_code",$code);
+       $stmt->execute(); 
+       return $stmt;
+      }
+      catch(PDOException $ex)
+      {
+       echo $ex->getMessage();
+      }
+    }else{
+      return false;
+    }
  }
  
  public function login($email,$upass)
