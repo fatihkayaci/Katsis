@@ -12,7 +12,7 @@
 
     <?php
 try {
-    $sql = "SELECT * FROM tbl_kullanici WHERE apartmanID = " .$_SESSION["apartID"]  ;
+    $sql = "SELECT * FROM tbl_users WHERE apartman_id = " .$_SESSION["apartID"]  ;
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     
@@ -37,8 +37,8 @@ try {
                 <tbody>';
 
                 foreach ($result as $row) {
-                    echo '<tr data-userid="' . $row["kullaniciID"] . '">
-                            <td contenteditable="true">' . $row["fullName"] . '</td>
+                    echo '<tr data-userid="' . $row["userID"] . '">
+                            <td contenteditable="true">' . $row["userName"] . '</td>
                             <td contenteditable="true">' . $row["tc"] . '</td>
                             <td contenteditable="true">' . $row["phoneNumber"] . '</td>
                             <td contenteditable="true">
@@ -47,9 +47,9 @@ try {
                                 <option value="kiracı" ' . ($row["durum"] == "kiracı" ? 'selected' : '') . '>kiracı</option>
                             </select>
                             </td>
-                            <td contenteditable="true">' . $row["email"] . '</td>
-                            <td contenteditable="true">' . $row["sifre"] . '</td>
-                            <td contenteditable="true">' . $row["vehiclePlate"] . '</td>
+                            <td contenteditable="true">' . $row["userEmail"] . '</td>
+                            <td contenteditable="true">' . $row["userPass"] . '</td>
+                            <td contenteditable="true">' . $row["plate"] . '</td>
                             <td contenteditable="true">
                             <select>
                                 <option value="Erkek" ' . ($row["gender"] == "Erkek" ? 'selected' : '') . '>Erkek</option>
