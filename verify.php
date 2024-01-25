@@ -32,7 +32,7 @@ if(isset($_GET['id']) && isset($_GET['code']))
    $msg = "
              <div class='alert alert-success'>
        <button class='close' data-dismiss='alert'>&times;</button>
-       <strong>WoW !</strong>  Your Account is Now Activated : <a class='btn-a' href='index '>Login here</a>
+       <strong>Teşekürler !</strong>  Hesabınız Başarıyla Aktifleştirildi. : <a class='btn-a' href='index '>Giriş Yap</a>
           </div>
           "; 
           
@@ -44,7 +44,7 @@ if(isset($_GET['id']) && isset($_GET['code']))
    $msg = "
              <div class='alert alert-error'>
        <button class='close' data-dismiss='alert'>&times;</button>
-       <strong>sorry !</strong>  Your Account is allready Activated : <a class='btn-a' href='index'>Login here</a>
+       <strong>Üzgünüz !</strong>  Hesabınız Zaten Aktifleştirilmiş. : <a class='btn-a' href='index'>Giriş Yap</a>
           </div>
           ";
        
@@ -55,7 +55,7 @@ if(isset($_GET['id']) && isset($_GET['code']))
   $msg = "
          <div class='alert alert-error'>
       <button class='close' data-dismiss='alert'>&times;</button>
-      <strong>sorry !</strong>  No Account Found : <a class='btn-a' href='signup'>Signup here</a>
+      <strong>Üzgünüz !</strong>  Hesap Bulunamadı : <a class='btn-a' href='signup'>Kaydol</a>
       </div>
       ";
       
