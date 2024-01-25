@@ -10,7 +10,9 @@ try {
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     if ($result) {
-        echo '<table id="example" class="display" style="width:100%">
+        echo '
+        <div class="table-responsive-vertical shadow-z-1">
+            <table id="table" class="table table-hover table-mc-light-blue">
                 <thead>
                     <tr>
                         <th><input type="checkbox"/></th>
@@ -21,26 +23,36 @@ try {
                         <th>Bakiye</th>
                     </tr>
                 </thead>
-                <tbody>';
+
+        ';
 
         foreach ($result as $row) {
-            echo '<tr id='.$row["daire_id"].'>
-                    <td> <input type="checkbox"/></td>
-                    <td>' . $row["blok_adi"] . '</td>
-                    <td>' . $row["daire_sayisi"] . '</td>
+
+            echo '
+
+            <tbody>
+                
+                <tr id='.$row["daire_id"].'>
+
+                    <td  data-title="ID"> <input type="checkbox"/></td>
+
+                    <td  data-title="Blok Adı">' . $row["blok_adi"] . '</td>
+
+                    <td  data-title="Kapı No">' . $row["daire_sayisi"] . '</td>
                     
-                    <td><button type="button" class="btn btn-primary btn-sm btn1" onclick="openPopup('.$row["daire_id"].',0)">Kiracı ekle + </button></td>
-                    <td><button type="button" class="btn btn-primary btn-sm btn1" onclick="openPopup('.$row["daire_id"].',1)">Kat Maliki ekle + </button></td>
+                    <td  data-title="Kiracı"><button type="button" class="table-a" onclick="openPopup('.$row["daire_id"].',0)">Kiracı ekle + </button></td>
+                    
+                    <td  data-title="Kat Maliki"><button type="button" class="table-a" onclick="openPopup('.$row["daire_id"].',1)">Kat Maliki ekle + </button></td>
 
-
-
-                    <td></td>
+                    <td data-title="Bakiye">asdsa</td>
 
                 </tr>';
         }
 
-        echo '</tbody>
-            </table>';
+    echo '      </tbody>
+            </table>
+        </div>
+            ';
     } else {
         echo "0 results";
     }
@@ -88,15 +100,7 @@ try {
 
     </div>
 
-
-
-
-
-
-
-
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 
 
 <script>
@@ -124,7 +128,7 @@ try {
             $('#popup').hide();
         }
 
-   new DataTable('#example', {
+   new DataTable('#table', {
     initComplete: function () {
         this.api()
             .columns()
@@ -146,30 +150,4 @@ try {
             });
     }
        });
-</script>
-
-
-
-
-
-<script type="text/javascript">
-$.fn.extend({
- alterCheck:function(tablo){
-  if($(""+tablo+" input[type='checkbox']:first").is(":checked")){
-   return this.each(function(){
-
-	this.checked=true;
-    
-   });
-  }else{
-   return this.each(function(){
-    this.checked=false;
-   });
-  }		
- }	
-});
-
-$("#example input[type='checkbox']:first").click(function(){
- $("#example input[type='checkbox']").alterCheck('#example');
-});
 </script>
