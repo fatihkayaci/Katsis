@@ -24,6 +24,10 @@
     flex-wrap: wrap;
 }
 
+tbody {
+    text-align: center;
+}
+
 .form-signin-heading1 {
     font-size: 1.5rem;
     margin-top: 10px;
