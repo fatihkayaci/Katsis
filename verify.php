@@ -36,7 +36,6 @@ if(isset($_GET['id']) && isset($_GET['code']))
           </div>
           "; 
           
-          $user->redirect('index.php');
         
   }
   else
