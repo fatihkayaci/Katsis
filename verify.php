@@ -22,6 +22,8 @@ if(isset($_GET['id']) && isset($_GET['code']))
  {
   if($row['userStatus']==$statusN)
   {
+
+
    $stmt = $user->runQuery("UPDATE tbl_users SET userStatus=:status WHERE userID=:uID");
    $stmt->bindparam(":status",$statusY);
    $stmt->bindparam(":uID",$id);
@@ -29,18 +31,17 @@ if(isset($_GET['id']) && isset($_GET['code']))
    
    $msg = "
              <div class='alert alert-success'>
-       <button class='close' data-dismiss='alert'>&times;</button>
-       <strong>WoW !</strong>  Your Account is Now Activated : <a href='index.php'>Login here</a>
+       <strong>Teşekürler !</strong>  Hesabınız Başarıyla Aktifleştirildi. : <a class='btn-a' href='index '>Giriş Yap</a>
           </div>
           "; 
+          
         
   }
   else
   {
    $msg = "
-             <div class='alert alert-error'>
-       <button class='close' data-dismiss='alert'>&times;</button>
-       <strong>sorry !</strong>  Your Account is allready Activated : <a href='index.php'>Login here</a>
+             <div class='alert alert-danger'>
+       <strong>Üzgünüz !</strong>  Hesabınız Zaten Aktifleştirilmiş. : <a class='btn-a' href='index'>Giriş Yap</a>
           </div>
           ";
        
@@ -49,9 +50,8 @@ if(isset($_GET['id']) && isset($_GET['code']))
  else
  {
   $msg = "
-         <div class='alert alert-error'>
-      <button class='close' data-dismiss='alert'>&times;</button>
-      <strong>sorry !</strong>  No Account Found : <a href='signup.php'>Signup here</a>
+         <div class='alert alert-danger'>
+      <strong>Üzgünüz !</strong>  Hesap Bulunamadı : <a class='btn-a' href='signup'>Kaydol</a>
       </div>
       ";
       
@@ -64,9 +64,11 @@ if(isset($_GET['id']) && isset($_GET['code']))
   <head>
     <title>Confirm Registration</title>
     <!-- Bootstrap -->
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
+
     <link href="assets/styles.css" rel="stylesheet" media="screen">
+
      <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -81,3 +83,9 @@ if(isset($_GET['id']) && isset($_GET['code']))
     <script src="bootstrap/js/bootstrap.min.js"></script>
   </body>
 </html>
+
+
+<script>
+
+
+</script>
