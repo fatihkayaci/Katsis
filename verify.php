@@ -22,6 +22,8 @@ if(isset($_GET['id']) && isset($_GET['code']))
  {
   if($row['userStatus']==$statusN)
   {
+
+
    $stmt = $user->runQuery("UPDATE tbl_users SET userStatus=:status WHERE userID=:uID");
    $stmt->bindparam(":status",$statusY);
    $stmt->bindparam(":uID",$id);
@@ -33,6 +35,8 @@ if(isset($_GET['id']) && isset($_GET['code']))
        <strong>WoW !</strong>  Your Account is Now Activated : <a class='btn-a' href='index '>Login here</a>
           </div>
           "; 
+          
+          $user->redirect('index.php');
         
   }
   else
