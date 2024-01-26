@@ -62,22 +62,17 @@ try {
 ?>
 
 
-  <!-- Popup Form -->
-    <div id="popup" class="form-popup">
+  <!-- Popup kiracı ve kat maliki eklemek için-->
+    <div id="popup2" class="form-popup">
 
         <form id="userForm" class="login-form1">
         
-        <h2 class="form-signin-heading">Kiracı Ekle</h2>
+        <h4 class="form-signin-heading" id="pop-head"></h4>
 
         <hr class="horizontal dark mt-0 w-100">
 
         <div class="row">
-            <div class="col-md-6 col">
-                <select class="input" id="durum">
-                    <option value="katmaliki">kat Maliki</option>
-                    <option value="kiracı">kiracı</option>
-                </select>
-            </div>
+         
             <div class="col-md-6 col">
                 <input  class="input" type="text" list="cars" />
                 <datalist id="cars">
@@ -104,7 +99,9 @@ try {
 
 
 <script>
-     function openPopup(daire_id, tur) {
+    closePopup();
+
+function openPopup(daire_id, tur) {
         // Belirli bir ID'ye sahip <tr> elementini seç
         var trElement = document.getElementById(daire_id);
 
@@ -112,20 +109,26 @@ try {
         var tdElements = trElement.getElementsByTagName('td');
 
         // İlgili <td> elemanlarının içeriğini al
-        var valueA = tdElements[1].innerText; // A
-        var value1 = tdElements[2].innerText; // 1
+        var blokName = tdElements[1].innerText; // A
+        var No = tdElements[2].innerText; // 1
+        
+        var head =" "+blokName +" Blok - No: "+No;
+        if(tur==0){
+            head += " (Kiracı)";
+        }else if(tur == 1){
+            head += " (Kat Maliki)";    
+        }
+        
+        $('#pop-head').html(head);
 
-        // Değerleri konsola yazdır (isteğe bağlı)
-        console.log('Value of A:', valueA);
-        console.log('Value of 1:', value1);
-        console.log('tur :', tur);
 
-            $('#popup').show();
-            $('#popup').css('display', 'flex');
+
+            $('#popup2').show();
+            $('#popup2').css('display', 'flex');
         }
 
         function closePopup() {
-            $('#popup').hide();
+            $('#popup2').hide();
         }
 
    new DataTable('#table', {
