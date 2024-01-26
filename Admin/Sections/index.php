@@ -1,6 +1,17 @@
 <?php
-
 $idapartman =$_SESSION["apartID"];
+
+
+$sql = "SELECT * FROM tbl_users WHERE apartman_id = " . $idapartman. " AND rol = 3";
+
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+
+// Sonuç kümesinin satır sayısını kontrol etme
+$UserList = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+
 try {
     $sql = "SELECT * FROM tbl_daireler where apartman_id=$idapartman";
     $stmt = $conn->prepare($sql);
@@ -74,12 +85,13 @@ try {
         <div class="row">
          
             <div class="col-md-6 col">
-                <input  class="input" type="text" list="cars" />
-                <datalist id="cars">
-                  <option>Volvo</option>
-                  <option>Saab</option>
-                  <option>Mercedes</option>
-                  <option>Audi</option>
+                <input  class="input" type="text" list="Users" id="userInput"/>
+                <datalist id="Users">
+                 <?php 
+                 foreach($UserList as $user){
+                    echo '<option value="' . $user['userID'] . '">' . $user['userName'] . '</option>';
+                 }
+                 ?>
                 </datalist>
             </div>
         </div>
@@ -153,4 +165,12 @@ function openPopup(daire_id, tur) {
             });
     }
        });
+
+
+
+       document.getElementById('userInput').addEventListener('input', function() {
+        var selectedValue = this.value; // Bu satırda kullanıcının girdiği değeri alıyoruz
+        console.log(selectedValue); // Bu satırı kullanarak değeri kontrol edebilirsiniz
+        // Burada seçilen değeri istediğiniz şekilde kullanabilirsiniz
+    });
 </script>
