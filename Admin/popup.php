@@ -1,3 +1,6 @@
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 <div class="form-popup">
 
     <div class="login-form">
@@ -154,7 +157,7 @@ function kaydet() {
 
 
 <script>
-
+  $('.form-popup').show();
 
 // HTML sayfasındaki input alanını seç
 var apartmanadi = document.getElementById('apartman_adi');
