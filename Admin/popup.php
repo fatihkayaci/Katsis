@@ -155,6 +155,7 @@ function kaydet() {
 
 <script>
 
+
 // HTML sayfasındaki input alanını seç
 var apartmanadi = document.getElementById('apartman_adi');
 var inputElement = document.getElementById('blokSay');
