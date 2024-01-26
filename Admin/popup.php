@@ -154,7 +154,6 @@ function kaydet() {
 
 
 <script>
-$('.form-popup').show();
 
 // HTML sayfasındaki input alanını seç
 var apartmanadi = document.getElementById('apartman_adi');
@@ -164,7 +163,6 @@ var numberalert2 = document.getElementById('numberalert2');
 var tableContainer = document.getElementById('table-container'); // oluşacak tabloyu çağırıyoruz
 
 var enteredNumber = inputElement.value;
-
 tableCreate(enteredNumber);
 rowListin(enteredNumber);
 
