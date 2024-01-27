@@ -112,7 +112,7 @@ try {
 
         <div class="row row-btns">
             <button type="button" class="btn btnx btn-secondary btn-size" onclick="closePopup()">Kapat</button>
-            <button type="button" class="btn btnx btn-primary btn-size" id="saveButton">Kaydet</button>
+            <button type="button" class="btn btnx btn-primary btn-size" id="saveButton" onclick="save()">Kaydet</button>
         </div>
 
     </form>
@@ -178,23 +178,30 @@ new DataTable('#table', {
     }
 });
 
-
+let selectedValue;
 
 document.getElementById('userInput').addEventListener('input', function() {
-    var selectedValue = this.value;
-    console.log(selectedValue);
+    selectedValue = this.value;
 });
+
+
+
+
+
+
+
 </script>
 
 
 
 <script>
+    var selectedUserID;
 function getUserID() {
     var userInput = document.getElementById("userInput");
     var selectedOption = getSelectedOption(userInput);
 
     if (selectedOption) {
-        var selectedUserID = selectedOption.getAttribute("data-user-id");
+        selectedUserID = selectedOption.getAttribute("data-user-id");
         console.log("Seçilen Kullanıcının ID'si: " + selectedUserID);
         // Burada istediğiniz işlemleri yapabilirsiniz
     }
@@ -211,5 +218,16 @@ function getSelectedOption(inputElement) {
     }
 
     return null;
+}
+
+
+
+function save(){
+
+var date = document.getElementById("dateInput").value;
+
+alert(date);
+
+alert(selectedUserID);
 }
 </script>
