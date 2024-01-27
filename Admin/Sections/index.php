@@ -4,13 +4,17 @@ $idapartman =$_SESSION["apartID"];
 
 $sql = "SELECT * FROM tbl_users WHERE apartman_id = " . $idapartman. " AND rol = 3";
 
+
+
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 
 // Sonuç kümesinin satır sayısını kontrol etme
 $UserList = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-
+$listt=[];
+foreach($UserList as $list){
+    $listt[$list['userID']] = $list['userName'];
+}
 
 try {
     $sql = "SELECT * FROM tbl_daireler where apartman_id=$idapartman";
@@ -49,13 +53,26 @@ try {
 
                     <td  data-title="Blok Adı">' . $row["blok_adi"] . '</td>
 
-                    <td  data-title="Kapı No">' . $row["daire_sayisi"] . '</td>
+                    <td  data-title="Kapı No">' . $row["daire_sayisi"] . '</td>';
                     
-                    <td  data-title="Kiracı"><button type="button" class="table-a" onclick="openPopup('.$row["daire_id"].',0)">Kiracı ekle + </button></td>
-                    
-                    <td  data-title="Kat Maliki"><button type="button" class="table-a" onclick="openPopup('.$row["daire_id"].',1)">Kat Maliki ekle + </button></td>
+                   if($row["kiraciID"]==null) {
+                  echo ' <td  data-title="0"><button type="button" class="table-a" onclick="openPopup('.$row["daire_id"].',0)">Kiracı ekle + </button></td>';
 
-                    <td data-title="Bakiye">00,0 $</td>
+                   }else{
+                    echo ' <td  data-title="0">'.$listt[$row["kiraciID"]].' </td>  '; 
+                   }
+                    
+                   if($row["katMalikiID"]==null) {
+                    echo '<td  data-title="1"><button type="button" class="table-a" onclick="openPopup('.$row["daire_id"].',1)">Kat Maliki ekle + </button></td>
+                    ';
+  
+                     }else{
+                      echo ' <td  data-title="1">'.$listt[$row["katMalikiID"]].' </td>  '; 
+                     }
+
+
+
+                  echo '  <td data-title="Bakiye">00,0 $</td>
 
                 </tr>';
         }
@@ -81,7 +98,8 @@ try {
         <h4 class="form-signin-heading" id="pop-head"></h4>
 
         <hr class="horizontal dark mt-0 w-100">
-
+        <input type="hidden" id="hiddenDaireID" />
+        <input type="hidden" id="turDaire" />
         <div class="row">
 
             <div class="col-md-6 col">
@@ -96,17 +114,17 @@ try {
             </div>
 
         </div>
-        
+
         <div class="row">
 
             <div class="col-md-6 col">
-            <input class="input" type="date" value="<?php echo date('Y-m-d'); ?>" id="dateInput" />
+                <input class="input" type="date" value="<?php echo date('Y-m-d'); ?>" id="dateInput" />
 
-                
+
             </div>
 
         </div>
-        
+
 
         <hr class="horizontal dark w-100">
 
@@ -132,6 +150,10 @@ function openPopup(daire_id, tur) {
     // <td> elemanlarını seç
     var tdElements = trElement.getElementsByTagName('td');
 
+    document.getElementById("hiddenDaireID").value = daire_id;
+    document.getElementById("turDaire").value = tur;
+
+
     // İlgili <td> elemanlarının içeriğini al
     var blokName = tdElements[1].innerText; // A
     var No = tdElements[2].innerText; // 1
@@ -152,50 +174,27 @@ function openPopup(daire_id, tur) {
 }
 
 function closePopup() {
+    document.getElementById("userInput").value = "";
+    $('#userInput').css('border-color', '#00000000');
+    $('#userInput').focus(function() {
+        $(this).css('border-color', '#3BB4D7');
+    });
     $('#popup2').hide();
 }
 
-new DataTable('#table', {
-    initComplete: function() {
-        this.api()
-            .columns()
-            .every(function() {
-                let column = this;
-                let title = column.footer().textContent;
-
-
-                let input = document.createElement('input');
-                input.placeholder = title;
-                column.footer().replaceChildren(input);
-
-
-                input.addEventListener('keyup', () => {
-                    if (column.search() !== this.value) {
-                        column.search(input.value).draw();
-                    }
-                });
-            });
-    }
-});
 
 let selectedValue;
 
 document.getElementById('userInput').addEventListener('input', function() {
     selectedValue = this.value;
 });
-
-
-
-
-
-
-
 </script>
 
 
 
 <script>
-    var selectedUserID;
+var selectedUserID;
+
 function getUserID() {
     var userInput = document.getElementById("userInput");
     var selectedOption = getSelectedOption(userInput);
@@ -222,12 +221,53 @@ function getSelectedOption(inputElement) {
 
 
 
-function save(){
+function save() {
+    var userr = document.getElementById('userInput').value;
+    var turr = document.getElementById("turDaire").value;
+    var kTarih = document.getElementById("dateInput").value;
+    var daireID = document.getElementById("hiddenDaireID").value;
 
-var date = document.getElementById("dateInput").value;
+    if (selectedUserID === undefined || userr === null || userr === "") {
+        $('#userInput').css('border-color', 'red');
+    } else {
+        $.ajax({
 
-alert(date);
+            url: 'Controller/user_assignment.php',
+            type: 'POST',
+            data: {
+                userID1: selectedUserID,
+                kTarih: kTarih,
+                daireID: daireID,
+                turr: turr,
 
-alert(selectedUserID);
+            },
+            success: function(response) {
+                closePopup();
+                var trElement = document.getElementById(daireID);
+
+                // <td> elemanlarını seç
+                var tdElements = trElement.getElementsByTagName('td');
+
+                if(turr == 0){
+                    tdElements[3].innerText ="";
+                    tdElements[3].innerText =response;
+                }else if(turr == 1){
+                    tdElements[4].innerText ="";
+                    tdElements[4].innerText =response;
+                }
+
+
+               
+            },
+            error: function(error) {
+                console.error(error);
+            }
+
+        });
+    }
+
+
+
+
 }
 </script>

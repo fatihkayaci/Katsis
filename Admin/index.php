@@ -25,7 +25,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     $userName = $row['userName'];
 }
 
-$_SESSION["pageName"]="Dashboarddd";
+$_SESSION["pageName"]="Dashboard";
 $_SESSION["userName"] =$userName;
 $_SESSION["apartID"] =$idApartman;
 
