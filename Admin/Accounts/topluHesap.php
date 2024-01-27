@@ -11,15 +11,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
 </head>
 
 <body>
-    <button class="adduser btn btn-primary">Kullanıcı Ekle</button>
-    <button class="toplu btn btn-primary">Toplu Kullanıcı Ekle Ve Düzelt</button>
     <?php
 try {
-    $sql = "SELECT * FROM tbl_users WHERE apartman_id = " . $_SESSION["apartID"] . " AND rol = 3";
+    $sql = "SELECT *,blok_adi,daire_sayisi FROM tbl_users INNER JOIN tbl_daireler ON tbl_users.apartman_id = tbl_daireler.apartman_id WHERE rol = 3";
 
     $stmt = $conn->prepare($sql);
     $stmt->execute();
@@ -31,6 +28,8 @@ try {
         echo '<table id="example" class="display" style="width:100%">
                 <thead>
                     <tr>
+                        <th>Blok Adı</th>
+                        <th>Daire Sayısı</th>
                         <th>Full Name</th>
                         <th>tc</th>
                         <th>Phone Number</th>
@@ -39,15 +38,14 @@ try {
                         <th>Şifre</th>
                         <th>Vehicle Plate</th>
                         <th>Gender</th>
-                        <th>update</th>
-                        <th>Delete</th>
-                        <th>Özelleştir</th>
                     </tr>
                 </thead>
                 <tbody>';
 
                 foreach ($result as $row) {
                     echo '<tr data-userid="' . $row["userID"] . '">
+                            <td contenteditable="true">' . $row["blok_adi"] . '</td>
+                            <td contenteditable="true">' . $row["daire_sayisi"] . '</td>
                             <td contenteditable="true">' . $row["userName"] . '</td>
                             <td contenteditable="true">' . $row["tc"] . '</td>
                             <td contenteditable="true">' . $row["phoneNumber"] . '</td>
@@ -66,10 +64,6 @@ try {
                                 <option value="Kadın" ' . ($row["gender"] == "Kadın" ? 'selected' : '') . '>Kadın</option>
                             </select>
                             </td>
-
-                            <td><button class="updateButton">update</button></td>
-                            <td><button class="deleteButton">delete</button></td>
-                            <td><a href="index?parametre=custom"><button class="ozellestirButton">ozellestir</button></a></td>
                         </tr>';
                     }
                 
@@ -84,147 +78,8 @@ try {
 }
 ?>
 
-    <!-- Popup Form -->
-    <div id="popup">
-        <form class="login-form" id="userForm">
-
-            <h2 class="form-signin-heading">Kullanıcı Ekleme</h2>
-
-            <hr class="horizontal dark mt-0 w-100">
-
-            <div class="row">
-                <div class="col-md-6 col">
-                    <label for="userName">Ad Soyad :</label>
-                    <input class="input" type="text" name="userName" placeholder="İsminizi Giriniz." required><br>
-                </div>
-
-                <div class="col-md-6 col">
-                    <label for="tc">T.C. Kimlik No :</label>
-                    <input class="input" type="text" name="tc" placeholder="T.C. giriniz." required><br>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6 col">
-                    <label for="phoneNumber">Telefon Numarası :</label>
-                    <input class="input" type="text" name="phoneNumber" pattern="[0-9]{10}"
-                        placeholder="e.g., 5551234567" required><br>
-                </div>
-
-                <div class="col-md-6 col">
-                    <label for="userEmail">E-Posta (opsiyonel) :</label>
-                    <input class="input" type="text" name="userEmail" placeholder="Email adresi"><br>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6 col margint">
-                    <label for="plate">Araba Plakası (opsiyonel) :</label>
-                    <input class="input" type="text" name="plate" placeholder="Araba plakası (opsiyonel)"><br>
-                </div>
-
-                <div class="col-md-6 col">
-                    <label for="gender">Cinsiyet :</label>
-                    <select class="input" id="gender">
-                        <option value="Erkek">Erkek</option>
-                        <option value="Kadın">Kadın</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6 col">
-                    <input class="input" type="text" name="apartman_id" value=<?php echo $_SESSION["apartID"];   ?>
-                        hidden>
-                </div>
-            </div>
-            <hr class="horizontal dark mt-0 w-100">
-            <button type="button" class="daireEkle btn btn-primary">Daire Ekle</button>
-            <hr class="horizontal dark mt-4 w-100">
-
-            <div class="row row-btns">
-                <button type="button" class="btn btnx btn-secondary btn-size" onclick="closePopup()">Kapat</button>
-                <button type="button" class="btn btnx btn-primary btn-size" id="saveButton">Kaydet</button>
-            </div>
-
-
-
-        </form>
-    </div>
-    <!--buraya toplu hesap eklenmesi için popup eklendi içeriğinin düzenlenmesi lazım-->
-    <div id="topluPopup">
-        <form action="">
-            <button type="button" onclick="closeToplu()">x</button>
-            <h2>oluşturma şeklini seçiniz!</h2>
-            <hr class="horizontal dark mt-0 w-100">
-
-            <div class="row row-btns">
-                <button type="button"><a href="index?parametre=TopluHesap">Toplu Hesap</a></button>
-                <button type="button">Excel İle Dışarıdan Aktar</button>
-                <!--bakılacak excel-->
-            </div>
-        </form>
-    </div>
-    <!--buraya daire için popup eklendi içeriğinin düzenlenmesi lazım-->
-    <div id="dairePopup">
-        <form action="">
-            <button type="button" onclick="closeDaire()">x</button>
-            <h2>Daire Ekleme</h2>
-            <hr class="horizontal dark mt-0 w-100">
-
-            <div class="row row-btns">
-                <label for="durum">Daire :</label>
-                
-                <?php
-                    /*while ($row) {
-                        echo "<option value='" . $row['blok_adi'] . "'>" . $row['blok_adi'] . "</option>";
-                        düzeltilecek fatih!!
-                    }*/
-                ?>
-                <label for="durum">Durum :</label>
-                <select class="input" id="durum">
-                    <option value="katmaliki">kat Maliki</option>
-                    <option value="kiracı">kiracı</option>
-                </select>
-            </div>
-        </form>
-    </div>
-
     <body>
-        <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-        <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-
-        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <script type="text/javascript">
-        $('.adduser').click(function() {
-            $('#popup').show();
-            $('#popup').css('display', 'flex');
-        });
-
-        function closePopup() {
-            $('#popup').hide();
-            $('#popup').css('display', 'none');
-        }
-
-        $('.toplu').click(function() {
-            $('#topluPopup').show();
-            $('#topluPopup').css('display', 'flex');
-        });
-
-        function closeToplu() {
-            $('#topluPopup').hide();
-            $('#topluPopup').css('display', 'none');
-        }
-
-        $('.daireEkle').click(function() {
-            $('#dairePopup').show();
-            $('#dairePopup').css('display', 'flex');
-        });
-
-        function closeDaire() {
-            $('#dairePopup').hide();
-            $('#dairePopup').css('display', 'none');
-        }
         //kısıtlama ile ilgili fonksiyonlar başlangıç...
         function validateFullName(userName) {
             const regex = /^[A-Za-zÇçĞğİıÖöŞşÜü\s]+$/;
@@ -431,47 +286,5 @@ try {
                     }
                 });
             });
-        });
-        new DataTable('#example', {
-            initComplete: function() {
-                this.api()
-                    .columns()
-                    .every(function() {
-                        let column = this;
-                        let title = column.footer().textContent;
-
-                        // Create input element
-                        let input = document.createElement('input');
-                        input.placeholder = title;
-                        column.footer().replaceChildren(input);
-
-                        // Event listener for user input
-                        input.addEventListener('keyup', () => {
-                            if (column.search() !== this.value) {
-                                column.search(input.value).draw();
-                            }
-                        });
-                    });
-            }
-        });
-        </script>
-
-        <script type="text/javascript">
-        $.fn.extend({
-            alterCheck: function(tablo) {
-                if ($("" + tablo + " input[type='checkbox']:first").is(":checked")) {
-                    return this.each(function() {
-                        this.checked = true;
-                    });
-                } else {
-                    return this.each(function() {
-                        this.checked = false;
-                    });
-                }
-            }
-        });
-
-        $("#example input[type='checkbox']:first").click(function() {
-            $("#example input[type='checkbox']").alterCheck('#example');
         });
         </script>
