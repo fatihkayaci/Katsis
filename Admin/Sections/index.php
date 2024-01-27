@@ -55,7 +55,7 @@ try {
                     
                     <td  data-title="Kat Maliki"><button type="button" class="table-a" onclick="openPopup('.$row["daire_id"].',1)">Kat Maliki ekle + </button></td>
 
-                    <td data-title="Bakiye">asdsa</td>
+                    <td data-title="Bakiye">00,0 $</td>
 
                 </tr>';
         }
@@ -73,90 +73,102 @@ try {
 ?>
 
 
-  <!-- Popup kiracı ve kat maliki eklemek için-->
-    <div id="popup2" class="form-popup">
+<!-- Popup kiracı ve kat maliki eklemek için-->
+<div id="popup2" class="form-popup">
 
-        <form id="userForm" class="login-form1">
-        
+    <form id="userForm" class="login-form1">
+
         <h4 class="form-signin-heading" id="pop-head"></h4>
 
         <hr class="horizontal dark mt-0 w-100">
 
         <div class="row">
-         
+
             <div class="col-md-6 col">
-                <input  class="input" type="text" list="Users" id="userInput"/>
+                <input class="input" type="text" list="Users" id="userInput" oninput="getUserID()" />
                 <datalist id="Users">
-                 <?php 
-                 foreach($UserList as $user){
-                    echo '<option value="' . $user['userID'] . '">' . $user['userName'] . '</option>';
-                 }
-                 ?>
+                    <?php 
+                        foreach($UserList as $user){
+                            echo '<option data-user-id="' . $user['userID'] . '">' . $user['userName'] . '</option>';
+                        }
+                    ?>
                 </datalist>
             </div>
-        </div>
 
-        <hr class="horizontal dark w-100">
-           
-        <div class="row row-btns">
-                <button type="button" class="btn btnx btn-secondary btn-size" onclick="closePopup()">Kapat</button>       
-                <button type="button" class="btn btnx btn-primary btn-size" id="saveButton">Kaydet</button>
         </div>
         
-        </form>
+        <div class="row">
 
-    </div>
+            <div class="col-md-6 col">
+            <input class="input" type="date" value="<?php echo date('Y-m-d'); ?>" id="dateInput" />
+
+                
+            </div>
+
+        </div>
+        
+
+        <hr class="horizontal dark w-100">
+
+        <div class="row row-btns">
+            <button type="button" class="btn btnx btn-secondary btn-size" onclick="closePopup()">Kapat</button>
+            <button type="button" class="btn btnx btn-primary btn-size" id="saveButton">Kaydet</button>
+        </div>
+
+    </form>
+
+</div>
 
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 
 
 <script>
-    closePopup();
+closePopup();
 
 function openPopup(daire_id, tur) {
-        // Belirli bir ID'ye sahip <tr> elementini seç
-        var trElement = document.getElementById(daire_id);
+    // Belirli bir ID'ye sahip <tr> elementini seç
+    var trElement = document.getElementById(daire_id);
 
-        // <td> elemanlarını seç
-        var tdElements = trElement.getElementsByTagName('td');
+    // <td> elemanlarını seç
+    var tdElements = trElement.getElementsByTagName('td');
 
-        // İlgili <td> elemanlarının içeriğini al
-        var blokName = tdElements[1].innerText; // A
-        var No = tdElements[2].innerText; // 1
-        
-        var head =" "+blokName +" Blok - No: "+No;
-        if(tur==0){
-            head += " (Kiracı)";
-        }else if(tur == 1){
-            head += " (Kat Maliki)";    
-        }
-        
-        $('#pop-head').html(head);
+    // İlgili <td> elemanlarının içeriğini al
+    var blokName = tdElements[1].innerText; // A
+    var No = tdElements[2].innerText; // 1
+
+    var head = " " + blokName + " Blok - No: " + No;
+    if (tur == 0) {
+        head += " (Kiracı)";
+    } else if (tur == 1) {
+        head += " (Kat Maliki)";
+    }
+
+    $('#pop-head').html(head);
 
 
 
-            $('#popup2').show();
-            $('#popup2').css('display', 'flex');
-        }
+    $('#popup2').show();
+    $('#popup2').css('display', 'flex');
+}
 
-        function closePopup() {
-            $('#popup2').hide();
-        }
+function closePopup() {
+    $('#popup2').hide();
+}
 
-   new DataTable('#table', {
-    initComplete: function () {
+new DataTable('#table', {
+    initComplete: function() {
         this.api()
             .columns()
-            .every(function () {
+            .every(function() {
                 let column = this;
                 let title = column.footer().textContent;
 
-                // Create input element
+
                 let input = document.createElement('input');
                 input.placeholder = title;
                 column.footer().replaceChildren(input);
 
-                // Event listener for user input
+
                 input.addEventListener('keyup', () => {
                     if (column.search() !== this.value) {
                         column.search(input.value).draw();
@@ -164,13 +176,40 @@ function openPopup(daire_id, tur) {
                 });
             });
     }
-       });
+});
 
 
 
-       document.getElementById('userInput').addEventListener('input', function() {
-        var selectedValue = this.value; // Bu satırda kullanıcının girdiği değeri alıyoruz
-        console.log(selectedValue); // Bu satırı kullanarak değeri kontrol edebilirsiniz
-        // Burada seçilen değeri istediğiniz şekilde kullanabilirsiniz
-    });
+document.getElementById('userInput').addEventListener('input', function() {
+    var selectedValue = this.value;
+    console.log(selectedValue);
+});
+</script>
+
+
+
+<script>
+function getUserID() {
+    var userInput = document.getElementById("userInput");
+    var selectedOption = getSelectedOption(userInput);
+
+    if (selectedOption) {
+        var selectedUserID = selectedOption.getAttribute("data-user-id");
+        console.log("Seçilen Kullanıcının ID'si: " + selectedUserID);
+        // Burada istediğiniz işlemleri yapabilirsiniz
+    }
+}
+
+function getSelectedOption(inputElement) {
+    var value = inputElement.value.toLowerCase();
+    var options = inputElement.list.options;
+
+    for (var i = 0; i < options.length; i++) {
+        if (options[i].value.toLowerCase() === value) {
+            return options[i];
+        }
+    }
+
+    return null;
+}
 </script>
