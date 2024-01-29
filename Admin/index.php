@@ -1,8 +1,8 @@
 <script>
-    function pagename(temp){
-    document.getElementById('pageName').innerHTML=temp;
+function pagename(temp) {
+    document.getElementById('pageName').innerHTML = temp;
 
-    }
+}
 </script>
 
 <?php
@@ -44,6 +44,10 @@ if($indexx == 'Accounts'){
     include ("Accounts/index.php");
     echo "<script>pagename('KULLANICILAR');</script>";
 }
+else if($indexx == 'TopluHesap'){
+    include ("Accounts/topluHesap.php");
+    echo "<script>pagename('TOPLU HESAP EKLEME');</script>";
+}
 else if($indexx == 'custom'){
     include ("Accounts/ozellestir.php");
     echo "<script>pagename('KULLANICI DÜZENLE');</script>";
@@ -51,9 +55,10 @@ else if($indexx == 'custom'){
 else if($indexx == 'Sections'){
     include ("Sections/index.php");
     echo "<script>pagename('BÖLÜMLER');</script>";
-}   else if($indexx == 'dashboard'){
-        include ("Dashboard/index.php");
-        echo "<script>pagename('DASHBOARD');</script>";
+}   
+else if($indexx == 'dashboard'){
+    include ("Dashboard/index.php");
+    echo "<script>pagename('DASHBOARD');</script>";
 }
 
 
@@ -72,6 +77,3 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     } 
 }
 ?>
-
-
-
