@@ -59,8 +59,8 @@ if(isset($_POST['btn-submit']))
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Şifremi Unuttum | Katsis</title>
     <!-- Bootstrap -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen"> -->
 
     <!-- Your custom styles -->
     
@@ -74,17 +74,17 @@ if(isset($_POST['btn-submit']))
 
     <div class="container">
 
-      <div class="logo-box">
-        <img src="assets/img/siyah.png" alt="">
-      </div> 
+      <div class="login-box">
 
-      <div class="login-box1">
+      <div class="logo-box">
+        <img src="admin/assets/img/ico.png" alt="">
+      </div> 
 
       <form class="login-form" method="post">
 
-        <h2 class="form-signin-heading">Şifremi Unuttum</h2>
-        
-        <div class="hr"></div>
+        <h1 class="form-signin-heading">Katsis'e Hoşgeldiniz</h1>
+
+        <p class="form-signin-heading1">Şifrenizi Değiştirmek için lütfen mail adresinizi giriniz</p>
 
         <?php
         if(isset($msg))
@@ -93,27 +93,29 @@ if(isset($_POST['btn-submit']))
         }
         else
         {
-        ?>
-
-        <div class='alert alert-info alert-area-password'>
-        Lütfen kayıt olduğunuz e-posta adresinizi yazınız. E-posta adresinize şifre sıfırlama linki gönderilecektir.
-        </div>  
+        ?>  
 
         <?php
         }
         ?>
 
-        <input type="email" class="input-block-level" placeholder="E-posta Hesabınız" name="txtemail" required />
-        <hr />
+        <label class="label-block-level" for="txtemail">E-Posta</label>
+        <input type="email" class="input-block-level" placeholder="E-posta Hesabınız" id="txtemail" name="txtemail" required />
         
-        <button class="btn btn-danger btn-primary" type="submit" name="btn-submit">Parolamı Sıfırla</button>
+        <button class="btn-custom" type="submit" name="btn-submit">Parolamı Sıfırla</button>
         
-        <a href="index.php" class="btn btn-large olusturbtn">Giriş Yap</a>
-        
-        <div class="hr"></div>
+        <p class="hesap">
+          <a href="index.php">Giriş Yap</a>
+        </p>
 
       </form>
     </div> 
+
+    <div class="img-box">
+      <h1 class="form-signin-heading">KATSİS</h1>
+      <p class="form-signin-heading2">Bina Yönetiminde Güvenilir Çözüm!</p>
+      <img src="assets/img/img.png" alt="">
+    </div>    
 
     </div> <!-- /container -->
     <script src="bootstrap/js/jquery-1.9.1.min.js"></script>
