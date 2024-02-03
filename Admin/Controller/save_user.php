@@ -1,4 +1,5 @@
 <?php
+session_start();
 include("../../DB/dbconfig.php");
 
 function randomPassword($length = 8) {
@@ -21,6 +22,7 @@ try {
     $apartman_id = $_POST['apartman_id'];
     $plate = $_POST['plate'];
     $gender = $_POST['gender'];
+    //$optionsBlok = $_POST['optionsBlok'];
 
     // E-posta adresinin varlığını kontrol et
     $emailCheckSQL = "SELECT COUNT(*) FROM tbl_users WHERE userEmail = :userEmail";
@@ -40,6 +42,8 @@ try {
         $sql = "INSERT INTO tbl_users (userName, tc, phoneNumber, durum, userEmail, userPass, plate, gender, apartman_id, rol, popup, userStatus) VALUES 
         (:userName, :tc, :phoneNumber, :durum, :userEmail, :userPass, :plate, :gender, :apartman_id, :rol, :popup, :userStatus)";
 
+        //$sql2 = "INSERT INTO tbl_daireler (optionsBlok) VALUES (:apartman_id, :apartman_name)";
+
         // PDO sorgusunu hazırla ve çalıştır
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':userName', $userName);
@@ -57,6 +61,7 @@ try {
         $stmt->bindParam(':rol', $rol);
         $stmt->bindParam(':popup', $popup);
         $stmt->execute();
+        $_SESSION['lastID'] = $conn->lastInsertId();
         echo 1;
     }
 } catch (PDOException $e) {

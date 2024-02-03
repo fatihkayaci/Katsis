@@ -16,8 +16,8 @@
 <body>
     <?php
 try {
-    $sql = "SELECT *,blok_adi,daire_sayisi FROM tbl_users INNER JOIN tbl_daireler ON tbl_users.apartman_id = tbl_daireler.apartman_id WHERE rol = 3";
-
+    //$sql = "SELECT *,blok_adi,daire_sayisi FROM tbl_users INNER JOIN tbl_daireler ON tbl_users.apartman_id = tbl_daireler.apartman_id WHERE rol = 3";
+    $sql = "SELECT blok_adi,daire_sayisi FROM tbl_daireler WHERE apartman_id = " . $_SESSION["apartID"];
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     
@@ -30,40 +30,14 @@ try {
                     <tr>
                         <th>Blok Adı</th>
                         <th>Daire Sayısı</th>
-                        <th>Full Name</th>
-                        <th>tc</th>
-                        <th>Phone Number</th>
-                        <th>Durum</th>
-                        <th>Email</th>
-                        <th>Şifre</th>
-                        <th>Vehicle Plate</th>
-                        <th>Gender</th>
                     </tr>
                 </thead>
                 <tbody>';
 
                 foreach ($result as $row) {
-                    echo '<tr data-userid="' . $row["userID"] . '">
+                    echo '<tr data-userid="">
                             <td contenteditable="true">' . $row["blok_adi"] . '</td>
                             <td contenteditable="true">' . $row["daire_sayisi"] . '</td>
-                            <td contenteditable="true">' . $row["userName"] . '</td>
-                            <td contenteditable="true">' . $row["tc"] . '</td>
-                            <td contenteditable="true">' . $row["phoneNumber"] . '</td>
-                            <td contenteditable="true">
-                            <select>
-                                <option value="katmaliki" ' . ($row["durum"] == "katmaliki" ? 'selected' : '') . '>katmaliki</option>
-                                <option value="kiracı" ' . ($row["durum"] == "kiracı" ? 'selected' : '') . '>kiracı</option>
-                            </select>
-                            </td>
-                            <td contenteditable="true">' . $row["userEmail"] . '</td>
-                            <td contenteditable="true">' .base64_decode($row["userPass"]) . '</td>
-                            <td contenteditable="true">' . $row["plate"] . '</td>
-                            <td contenteditable="true">
-                            <select>
-                                <option value="Erkek" ' . ($row["gender"] == "Erkek" ? 'selected' : '') . '>Erkek</option>
-                                <option value="Kadın" ' . ($row["gender"] == "Kadın" ? 'selected' : '') . '>Kadın</option>
-                            </select>
-                            </td>
                         </tr>';
                     }
                 

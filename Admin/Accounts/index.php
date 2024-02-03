@@ -18,7 +18,30 @@
     <button class="adduser btn btn-primary">Kullanıcı Ekle</button>
     <button class="toplu btn btn-primary">Toplu Kullanıcı Ekle Ve Düzelt</button>
     <?php
+    $optionsBlok = '';
+    $optionsDurum = '';
 try {
+    //burada yeni eklendi css eklenmesi lazım.
+    $sql = "SELECT blok_adi, daire_sayisi FROM tbl_daireler WHERE apartman_id = " . $_SESSION["apartID"];
+    $result = $conn->query($sql);
+
+    if ($result->rowCount() > 0) {
+        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+            $optionsBlok .= '<option name="optionsBlok" value="' . $row['blok_adi']." Blok - Daire ".$row['daire_sayisi'] . '">' .$row['blok_adi']." Blok - Daire ". $row['daire_sayisi'] . '</option>';
+        }
+    }
+/*
+    $sql = "SELECT durum FROM tbl_users WHERE apartman_id = " . $_SESSION["apartID"];
+    $result = $conn->query($sql);
+
+    if ($result->rowCount() > 0) {
+        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+            $optionsDurum .= '<option value="' . $row['durum'].'">' .$row['durum'].'</option>';
+        }
+    }*/
+    //buraya kadar...
+
+    
     $sql = "SELECT * FROM tbl_users WHERE apartman_id = " . $_SESSION["apartID"] . " AND rol = 3";
 
     $stmt = $conn->prepare($sql);
@@ -139,7 +162,21 @@ try {
                 </div>
             </div>
             <hr class="horizontal dark mt-0 w-100">
-            <button type="button" class="daireEkle btn btn-primary">Daire Ekle</button>
+            <div class="at">
+                <button type="button" class="daireEkle btn btn-primary">Daire Ekle</button>
+                <!--<button type="button" class="Artı btn btn-primary">+</button>-->
+            </div>
+            <div class="indexAdd">
+
+                <?php
+                 /*echo '<select id="blokOption" name="optionsBlok">' . $optionsBlok.'</select>';
+                 echo '<select id="durumOption" name="optionsDurum">
+                 <option value="katmaliki">Kat Maliki</option>
+                 <option value="kiraci">Kiracı</option>
+                 </select>';*/
+                ?>
+            </div>
+
             <hr class="horizontal dark mt-4 w-100">
 
             <div class="row row-btns">
@@ -173,19 +210,17 @@ try {
             <hr class="horizontal dark mt-0 w-100">
 
             <div class="row row-btns">
-                <label for="durum">Daire :</label>
-                
-                <?php
-                    /*while ($row) {
-                        echo "<option value='" . $row['blok_adi'] . "'>" . $row['blok_adi'] . "</option>";
-                        düzeltilecek fatih!!
-                    }*/
-                ?>
+                <label for="options">Daire:</label>
+                <select id="optionsBlok" name="options">
+                    <?php echo $optionsBlok; ?>
+                </select>
+
                 <label for="durum">Durum :</label>
                 <select class="input" id="durum">
                     <option value="katmaliki">kat Maliki</option>
                     <option value="kiracı">kiracı</option>
                 </select>
+                <button type="button" id="ekle" onclick="newDaire()">Ekle</button>
             </div>
         </form>
     </div>
@@ -196,6 +231,30 @@ try {
 
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <script type="text/javascript">
+        function newDaire() {
+            // Seçilen değeri al
+            var optionsElement = document.getElementById("optionsBlok");
+            var selectedValue = optionsElement.value;
+
+            var optionsDurum = document.getElementById("durum");
+            var selectedDurum = optionsDurum.value;
+
+            // Yeni <p> elementini oluştur
+            var newDaire = document.createElement('div');
+            newDaire.className = 'daire';
+            newDaire.innerHTML = selectedValue;
+          
+            //durum için div oluşturuldu.
+            var newDurum = document.createElement('div');
+            newDurum.innerHTML = selectedDurum;
+
+            // Oluşturulan <p> elementini belirli bir alana ekleyin
+            var indexAddElement = document.querySelector('.indexAdd');
+            indexAddElement.appendChild(newDaire);
+            indexAddElement.appendChild(newDurum);
+            closeDaire();
+        }
+
         $('.adduser').click(function() {
             $('#popup').show();
             $('#popup').css('display', 'flex');
@@ -231,43 +290,43 @@ try {
             return regex.test(userName);
             event.preventDefault(); // Formun gönderimini engelle
         }
+        /*
+                function validateEmail(userEmail) {
+                    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    return regex.test(userEmail);
+                    event.preventDefault(); // Formun gönderimini engelle
+                }
 
-        function validateEmail(userEmail) {
-            const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return regex.test(userEmail);
-            event.preventDefault(); // Formun gönderimini engelle
-        }
+                function validateVehiclePlate(plate) {
+                    //const regex = /^\d{2}\s[A-ZÇĞİÖŞÜ]{1,3}\s\d{2,3}\s?[A-ZÇĞİÖŞÜ]{0,1}\s?[0-9]{0,3}$/; BOŞLUKLU İSTERSEK.
+                    const regex = /^\d{2}[A-ZÇĞİÖŞÜ]{1,3}\d{2,3}?[A-ZÇĞİÖŞÜ]{0,1}?[0-9]{0,3}$/;
+                    return regex.test(plate);
+                    event.preventDefault(); // Formun gönderimini engelle
+                }
+                //parola için kısıtlama
+                function validatePassword(sifre) {
+                    // Parola en az 8 karakterden oluşmalıdır.
+                    if (sifre.length < 8) {
+                        alert('Parola en az 8 karakterden oluşmalıdır.');
+                        return false;
+                    }
 
-        function validateVehiclePlate(plate) {
-            //const regex = /^\d{2}\s[A-ZÇĞİÖŞÜ]{1,3}\s\d{2,3}\s?[A-ZÇĞİÖŞÜ]{0,1}\s?[0-9]{0,3}$/; BOŞLUKLU İSTERSEK.
-            const regex = /^\d{2}[A-ZÇĞİÖŞÜ]{1,3}\d{2,3}?[A-ZÇĞİÖŞÜ]{0,1}?[0-9]{0,3}$/;
-            return regex.test(plate);
-            event.preventDefault(); // Formun gönderimini engelle
-        }
-        //parola için kısıtlama
-        function validatePassword(sifre) {
-            // Parola en az 8 karakterden oluşmalıdır.
-            if (sifre.length < 8) {
-                alert('Parola en az 8 karakterden oluşmalıdır.');
-                return false;
-            }
+                    // Parola 50 karakterden fazla olmamalıdır.
+                    if (sifre.length > 50) {
+                        alert('Parola 50 karakterden fazla olamaz.');
+                        return false;
+                    }
 
-            // Parola 50 karakterden fazla olmamalıdır.
-            if (sifre.length > 50) {
-                alert('Parola 50 karakterden fazla olamaz.');
-                return false;
-            }
+                    // Parolada en az bir büyük harf, bir küçük harf, bir sayı ve bir özel karakter olmalıdır.
+                    if (!/(?=.[a-zÇçĞğİıÖöŞşÜü])(?=.[A-ZÇçĞğİıÖöŞşÜü])(?=.*\d)[A-Za-zÇçĞğİıÖöŞşÜü\d]/.test(sifre)) {
+                        alert('Parola güçlü değil. Lütfen en az bir büyük harf, bir küçük harf ve bir sayı içersin.');
+                        return false;
+                    }
+                    // Tüm kısıtlamalar geçildiyse true döndür
+                    return true;
+                }*/
 
-            // Parolada en az bir büyük harf, bir küçük harf, bir sayı ve bir özel karakter olmalıdır.
-            if (!/(?=.[a-zÇçĞğİıÖöŞşÜü])(?=.[A-ZÇçĞğİıÖöŞşÜü])(?=.*\d)[A-Za-zÇçĞğİıÖöŞşÜü\d]/.test(sifre)) {
-                alert('Parola güçlü değil. Lütfen en az bir büyük harf, bir küçük harf ve bir sayı içersin.');
-                return false;
-            }
-            // Tüm kısıtlamalar geçildiyse true döndür
-            return true;
-        }
-
-        function kisitlamalar(userName, tc, phoneNumber, userEmail, plate) {
+        function kisitlamalar(userName /*, tc, phoneNumber, userEmail, plate*/ ) {
             if (userName.length < 3) {
                 alert('Full Name en az 3 karakter olmalıdır.');
                 return;
@@ -280,34 +339,34 @@ try {
                 alert('Lütfen yalnızca harf karakterleri içeren geçerli bir tam ad girin.');
                 return;
             }
-            //tc kısıtlamaları
-            if (tc.length !== 11) {
-                alert('TC numarı 11 haneli olmalıdır.');
-                return; // Fonksiyondan çık
-            }
+            /*            //tc kısıtlamaları
+                        if (tc.length !== 11) {
+                            alert('TC numarı 11 haneli olmalıdır.');
+                            return; // Fonksiyondan çık
+                        }
 
-            //telefon kısıtlamaları
-            if (phoneNumber.length !== 10) {
-                alert('Telefon numarası 10 haneli olmalıdır.');
-                return;
-            }
-            //email kısıtlamaları
-            if (!validateEmail(userEmail)) {
-                alert('Lütfen geçerli bir e-posta adresi girin.');
-                return;
-            }
-            //araba plakası kısıtlamaları.
-            if (plate !== null && plate.trim() !== "") {
-                if (!validateVehiclePlate(plate)) {
-                    alert('Lütfen geçerli bir araba plakası giriniz.');
-                    return;
-                }
-            }
+                        //telefon kısıtlamaları
+                        if (phoneNumber.length !== 10) {
+                            alert('Telefon numarası 10 haneli olmalıdır.');
+                            return;
+                        }
+                        //email kısıtlamaları
+                        if (!validateEmail(userEmail)) {
+                            alert('Lütfen geçerli bir e-posta adresi girin.');
+                            return;
+                        }
+                        //araba plakası kısıtlamaları.
+                        if (plate !== null && plate.trim() !== "") {
+                            if (!validateVehiclePlate(plate)) {
+                                alert('Lütfen geçerli bir araba plakası giriniz.');
+                                return;
+                            }
+                        }*/
             return true;
         }
         //kısıtlama ile ilgili fonksiyonlar bitiş...
-
         var saveButton = document.getElementById('saveButton');
+
         saveButton.addEventListener('click', function() {
             var userName = $('input[name="userName"]').val();
             var tc = $('input[name="tc"]').val();
@@ -317,8 +376,11 @@ try {
             var plate = $('input[name="plate"]').val();
             var gender = $('select#gender').val();
             var apartman_id = $('input[name="apartman_id"]').val();
-            //alert(userName+","+  tc+","+phoneNumber+","+durum+","+userEmail+","+apartman_id+","+plate+","+gender);
-            if (kisitlamalar(userName, tc, phoneNumber, userEmail, plate)) {
+
+            alert(userName + "," + tc + "," + phoneNumber + "," + durum + "," + userEmail + "," + apartman_id +
+                "," + plate + "," + gender);
+
+            if (kisitlamalar(userName /* tc, phoneNumber, userEmail, plate*/ )) {
                 $.ajax({
                     url: 'Controller/save_user.php',
                     type: 'POST',
@@ -333,9 +395,25 @@ try {
                         apartman_id: apartman_id
                     },
                     success: function(response) {
-                        //alert(response);
                         if (response == 1) {
-                            location.reload();
+                            // Birinci AJAX isteği başarılı oldu, şimdi ikinci isteği yapalım.
+                            $.ajax({
+                                url: 'Controller/demo.php',
+                                type: 'POST',
+                                data: {
+                                    durum: durum
+                                },
+                                success: function(secondResponse) {
+                                    // İkinci AJAX başarılı ise burada işlemler yapabilirsiniz.
+                                    //alert(secondResponse)
+                                    if (secondResponse == 1) {
+                                        location.reload();
+                                    }
+                                },
+                                error: function(secondError) {
+                                    console.error(secondError);
+                                }
+                            });
                         }
                     },
                     error: function(error) {
@@ -345,8 +423,8 @@ try {
             } else {
                 return;
             }
-
         });
+
 
         var updateButtons = document.querySelectorAll('.updateButton');
 
@@ -363,7 +441,7 @@ try {
                 var plate = row.querySelector('td:nth-child(7)').textContent;
                 var gender = row.querySelector('td:nth-child(8) select').value;
                 //alert(userName+","+  tc+","+phoneNumber+","+durum+","+userEmail+","+userID+","+plate+","+gender);
-                if (kisitlamalar(userName, tc, phoneNumber, userEmail, plate)) {
+                if (kisitlamalar(userName /*, tc, phoneNumber, userEmail, plate*/ )) {
                     $.ajax({
                         url: 'Controller/update_user.php',
                         type: 'POST',
