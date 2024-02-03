@@ -79,8 +79,8 @@ if(isset($_POST['btn-signup']))
 
     <!-- Bootstrap -->
     
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen"> -->
 
     <!-- Your custom styles -->
     
@@ -95,36 +95,49 @@ if(isset($_POST['btn-signup']))
 
     <div class="container">
 
-      <div class="logo-box">
-        <img src="assets/img/siyah.png" alt="">
-      </div> 
-
       <div class="login-box">
+
+        <div class="logo-box">
+          <img src="admin/assets/img/ico.png" alt="">
+        </div> 
         
           <form class="login-form" method="post">
 
-            <h2 class="form-signin-heading">Hesap Oluştur</h2>
+            <h1 class="form-signin-heading">Katsis'e Hoşgeldiniz</h1>
             
-            <div class="hr"></div>
+            <p class="form-signin-heading1">Hesap oluşturmak için lütfen bilgilerinizi giriniz</p>
 
             <?php if(isset($msg)){
              echo $msg; 
             }  
             ?>
-            
-            <input type="text" class="input-block-level" placeholder="Ad ve Soyad" name="txtuname" required />
-            <input type="email" class="input-block-level" placeholder="E-Posta Adresi" name="txtemail" required />
-            <input type="password" class="input-block-level" placeholder="Parola" name="txtpass" required />
-            <input type="password" class="input-block-level" placeholder="Parola Tekrarı" name="confirm_password" required />
-          
-            <button class="btn btn-large btn-primary" type="submit" name="btn-signup">Hesap Oluştur</button>
-            
-            <a href="index.php" class="btn btn-large olusturbtn">Giriş Yap</a>
-          
-            <div class="hr"></div>
 
+            <label class="label-block-level" for="txtuname">Ad Soyad</label>
+            <input type="text" class="input-block-level" placeholder="Ad ve Soyad" id="txtuname" name="txtuname" required />
+
+            <label class="label-block-level" for="txtemail">E-Posta</label>
+            <input type="email" class="input-block-level" placeholder="E-Posta Adresi" id="txtemail" name="txtemail" required />
+
+            <label class="label-block-level" for="txtpass">Parola</label>
+            <input type="password" class="input-block-level" placeholder="Parola" id="txtpass" name="txtpass" required />
+
+            <label class="label-block-level" for="confirm_password">Parola Tekrarı</label>
+            <input type="password" class="input-block-level" placeholder="Parola Tekrarı" id="confirm_password" name="confirm_password" required />
+          
+            <button class="btn-custom" type="submit" id="" name="btn-signup">Hesap Oluştur</button>
+            
+            <p class="hesap">
+              Hesabınız var mı?<br> <a href="index.php">Giriş Yap</a>
+            </p>
+          
           </form>
 
+      </div>
+
+      <div class="img-box">
+        <h1 class="form-signin-heading">KATSİS</h1>
+        <p class="form-signin-heading2">Bina Yönetiminde Güvenilir Çözüm!</p>
+        <img src="assets/img/img.png" alt="">
       </div>
       
     </div> <!-- /container -->

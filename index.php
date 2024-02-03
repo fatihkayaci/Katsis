@@ -66,10 +66,10 @@ if(isset($_POST['btn-login']))
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="apple-touch-icon" sizes="76x76" href="admin/assets/img/ico.png">
+    <link rel="icon" type="image/png" href="admin/assets/img/ico.png">
     <title>Giriş Yap | Katsis</title>
 
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
 
     <!-- Your custom styles -->
     
@@ -79,6 +79,9 @@ if(isset($_POST['btn-login']))
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen"> -->
 
     <!-- Modernizr JavaScript -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script> -->
@@ -90,17 +93,18 @@ if(isset($_POST['btn-login']))
   
   <div class="container">
 
-    <div class="logo-box">
-      <img src="assets/img/siyah.png" alt="">
-    </div> 
-
     <div class="login-box">
+
+      <div class="logo-box">
+        <img src="admin/assets/img/ico.png" alt="">
+      </div> 
 
       <form class="login-form" method="post">
 
-        <h2 class="form-signin-heading">Giriş Yap</h2>
+        <h1 class="form-signin-heading">Katsis'e Hoşgeldiniz</h1>
 
-        <div class="hr"></div>
+        <p class="form-signin-heading1">Giriş yapmak için lütfen bilgilerinizi giriniz</p>
+
 
       <?php
       if(isset($_GET['inactive']))
@@ -123,10 +127,11 @@ if(isset($_POST['btn-login']))
       <?php
       }
       ?>
+        <label class="label-block-level" for="txtemail">E-Posta</label>
+        <input type="email" class="input-block-level" id="txtemail" placeholder="E-posta adresi" name="txtemail" required />
 
-        <input type="email" class="input-block-level" placeholder="E-posta adresi" name="txtemail" required />
-
-        <input type="password" class="input-block-level1" placeholder="Şifre" name="txtupass" required />
+        <label class="label-block-level" for="txtupass">Parola</label>
+        <input type="password" class="input-block-level" placeholder="Şifre" id="txtupass" name="txtupass" required />
 
         <div class="remember-div">
 
@@ -149,14 +154,21 @@ if(isset($_POST['btn-login']))
 
         <div class="g-recaptcha" data-sitekey="6Ld0njYpAAAAAC027yq47stnNrM7uKvoiGv6-Eud"></div>
 
-        <button class="btn btn-large btn-primary" type="submit" name="btn-login">Giriş yap</button>
+        <button class="btn-custom" type="submit" name="btn-login">Giriş yap</button>
 
-        <a href="signup" class="btn btn-large olusturbtn">Hesap Oluştur</a>
-
-        <div class="hr"></div>
+        <p class="hesap">
+          Hesabınız yok mu?<br> <a href="signup">Hesap Oluştur</a>
+        </p>
 
       </form>
 
+    </div>
+
+
+    <div class="img-box">
+      <h1 class="form-signin-heading">KATSİS</h1>
+      <p class="form-signin-heading2">Bina Yönetiminde Güvenilir Çözüm!</p>
+      <img src="assets/img/img.png" alt="">
     </div>
 
   </div> <!-- /container -->
