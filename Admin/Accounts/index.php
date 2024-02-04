@@ -2,6 +2,7 @@
     sonradan eklenecekler işlemler kısmı eklenecek.
     icra durumu
     bakiye.
+    <td contenteditable="true">' .base64_decode($row["userPass"]) . '</td>
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -30,18 +31,7 @@ try {
             $optionsBlok .= '<option name="optionsBlok" value="' . $row['blok_adi']." Blok - Daire ".$row['daire_sayisi'] . '">' .$row['blok_adi']." Blok - Daire ". $row['daire_sayisi'] . '</option>';
         }
     }
-/*
-    $sql = "SELECT durum FROM tbl_users WHERE apartman_id = " . $_SESSION["apartID"];
-    $result = $conn->query($sql);
 
-    if ($result->rowCount() > 0) {
-        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-            $optionsDurum .= '<option value="' . $row['durum'].'">' .$row['durum'].'</option>';
-        }
-    }*/
-    //buraya kadar...
-
-    
     $sql = "SELECT * FROM tbl_users WHERE apartman_id = " . $_SESSION["apartID"] . " AND rol = 3";
 
     $stmt = $conn->prepare($sql);
@@ -55,11 +45,9 @@ try {
                 <thead>
                     <tr>
                         <th>Full Name</th>
-                        <th>tc</th>
                         <th>Phone Number</th>
                         <th>Durum</th>
                         <th>Email</th>
-                        <th>Şifre</th>
                         <th>Vehicle Plate</th>
                         <th>Gender</th>
                         <th>update</th>
@@ -72,16 +60,9 @@ try {
                 foreach ($result as $row) {
                     echo '<tr data-userid="' . $row["userID"] . '">
                             <td contenteditable="true">' . $row["userName"] . '</td>
-                            <td contenteditable="true">' . $row["tc"] . '</td>
                             <td contenteditable="true">' . $row["phoneNumber"] . '</td>
-                            <td contenteditable="true">
-                            <select>
-                                <option value="katmaliki" ' . ($row["durum"] == "katmaliki" ? 'selected' : '') . '>katmaliki</option>
-                                <option value="kiracı" ' . ($row["durum"] == "kiracı" ? 'selected' : '') . '>kiracı</option>
-                            </select>
-                            </td>
+                            <td>'.$row["durum"] .'</td>
                             <td contenteditable="true">' . $row["userEmail"] . '</td>
-                            <td contenteditable="true">' .base64_decode($row["userPass"]) . '</td>
                             <td contenteditable="true">' . $row["plate"] . '</td>
                             <td contenteditable="true">
                             <select>
@@ -164,18 +145,8 @@ try {
             <hr class="horizontal dark mt-0 w-100">
             <div class="at">
                 <button type="button" class="daireEkle btn btn-primary">Daire Ekle</button>
-                <!--<button type="button" class="Artı btn btn-primary">+</button>-->
             </div>
-            <div class="indexAdd">
-
-                <?php
-                 /*echo '<select id="blokOption" name="optionsBlok">' . $optionsBlok.'</select>';
-                 echo '<select id="durumOption" name="optionsDurum">
-                 <option value="katmaliki">Kat Maliki</option>
-                 <option value="kiraci">Kiracı</option>
-                 </select>';*/
-                ?>
-            </div>
+            <div class="indexAdd"></div>
 
             <hr class="horizontal dark mt-4 w-100">
 
@@ -212,11 +183,13 @@ try {
             <div class="row row-btns">
                 <label for="options">Daire:</label>
                 <select id="optionsBlok" name="options">
+                    <option value=""></option>
                     <?php echo $optionsBlok; ?>
                 </select>
 
                 <label for="durum">Durum :</label>
                 <select class="input" id="durum">
+                    <option value=""></option>
                     <option value="katmaliki">kat Maliki</option>
                     <option value="kiracı">kiracı</option>
                 </select>
@@ -243,7 +216,7 @@ try {
             var newDaire = document.createElement('div');
             newDaire.className = 'daire';
             newDaire.innerHTML = selectedValue;
-          
+
             //durum için div oluşturuldu.
             var newDurum = document.createElement('div');
             newDurum.innerHTML = selectedDurum;
@@ -376,10 +349,23 @@ try {
             var plate = $('input[name="plate"]').val();
             var gender = $('select#gender').val();
             var apartman_id = $('input[name="apartman_id"]').val();
+            var optionsBlok = $('select#optionsBlok').val();
 
-            alert(userName + "," + tc + "," + phoneNumber + "," + durum + "," + userEmail + "," + apartman_id +
-                "," + plate + "," + gender);
+            // Düzenli ifade kullanarak "C" ve "10" kısmını almak
+            var blokDaireRegex = /([A-Za-z]+).*?(\d+)/;
+            var eslesme = optionsBlok.match(blokDaireRegex);
+            var sadeceBlok =null;
+            var sadeceDaire =null;
+            if (eslesme) {
+                sadeceBlok = eslesme[1];
+                sadeceDaire = eslesme[2];
 
+                console.log(sadeceBlok, sadeceDaire); // Konsola yazdırabilirsiniz
+            } else {
+                console.log("Eşleşme bulunamadı");
+            }
+
+            alert("hello"); // burada çekerim
             if (kisitlamalar(userName /* tc, phoneNumber, userEmail, plate*/ )) {
                 $.ajax({
                     url: 'Controller/save_user.php',
@@ -395,13 +381,17 @@ try {
                         apartman_id: apartman_id
                     },
                     success: function(response) {
+
+
                         if (response == 1) {
                             // Birinci AJAX isteği başarılı oldu, şimdi ikinci isteği yapalım.
                             $.ajax({
                                 url: 'Controller/demo.php',
                                 type: 'POST',
                                 data: {
-                                    durum: durum
+                                    durum: durum,
+                                    sadeceBlok: sadeceBlok, // Yeni eklenen kısım
+                                    sadeceDaire: sadeceDaire // Yeni eklenen kısım
                                 },
                                 success: function(secondResponse) {
                                     // İkinci AJAX başarılı ise burada işlemler yapabilirsiniz.
@@ -433,14 +423,11 @@ try {
                 var row = this.closest('tr'); // Güncellenen satırı bul
                 var userID = row.getAttribute('data-userid');
                 var userName = row.querySelector('td:nth-child(1)').textContent;
-                var tc = row.querySelector('td:nth-child(2)').textContent;
-                var phoneNumber = row.querySelector('td:nth-child(3)').textContent;
-                var durum = row.querySelector('td:nth-child(4) select').value;
-                var userEmail = row.querySelector('td:nth-child(5)').textContent;
-                var userPass = row.querySelector('td:nth-child(6)').textContent;
-                var plate = row.querySelector('td:nth-child(7)').textContent;
-                var gender = row.querySelector('td:nth-child(8) select').value;
-                //alert(userName+","+  tc+","+phoneNumber+","+durum+","+userEmail+","+userID+","+plate+","+gender);
+                var phoneNumber = row.querySelector('td:nth-child(2)').textContent;
+                var userEmail = row.querySelector('td:nth-child(4)').textContent;
+                var plate = row.querySelector('td:nth-child(5)').textContent;
+                var gender = row.querySelector('td:nth-child(6) select').value;
+                //alert(userName+","+phoneNumber+","+durum+","+userEmail+","+userID+","+plate+","+gender);
                 if (kisitlamalar(userName /*, tc, phoneNumber, userEmail, plate*/ )) {
                     $.ajax({
                         url: 'Controller/update_user.php',
@@ -448,16 +435,13 @@ try {
                         data: {
                             userID: userID,
                             userName: userName,
-                            tc: tc,
                             phoneNumber: phoneNumber,
-                            durum: durum,
                             userEmail: userEmail,
-                            userPass: userPass,
                             plate: plate,
                             gender: gender
                         },
                         success: function(response) {
-                            //alert(response);
+                            alert(response);
                             if (response == 1) {
                                 alert("güncellendi");
                                 //location.reload();
