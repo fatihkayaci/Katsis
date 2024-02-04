@@ -10,8 +10,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+    <title>Kullanıcılar</title>
+    <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css"> -->
 </head>
 
 <body>
@@ -109,11 +109,10 @@ try {
 
     <!-- Popup Form -->
     <div id="popup">
+
         <form class="login-form" id="userForm">
 
             <h2 class="form-signin-heading">Kullanıcı Ekleme</h2>
-
-            <hr class="horizontal dark mt-0 w-100">
 
             <div class="row">
                 <div class="col-md-6 col">
@@ -157,17 +156,17 @@ try {
 
             <div class="row">
                 <div class="col-md-6 col">
-                    <input class="input" type="text" name="apartman_id" value=<?php echo $_SESSION["apartID"];   ?>
-                        hidden>
+                    <input class="input" type="text" name="apartman_id" value=<?php echo $_SESSION["apartID"]; ?> hidden>
                 </div>
             </div>
-            <hr class="horizontal dark mt-0 w-100">
-            <div class="at">
-                <button type="button" class="daireEkle btn btn-primary">Daire Ekle</button>
+
+            <div class="row">
+                <div class="col-md-12 col-btn">
+                    <button type="button" class="daireEkle btn-custom">Daire Ekle</button>
+                </div>
                 <!--<button type="button" class="Artı btn btn-primary">+</button>-->
             </div>
             <div class="indexAdd">
-
                 <?php
                  /*echo '<select id="blokOption" name="optionsBlok">' . $optionsBlok.'</select>';
                  echo '<select id="durumOption" name="optionsDurum">
@@ -179,55 +178,75 @@ try {
 
             <hr class="horizontal dark mt-4 w-100">
 
-            <div class="row row-btns">
-                <button type="button" class="btn btnx btn-secondary btn-size" onclick="closePopup()">Kapat</button>
-                <button type="button" class="btn btnx btn-primary btn-size" id="saveButton">Kaydet</button>
+            <div class="row">
+                <div class="col-md-12 col-btn">
+                    <button type="button" class="btn-custom" id="saveButton">Kaydet</button>
+                    <button type="button" class="btn-custom-close" onclick="closePopup()">Kapat</button>
+                </div>
             </div>
-
 
 
         </form>
     </div>
     <!--buraya toplu hesap eklenmesi için popup eklendi içeriğinin düzenlenmesi lazım-->
     <div id="topluPopup">
-        <form action="">
-            <button type="button" onclick="closeToplu()">x</button>
-            <h2>oluşturma şeklini seçiniz!</h2>
-            <hr class="horizontal dark mt-0 w-100">
 
-            <div class="row row-btns">
-                <button type="button"><a href="index?parametre=TopluHesap">Toplu Hesap</a></button>
-                <button type="button">Excel İle Dışarıdan Aktar</button>
-                <!--bakılacak excel-->
+        <form class="login-form-toplu" id="userForm2" action="">
+
+            <h2 class="form-signin-heading">oluşturma şeklini seçiniz!</h2>
+
+            <div class="row">
+                <div class="col-md-12 col-btn">
+                    <button class="btn-custom" type="button"><a class="ahref" href="index?parametre=TopluHesap">Toplu Hesap</a></button>
+                    <button class="btn-custom" type="button">Excel İle Dışarıdan Aktar</button>
+                    <!--bakılacak excel-->
+                </div>
             </div>
+
+            <hr class="horizontal dark w-100">
+
+            <div class="row">
+                <div class="col-md-12 col-btn">
+                    <button  type="button" class="btn-custom-close" onclick="closeToplu()">Kapat</button>
+                </div>
+            </div>
+
         </form>
     </div>
     <!--buraya daire için popup eklendi içeriğinin düzenlenmesi lazım-->
     <div id="dairePopup">
-        <form action="">
-            <button type="button" onclick="closeDaire()">x</button>
-            <h2>Daire Ekleme</h2>
-            <hr class="horizontal dark mt-0 w-100">
+        <form class="login-form-daire" id="userForm1" action="">
 
-            <div class="row row-btns">
-                <label for="options">Daire:</label>
-                <select id="optionsBlok" name="options">
-                    <?php echo $optionsBlok; ?>
-                </select>
+            <h2 class="form-signin-heading">Daire Ekleme</h2>
 
-                <label for="durum">Durum :</label>
-                <select class="input" id="durum">
-                    <option value="katmaliki">kat Maliki</option>
-                    <option value="kiracı">kiracı</option>
-                </select>
-                <button type="button" id="ekle" onclick="newDaire()">Ekle</button>
+            <div class="row">
+                <div class="col-md-12 col-btn">
+                    <label for="options">Daire:</label>
+                    <select class="input" id="optionsBlok" name="options">
+                        <?php echo $optionsBlok; ?>
+                    </select>
+
+                    <label for="durum">Durum :</label>
+                    <select class="input" id="durum">
+                        <option value="katmaliki">kat Maliki</option>
+                        <option value="kiracı">kiracı</option>
+                    </select>
+
+                </div>
             </div>
+
+            <div class="row mt-4">
+                <div class="col-md-12 col-btn">
+                    <button type="button" class="btn-custom" id="ekle" onclick="newDaire()">Ekle</button>
+                    <button type="button" class="btn-custom-close" onclick="closeDaire()">Kapat</button>
+                </div>
+            </div>
+
         </form>
     </div>
 
     <body>
         <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-        <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <script type="text/javascript">
@@ -256,34 +275,63 @@ try {
         }
 
         $('.adduser').click(function() {
-            $('#popup').show();
-            $('#popup').css('display', 'flex');
+            $('#popup').show().css('display', 'flex').delay(100).queue(function(next) {
+                $('#popup').css('opacity', '1');
+                $('#userForm').css('opacity', '1');
+                $('#userForm').css('transform', 'translateY(0)');
+                next();
+            });
         });
 
+
         function closePopup() {
-            $('#popup').hide();
-            $('#popup').css('display', 'none');
+            $('#userForm').css('opacity', '0').css('transform', 'translateY(-180px)').delay(100).queue(function(next) {
+                $('#popup').css('opacity', '0').delay(300).queue(function(nextInner) {
+                    $(this).hide().css('display', 'none');
+                    nextInner();
+                });
+                next();
+            });
         }
 
         $('.toplu').click(function() {
-            $('#topluPopup').show();
-            $('#topluPopup').css('display', 'flex');
+            $('#topluPopup').show().css('display', 'flex').delay(100).queue(function(next) {
+                $('#topluPopup').css('opacity', '1');
+                $('#userForm2').css('opacity', '1');
+                $('#userForm2').css('transform', 'translateY(0)');
+                next();
+            });
         });
 
         function closeToplu() {
-            $('#topluPopup').hide();
-            $('#topluPopup').css('display', 'none');
+            $('#userForm2').css('opacity', '0').css('transform', 'translateY(-180px)').delay(100).queue(function(next) {
+                $('#topluPopup').css('opacity', '0').delay(300).queue(function(nextInner) {
+                    $(this).hide().css('display', 'none');
+                    nextInner();
+                });
+                next();
+            });
         }
 
         $('.daireEkle').click(function() {
-            $('#dairePopup').show();
-            $('#dairePopup').css('display', 'flex');
+            $('#dairePopup').show().css('display', 'flex').delay(100).queue(function(next) {
+                $('#dairePopup').css('opacity', '1');
+                $('#userForm1').css('opacity', '1');
+                $('#userForm1').css('transform', 'translateY(0)');
+                next();
+            });
         });
 
         function closeDaire() {
-            $('#dairePopup').hide();
-            $('#dairePopup').css('display', 'none');
+            $('#userForm1').css('opacity', '0').css('transform', 'translateY(-180px)').delay(100).queue(function(next) {
+                $('#dairePopup').css('opacity', '0').delay(300).queue(function(nextInner) {
+                    $(this).hide().css('display', 'none');
+                    nextInner();
+                });
+                next();
+            });
         }
+
         //kısıtlama ile ilgili fonksiyonlar başlangıç...
         function validateFullName(userName) {
             const regex = /^[A-Za-zÇçĞğİıÖöŞşÜü\s]+$/;
