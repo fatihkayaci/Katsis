@@ -349,21 +349,30 @@ try {
             var plate = $('input[name="plate"]').val();
             var gender = $('select#gender').val();
             var apartman_id = $('input[name="apartman_id"]').val();
-            var optionsBlok = $('select#optionsBlok').val();
+            var optionsBlok = $('select#optionsBlok');
 
-            // Düzenli ifade kullanarak "C" ve "10" kısmını almak
-            var blokDaireRegex = /([A-Za-z]+).*?(\d+)/;
-            var eslesme = optionsBlok.match(blokDaireRegex);
-            var sadeceBlok =null;
-            var sadeceDaire =null;
-            if (eslesme) {
-                sadeceBlok = eslesme[1];
-                sadeceDaire = eslesme[2];
+            var blokDaireArray = []; // Boş bir dizi oluştur
 
-                console.log(sadeceBlok, sadeceDaire); // Konsola yazdırabilirsiniz
-            } else {
-                console.log("Eşleşme bulunamadı");
-            }
+            // Döngü ile optionsBlok'taki her eşleşmeyi diziye ekleyin
+            optionsBlok.each(function() {
+                var blokDaireRegex = /([A-Za-z]+).*?(\d+)/;
+                var eslesme = $(this).val().match(blokDaireRegex);
+
+                if (eslesme) {
+                    var sadeceBlok = eslesme[1];
+                    var sadeceDaire = eslesme[2];
+
+                    blokDaireArray.push({
+                        blok: sadeceBlok,
+                        daire: sadeceDaire
+                    });
+                } else {
+                    console.log("Eşleşme bulunamadı");
+                }
+            });
+
+            // Diziyi konsola yazdırabilirsiniz
+            console.log(blokDaireArray);
 
             alert("hello"); // burada çekerim
             if (kisitlamalar(userName /* tc, phoneNumber, userEmail, plate*/ )) {
@@ -381,21 +390,15 @@ try {
                         apartman_id: apartman_id
                     },
                     success: function(response) {
-
-
                         if (response == 1) {
-                            // Birinci AJAX isteği başarılı oldu, şimdi ikinci isteği yapalım.
                             $.ajax({
                                 url: 'Controller/demo.php',
                                 type: 'POST',
                                 data: {
                                     durum: durum,
-                                    sadeceBlok: sadeceBlok, // Yeni eklenen kısım
-                                    sadeceDaire: sadeceDaire // Yeni eklenen kısım
+                                    blokDaireArray: blokDaireArray // Diziyi gönder
                                 },
                                 success: function(secondResponse) {
-                                    // İkinci AJAX başarılı ise burada işlemler yapabilirsiniz.
-                                    //alert(secondResponse)
                                     if (secondResponse == 1) {
                                         location.reload();
                                     }
