@@ -147,7 +147,6 @@ try {
                 </div>
                 <!--<button type="button" class="Artı btn btn-primary">+</button>-->
             </div>
-
             <div class="indexAdd"></div>
 
             <hr class="horizontal dark mt-4 w-100">
