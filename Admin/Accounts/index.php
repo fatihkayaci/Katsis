@@ -205,6 +205,7 @@ try {
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <script type="text/javascript">
         var selectedValuesArray = [];
+        var selectedDurumArray = [];
 
         function newDaire() {
             // Seçilen değeri al
@@ -215,6 +216,7 @@ try {
             var selectedDurum = optionsDurum.value;
 
             selectedValuesArray.push(selectedValue);
+            selectedDurumArray.push(selectedDurum);
             // Yeni <p> elementini oluştur
             var newDaire = document.createElement('div');
             newDaire.className = 'daire';
@@ -229,7 +231,7 @@ try {
             indexAddElement.appendChild(newDaire);
             indexAddElement.appendChild(newDurum);
             closeDaire();
-            alert(selectedValuesArray);
+            alert(selectedValuesArray + selectedDurumArray);
         }
 
         $('.adduser').click(function() {
@@ -355,21 +357,38 @@ try {
             var apartman_id = $('input[name="apartman_id"]').val();
             var optionsBlok = $('select#optionsBlok').val();
 
-            // Düzenli ifade kullanarak "C" ve "10" kısmını almak
-            var blokDaireRegex = /([A-Za-z]+).*?(\d+)/;
-            var eslesme = optionsBlok.match(blokDaireRegex);
-            var sadeceBlok = null;
-            var sadeceDaire = null;
-            if (eslesme) {
-                sadeceBlok = eslesme[1];
-                sadeceDaire = eslesme[2];
+            var blokArray = [];
+            var durumArray = [];
 
-                console.log(sadeceBlok, sadeceDaire); // Konsola yazdırabilirsiniz
-            } else {
-                console.log("Eşleşme bulunamadı");
+            for (var i = 0; i < selectedDurumArray.length; i++) {
+                var durumParcalari = selectedDurumArray[i].split(',');
+
+                for (var j = 0; j < durumParcalari.length; j++) {
+                    durumArray.push(durumParcalari[j]);
+                }
             }
 
-            alert("hello"); // burada çekerim
+            console.log("durum Array = " + JSON.stringify(durumArray));
+
+            for (var i = 0; i < selectedValuesArray.length; i++) {
+                var element = selectedValuesArray[i];
+                var match = element.match(/\d+/);
+                var letterPart = element.charAt(0);
+                var numberPart = match ? match[0] : null;
+
+                console.log("element = " + element + ", letterpart = " + letterPart + ", numberpart = " +
+                    numberPart);
+
+                var blokElement = {
+                    letter: letterPart,
+                    number: numberPart
+                };
+
+                blokArray.push(blokElement);
+            }
+
+            console.log("blok Array = " + JSON.stringify(blokArray));
+
             if (kisitlamalar(userName /* tc, phoneNumber, userEmail, plate*/ )) {
                 $.ajax({
                     url: 'Controller/save_user.php',
@@ -378,29 +397,27 @@ try {
                         userName: userName,
                         tc: tc,
                         phoneNumber: phoneNumber,
-                        durum: durum,
+                        durumArray: JSON.stringify(durumArray),
                         userEmail: userEmail,
                         plate: plate,
                         gender: gender,
                         apartman_id: apartman_id
                     },
                     success: function(response) {
-
+                        alert(response);
 
                         if (response == 1) {
-                            // Birinci AJAX isteği başarılı oldu, şimdi ikinci isteği yapalım.
                             $.ajax({
                                 url: 'Controller/demo.php',
                                 type: 'POST',
                                 data: {
-                                    durum: durum,
-                                    //selectedValuesArray: selectedValuesArray,
-                                    sadeceBlok: sadeceBlok, // Yeni eklenen kısım
-                                    sadeceDaire: sadeceDaire // Yeni eklenen kısım
+                                    blokArray: JSON.stringify(blokArray), // Diziyi JSON dizesine dönüştür
+                                    durumArray: JSON.stringify(durumArray)
                                 },
+                                contentType: 'application/json', // İçerik türünü belirt
+                                dataType: 'json', // Yanıt türünü belirt
                                 success: function(secondResponse) {
-                                    // İkinci AJAX başarılı ise burada işlemler yapabilirsiniz.
-                                    //alert(secondResponse)
+                                    alert(secondResponse)
                                     if (secondResponse == 1) {
                                         location.reload();
                                     }

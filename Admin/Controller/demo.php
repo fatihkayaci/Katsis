@@ -4,11 +4,15 @@ include("../../DB/dbconfig.php");
 try {
     session_start();
 
-    $durum = $_POST['durum'];
     $lastID = $_SESSION['lastID'];
-    $sadeceBlok = $_POST['sadeceBlok'];
-    $sadeceDaire = $_POST['sadeceDaire'];
-
+    
+    // BlokArray'i almak için
+    $blokArrayJSON = $_POST['blokArray'];
+    $blokArray = json_decode($blokArrayJSON, true);
+    $durumArrayJSON = $_POST['durumArray'];
+    $durumArray = json_decode($durumArrayJSON, true);
+    print_r($blokArray);
+    print_r($durumArray);
     if ($durum == "kiracı") {
         $sql  = "UPDATE tbl_daireler
                  SET kiraciID = (SELECT userID FROM tbl_users WHERE userID = :lastID)
