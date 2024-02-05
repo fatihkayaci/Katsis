@@ -22,29 +22,53 @@ try {
     $apartman_id = $_POST['apartman_id'];
     $plate = $_POST['plate'];
     $gender = $_POST['gender'];
-    //$optionsBlok = $_POST['optionsBlok'];
+    // E-posta adresi kontrolü
+if (empty($userEmail) || trim($userEmail) === "") {
+    // E-posta adresi boşsa, kontrol yapmadan kaydet
+    $userPass = randomPassword();
+    $hashedPassword = base64_encode($userPass);
+    $t ="Y";
 
-    // E-posta adresinin varlığını kontrol et
+    $sql = "INSERT INTO tbl_users (userName, tc, phoneNumber, durum, userEmail, userPass, plate, gender, apartman_id, rol, popup, userStatus) VALUES 
+    (:userName, :tc, :phoneNumber, :durum, :userEmail, :userPass, :plate, :gender, :apartman_id, :rol, :popup, :userStatus)";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':userName', $userName);
+    $stmt->bindParam(':tc', $tc);
+    $stmt->bindParam(':phoneNumber', $phoneNumber);
+    $stmt->bindParam(':durum', $durum);
+    $stmt->bindValue(':userEmail', null, PDO::PARAM_NULL); // Boş değeri atanır
+    $stmt->bindParam(':userPass', $hashedPassword);
+    $stmt->bindParam(':plate', $plate);
+    $stmt->bindParam(':gender', $gender);
+    $stmt->bindParam(':userStatus', $t);
+    $stmt->bindParam(':apartman_id', $apartman_id);
+    $rol = 3;
+    $popup = 0;
+    $stmt->bindParam(':rol', $rol);
+    $stmt->bindParam(':popup', $popup);
+    $stmt->execute();
+
+    $_SESSION['lastID'] = $conn->lastInsertId();
+    echo 1;
+} else {
+    // E-posta adresi doluysa, benzersizlik kontrolü yap
     $emailCheckSQL = "SELECT COUNT(*) FROM tbl_users WHERE userEmail = :userEmail";
     $emailCheckStmt = $conn->prepare($emailCheckSQL);
     $emailCheckStmt->bindParam(':userEmail', $userEmail);
     $emailCheckStmt->execute();
 
     if ($emailCheckStmt->fetchColumn() > 0) {
-        echo "bu email zaten var. lütfen email adresini kontrol edip tekrar deneyiniz.";
+        echo "Bu e-posta adresi zaten var. Lütfen farklı bir e-posta adresi seçiniz.";
     } else {
-        // Rastgele şifre oluştur
+        // E-posta adresi benzersiz, kaydetmeye devam et
         $userPass = randomPassword();
         $hashedPassword = base64_encode($userPass);
         $t ="Y";
 
-        // SQL sorgusunu hazırla
         $sql = "INSERT INTO tbl_users (userName, tc, phoneNumber, durum, userEmail, userPass, plate, gender, apartman_id, rol, popup, userStatus) VALUES 
         (:userName, :tc, :phoneNumber, :durum, :userEmail, :userPass, :plate, :gender, :apartman_id, :rol, :popup, :userStatus)";
 
-        //$sql2 = "INSERT INTO tbl_daireler (optionsBlok) VALUES (:apartman_id, :apartman_name)";
-
-        // PDO sorgusunu hazırla ve çalıştır
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':userName', $userName);
         $stmt->bindParam(':tc', $tc);
@@ -61,10 +85,13 @@ try {
         $stmt->bindParam(':rol', $rol);
         $stmt->bindParam(':popup', $popup);
         $stmt->execute();
+        
         $_SESSION['lastID'] = $conn->lastInsertId();
         echo 1;
     }
+}
+
 } catch (PDOException $e) {
-    echo $e;
+    echo "Hata: " . $e->getMessage();
 }
 ?>
