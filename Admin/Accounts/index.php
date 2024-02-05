@@ -143,20 +143,11 @@ try {
 
             <div class="row">
                 <div class="col-md-12 col-btn">
-                    <button type="button" class="daireEkle btn-custom">Daire Ekle</button>
+                    <button type="button" class="daireEkle btn-custom-daire">Daire Ekle</button>
                 </div>
                 <!--<button type="button" class="Artı btn btn-primary">+</button>-->
             </div>
-            <div class="indexAdd">
-                <?php
-                 /*echo '<select id="blokOption" name="optionsBlok">' . $optionsBlok.'</select>';
-                 echo '<select id="durumOption" name="optionsDurum">
-                 <option value="katmaliki">Kat Maliki</option>
-                 <option value="kiraci">Kiracı</option>
-                 </select>';*/
-                ?>
 
-            </div>
             <div class="indexAdd"></div>
 
             <hr class="horizontal dark mt-4 w-100">
@@ -180,7 +171,7 @@ try {
 
             <div class="row">
                 <div class="col-md-12 col-btn">
-                    <button class="btn-custom" type="button"><a class="ahref" href="index?parametre=TopluHesap">Toplu Hesap</a></button>
+                    <a class="ahref btn-custom" href="index?parametre=TopluHesap">Toplu Hesap</a>
                     <button class="btn-custom" type="button">Excel İle Dışarıdan Aktar</button>
                     <!--bakılacak excel-->
                 </div>
@@ -252,6 +243,7 @@ try {
 
             //durum için div oluşturuldu.
             var newDurum = document.createElement('div');
+            newDurum.className = 'durum';
             newDurum.innerHTML = selectedDurum;
 
             // Oluşturulan <p> elementini belirli bir alana ekleyin

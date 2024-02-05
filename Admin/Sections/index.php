@@ -183,7 +183,7 @@ function openPopup(daire_id, tur) {
 
 function closePopup() {
     document.getElementById("userInput").value = "";
-    $('#userInput').css('border-color', '#00000000');
+    $('#userInput').css('border-color', '#000000');
     $('#userInput').focus(function() {
         $(this).css('border-color', '#3BB4D7');
     });
