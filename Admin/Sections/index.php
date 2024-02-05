@@ -27,6 +27,14 @@ try {
     if ($result) {
         echo '
         <div class="table-responsive-vertical shadow-z-1">
+        
+        <div class="input-group-div">
+            <div class="input-group">
+              <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
+              <input type="text" class="form-control" placeholder="Arama...">
+            </div>
+        </div>
+
             <table id="table" class="table table-hover table-mc-light-blue">
                 <thead>
                     <tr>
