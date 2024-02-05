@@ -146,7 +146,9 @@ try {
             <div class="at">
                 <button type="button" class="daireEkle btn btn-primary">Daire Ekle</button>
             </div>
-            <div class="indexAdd"></div>
+            <div class="indexAdd">
+                <div ></div>
+            </div>
 
             <hr class="horizontal dark mt-4 w-100">
 
