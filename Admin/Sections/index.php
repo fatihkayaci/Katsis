@@ -42,8 +42,10 @@ try {
                         <th>Blok Adı</th>
                         <th>Kapı No</th>
                         <th>Kiracı</th>
+                        <th></th>
                         <th>Kat Maliki</th>
-                        <th>Bakiye</th>
+                        <th></th>
+                        <th></th>
                     </tr>
                 </thead>
 
@@ -57,31 +59,70 @@ try {
                 
                 <tr id='.$row["daire_id"].'>
 
-                    <td  data-title="ID"> <input type="checkbox"/></td>
+                    <td data-title="ID"> <input type="checkbox"/></td>
 
-                    <td  data-title="Blok Adı">' . $row["blok_adi"] . '</td>
+                    <td data-title="Blok Adı">' . $row["blok_adi"] . '</td>
 
-                    <td  data-title="Kapı No">' . $row["daire_sayisi"] . '</td>';
+                    <td data-title="Kapı No">' . $row["daire_sayisi"] . '</td>';
                     
                    if($row["kiraciID"]==null) {
-                  echo ' <td  data-title="0"><button type="button" class="table-a" onclick="openPopup('.$row["daire_id"].',0)">Kiracı ekle + </button></td>';
+                  echo ' <td data-title="0"><button type="button" class="table-a" onclick="openPopup('.$row["daire_id"].',0)">Kiracı ekle + </button></td>';
 
                    }else{
-                    echo ' <td  data-title="0">'.$listt[$row["kiraciID"]].' </td>  '; 
+                    echo ' <td data-title="0">'.$listt[$row["kiraciID"]].' </td>  '; 
                    }
-                    
+                   
+                   echo ' <td data-title="Bakiye">00,0 $</td> ';
+
                    if($row["katMalikiID"]==null) {
-                    echo '<td  data-title="1"><button type="button" class="table-a" onclick="openPopup('.$row["daire_id"].',1)">Kat Maliki ekle + </button></td>
+                    echo '<td data-title="1"><button type="button" class="table-a" onclick="openPopup('.$row["daire_id"].',1)">Kat Maliki ekle + </button></td>
                     ';
   
-                     }else{
-                      echo ' <td  data-title="1">'.$listt[$row["katMalikiID"]].' </td>  '; 
-                     }
+                    }else{
+                     echo ' <td data-title="1">'.$listt[$row["katMalikiID"]].' </td>  '; 
+                    }
 
 
 
                   echo '  <td data-title="Bakiye">00,0 $</td>
 
+                        <td data-title="Seçenekler">
+                            <li class="nav-item dropdown pe-2 d-flex settings">
+                                  <a href="javascript:;" class="nav-link text-body nav-link font-weight-bold mb-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                  </a>
+                              <ul class="dropdown-menu dropdown-menu-end ayar-1 px-1 margin-10" aria-labelledby="dropdownMenuButton">
+                                <li class="mb-2">
+                                  <a class="dropdown-item border-radius-md" href="javascript:;">
+                                    <div class="d-flex">
+                                      <div class="my-auto">
+                                        <i class="fa-solid fa-pen i-color me-3"></i>
+                                      </div>
+                                      <div class="d-flex flex-column justify-content-center">
+                                        <h6 class="text-sm font-weight-normal mb-1">
+                                          <span class="font-weight-bold">Düzenle</span>
+                                        </h6>
+                                      </div>
+                                    </div>
+                                  </a>
+                                </li>
+                                <li class="mb-1">
+                                  <a class="dropdown-item border-radius-md" href="../logout">
+                                    <div class="d-flex">
+                                      <div class="my-auto">
+                                        <i class="fa-solid fa-trash i-color me-3"></i>
+                                      </div>
+                                      <div class="d-flex flex-column justify-content-center">
+                                        <h6 class="text-sm font-weight-normal mb-0">
+                                          <span class="font-weight-bold">Sil</span>
+                                        </h6>
+                                      </div>
+                                    </div>
+                                  </a>
+                                </li>
+                              </ul>
+                            </li>
+                        </td>
                 </tr>';
         }
 
@@ -109,6 +150,7 @@ try {
         <input type="hidden" id="hiddenDaireID" />
         <input type="hidden" id="turDaire" />
         <div class="row">
+
 
             <div class="col-md-6 col">
                 <input class="input" type="text" list="Users" id="userInput" oninput="getUserID()" />

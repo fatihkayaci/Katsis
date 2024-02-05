@@ -4126,9 +4126,14 @@ fieldset:disabled .btn {
   margin-left: 0;
 }
 
+.ayar-1 {
+  min-width: var(--bs-dropdown-min-width-1) !important;
+}
+
 .dropdown-menu {
   --bs-dropdown-zindex: 1000;
   --bs-dropdown-min-width: 11rem;
+  --bs-dropdown-min-width-1: 5rem;
   --bs-dropdown-padding-x: 0;
   --bs-dropdown-padding-y: 0.5rem;
   --bs-dropdown-spacer: 1.625rem;

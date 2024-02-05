@@ -127,7 +127,7 @@ if(isset($_POST['btn-signup']))
             <button class="btn-custom" type="submit" id="" name="btn-signup">Hesap Oluştur</button>
             
             <p class="hesap">
-              Hesabınız var mı?<br> <a href="index.php">Giriş Yap</a>
+              Hesabınız var mı?<br> <a href="index">Giriş Yap</a>
             </p>
           
           </form>
