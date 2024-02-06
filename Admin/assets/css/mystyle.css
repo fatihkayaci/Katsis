@@ -638,3 +638,13 @@ background-color: #f9bdbb;
   align-items: center;
   padding-top: 20px;
 }
+
+.settings {
+  justify-content: end;
+  align-items: end;
+  width: 100%;
+}
+
+.margin-10 {
+  margin-right: -10px !important;
+}

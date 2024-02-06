@@ -105,7 +105,7 @@ if(isset($_POST['btn-submit']))
         <button class="btn-custom" type="submit" name="btn-submit">Parolamı Sıfırla</button>
         
         <p class="hesap">
-          <a href="index.php">Giriş Yap</a>
+          <a href="index">Giriş Yap</a>
         </p>
 
       </form>
