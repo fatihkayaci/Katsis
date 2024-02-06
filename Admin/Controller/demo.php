@@ -18,7 +18,7 @@ try {
             if ($durum == "kiracı") {
                 $sql  = "UPDATE tbl_daireler
                          SET kiraciID = (SELECT userID FROM tbl_users WHERE userID = :lastID)
-                         WHERE blok_adi = :sadeceBlok AND daire_sayisi = :sadeceDaire";
+                         WHERE blok_adi = :sadeceBlok AND daire_sayisi = :sadeceDaire AND apartman_id = " . $_SESSION["apartID"];
                          // PDO sorgusunu hazırla ve çalıştır
                         $stmt = $conn->prepare($sql);
                         $stmt->bindParam(':lastID', $lastID, PDO::PARAM_INT);
@@ -29,7 +29,7 @@ try {
             } else if ($durum == "katmaliki") {
                 $sql  = "UPDATE tbl_daireler
                          SET katmalikiID = (SELECT userID FROM tbl_users WHERE userID = :lastID)
-                         WHERE blok_adi = :sadeceBlok AND daire_sayisi = :sadeceDaire";
+                         WHERE blok_adi = :sadeceBlok AND daire_sayisi = :sadeceDaire AND apartman_id = " . $_SESSION["apartID"];
                          // PDO sorgusunu hazırla ve çalıştır
                         $stmt = $conn->prepare($sql);
                         $stmt->bindParam(':lastID', $lastID, PDO::PARAM_INT);

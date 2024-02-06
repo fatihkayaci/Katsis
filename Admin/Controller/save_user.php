@@ -57,42 +57,47 @@ if (empty($userEmail) || trim($userEmail) === "") {
 } else {
     //burada sıkıntı var yarın bakılacak.
     // E-posta adresi doluysa, benzersizlik kontrolü yap
+    
     $emailCheckSQL = "SELECT COUNT(*) FROM tbl_users WHERE userEmail = :userEmail";
     $emailCheckStmt = $conn->prepare($emailCheckSQL);
     $emailCheckStmt->bindParam(':userEmail', $userEmail);
     $emailCheckStmt->execute();
-
+    
     if ($emailCheckStmt->fetchColumn() > 0) {
         echo "Bu e-posta adresi zaten var. Lütfen farklı bir e-posta adresi seçiniz.";
     } else {
         foreach($durumArray as $durum){
-        // E-posta adresi benzersiz, kaydetmeye devam et
-        $userPass = randomPassword();
-        $hashedPassword = base64_encode($userPass);
-        $t ="Y";
-        $sql = "INSERT INTO tbl_users (userName, tc, phoneNumber, durum, userEmail, userPass, plate, gender, apartman_id, rol, popup, userStatus) VALUES 
-        (:userName, :tc, :phoneNumber, :durum, :userEmail, :userPass, :plate, :gender, :apartman_id, :rol, :popup, :userStatus)";
-    
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':userName', $userName);
-        $stmt->bindParam(':tc', $tc);
-        $stmt->bindParam(':phoneNumber', $phoneNumber);
-        $stmt->bindParam(':durum', $durum);
-        $stmt->bindValue(':userEmail',$userEmail);
-        $stmt->bindParam(':userPass', $hashedPassword);
-        $stmt->bindParam(':plate', $plate);
-        $stmt->bindParam(':gender', $gender);
-        $stmt->bindParam(':userStatus', $t);
-        $stmt->bindParam(':apartman_id', $apartman_id);
-        $rol = 3;
-        $popup = 0;
-        $stmt->bindParam(':rol', $rol);
-        $stmt->bindParam(':popup', $popup);
-        $stmt->execute();
-    
-        $_SESSION['lastID'] = $conn->lastInsertId();
-        echo 1;
+            // E-posta adresi benzersiz, kaydetmeye devam et
+            $userPass = randomPassword();
+            $hashedPassword = base64_encode($userPass);
+            $t ="Y";
+            $sql = "INSERT INTO tbl_users (userName, tc, phoneNumber, durum, userEmail, userPass, plate, gender, apartman_id, rol, popup, userStatus) VALUES 
+            (:userName, :tc, :phoneNumber, :durum, :userEmail, :userPass, :plate, :gender, :apartman_id, :rol, :popup, :userStatus)";
+
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':userName', $userName);
+            $stmt->bindParam(':tc', $tc);
+            $stmt->bindParam(':phoneNumber', $phoneNumber);
+            $stmt->bindParam(':durum', $durum);
+            /*if(){
+               
+            }*/
+            $stmt->bindValue(':userEmail', null, PDO::PARAM_NULL); // Boş değeri atanır
+            $stmt->bindValue(':userEmail',$userEmail);
+            $stmt->bindParam(':userPass', $hashedPassword);
+            $stmt->bindParam(':plate', $plate);
+            $stmt->bindParam(':gender', $gender);
+            $stmt->bindParam(':userStatus', $t);
+            $stmt->bindParam(':apartman_id', $apartman_id);
+            $rol = 3;
+            $popup = 0;
+            $stmt->bindParam(':rol', $rol);
+            $stmt->bindParam(':popup', $popup);
+            $stmt->execute();
+            
+            $_SESSION['lastID'] = $conn->lastInsertId();
         }
+        echo 1;
     }
 }
 
