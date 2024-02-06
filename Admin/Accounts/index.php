@@ -250,7 +250,6 @@ try {
             indexAddElement.appendChild(newDaire);
             indexAddElement.appendChild(newDurum);
             closeDaire();
-            alert(selectedValuesArray + selectedDurumArray);
         }
 
         $('.adduser').click(function() {
@@ -462,7 +461,7 @@ try {
                                     durumArray: JSON.stringify(durumArray)
                                 },
                                 success: function(secondResponse) {
-                                    alert(secondResponse);
+                                    alert(secondResponse+"atttt");
                                     if (secondResponse == 1) {
                                         location.reload();
                                     }

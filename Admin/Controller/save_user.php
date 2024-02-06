@@ -22,6 +22,7 @@ try {
     $apartman_id = $_POST['apartman_id'];
     $plate = $_POST['plate'];
     $gender = $_POST['gender'];
+    $elemanSayisi = count($durumArray);
     // E-posta adresi kontrolü
 if (empty($userEmail) || trim($userEmail) === "") {
     foreach($durumArray as $durum){
@@ -70,6 +71,7 @@ if (empty($userEmail) || trim($userEmail) === "") {
             // E-posta adresi benzersiz, kaydetmeye devam et
             $userPass = randomPassword();
             $hashedPassword = base64_encode($userPass);
+            
             $t ="Y";
             $sql = "INSERT INTO tbl_users (userName, tc, phoneNumber, durum, userEmail, userPass, plate, gender, apartman_id, rol, popup, userStatus) VALUES 
             (:userName, :tc, :phoneNumber, :durum, :userEmail, :userPass, :plate, :gender, :apartman_id, :rol, :popup, :userStatus)";
@@ -79,10 +81,6 @@ if (empty($userEmail) || trim($userEmail) === "") {
             $stmt->bindParam(':tc', $tc);
             $stmt->bindParam(':phoneNumber', $phoneNumber);
             $stmt->bindParam(':durum', $durum);
-            /*if(){
-               
-            }*/
-            $stmt->bindValue(':userEmail', null, PDO::PARAM_NULL); // Boş değeri atanır
             $stmt->bindValue(':userEmail',$userEmail);
             $stmt->bindParam(':userPass', $hashedPassword);
             $stmt->bindParam(':plate', $plate);
