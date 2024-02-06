@@ -1,7 +1,7 @@
 <?php
 session_start();
 include("../../DB/dbconfig.php");
-
+$i=0;
 function randomPassword($length = 8) {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $userPass = '';
@@ -17,13 +17,15 @@ try {
     $userName = $_POST['userName'];
     $tc = $_POST['tc'];
     $phoneNumber = $_POST['phoneNumber'];
-    $durum = $_POST['durum'];
+    $durumArray = json_decode($_POST['durumArray']);
     $userEmail = $_POST['userEmail'];
     $apartman_id = $_POST['apartman_id'];
     $plate = $_POST['plate'];
     $gender = $_POST['gender'];
     // E-posta adresi kontrolü
 if (empty($userEmail) || trim($userEmail) === "") {
+    foreach($durumArray as $durum){
+
     // E-posta adresi boşsa, kontrol yapmadan kaydet
     $userPass = randomPassword();
     $hashedPassword = base64_encode($userPass);
@@ -50,8 +52,10 @@ if (empty($userEmail) || trim($userEmail) === "") {
     $stmt->execute();
 
     $_SESSION['lastID'] = $conn->lastInsertId();
+    }
     echo 1;
 } else {
+    //burada sıkıntı var yarın bakılacak.
     // E-posta adresi doluysa, benzersizlik kontrolü yap
     $emailCheckSQL = "SELECT COUNT(*) FROM tbl_users WHERE userEmail = :userEmail";
     $emailCheckStmt = $conn->prepare($emailCheckSQL);
@@ -61,20 +65,20 @@ if (empty($userEmail) || trim($userEmail) === "") {
     if ($emailCheckStmt->fetchColumn() > 0) {
         echo "Bu e-posta adresi zaten var. Lütfen farklı bir e-posta adresi seçiniz.";
     } else {
+        foreach($durumArray as $durum){
         // E-posta adresi benzersiz, kaydetmeye devam et
         $userPass = randomPassword();
         $hashedPassword = base64_encode($userPass);
         $t ="Y";
-
         $sql = "INSERT INTO tbl_users (userName, tc, phoneNumber, durum, userEmail, userPass, plate, gender, apartman_id, rol, popup, userStatus) VALUES 
         (:userName, :tc, :phoneNumber, :durum, :userEmail, :userPass, :plate, :gender, :apartman_id, :rol, :popup, :userStatus)";
-
+    
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':userName', $userName);
         $stmt->bindParam(':tc', $tc);
         $stmt->bindParam(':phoneNumber', $phoneNumber);
         $stmt->bindParam(':durum', $durum);
-        $stmt->bindParam(':userEmail', $userEmail);
+        $stmt->bindValue(':userEmail',$userEmail);
         $stmt->bindParam(':userPass', $hashedPassword);
         $stmt->bindParam(':plate', $plate);
         $stmt->bindParam(':gender', $gender);
@@ -85,9 +89,10 @@ if (empty($userEmail) || trim($userEmail) === "") {
         $stmt->bindParam(':rol', $rol);
         $stmt->bindParam(':popup', $popup);
         $stmt->execute();
-        
+    
         $_SESSION['lastID'] = $conn->lastInsertId();
         echo 1;
+        }
     }
 }
 

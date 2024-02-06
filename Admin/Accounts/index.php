@@ -398,7 +398,6 @@ try {
             var userName = $('input[name="userName"]').val();
             var tc = $('input[name="tc"]').val();
             var phoneNumber = $('input[name="phoneNumber"]').val();
-            var durum = $('select#durum').val();
             var userEmail = $('input[name="userEmail"]').val();
             var plate = $('input[name="plate"]').val();
             var gender = $('select#gender').val();
@@ -416,7 +415,7 @@ try {
                 }
             }
 
-            console.log("durum Array = " + JSON.stringify(durumArray));
+            //console.log("durum Array = " + JSON.stringify(durumArray));
 
             for (var i = 0; i < selectedValuesArray.length; i++) {
                 var element = selectedValuesArray[i];
@@ -424,8 +423,8 @@ try {
                 var letterPart = element.charAt(0);
                 var numberPart = match ? match[0] : null;
 
-                console.log("element = " + element + ", letterpart = " + letterPart + ", numberpart = " +
-                    numberPart);
+                /*console.log("element = " + element + ", letterpart = " + letterPart + ", numberpart = " +
+                    numberPart);*/
 
                 var blokElement = {
                     letter: letterPart,
@@ -462,10 +461,8 @@ try {
                                     blokArray: JSON.stringify(blokArray), // Diziyi JSON dizesine dönüştür
                                     durumArray: JSON.stringify(durumArray)
                                 },
-                                contentType: 'application/json', // İçerik türünü belirt
-                                dataType: 'json', // Yanıt türünü belirt
                                 success: function(secondResponse) {
-                                    alert(secondResponse)
+                                    alert(secondResponse);
                                     if (secondResponse == 1) {
                                         location.reload();
                                     }
