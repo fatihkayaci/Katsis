@@ -113,16 +113,14 @@
                 durumArray.push("kat Maliki");
             }
         }
-        
+        console.log("durum = " + JSON.stringify(durumArray));
         //console.log("User Name Array = " + JSON.stringify(userNameArray));
-        //console.log("durum = " + JSON.stringify(durumArray));
-     
+
         $.ajax({
             url: 'Controller/demo2.php',
             type: 'POST',
             data: {
                 userNameArray: JSON.stringify(userNameArray),
-                durumArray: JSON.stringify(durumArray),
                 apartman_id: apartman_id
             },
             success: function(response) {

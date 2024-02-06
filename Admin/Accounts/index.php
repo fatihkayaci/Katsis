@@ -461,7 +461,6 @@ try {
                                     durumArray: JSON.stringify(durumArray)
                                 },
                                 success: function(secondResponse) {
-                                    alert(secondResponse+"atttt");
                                     if (secondResponse == 1) {
                                         location.reload();
                                     }
