@@ -2,7 +2,7 @@
     display: none;
     position: fixed;
     width: 100%;
-    height: 100vh;
+    height: 100%;
     top: 0;
     left: 0;
     flex-direction: column;
@@ -18,9 +18,9 @@
 
 .login-form-start {
     width: 50%;
-    max-width: 500px;
+    max-width: 450px;
     min-width: 350px;
-    min-height: 370px;
+    min-height: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -28,8 +28,6 @@
     text-align: left;
     background-color: #fff;
     border-radius: 15px;
-    overflow-y: auto;
-    overflow-x: hidden;
     opacity: 0;
     transform: translateY(-180px);
     transition: 0.5s;
