@@ -3,12 +3,10 @@
 
 <div class="form-popup">
 
-    <div class="login-form">
+    <div class="login-form-start" id="userFormStart">
 
         <h2 class="form-signin-heading">Apartman Kayıt</h2>
             
-        <hr class="horizontal dark mt-0 w-100">
-
         <div class="row">
             <div class="col-md-6 col">
                 <label for="apartman_adi">Apartman Adı</label>
@@ -28,16 +26,16 @@
         <p id="numberalert"></p>
 
         <div class="row daire-area" id="table-container">
-            <div class="col-md-6 col1">
-
-
-            </div>
-        
+              
         </div>
 
         <hr class="horizontal dark mt-4 w-100">
 
-        <button id="kaydetbtn" class="btn btnx btn-primary send-form" onclick="kaydet()">Kaydet</button>
+        <div class="row">
+            <div class="col-md-12 col-btn">
+                <button id="kaydetbtn" class="btn-custom send-form" onclick="kaydet()">Kaydet</button>
+            </div>
+        </div>
 
     </div>
 
@@ -157,7 +155,13 @@ function kaydet() {
 
 
 <script>
-  $('.form-popup').show();
+
+      $('.form-popup').show().css('display', 'flex').delay(100).queue(function(next) {
+          $('.form-popup').css('opacity', '1');
+          $('#userFormStart').css('opacity', '1');
+          $('#userFormStart').css('transform', 'translateY(0)');
+          next();
+      });
 
 // HTML sayfasındaki input alanını seç
 var apartmanadi = document.getElementById('apartman_adi');

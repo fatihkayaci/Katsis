@@ -26,7 +26,7 @@ try {
 
     if ($result) {
         echo '
-        <div class="table-responsive-vertical shadow-z-1">
+        <div class="table-responsive-vertical shadow-z-1 cener-table">
         
         <div class="input-group-div">
             <div class="input-group">
