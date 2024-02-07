@@ -39,8 +39,6 @@ try {
                          break;
             }
         }
-        
-    echo "blok: $sadeceBlok, daire: $sadeceDaire\n";
     }
     
     

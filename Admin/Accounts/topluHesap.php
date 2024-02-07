@@ -78,16 +78,16 @@
                 // Kiracı ve Kat Maliki bilgileri var mı kontrolü
                 if ($kiraciBilgisi && $katMalikiBilgisi) {
                     echo '<tr data-userid="">
-                                <td data-title="Blok Adı">' . $blokAdi . '</td>
-                                <td data-title="Daire Sayısı">' . $daireSayisi . '</td>
+                                <td data-title="Blok Adı" name="blok">' . $blokAdi . '</td>
+                                <td data-title="Daire Sayısı" name="daire">' . $daireSayisi . '</td>
                                 <td data-title="Kiracı Adı"><input type="text" name="kiraciUserName" value="' . $kiraciBilgisi['userName'] . '" /></td>
                                 <td data-title="Kat Maliki Adı"><input type="text" name="katMalikiUserName" value="' . $katMalikiBilgisi['userName'] . '" /></td>
                             </tr>';
                 } else {
                     // Kullanıcı bilgileri bulunamadıysa, hata mesajı veya başka bir işlem
                     echo '<tr data-userid="">
-                                <td data-title="Blok Adı">' . $blokAdi . '</td>
-                                <td data-title="Daire Sayısı">' . $daireSayisi . '</td>
+                                <td data-title="Blok Adı" name="blok">' . $blokAdi . '</td>
+                                <td data-title="Daire Sayısı" name="daire">' . $daireSayisi . '</td>
                                 <td data-title="Kiracı Adı"><input class="input-select" type="text" name="kiraciUserName" value="' . ($kiraciBilgisi ? $kiraciBilgisi['userName'] : '') . '" /></td>
                                 <td data-title="Kat Maliki Adı"><input class="input-select" type="text" name="katMalikiUserName" value="' . ($katMalikiBilgisi ? $katMalikiBilgisi['userName'] : '') . '" /></td>
                             </tr>';
@@ -109,12 +109,16 @@
         var kiraciUserNameInputs = document.getElementsByName('kiraciUserName');
         var katMalikiUserNameInputs = document.getElementsByName('katMalikiUserName');
         var apartman_id = $('input[name="apartman_id"]').val();
-        var userNameArray = []; //bu tamam
+        var blok = document.getElementsByName('blok');
+        var daire = document.getElementsByName('daire');
 
+        console.log("blok Name = "+blok +"Daire Name = " + daire);
+        var userNameArray = []; //bu tamam
+        var durumArray = [];// tamam
         //DEVAM EDİLECEK
         var blokArray = [];
         var daireArray = [];
-        var durumArray = [];
+        
 
         for (var i = 0; i < kiraciUserNameInputs.length; i++) {
             if (kiraciUserNameInputs[i].value.trim() !== "") {
@@ -137,6 +141,7 @@
             type: 'POST',
             data: {
                 userNameArray: JSON.stringify(userNameArray),
+                durumArray: JSON.stringify(durumArray),
                 apartman_id: apartman_id
             },
             success: function(response) {
