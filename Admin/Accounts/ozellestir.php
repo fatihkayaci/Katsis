@@ -6,7 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
 </head>
 <body>
 
@@ -20,44 +19,59 @@ try {
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     if ($result) {
-        echo '<table id="example" class="display" style="width:100%">
+        echo '
+        <div class="table-responsive-vertical shadow-z-1 cener-table">
+        
+            <div class="input-group-div">
+
+                <div class="input-group1">
+                  <button class="btn-custom-outline">Buton</button>
+                  <button class="btn-custom-outline">Buton</button>
+                </div>
+
+                <div class="input-group">
+                  <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
+                  <input type="text" class="form-control" placeholder="Arama...">
+                </div>
+            </div>
+            <table id="example" class="table table-hover table-mc-light-blue">
                 <thead>
                     <tr>
-                        <th>Full Name</th>
-                        <th>tc</th>
-                        <th>Phone Number</th>
+                        <th>Ad Soyad</th>
+                        <th>T.C.</th>
+                        <th>Telefon Numarası</th>
                         <th>Durum</th>
-                        <th>Email</th>
+                        <th>E-Posta</th>
                         <th>Şifre</th>
-                        <th>Vehicle Plate</th>
-                        <th>Gender</th>
-                        <th>update</th>
+                        <th>Araç Plakası</th>
+                        <th>Cinsiyet</th>
+                        <th>Güncelle</th>
                     </tr>
                 </thead>
                 <tbody>';
 
                 foreach ($result as $row) {
                     echo '<tr data-userid="' . $row["userID"] . '">
-                            <td contenteditable="true">' . $row["userName"] . '</td>
-                            <td contenteditable="true">' . $row["tc"] . '</td>
-                            <td contenteditable="true">' . $row["phoneNumber"] . '</td>
-                            <td contenteditable="true">
-                            <select>
+                            <td data-title="Ad Soyad" contenteditable="true">' . $row["userName"] . '</td>
+                            <td data-title="T.C." contenteditable="true">' . $row["tc"] . '</td>
+                            <td data-title="Telefon Numarası" contenteditable="true">' . $row["phoneNumber"] . '</td>
+                            <td data-title="Durum" contenteditable="true">
+                            <select class="input-select">
                                 <option value="katmaliki" ' . ($row["durum"] == "katmaliki" ? 'selected' : '') . '>katmaliki</option>
                                 <option value="kiracı" ' . ($row["durum"] == "kiracı" ? 'selected' : '') . '>kiracı</option>
                             </select>
                             </td>
-                            <td contenteditable="true">' . $row["userEmail"] . '</td>
-                            <td contenteditable="true">' . $row["userPass"] . '</td>
-                            <td contenteditable="true">' . $row["plate"] . '</td>
-                            <td contenteditable="true">
-                            <select>
+                            <td data-title="E-Posta" contenteditable="true">' . $row["userEmail"] . '</td>
+                            <td data-title="Şifre" contenteditable="true">' . $row["userPass"] . '</td>
+                            <td data-title="Araç Plakası" contenteditable="true">' . $row["plate"] . '</td>
+                            <td data-title="Cinsiyet" contenteditable="true">
+                            <select class="input-select">
                                 <option value="Erkek" ' . ($row["gender"] == "Erkek" ? 'selected' : '') . '>Erkek</option>
                                 <option value="Kadın" ' . ($row["gender"] == "Kadın" ? 'selected' : '') . '>Kadın</option>
                             </select>
                             </td>
 
-                            <td><button class="updateButton">update</button></td>
+                            <td data-title="Güncelle"><button class="updateButton table-a">Güncelle</button></td>
                         </tr>';
                     }
                 
@@ -73,7 +87,6 @@ try {
 ?>
 <body>
         <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-        <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <script type="text/javascript">

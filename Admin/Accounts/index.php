@@ -16,8 +16,20 @@
 </head>
 
 <body>
-    <button class="adduser btn btn-primary">Kullanıcı Ekle</button>
-    <button class="toplu btn btn-primary">Toplu Kullanıcı Ekle Ve Düzelt</button>
+<div class="table-responsive-vertical cener-table">
+    <div class="input-group-div">
+
+        <div class="input-group1">
+        <button class="adduser btn-custom-outline">Kullanıcı Ekle</button>
+        <button class="toplu btn-custom-outline">Toplu Kullanıcı Ekle Ve Düzelt</button>
+        </div>
+
+        <div class="input-group">
+          <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
+          <input type="text" class="form-control" placeholder="Arama...">
+        </div>
+    </div>
+</div>   
     <?php
     $optionsBlok = '';
     $optionsDurum = '';
@@ -41,45 +53,106 @@ try {
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     if ($result) {
-        echo '<table id="example" class="display" style="width:100%">
+        echo '
+        
+        <div class="table-responsive-vertical shadow-z-1 cener-table">
+
+            <table id="example" class="table table-hover table-mc-light-blue">
                 <thead>
                     <tr>
-                        <th>Full Name</th>
-                        <th>Phone Number</th>
+                        <th><input type="checkbox"/></th>
+                        <th>Ad Soyad</th>
+                        <th>Telefon Numarası</th>
                         <th>Durum</th>
-                        <th>Email</th>
-                        <th>Vehicle Plate</th>
-                        <th>Gender</th>
-                        <th>update</th>
-                        <th>Delete</th>
-                        <th>Özelleştir</th>
+                        <th>E-Posta</th>
+                        <th>Araç Plakası</th>
+                        <th>Cinsiyet</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>';
 
                 foreach ($result as $row) {
                     echo '<tr data-userid="' . $row["userID"] . '">
-                            <td contenteditable="true">' . $row["userName"] . '</td>
-                            <td contenteditable="true">' . $row["phoneNumber"] . '</td>
-                            <td>'.$row["durum"] .'</td>
-                            <td contenteditable="true">' . $row["userEmail"] . '</td>
-                            <td contenteditable="true">' . $row["plate"] . '</td>
-                            <td contenteditable="true">
-                            <select>
+
+                            <td data-title="Seç"> <input type="checkbox"/></td>
+
+                            <td data-title="Ad Soyad" contenteditable="true">' . $row["userName"] . '</td>
+
+                            <td data-title="Telefon Numarası" contenteditable="true">' . $row["phoneNumber"] . '</td>
+
+                            <td data-title="Durum">'.$row["durum"] .'</td>
+
+                            <td data-title="E-Posta" contenteditable="true">' . $row["userEmail"] . '</td>
+
+                            <td data-title="Araç Plakası" contenteditable="true">' . $row["plate"] . '</td>
+
+                            <td data-title="Cinsiyet" contenteditable="false">
+                            <select class="input-select">
                                 <option value="Erkek" ' . ($row["gender"] == "Erkek" ? 'selected' : '') . '>Erkek</option>
                                 <option value="Kadın" ' . ($row["gender"] == "Kadın" ? 'selected' : '') . '>Kadın</option>
                             </select>
                             </td>
 
-                            <td><button class="updateButton">update</button></td>
-                            <td><button class="deleteButton">delete</button></td>
-                            <td><a href="index?parametre=custom"><button class="ozellestirButton">ozellestir</button></a></td>
+                            <td data-title="Seçenekler">
+                                <li class="nav-item dropdown pe-2 d-flex settings">
+                                      <a href="javascript:;" class="nav-link text-body nav-link font-weight-bold mb-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                                      </a>
+                                  <ul class="dropdown-menu dropdown-menu-end1 ayar-1 px-1 margin-10" aria-labelledby="dropdownMenuButton">
+                                    <li class="mb-1">
+                                      <a class="dropdown-item border-radius-md" href="index?parametre=custom">
+                                        <div class="d-flex">
+                                          <div class="my-auto">
+                                            <i class="fa-solid fa-pen i-color me-3"></i>
+                                          </div>
+                                          <div class="d-flex flex-column justify-content-center">
+                                            <h6 class="text-sm font-weight-normal mb-1">
+                                              <span class="font-weight-bold">Düzenle</span>
+                                            </h6>
+                                          </div>
+                                        </div>
+                                      </a>
+                                    </li>
+                                    <li class="mb-1">
+                                      <button class="updateButton dropdown-item border-radius-md">
+                                        <div class="d-flex">
+                                          <div class="my-auto">
+                                            <i class="fa-solid fa-floppy-disk i-color me-3"></i>
+                                          </div>
+                                          <div class="d-flex flex-column justify-content-center">
+                                            <h6 class="text-sm font-weight-normal mb-0">
+                                              <span class="font-weight-bold">Güncelle</span>
+                                            </h6>
+                                          </div>
+                                        </div>
+                                      </button>
+                                    </li>
+                                    <li class="mb-1">
+                                      <button class="deleteButton dropdown-item border-radius-md">
+                                        <div class="d-flex">
+                                          <div class="my-auto">
+                                            <i class="fa-solid fa-trash i-color me-3"></i>
+                                          </div>
+                                          <div class="d-flex flex-column justify-content-center">
+                                            <h6 class="text-sm font-weight-normal mb-0">
+                                              <span class="font-weight-bold">Sil</span>
+                                            </h6>
+                                          </div>
+                                        </div>
+                                      </button>
+                                    </li>
+                                  </ul>
+                                </li>
+                            </td>
+
                         </tr>';
                     }
                 
 
         echo '</tbody>
-            </table>';
+            </table>
+        </div>';
     } else {
         echo "0 results";
     }

@@ -2492,7 +2492,6 @@ progress {
 .table> :not(caption)>*>* {
   padding: 0.5rem 0.5rem;
   background-color: var(--bs-table-bg);
-  border-bottom-width: 1px;
   box-shadow: inset 0 0 0 9999px var(--bs-table-accent-bg);
 }
 
@@ -3297,7 +3296,7 @@ textarea.form-control-lg {
 .input-group {
   position: relative;
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: stretch;
   width: 10%;
 }
@@ -3323,6 +3322,15 @@ textarea.form-control-lg {
 }
 
 .input-group .btn:focus {
+  z-index: 5;
+}
+
+.input-group1 .btn {
+  position: relative;
+  z-index: 2;
+}
+
+.input-group1 .btn:focus {
   z-index: 5;
 }
 
@@ -3864,6 +3872,23 @@ fieldset:disabled .btn {
   --bs-btn-hover-color: #fff;
   --bs-btn-hover-bg: #277CE0;
   --bs-btn-hover-border-color: #084793;
+  --bs-btn-focus-shadow-rgb: 203, 12, 159;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #fff;
+  --bs-btn-active-border-color: #686A6C;
+  --bs-btn-active-shadow: none;
+  --bs-btn-disabled-color: #686A6C;
+  --bs-btn-disabled-bg: transparent;
+  --bs-btn-disabled-border-color: #686A6C;
+  --bs-gradient: none;
+}
+
+.btn-outline-user {
+  --bs-btn-color: #0d0c22;
+  --bs-btn-border-color: #0d0c22;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #ffffff00;
+  --bs-btn-hover-border-color: #fff;
   --bs-btn-focus-shadow-rgb: 203, 12, 159;
   --bs-btn-active-color: #fff;
   --bs-btn-active-bg: #fff;
@@ -20504,6 +20529,17 @@ fieldset:disabled .btn {
   color: #cb0c9f;
 }
 
+.btn-outline-user {
+  box-shadow: none;
+}
+
+.btn-outline-user:hover:not(.active) {
+  background-color: transparent;
+  opacity: .75;
+  box-shadow: none;
+  color: #cb0c9f;
+}
+
 .btn-secondary:hover,
 .btn.bg-gradient-secondary:hover {
   background-color: #8392AB;
@@ -21366,6 +21402,17 @@ fieldset:disabled .btn {
   right: 28px;
   left: auto;
 }
+
+.dropdown .dropdown-menu.dropdown-menu-end1 {
+  right: -15px !important;
+  left: auto !important;
+}
+
+.dropdown .dropdown-menu.dropdown-menu-end1:before {
+  right: 28px;
+  left: auto;
+}
+
 
 .dropdown.dropdown-subitem:hover .dropdown-item+.dropdown-menu:before {
   left: -8px;

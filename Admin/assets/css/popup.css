@@ -31,7 +31,7 @@
     opacity: 0;
     transform: translateY(-180px);
     transition: 0.5s;
-  }
+}
 
 .daire-area {
     border: none;

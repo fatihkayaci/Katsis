@@ -105,7 +105,7 @@
 
           <ul class="navbar-nav  justify-content-end">
           <li class="nav-item dropdown pe-2 d-flex align-items-center">
-              <a href="javascript:;" class="nav-link text-body nav-link font-weight-bold btn btn-outline-primary mb-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+              <a href="javascript:;" class="nav-link text-body nav-link font-weight-bold btn btn-outline-user mb-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fa-solid fa-user avatar avatar-xs bg-gradient-dark me-3 me-sm-1"></i>
                 <span class="d-sm-inline d-none"><?php  echo $_SESSION["userName"]; ?></span>
               </a>

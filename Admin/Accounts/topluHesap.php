@@ -2,14 +2,28 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Toplu Hesap Ekleme</title>
 </head>
 
 <body>
-    <button type="button" class="btn btnx btn-primary btn-size" id="saveButton">Kaydet</button>
+
+<div class="table-responsive-vertical cener-table">
+    <div class="input-group-div">
+
+        <div class="input-group1">
+        <button type="button" class="btn-custom-outline" id="saveButton">Kaydet</button>
+        </div>
+
+        <div class="input-group">
+          <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
+          <input type="text" class="form-control" placeholder="Arama...">
+        </div>
+    </div>
+</div>  
+
     <div class="row">
         <div class="col-md-6 col">
             <input class="input" type="text" name="apartman_id" value=<?php echo $_SESSION["apartID"]; ?> hidden>
@@ -28,7 +42,9 @@
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         if ($result) {
-            echo '<table id="example" class="display" style="width:100%">
+            echo '
+            <div class="table-responsive-vertical shadow-z-1 cener-table">
+                <table id="example" class="table table-hover table-mc-light-blue">
                     <thead>
                         <tr>
                             <th>Blok Adı</th>
@@ -62,18 +78,18 @@
                 // Kiracı ve Kat Maliki bilgileri var mı kontrolü
                 if ($kiraciBilgisi && $katMalikiBilgisi) {
                     echo '<tr data-userid="">
-                                <td>' . $blokAdi . '</td>
-                                <td>' . $daireSayisi . '</td>
-                                <td><input type="text" name="kiraciUserName" value="' . $kiraciBilgisi['userName'] . '" /></td>
-                                <td><input type="text" name="katMalikiUserName" value="' . $katMalikiBilgisi['userName'] . '" /></td>
+                                <td data-title="Blok Adı">' . $blokAdi . '</td>
+                                <td data-title="Daire Sayısı">' . $daireSayisi . '</td>
+                                <td data-title="Kiracı Adı"><input type="text" name="kiraciUserName" value="' . $kiraciBilgisi['userName'] . '" /></td>
+                                <td data-title="Kat Maliki Adı"><input type="text" name="katMalikiUserName" value="' . $katMalikiBilgisi['userName'] . '" /></td>
                             </tr>';
                 } else {
                     // Kullanıcı bilgileri bulunamadıysa, hata mesajı veya başka bir işlem
                     echo '<tr data-userid="">
-                                <td>' . $blokAdi . '</td>
-                                <td>' . $daireSayisi . '</td>
-                                <td><input type="text" name="kiraciUserName" value="' . ($kiraciBilgisi ? $kiraciBilgisi['userName'] : '') . '" /></td>
-                                <td><input type="text" name="katMalikiUserName" value="' . ($katMalikiBilgisi ? $katMalikiBilgisi['userName'] : '') . '" /></td>
+                                <td data-title="Blok Adı">' . $blokAdi . '</td>
+                                <td data-title="Daire Sayısı">' . $daireSayisi . '</td>
+                                <td data-title="Kiracı Adı"><input class="input-select" type="text" name="kiraciUserName" value="' . ($kiraciBilgisi ? $kiraciBilgisi['userName'] : '') . '" /></td>
+                                <td data-title="Kat Maliki Adı"><input class="input-select" type="text" name="katMalikiUserName" value="' . ($katMalikiBilgisi ? $katMalikiBilgisi['userName'] : '') . '" /></td>
                             </tr>';
                 }
             }

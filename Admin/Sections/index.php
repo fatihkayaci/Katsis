@@ -29,6 +29,12 @@ try {
         <div class="table-responsive-vertical shadow-z-1 cener-table">
         
         <div class="input-group-div">
+
+            <div class="input-group1">
+              <button class="btn-custom-outline">Buton</button>
+              <button class="btn-custom-outline">Buton</button>
+            </div>
+
             <div class="input-group">
               <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
               <input type="text" class="form-control" placeholder="Arama...">
@@ -59,7 +65,7 @@ try {
                 
                 <tr id='.$row["daire_id"].'>
 
-                    <td data-title="ID"> <input type="checkbox"/></td>
+                    <td data-title="Seç"> <input type="checkbox"/></td>
 
                     <td data-title="Blok Adı">' . $row["blok_adi"] . '</td>
 
@@ -91,7 +97,7 @@ try {
                                   <a href="javascript:;" class="nav-link text-body nav-link font-weight-bold mb-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="fa-solid fa-ellipsis-vertical"></i>
                                   </a>
-                              <ul class="dropdown-menu dropdown-menu-end ayar-1 px-1 margin-10" aria-labelledby="dropdownMenuButton">
+                              <ul class="dropdown-menu dropdown-menu-end1 ayar-1 px-1 margin-10" aria-labelledby="dropdownMenuButton">
                                 <li class="mb-2">
                                   <a class="dropdown-item border-radius-md" href="javascript:;">
                                     <div class="d-flex">
@@ -142,17 +148,15 @@ try {
 <!-- Popup kiracı ve kat maliki eklemek için-->
 <div id="popup2" class="form-popup">
 
-    <form id="userForm" class="login-form1">
+    <form id="userForm" class="login-form">
 
         <h4 class="form-signin-heading" id="pop-head"></h4>
-
-        <hr class="horizontal dark mt-0 w-100">
+        
         <input type="hidden" id="hiddenDaireID" />
         <input type="hidden" id="turDaire" />
+
         <div class="row">
-
-
-            <div class="col-md-6 col">
+            <div class="col-md-12 col-btn">
                 <input class="input" type="text" list="Users" id="userInput" oninput="getUserID()" />
                 <datalist id="Users">
                     <?php 
@@ -161,26 +165,16 @@ try {
                         }
                     ?>
                 </datalist>
-            </div>
-
-        </div>
-
-        <div class="row">
-
-            <div class="col-md-6 col">
                 <input class="input" type="date" value="<?php echo date('Y-m-d'); ?>" id="dateInput" />
-
-
             </div>
 
         </div>
-
 
         <hr class="horizontal dark w-100">
 
         <div class="row row-btns">
-            <button type="button" class="btn btnx btn-secondary btn-size" onclick="closePopup()">Kapat</button>
-            <button type="button" class="btn btnx btn-primary btn-size" id="saveButton" onclick="save()">Kaydet</button>
+            <button type="button" class="btn-custom" id="saveButton" onclick="save()">Kaydet</button>
+            <button type="button" class="btn-custom-close" onclick="closePopup()">Kapat</button>
         </div>
 
     </form>
@@ -218,9 +212,12 @@ function openPopup(daire_id, tur) {
     $('#pop-head').html(head);
 
 
-
-    $('#popup2').show();
-    $('#popup2').css('display', 'flex');
+    $('#popup2').show().css('display', 'flex').delay(100).queue(function(next) {
+        $('#popup2').css('opacity', '1');
+        $('#userForm').css('opacity', '1');
+        $('#userForm').css('transform', 'translateY(0)');
+        next();
+    });
 }
 
 function closePopup() {
@@ -229,7 +226,14 @@ function closePopup() {
     $('#userInput').focus(function() {
         $(this).css('border-color', '#3BB4D7');
     });
-    $('#popup2').hide();
+ 
+    $('#userForm').css('opacity', '0').css('transform', 'translateY(-180px)').delay(100).queue(function(next) {
+        $('#popup2').css('opacity', '0').delay(300).queue(function(nextInner) {
+            $(this).hide().css('display', 'none');
+            nextInner();
+        });
+        next();
+    });
 }
 
 
@@ -320,4 +324,24 @@ function save() {
 
 
 }
+</script>
+
+<script type="text/javascript">
+    $.fn.extend({
+        alterCheck: function(tablo) {
+            if ($("" + tablo + " input[type='checkbox']:first").is(":checked")) {
+                return this.each(function() {
+                    this.checked = true;
+                });
+            } else {
+                return this.each(function() {
+                    this.checked = false;
+                });
+            }
+        }
+
+    });
+    $("#table input[type='checkbox']:first").click(function() {
+        $("#table input[type='checkbox']").alterCheck('#table');
+    });
 </script>
