@@ -16,20 +16,20 @@
 </head>
 
 <body>
-<div class="table-responsive-vertical cener-table">
-    <div class="input-group-div">
+    <div class="table-responsive-vertical cener-table">
+        <div class="input-group-div">
 
-        <div class="input-group1">
-        <button class="adduser btn-custom-outline">Kullanıcı Ekle</button>
-        <button class="toplu btn-custom-outline">Toplu Kullanıcı Ekle Ve Düzelt</button>
-        </div>
+            <div class="input-group1">
+                <button class="adduser btn-custom-outline">Kullanıcı Ekle</button>
+                <button class="toplu btn-custom-outline">Toplu Kullanıcı Ekle Ve Düzelt</button>
+            </div>
 
-        <div class="input-group">
-          <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
-          <input type="text" class="form-control" placeholder="Arama...">
+            <div class="input-group">
+                <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
+                <input type="text" class="form-control" placeholder="Arama...">
+            </div>
         </div>
     </div>
-</div>   
     <?php
     $optionsBlok = '';
     $optionsDurum = '';
@@ -210,7 +210,8 @@ try {
 
             <div class="row">
                 <div class="col-md-6 col">
-                    <input class="input" type="text" name="apartman_id" value=<?php echo $_SESSION["apartID"]; ?> hidden>
+                    <input class="input" type="text" name="apartman_id" value=<?php echo $_SESSION["apartID"]; ?>
+                        hidden>
                 </div>
             </div>
 
@@ -220,7 +221,8 @@ try {
                 </div>
                 <!--<button type="button" class="Artı btn btn-primary">+</button>-->
             </div>
-            <div class="indexAdd"></div>
+            <div class="indexAdd">
+            </div>
 
             <hr class="horizontal dark mt-4 w-100">
 
@@ -253,7 +255,7 @@ try {
 
             <div class="row">
                 <div class="col-md-12 col-btn">
-                    <button  type="button" class="btn-custom-close" onclick="closeToplu()">Kapat</button>
+                    <button type="button" class="btn-custom-close" onclick="closeToplu()">Kapat</button>
                 </div>
             </div>
 
@@ -308,7 +310,12 @@ try {
 
             selectedValuesArray.push(selectedValue);
             selectedDurumArray.push(selectedDurum);
-            // Yeni <p> elementini oluştur
+
+            // Yeni bir ana div oluştur
+            var newContainer = document.createElement('div');
+            newContainer.className = 'daire-container';
+
+            // Yeni <div> elementini oluştur
             var newDaire = document.createElement('div');
             newDaire.className = 'daire';
             newDaire.innerHTML = selectedValue;
@@ -318,12 +325,26 @@ try {
             newDurum.className = 'durum';
             newDurum.innerHTML = selectedDurum;
 
-            // Oluşturulan <p> elementini belirli bir alana ekleyin
+            //durum için div oluşturuldu.
+            var sil = document.createElement('button');
+            sil.className = 'sil';
+            sil.innerHTML = 'Delete';
+            sil.addEventListener('click', function() {
+                newContainer.remove(); // newContainer'ı sil
+            });
+
+            // Yeni div'leri ana div içerisine ekle
+            newContainer.appendChild(newDaire);
+            newContainer.appendChild(newDurum);
+            newContainer.appendChild(sil); // sil butonunu ekleyin
+
+            // Oluşturulan ana div'i belirli bir alana ekleyin (indexAdd)
             var indexAddElement = document.querySelector('.indexAdd');
-            indexAddElement.appendChild(newDaire);
-            indexAddElement.appendChild(newDurum);
+            indexAddElement.appendChild(newContainer);
+
             closeDaire();
         }
+
 
         $('.adduser').click(function() {
             $('#popup').show().css('display', 'flex').delay(100).queue(function(next) {
@@ -487,7 +508,7 @@ try {
                 }
             }
 
-            //console.log("durum Array = " + JSON.stringify(durumArray));
+            console.log("durum Array = " + JSON.stringify(durumArray));
 
             for (var i = 0; i < selectedValuesArray.length; i++) {
                 var element = selectedValuesArray[i];
@@ -526,14 +547,17 @@ try {
                         alert(response);
 
                         if (response == 1) {
+
                             $.ajax({
                                 url: 'Controller/demo.php',
                                 type: 'POST',
                                 data: {
-                                    blokArray: JSON.stringify(blokArray), // Diziyi JSON dizesine dönüştür
+                                    blokArray: JSON.stringify(
+                                        blokArray), // Diziyi JSON dizesine dönüştür
                                     durumArray: JSON.stringify(durumArray)
                                 },
                                 success: function(secondResponse) {
+                                    alert(secondResponse);
                                     if (secondResponse == 1) {
                                         location.reload();
                                     }

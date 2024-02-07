@@ -36,12 +36,10 @@ try {
                         $stmt->bindParam(':sadeceBlok', $sadeceBlok, PDO::PARAM_STR);
                         $stmt->bindParam(':sadeceDaire', $sadeceDaire, PDO::PARAM_STR);
                         $stmt->execute();
-                         break;
+                        break;
             }
         }
     }
-    
-    
     echo 1;
 } catch (PDOException $e) {
     echo $e->getMessage(); // Hata mesajını ekrana yazdır

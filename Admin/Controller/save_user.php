@@ -25,7 +25,6 @@ try {
     $elemanSayisi = count($durumArray);
     // E-posta adresi kontrolü
 if (empty($userEmail) || trim($userEmail) === "") {
-    foreach($durumArray as $durum){
 
     // E-posta adresi boşsa, kontrol yapmadan kaydet
     $userPass = randomPassword();
@@ -51,9 +50,6 @@ if (empty($userEmail) || trim($userEmail) === "") {
     $stmt->bindParam(':rol', $rol);
     $stmt->bindParam(':popup', $popup);
     $stmt->execute();
-
-    $_SESSION['lastID'] = $conn->lastInsertId();
-    }
     echo 1;
 } else {
     //burada sıkıntı var yarın bakılacak.
@@ -92,13 +88,11 @@ if (empty($userEmail) || trim($userEmail) === "") {
             $stmt->bindParam(':rol', $rol);
             $stmt->bindParam(':popup', $popup);
             $stmt->execute();
-            
-            $_SESSION['lastID'] = $conn->lastInsertId();
         }
-        echo 1;
     }
+    echo 1;
 }
-
+$_SESSION['lastID'] = $conn->lastInsertId();
 } catch (PDOException $e) {
     echo "Hata: " . $e->getMessage();
 }
