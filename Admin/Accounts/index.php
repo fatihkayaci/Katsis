@@ -22,6 +22,11 @@
             <div class="input-group1">
                 <button class="adduser btn-custom-outline">Kullanıcı Ekle</button>
                 <button class="toplu btn-custom-outline">Toplu Kullanıcı Ekle Ve Düzelt</button>
+
+
+                <button class="topluGuncelle btn-custom-outline" id="guncelleButton"
+                    style="display: none;">Güncelle</button>
+                <button class="topluSil btn-custom-outline" id="silButton" style="display: none;">Sil</button>
             </div>
 
             <div class="input-group">
@@ -60,14 +65,13 @@ try {
             <table id="example" class="table table-hover table-mc-light-blue">
                 <thead>
                     <tr>
-                        <th><input type="checkbox"/></th>
+                        <th><input id="mainCheckbox" type="checkbox" onclick="toggleMainCheckbox()"/></th>
                         <th>Ad Soyad</th>
                         <th>Telefon Numarası</th>
                         <th>Durum</th>
                         <th>E-Posta</th>
                         <th>Araç Plakası</th>
                         <th>Cinsiyet</th>
-                        <th></th>
                     </tr>
                 </thead>
                 <tbody>';
@@ -75,7 +79,7 @@ try {
                 foreach ($result as $row) {
                     echo '<tr data-userid="' . $row["userID"] . '">
 
-                            <td data-title="Seç"> <input type="checkbox"/></td>
+                            <td data-title="Seç"> <input type="checkbox"  onclick="toggleMainCheckbox()"/></td>
 
                             <td data-title="Ad Soyad" contenteditable="true">' . $row["userName"] . '</td>
 
@@ -299,9 +303,11 @@ try {
         <script type="text/javascript">
         var selectedValuesArray = [];
         var selectedDurumArray = [];
+        var sayac = 0;
 
         function newDaire() {
             // Seçilen değeri al
+
             var optionsElement = document.getElementById("optionsBlok");
             var selectedValue = optionsElement.value;
 
@@ -328,9 +334,14 @@ try {
             //durum için div oluşturuldu.
             var sil = document.createElement('button');
             sil.className = 'sil';
+            sil.id = "demo" + sayac;
             sil.innerHTML = 'Delete';
             sil.addEventListener('click', function() {
                 newContainer.remove(); // newContainer'ı sil
+                var index = parseInt(this.id.replace('demo', ''), 10);
+                selectedValuesArray.splice(index, 1); // selectedValuesArray'den ilgili elemanı sil
+                selectedDurumArray.splice(index, 1); // selectedDurumArray'den ilgili elemanı sil
+                sayac--;
             });
 
             // Yeni div'leri ana div içerisine ekle
@@ -343,7 +354,37 @@ try {
             indexAddElement.appendChild(newContainer);
 
             closeDaire();
+
+
+            sayac++;
         }
+        //mainCheckbox da sıkıntı var
+        function toggleMainCheckbox() {
+            var mainCheckbox = document.getElementById('mainCheckbox');
+            var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            var guncelleButton = document.getElementById('guncelleButton');
+            var silButton = document.getElementById('silButton');
+            var enAzBirSecili = false;
+
+            checkboxes.forEach(function(checkbox) {
+                if (checkbox !== mainCheckbox && checkbox.checked) {
+                    enAzBirSecili = true;
+                }
+            });
+
+            if (mainCheckbox.checked) {
+                enAzBirSecili = true;
+            }
+
+            if (enAzBirSecili) {
+                guncelleButton.style.display = 'inline-block';
+                silButton.style.display = 'inline-block';
+            } else {
+                guncelleButton.style.display = 'none';
+                silButton.style.display = 'none';
+            }
+        }
+
 
 
         $('.adduser').click(function() {
@@ -484,7 +525,84 @@ try {
                         }*/
             return true;
         }
+
         //kısıtlama ile ilgili fonksiyonlar bitiş...
+        //var toplusil
+        var topluGuncelleButtons = document.querySelectorAll('.topluGuncelle');
+
+        topluGuncelleButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                var rows = document.querySelectorAll('#example tbody tr'); // Tüm satırları bul
+                rows.forEach(function(row) {
+                    var userID = row.getAttribute('data-userid');
+                    var userName = row.querySelector('td:nth-child(2)').textContent;
+                    var phoneNumber = row.querySelector('td:nth-child(3)').textContent;
+                    var userEmail = row.querySelector('td:nth-child(5)').textContent;
+                    var plate = row.querySelector('td:nth-child(6)').textContent;
+                    var gender = row.querySelector('td:nth-child(7) select').value;
+
+                    var checkbox = row.querySelector('input[type="checkbox"]');
+                    if (checkbox.checked) {
+                        if (kisitlamalar(userName /*, tc, phoneNumber, userEmail, plate*/ )) {
+                            $.ajax({
+                                url: 'Controller/update_user.php',
+                                type: 'POST',
+                                data: {
+                                    userID: userID,
+                                    userName: userName,
+                                    phoneNumber: phoneNumber,
+                                    userEmail: userEmail,
+                                    plate: plate,
+                                    gender: gender
+                                },
+                                success: function(response) {
+                                    if (response == 1) {
+                                        location.reload();
+                                    }
+                                },
+                                error: function(error) {
+                                    console.error('Gönderim hatası:', error);
+                                }
+                            });
+                        }
+                    }
+                });
+            });
+        });
+        // Toplu silme işlemi için butonları seç
+        var topluSilButton = document.getElementById('silButton');
+
+
+        // Silme işlemi butonuna tıklanınca bu fonksiyon çalışacak
+        topluSilButton.addEventListener('click', function() {
+            var guncelleButton = document.getElementById('guncelleButton');
+            var silButton = document.getElementById('silButton');
+            var checkboxes = document.querySelectorAll('#example tbody input[type="checkbox"]:checked');
+            checkboxes.forEach(function(checkbox) {
+                var row = checkbox.closest('tr');
+                var userID = row.getAttribute('data-userid');
+
+                // Sunucuya silme isteği gönder
+                $.ajax({
+                    url: 'Controller/delete_user.php',
+                    type: 'POST',
+                    data: {
+                        userID: userID
+                    },
+                    success: function(response) {
+                        if (response == 1) {
+                            row.remove();
+                        }
+                    },
+                    error: function(error) {
+                        console.error('Silme hatası:', error);
+                    }
+                });
+            });
+            guncelleButton.style.display = 'none';
+            silButton.style.display = 'none';
+        });
+
         var saveButton = document.getElementById('saveButton');
 
         saveButton.addEventListener('click', function() {
@@ -496,7 +614,6 @@ try {
             var gender = $('select#gender').val();
             var apartman_id = $('input[name="apartman_id"]').val();
             var optionsBlok = $('select#optionsBlok').val();
-
             var blokArray = [];
             var durumArray = [];
 
@@ -544,8 +661,6 @@ try {
                         apartman_id: apartman_id
                     },
                     success: function(response) {
-                        alert(response);
-
                         if (response == 1) {
 
                             $.ajax({
@@ -557,7 +672,6 @@ try {
                                     durumArray: JSON.stringify(durumArray)
                                 },
                                 success: function(secondResponse) {
-                                    alert(secondResponse);
                                     if (secondResponse == 1) {
                                         location.reload();
                                     }
@@ -584,12 +698,13 @@ try {
             button.addEventListener('click', function() {
                 var row = this.closest('tr'); // Güncellenen satırı bul
                 var userID = row.getAttribute('data-userid');
-                var userName = row.querySelector('td:nth-child(1)').textContent;
-                var phoneNumber = row.querySelector('td:nth-child(2)').textContent;
-                var userEmail = row.querySelector('td:nth-child(4)').textContent;
-                var plate = row.querySelector('td:nth-child(5)').textContent;
-                var gender = row.querySelector('td:nth-child(6) select').value;
-                //alert(userName+","+phoneNumber+","+durum+","+userEmail+","+userID+","+plate+","+gender);
+                var userName = row.querySelector('td:nth-child(2)').textContent;
+                var phoneNumber = row.querySelector('td:nth-child(3)').textContent;
+                var userEmail = row.querySelector('td:nth-child(5)').textContent;
+                var plate = row.querySelector('td:nth-child(6)').textContent;
+                var gender = row.querySelector('td:nth-child(7) select').value;
+                alert(userName + "," + phoneNumber + "," + userEmail + "," + userID + "," + plate +
+                    "," + gender);
                 if (kisitlamalar(userName /*, tc, phoneNumber, userEmail, plate*/ )) {
                     $.ajax({
                         url: 'Controller/update_user.php',
