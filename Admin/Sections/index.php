@@ -78,7 +78,7 @@ try {
                     echo ' <td data-title="0">'.$listt[$row["kiraciID"]].' </td>  '; 
                    }
                    
-                   echo ' <td data-title="Bakiye">00,0 $</td> ';
+                   echo ' <td data-title="Bakiye">00,0 ₺</td> ';
 
                    if($row["katMalikiID"]==null) {
                     echo '<td data-title="1"><button type="button" class="table-a" onclick="openPopup('.$row["daire_id"].',1)">Kat Maliki ekle + </button></td>
@@ -90,7 +90,7 @@ try {
 
 
 
-                  echo '  <td data-title="Bakiye">00,0 $</td>
+                  echo '  <td data-title="Bakiye">00,0 ₺</td>
 
                         <td data-title="Seçenekler">
                             <li class="nav-item dropdown pe-2 d-flex settings">
@@ -306,8 +306,8 @@ function save() {
                     tdElements[3].innerText ="";
                     tdElements[3].innerText =response;
                 }else if(turr == 1){
-                    tdElements[4].innerText ="";
-                    tdElements[4].innerText =response;
+                    tdElements[5].innerText ="";
+                    tdElements[5].innerText =response;
                 }
 
 
