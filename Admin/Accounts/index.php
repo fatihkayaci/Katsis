@@ -56,7 +56,7 @@ try {
     
     // Sonuç kümesinin satır sayısını kontrol etme
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
+//contenteditable="true"
     if ($result) {
         echo '
         
@@ -78,25 +78,13 @@ try {
 
                 foreach ($result as $row) {
                     echo '<tr data-userid="' . $row["userID"] . '">
-
                             <td data-title="Seç"> <input type="checkbox"  onclick="toggleMainCheckbox()"/></td>
-
-                            <td data-title="Ad Soyad" contenteditable="true">' . $row["userName"] . '</td>
-
-                            <td data-title="Telefon Numarası" contenteditable="true">' . $row["phoneNumber"] . '</td>
-
+                            <td data-title="Ad Soyad" >' . $row["userName"] . '</td>
+                            <td data-title="Telefon Numarası">' . $row["phoneNumber"] . '</td>
                             <td data-title="Durum">'.$row["durum"] .'</td>
-
-                            <td data-title="E-Posta" contenteditable="true">' . $row["userEmail"] . '</td>
-
-                            <td data-title="Araç Plakası" contenteditable="true">' . $row["plate"] . '</td>
-
-                            <td data-title="Cinsiyet" contenteditable="false">
-                            <select class="input-select">
-                                <option value="Erkek" ' . ($row["gender"] == "Erkek" ? 'selected' : '') . '>Erkek</option>
-                                <option value="Kadın" ' . ($row["gender"] == "Kadın" ? 'selected' : '') . '>Kadın</option>
-                            </select>
-                            </td>
+                            <td data-title="E-Posta">' . $row["userEmail"] . '</td>
+                            <td data-title="Araç Plakası">' . $row["plate"] . '</td>
+                            <td data-title="Cinsiyet">'.$row["gender"].'</td>
 
                             <td data-title="Seçenekler">
                                 <li class="nav-item dropdown pe-2 d-flex settings">
@@ -105,7 +93,7 @@ try {
                                       </a>
                                   <ul class="dropdown-menu dropdown-menu-end1 ayar-1 px-1 margin-10" aria-labelledby="dropdownMenuButton">
                                     <li class="mb-1">
-                                      <a class="dropdown-item border-radius-md" href="index?parametre=custom">
+                                      <a id="duzenleLink" class="dropdown-item border-radius-md" href="index?parametre=custom">
                                         <div class="d-flex">
                                           <div class="my-auto">
                                             <i class="fa-solid fa-pen i-color me-3"></i>
@@ -365,6 +353,7 @@ try {
             var guncelleButton = document.getElementById('guncelleButton');
             var silButton = document.getElementById('silButton');
             var enAzBirSecili = false;
+
 
             checkboxes.forEach(function(checkbox) {
                 if (checkbox !== mainCheckbox && checkbox.checked) {
@@ -771,6 +760,18 @@ try {
                 });
             });
         });
+
+        // Link öğesini seçin
+        var rows = document.querySelectorAll('tr');
+        rows.forEach(function(row) {
+            row.addEventListener('click', function() {
+                window.location.href = 'index?parametre=custom';
+            });
+        });
+
+
+
+
         new DataTable('#example', {
             initComplete: function() {
                 this.api()
