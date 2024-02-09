@@ -761,57 +761,14 @@ try {
             });
         });
 
-        // Link öğesini seçin
         var rows = document.querySelectorAll('tr');
         rows.forEach(function(row) {
             row.addEventListener('click', function() {
-                window.location.href = 'index?parametre=custom';
+                var userID = row.getAttribute('data-userid');
+                // userID'yi URL'ye ekleyerek sayfayı yeniden yönlendir
+                window.location.href = 'index.php?parametre=custom&userID=' + encodeURIComponent(
+                userID);
             });
         });
-
-
-
-
-        new DataTable('#example', {
-            initComplete: function() {
-                this.api()
-                    .columns()
-                    .every(function() {
-                        let column = this;
-                        let title = column.footer().textContent;
-
-                        // Create input element
-                        let input = document.createElement('input');
-                        input.placeholder = title;
-                        column.footer().replaceChildren(input);
-
-                        // Event listener for user input
-                        input.addEventListener('keyup', () => {
-                            if (column.search() !== this.value) {
-                                column.search(input.value).draw();
-                            }
-                        });
-                    });
-            }
-        });
-        </script>
-
-        <script type="text/javascript">
-        $.fn.extend({
-            alterCheck: function(tablo) {
-                if ($("" + tablo + " input[type='checkbox']:first").is(":checked")) {
-                    return this.each(function() {
-                        this.checked = true;
-                    });
-                } else {
-                    return this.each(function() {
-                        this.checked = false;
-                    });
-                }
-            }
-        });
-
-        $("#example input[type='checkbox']:first").click(function() {
-            $("#example input[type='checkbox']").alterCheck('#example');
-        });
+        
         </script>
