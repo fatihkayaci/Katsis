@@ -26,7 +26,7 @@ try {
 
     if ($result) {
         echo '
-        <div class="table-responsive-vertical shadow-z-1 cener-table">
+        <div class="table-responsive-vertical cener-table">
         
         <div class="input-group-div">
 
@@ -41,7 +41,7 @@ try {
             </div>
         </div>
 
-            <table id="table" class="table table-hover table-mc-light-blue">
+            <table id="table" class="table table-hover">
                 <thead>
                     <tr>
                         <th><input type="checkbox"/></th>

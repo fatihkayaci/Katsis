@@ -28,7 +28,7 @@ try {
     
     if ($result) {
         echo '
-        <div class="table-responsive-vertical shadow-z-1 cener-table">
+        <div class="table-responsive-vertical cener-table">
         
             <div class="input-group-div">
 
@@ -42,7 +42,7 @@ try {
                   <input type="text" class="form-control" placeholder="Arama...">
                 </div>
             </div>
-            <table id="example" class="table table-hover table-mc-light-blue">
+            <table id="example" class="table table-hover">
                 <thead>
                     <tr>
                         <th>Ad Soyad</th>
