@@ -25,12 +25,12 @@ try {
     $elemanSayisi = count($durumArray);
     // E-posta adresi kontrolü
 if (empty($userEmail) || trim($userEmail) === "") {
-
-    // E-posta adresi boşsa, kontrol yapmadan kaydet
     $userPass = randomPassword();
     $hashedPassword = base64_encode($userPass);
     $t ="Y";
 
+    foreach($durumArray as $durum){
+    
     $sql = "INSERT INTO tbl_users (userName, tc, phoneNumber, durum, userEmail, userPass, plate, gender, apartman_id, rol, popup, userStatus) VALUES 
     (:userName, :tc, :phoneNumber, :durum, :userEmail, :userPass, :plate, :gender, :apartman_id, :rol, :popup, :userStatus)";
 
@@ -50,6 +50,8 @@ if (empty($userEmail) || trim($userEmail) === "") {
     $stmt->bindParam(':rol', $rol);
     $stmt->bindParam(':popup', $popup);
     $stmt->execute();
+    
+    }
     echo 1;
 } else {
     //burada sıkıntı var yarın bakılacak.

@@ -48,10 +48,20 @@ try {
             $optionsBlok .= '<option name="optionsBlok" value="' . $row['blok_adi']." Blok - Daire ".$row['daire_sayisi'] . '">' .$row['blok_adi']." Blok - Daire ". $row['daire_sayisi'] . '</option>';
         }
     }
+    $sql2 = "SELECT u.*, d.blok_adi, d.daire_sayisi 
+    FROM tbl_users u
+    LEFT JOIN tbl_daireler d ON u.apartman_id = d.apartman_id
+    WHERE u.apartman_id = " . $_SESSION["apartID"] . " 
+    AND u.rol = 3
+    AND (d.kiraciID = u.userID OR d.katMalikiID = u.userID)";
 
-    $sql = "SELECT * FROM tbl_users WHERE apartman_id = " . $_SESSION["apartID"] . " AND rol = 3";
+    
 
-    $stmt = $conn->prepare($sql);
+/*$sql2 = "SELECT u.*, d.blok_adi, d.daire_sayisi 
+    FROM tbl_users u 
+    INNER JOIN tbl_daireler d ON u.apartman_id = d.apartman_id
+    WHERE u.apartman_id = " . $_SESSION["apartID"] . " AND rol = 3"; */
+    $stmt = $conn->prepare($sql2);
     $stmt->execute();
     
     // Sonuç kümesinin satır sayısını kontrol etme
@@ -68,10 +78,9 @@ try {
                         <th><input id="mainCheckbox" type="checkbox" onclick="toggleMainCheckbox()"/></th>
                         <th>Ad Soyad</th>
                         <th>Telefon Numarası</th>
+                        <th>Blok Adı</th>
+                        <th>Kapı Numarası</th>
                         <th>Durum</th>
-                        <th>E-Posta</th>
-                        <th>Araç Plakası</th>
-                        <th>Cinsiyet</th>
                     </tr>
                 </thead>
                 <tbody>';
@@ -81,10 +90,9 @@ try {
                             <td data-title="Seç"> <input type="checkbox"  onclick="toggleMainCheckbox()"/></td>
                             <td data-title="Ad Soyad" >' . $row["userName"] . '</td>
                             <td data-title="Telefon Numarası">' . $row["phoneNumber"] . '</td>
+                            <td data-title="Blok Adı">' . $row["blok_adi"] . '</td>
+                            <td data-title="Kapı Numarası">' . $row["daire_sayisi"] . '</td>
                             <td data-title="Durum">'.$row["durum"] .'</td>
-                            <td data-title="E-Posta">' . $row["userEmail"] . '</td>
-                            <td data-title="Araç Plakası">' . $row["plate"] . '</td>
-                            <td data-title="Cinsiyet">'.$row["gender"].'</td>
 
                             <td data-title="Seçenekler">
                                 <li class="nav-item dropdown pe-2 d-flex settings">
@@ -650,6 +658,7 @@ try {
                         apartman_id: apartman_id
                     },
                     success: function(response) {
+                        alert(response);
                         if (response == 1) {
 
                             $.ajax({
@@ -767,8 +776,7 @@ try {
                 var userID = row.getAttribute('data-userid');
                 // userID'yi URL'ye ekleyerek sayfayı yeniden yönlendir
                 window.location.href = 'index.php?parametre=custom&userID=' + encodeURIComponent(
-                userID);
+                    userID);
             });
         });
-        
         </script>
