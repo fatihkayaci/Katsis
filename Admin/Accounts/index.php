@@ -69,7 +69,7 @@ try {
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 //contenteditable="true"
     if ($result) {
-        echo '
+       ?>
         
         <div class="table-responsive-vertical cener-table">
 
@@ -85,16 +85,18 @@ try {
                         <th></th>
                     </tr>
                 </thead>
-                <tbody>';
-
+                <tbody>
+                
+                <?php
                 foreach ($result as $row) {
-                    echo '<tr data-userid="' . $row["userID"] . '">
+                    ?>
+                    <tr data-userid="<?php echo $row["userID"]; ?>">
                             <td data-title="Seç"> <input type="checkbox"  onclick="toggleMainCheckbox()"/></td>
-                            <td data-title="Ad Soyad" >' . $row["userName"] . '</td>
-                            <td data-title="Telefon Numarası">' . $row["phoneNumber"] . '</td>
-                            <td data-title="Blok Adı">' . $row["blok_adi"] . '</td>
-                            <td data-title="Kapı Numarası">' . $row["daire_sayisi"] . '</td>
-                            <td data-title="Durum">'.$row["durum"] .'</td>
+                            <td data-title="Ad Soyad" ><?php echo $row["userName"]; ?></td>
+                            <td data-title="Telefon Numarası"><?php echo $row["phoneNumber"]; ?></td>
+                            <td data-title="Blok Adı"><?php echo $row["blok_adi"]; ?></td>
+                            <td data-title="Kapı Numarası"><?php echo $row["daire_sayisi"]; ?></td>
+                            <td data-title="Durum"><?php echo $row["durum"]; ?></td>
 
                             <td data-title="Seçenekler">
                                 <li class="nav-item dropdown pe-2 d-flex settings">
@@ -148,13 +150,15 @@ try {
                                 </li>
                             </td>
 
-                        </tr>';
+                        </tr>
+                    <?php
                     }
-                
+                    ?>
 
-        echo '</tbody>
+                </tbody>
             </table>
-        </div>';
+        </div>
+<?php
     } else {
         echo "0 results";
     }

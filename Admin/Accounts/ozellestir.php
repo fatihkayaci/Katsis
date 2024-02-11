@@ -27,7 +27,8 @@ try {
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
     if ($result) {
-        echo '
+        ?>
+
         <div class="table-responsive-vertical cener-table">
         
             <div class="input-group-div">
@@ -56,36 +57,40 @@ try {
                         <th>Güncelle</th>
                     </tr>
                 </thead>
-                <tbody>';
 
+                <?php
                 foreach ($result as $row) {
-                    echo '<tr data-userid="' . $row["userID"] . '">
-                            <td data-title="Ad Soyad" contenteditable="true">' . $row["userName"] . '</td>
-                            <td data-title="T.C." contenteditable="true">' . $row["tc"] . '</td>
-                            <td data-title="Telefon Numarası" contenteditable="true">' . $row["phoneNumber"] . '</td>
+                ?>   
+                    <tbody>
+                        <tr data-userid="<?php echo $row["userID"]; ?>">
+                            <td data-title="Ad Soyad" contenteditable="true"><?php echo $row["userName"]; ?></td>
+                            <td data-title="T.C." contenteditable="true"><?php echo $row["tc"]; ?></td>
+                            <td data-title="Telefon Numarası" contenteditable="true"><?php echo $row["phoneNumber"]; ?></td>
                             <td data-title="Durum" contenteditable="true">
                             <select class="input-select">
-                                <option value="katmaliki" ' . ($row["durum"] == "katmaliki" ? 'selected' : '') . '>katmaliki</option>
-                                <option value="kiracı" ' . ($row["durum"] == "kiracı" ? 'selected' : '') . '>kiracı</option>
+                                <option value="katmaliki"<?php echo ($row["durum"] == "katmaliki" ? 'selected' : '') ?>>katmaliki</option>
+                                <option value="kiracı" <?php echo ($row["durum"] == "kiracı" ? 'selected' : '') ?>>kiracı</option>
                             </select>
                             </td>
-                            <td data-title="E-Posta" contenteditable="true">' . $row["userEmail"] . '</td>
-                            <td data-title="Şifre" contenteditable="true">' . $row["userPass"] . '</td>
-                            <td data-title="Araç Plakası" contenteditable="true">' . $row["plate"] . '</td>
+                            <td data-title="E-Posta" contenteditable="true"><?php echo $row["userEmail"]; ?></td>
+                            <td data-title="Şifre" contenteditable="true"><?php echo $row["userPass"]; ?></td>
+                            <td data-title="Araç Plakası" contenteditable="true"><?php echo $row["plate"]; ?></td>
                             <td data-title="Cinsiyet" contenteditable="true">
                             <select class="input-select">
-                                <option value="Erkek" ' . ($row["gender"] == "Erkek" ? 'selected' : '') . '>Erkek</option>
-                                <option value="Kadın" ' . ($row["gender"] == "Kadın" ? 'selected' : '') . '>Kadın</option>
+                                <option value="Erkek" <?php echo ($row["gender"] == "Erkek" ? 'selected' : '') ?>>Erkek</option>
+                                <option value="Kadın" <?php echo ($row["gender"] == "Kadın" ? 'selected' : '') ?>>Kadın</option>
                             </select>
                             </td>
 
                             <td data-title="Güncelle"><button class="updateButton table-a">Güncelle</button></td>
-                        </tr>';
+                        </tr>
+                    <?php
                     }
-                
+                    ?>
 
-        echo '</tbody>
-            </table>';
+                    </tbody>
+                </table>
+    <?php
     } else {
         echo "0 results";
     }

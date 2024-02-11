@@ -25,7 +25,8 @@ try {
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     if ($result) {
-        echo '
+    ?>
+
         <div class="table-responsive-vertical cener-table">
         
         <div class="input-group-div">
@@ -55,22 +56,23 @@ try {
                     </tr>
                 </thead>
 
-        ';
+        <?php
 
         foreach ($result as $row) {
 
-            echo '
+        ?>
 
             <tbody>
                 
-                <tr id='.$row["daire_id"].'>
+                <tr id=<?php echo $row["daire_id"]; ?>>
 
                     <td data-title="Seç"> <input type="checkbox"/></td>
 
-                    <td data-title="Blok Adı">' . $row["blok_adi"] . '</td>
+                    <td data-title="Blok Adı"><?php echo $row["blok_adi"]; ?></td>
 
-                    <td data-title="Kapı No">' . $row["daire_sayisi"] . '</td>';
+                    <td data-title="Kapı No"><?php echo $row["daire_sayisi"]; ?></td>
                     
+                <?php
                    if($row["kiraciID"]==null) {
                   echo ' <td data-title="0"><button type="button" class="table-a" onclick="openPopup('.$row["daire_id"].',0)">Kiracı ekle + </button></td>';
 
@@ -88,9 +90,9 @@ try {
                      echo ' <td data-title="1">'.$listt[$row["katMalikiID"]].' </td>  '; 
                     }
 
+                ?>
 
-
-                  echo '  <td data-title="Bakiye">00,0 ₺</td>
+                    <td data-title="Bakiye">00,0 ₺</td>
 
                         <td data-title="Seçenekler">
                             <li class="nav-item dropdown pe-2 d-flex settings">
@@ -129,13 +131,14 @@ try {
                               </ul>
                             </li>
                         </td>
-                </tr>';
+                    </tr>
+        <?php
         }
-
-    echo '      </tbody>
+        ?>
+                </tbody>
             </table>
         </div>
-            ';
+    <?php
     } else {
         echo "0 results";
     }
