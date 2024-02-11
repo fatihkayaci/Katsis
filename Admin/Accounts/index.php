@@ -48,7 +48,8 @@ try {
             $optionsBlok .= '<option name="optionsBlok" value="' . $row['blok_adi']." Blok - Daire ".$row['daire_sayisi'] . '">' .$row['blok_adi']." Blok - Daire ". $row['daire_sayisi'] . '</option>';
         }
     }
-    $sql2 = "SELECT u.*, d.blok_adi, d.daire_sayisi 
+    //DURUM kontrol edilecek
+    $sql2 = "SELECT u.*, d.blok_adi, d.daire_sayisi
     FROM tbl_users u
     LEFT JOIN tbl_daireler d ON u.apartman_id = d.apartman_id
     WHERE u.apartman_id = " . $_SESSION["apartID"] . " 
@@ -56,7 +57,7 @@ try {
     AND (d.kiraciID = u.userID OR d.katMalikiID = u.userID)";
 
     
-
+    
 /*$sql2 = "SELECT u.*, d.blok_adi, d.daire_sayisi 
     FROM tbl_users u 
     INNER JOIN tbl_daireler d ON u.apartman_id = d.apartman_id
