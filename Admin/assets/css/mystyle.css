@@ -419,11 +419,11 @@ border-radius: 50px;
 }
 
 .table-a {
-  height: 30px;
-  border: 1px solid #277CE0 !important;
+  height: 35px;
+  border: 1px solid #277CE0;
   background-color: transparent;
   color: #277CE0;
-  transition: all 0.5s;
+  transition: all 0.3s;
   -webkit-transition: all 0.5s;
   text-decoration: none;
   font-size: 14px;
@@ -437,7 +437,6 @@ border-radius: 50px;
   background-color: #277CE0;
   color: #ffffff;
   box-shadow: 0 0 20px #6fc5ff50;
-  transform: scale(1.1);
 }
 
 .table-a:active {
@@ -480,28 +479,24 @@ box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
 }
 
 .btn-custom-outline {
-  height: 30px;
-  border: 1px solid #0d0c22;
+  height: 40px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
   background-color: transparent;
   color: #0d0c22;
   padding: 0px 20px;
-  transition: all 0.5s;
-  -webkit-transition: all 0.5s;
+  transition: all 0.3s;
+  -webkit-transition: all 0.3s;
   text-decoration: none;
   font-size: 14px;
   cursor: pointer;
-  border-radius: 7px;
-  font-family: 'poppins-medium';
+  border-radius: 4px;
+  font-family: 'poppins-regular';
   font-weight: 500;
   margin-right: 10px;
 }
 
 .btn-custom-outline:hover {
-  box-shadow: 0 -1px 10px rgba(13,12,34, 0.3);
-  border: 1px solid transparent;
-  background-color: #0d0c22;
-  color: #fff;
-  transform: scale(1.1);
+  border: 1px solid #0d0c22;
 }
 
 .input-select {
@@ -550,6 +545,7 @@ transition: all 0.3s ease;
 .table > tfoot > tr > td {
 text-align: left;
 padding: 1rem;
+height: 60px;
 vertical-align: middle;
 border-top: 0;
 -webkit-transition: all 0.3s ease;
@@ -559,9 +555,25 @@ transition: all 0.3s ease;
 .table > thead > tr > th {
 font-weight: 500;
 color: #000;
-vertical-align: bottom;
-border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+vertical-align: middle;
+border-bottom: 1px solid rgb(0, 0, 0);
 }
+
+.table thead tr th {
+  background-color: #e0e0e0;
+  border-radius: 10px;
+}
+
+.table {
+  background-color: #e0e0e0;
+  border-radius: 10px;
+}
+
+.table td{
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e0e0e0;
+}
+
 .table > caption + thead > tr:first-child > th,
 .table > colgroup + thead > tr:first-child > th,
 .table > thead:first-child > tr:first-child > th,
@@ -575,41 +587,13 @@ border-top: 1px solid rgba(0, 0, 0, 0.12);
 }
 .table .table {
 background-color: #fff;
+border-top: 1px solid rgba(0, 0, 0, 0.12);
 }
-.table .no-border {
-border: 0;
-}
-.table-condensed > thead > tr > th,
-.table-condensed > tbody > tr > th,
-.table-condensed > tfoot > tr > th,
-.table-condensed > thead > tr > td,
-.table-condensed > tbody > tr > td,
-.table-condensed > tfoot > tr > td {
-padding: 0.8rem;
-}
-.table-bordered {
-border: 0;
-}
-.table-bordered > thead > tr > th,
-.table-bordered > tbody > tr > th,
-.table-bordered > tfoot > tr > th,
-.table-bordered > thead > tr > td,
-.table-bordered > tbody > tr > td,
-.table-bordered > tfoot > tr > td {
-border: 0;
-border-bottom: 1px solid #e0e0e0;
-}
-.table-bordered > thead > tr > th,
-.table-bordered > thead > tr > td {
-border-bottom-width: 2px;
-}
-.table-striped > tbody > tr:nth-child(odd) > td,
-.table-striped > tbody > tr:nth-child(odd) > th {
-background-color: #f5f5f5;
-}
+
 .table-hover > tbody > tr:hover > td,
 .table-hover > tbody > tr:hover > th {
-background-color: rgba(0, 0, 0, 0.12);
+background-color: #F1F6F9;
+color: #0d0c22;
 }
 
 .settings {

@@ -71,9 +71,9 @@ try {
     if ($result) {
         echo '
         
-        <div class="table-responsive-vertical shadow-z-1 cener-table">
+        <div class="table-responsive-vertical cener-table">
 
-            <table id="example" class="table table-hover table-mc-light-blue">
+            <table id="example" class="table table-hover">
                 <thead>
                     <tr>
                         <th><input id="mainCheckbox" type="checkbox" onclick="toggleMainCheckbox()"/></th>
@@ -82,6 +82,7 @@ try {
                         <th>Blok Adı</th>
                         <th>Kapı Numarası</th>
                         <th>Durum</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>';
