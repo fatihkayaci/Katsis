@@ -23,16 +23,16 @@
                 <button class="adduser btn-custom-outline">Kullanıcı Ekle</button>
                 <button class="toplu btn-custom-outline">Toplu Kullanıcı Ekle Ve Düzelt</button>
 
-
                 <button class="topluGuncelle btn-custom-outline" id="guncelleButton"
                     style="display: none;">Güncelle</button>
                 <button class="topluSil btn-custom-outline" id="silButton" style="display: none;">Sil</button>
             </div>
 
-            <div class="input-group">
-                <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
-                <input type="text" class="form-control" placeholder="Arama...">
+            <div class="search-box">
+                <i class="fas fa-search search-icon" aria-hidden="true"></i>
+                <input type="text" class="search-input" placeholder="Arama...">
             </div>
+
         </div>
     </div>
     <?php
