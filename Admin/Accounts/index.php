@@ -49,14 +49,30 @@ try {
         }
     }
     //DURUM kontrol edilecek
-    $sql2 = "SELECT u.*, d.blok_adi, d.daire_sayisi
-    FROM tbl_users u
-    LEFT JOIN tbl_daireler d ON u.apartman_id = d.apartman_id
-    WHERE u.apartman_id = " . $_SESSION["apartID"] . " 
-    AND u.rol = 3
-    AND (d.kiraciID = u.userID OR d.katMalikiID = u.userID)";
+   /*$sql2 = "SELECT *
+    FROM tbl_users
+    INNER JOIN tbl_daireler ON tbl_users.apartman_id = tbl_daireler.apartman_id
+    WHERE tbl_users.apartman_id = " . $_SESSION["apartID"] . " 
+    AND tbl_users.rol = 3
+    AND (tbl_daireler.kiraciID = tbl_users.userID OR tbl_daireler.katMalikiID = tbl_users.userID)";*/
 
-    
+    $sql2 = "SELECT * 
+    FROM tbl_users 
+    WHERE tbl_users.apartman_id = " . $_SESSION["apartID"] . " 
+    AND tbl_users.rol = 3";
+    /*$sql2 = "SELECT *
+    FROM tbl_users
+    INNER JOIN tbl_daireler ON tbl_users.apartman_id = tbl_daireler.apartman_id
+    WHERE tbl_users.apartman_id = " . $_SESSION["apartID"] . " 
+    AND tbl_users.rol = 3";*/
+
+   /*$sql2 = "SELECT d.blok_adi, d.daire_sayisi, u.*
+    FROM tbl_daireler d 
+    LEFT JOIN tbl_users u ON d.apartman_id = u.apartman_id
+    WHERE d.apartman_id = " . $_SESSION["apartID"] . " 
+    AND u.rol = 3
+    AND (d.kiraciID = u.userID OR d.katMalikiID = u.userID)";*/
+
     
 /*$sql2 = "SELECT u.*, d.blok_adi, d.daire_sayisi 
     FROM tbl_users u 
@@ -79,8 +95,8 @@ try {
                         <th><input id="mainCheckbox" type="checkbox" onclick="toggleMainCheckbox()"/></th>
                         <th>Ad Soyad</th>
                         <th>Telefon Numarası</th>
-                        <th>Blok Adı</th>
-                        <th>Kapı Numarası</th>
+                        <!--<th>Blok Adı</th>
+                        <th>Kapı Numarası</th>-->
                         <th>Durum</th>
                         <th></th>
                     </tr>
@@ -94,8 +110,6 @@ try {
                             <td data-title="Seç"> <input type="checkbox"  onclick="toggleMainCheckbox()"/></td>
                             <td data-title="Ad Soyad" ><?php echo $row["userName"]; ?></td>
                             <td data-title="Telefon Numarası"><?php echo $row["phoneNumber"]; ?></td>
-                            <td data-title="Blok Adı"><?php echo $row["blok_adi"]; ?></td>
-                            <td data-title="Kapı Numarası"><?php echo $row["daire_sayisi"]; ?></td>
                             <td data-title="Durum"><?php echo $row["durum"]; ?></td>
 
                             <td data-title="Seçenekler">

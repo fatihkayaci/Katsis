@@ -23,78 +23,102 @@ try {
     $plate = $_POST['plate'];
     $gender = $_POST['gender'];
     $elemanSayisi = count($durumArray);
-    // E-posta adresi kontrolü
-if (empty($userEmail) || trim($userEmail) === "") {
-    $userPass = randomPassword();
-    $hashedPassword = base64_encode($userPass);
-    $t ="Y";
+    
+    // DurumArray boşsa kayıt yapmayı dene
+    if (empty($durumArray)) {
+        $userPass = randomPassword();
+        $hashedPassword = base64_encode($userPass);
+        $t = "Y";
 
-    foreach($durumArray as $durum){
-    
-    $sql = "INSERT INTO tbl_users (userName, tc, phoneNumber, durum, userEmail, userPass, plate, gender, apartman_id, rol, popup, userStatus) VALUES 
-    (:userName, :tc, :phoneNumber, :durum, :userEmail, :userPass, :plate, :gender, :apartman_id, :rol, :popup, :userStatus)";
+        $sql = "INSERT INTO tbl_users (userName, tc, phoneNumber, durum, userEmail, userPass, plate, gender, apartman_id, rol, popup, userStatus) VALUES 
+        (:userName, :tc, :phoneNumber, :durum, :userEmail, :userPass, :plate, :gender, :apartman_id, :rol, :popup, :userStatus)";
 
-    $stmt = $conn->prepare($sql);
-    $stmt->bindParam(':userName', $userName);
-    $stmt->bindParam(':tc', $tc);
-    $stmt->bindParam(':phoneNumber', $phoneNumber);
-    $stmt->bindParam(':durum', $durum);
-    $stmt->bindValue(':userEmail', null, PDO::PARAM_NULL); // Boş değeri atanır
-    $stmt->bindParam(':userPass', $hashedPassword);
-    $stmt->bindParam(':plate', $plate);
-    $stmt->bindParam(':gender', $gender);
-    $stmt->bindParam(':userStatus', $t);
-    $stmt->bindParam(':apartman_id', $apartman_id);
-    $rol = 3;
-    $popup = 0;
-    $stmt->bindParam(':rol', $rol);
-    $stmt->bindParam(':popup', $popup);
-    $stmt->execute();
-    
-    }
-    echo 1;
-} else {
-    //burada sıkıntı var yarın bakılacak.
-    // E-posta adresi doluysa, benzersizlik kontrolü yap
-    
-    $emailCheckSQL = "SELECT COUNT(*) FROM tbl_users WHERE userEmail = :userEmail";
-    $emailCheckStmt = $conn->prepare($emailCheckSQL);
-    $emailCheckStmt->bindParam(':userEmail', $userEmail);
-    $emailCheckStmt->execute();
-    
-    if ($emailCheckStmt->fetchColumn() > 0) {
-        echo "Bu e-posta adresi zaten var. Lütfen farklı bir e-posta adresi seçiniz.";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':userName', $userName);
+        $stmt->bindParam(':tc', $tc);
+        $stmt->bindParam(':phoneNumber', $phoneNumber);
+        $stmt->bindValue(':durum', null, PDO::PARAM_NULL); // DurumArray boş olduğunda null atar
+        $stmt->bindValue(':userEmail', null, PDO::PARAM_NULL); // Boş değeri atanır
+        $stmt->bindParam(':userPass', $hashedPassword);
+        $stmt->bindParam(':plate', $plate);
+        $stmt->bindParam(':gender', $gender);
+        $stmt->bindParam(':userStatus', $t);
+        $stmt->bindParam(':apartman_id', $apartman_id);
+        $rol = 3;
+        $popup = 0;
+        $stmt->bindParam(':rol', $rol);
+        $stmt->bindParam(':popup', $popup);
+        $stmt->execute();
+
+        echo 1;
     } else {
-        foreach($durumArray as $durum){
-            // E-posta adresi benzersiz, kaydetmeye devam et
-            $userPass = randomPassword();
-            $hashedPassword = base64_encode($userPass);
-            
-            $t ="Y";
-            $sql = "INSERT INTO tbl_users (userName, tc, phoneNumber, durum, userEmail, userPass, plate, gender, apartman_id, rol, popup, userStatus) VALUES 
-            (:userName, :tc, :phoneNumber, :durum, :userEmail, :userPass, :plate, :gender, :apartman_id, :rol, :popup, :userStatus)";
+        // DurumArray doluysa normal kayıt işlemlerini yap
+        foreach ($durumArray as $durum) {
+            // E-posta adresi kontrolü
+            if (empty($userEmail) || trim($userEmail) === "") {
+                $userPass = randomPassword();
+                $hashedPassword = base64_encode($userPass);
+                $t = "Y";
 
-            $stmt = $conn->prepare($sql);
-            $stmt->bindParam(':userName', $userName);
-            $stmt->bindParam(':tc', $tc);
-            $stmt->bindParam(':phoneNumber', $phoneNumber);
-            $stmt->bindParam(':durum', $durum);
-            $stmt->bindValue(':userEmail',$userEmail);
-            $stmt->bindParam(':userPass', $hashedPassword);
-            $stmt->bindParam(':plate', $plate);
-            $stmt->bindParam(':gender', $gender);
-            $stmt->bindParam(':userStatus', $t);
-            $stmt->bindParam(':apartman_id', $apartman_id);
-            $rol = 3;
-            $popup = 0;
-            $stmt->bindParam(':rol', $rol);
-            $stmt->bindParam(':popup', $popup);
-            $stmt->execute();
+                $sql = "INSERT INTO tbl_users (userName, tc, phoneNumber, durum, userEmail, userPass, plate, gender, apartman_id, rol, popup, userStatus) VALUES 
+                (:userName, :tc, :phoneNumber, :durum, :userEmail, :userPass, :plate, :gender, :apartman_id, :rol, :popup, :userStatus)";
+
+                $stmt = $conn->prepare($sql);
+                $stmt->bindParam(':userName', $userName);
+                $stmt->bindParam(':tc', $tc);
+                $stmt->bindParam(':phoneNumber', $phoneNumber);
+                $stmt->bindParam(':durum', $durum);
+                $stmt->bindValue(':userEmail', null, PDO::PARAM_NULL); // Boş değeri atanır
+                $stmt->bindParam(':userPass', $hashedPassword);
+                $stmt->bindParam(':plate', $plate);
+                $stmt->bindParam(':gender', $gender);
+                $stmt->bindParam(':userStatus', $t);
+                $stmt->bindParam(':apartman_id', $apartman_id);
+                $rol = 3;
+                $popup = 0;
+                $stmt->bindParam(':rol', $rol);
+                $stmt->bindParam(':popup', $popup);
+                $stmt->execute();
+            } else {
+                // E-posta adresi doluysa, benzersizlik kontrolü yap
+                $emailCheckSQL = "SELECT COUNT(*) FROM tbl_users WHERE userEmail = :userEmail";
+                $emailCheckStmt = $conn->prepare($emailCheckSQL);
+                $emailCheckStmt->bindParam(':userEmail', $userEmail);
+                $emailCheckStmt->execute();
+
+                if ($emailCheckStmt->fetchColumn() > 0) {
+                    echo "Bu e-posta adresi zaten var. Lütfen farklı bir e-posta adresi seçiniz.";
+                } else {
+                    // E-posta adresi benzersiz, kaydetmeye devam et
+                    $userPass = randomPassword();
+                    $hashedPassword = base64_encode($userPass);
+
+                    $t = "Y";
+                    $sql = "INSERT INTO tbl_users (userName, tc, phoneNumber, durum, userEmail, userPass, plate, gender, apartman_id, rol, popup, userStatus) VALUES 
+                    (:userName, :tc, :phoneNumber, :durum, :userEmail, :userPass, :plate, :gender, :apartman_id, :rol, :popup, :userStatus)";
+
+                    $stmt = $conn->prepare($sql);
+                    $stmt->bindParam(':userName', $userName);
+                    $stmt->bindParam(':tc', $tc);
+                    $stmt->bindParam(':phoneNumber', $phoneNumber);
+                    $stmt->bindParam(':durum', $durum);
+                    $stmt->bindParam(':userEmail', $userEmail);
+                    $stmt->bindParam(':userPass', $hashedPassword);
+                    $stmt->bindParam(':plate', $plate);
+                    $stmt->bindParam(':gender', $gender);
+                    $stmt->bindParam(':userStatus', $t);
+                    $stmt->bindParam(':apartman_id', $apartman_id);
+                    $rol = 3;
+                    $popup = 0;
+                    $stmt->bindParam(':rol', $rol);
+                    $stmt->bindParam(':popup', $popup);
+                    $stmt->execute();
+                }
+            }
         }
+        echo 1;
     }
-    echo 1;
-}
-$_SESSION['lastID'] = $conn->lastInsertId();
+    $_SESSION['lastID'] = $conn->lastInsertId();
 } catch (PDOException $e) {
     echo "Hata: " . $e->getMessage();
 }

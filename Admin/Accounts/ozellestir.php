@@ -163,48 +163,7 @@ try {
                 var sifre = row.querySelector('td:nth-child(6)').textContent;
                 var vehiclePlate = row.querySelector('td:nth-child(7)').textContent;
                 var gender = row.querySelector('td:nth-child(8) select').value;
-                //KISITLAMALAR BAŞLANGIÇ...
-                //fullname
-                if (fullName.length < 3) {
-                    alert('Full Name en az 3 karakter olmalıdır.');
-                    return;
-                }
-                if (fullName.length > 100) {
-                    alert('Full Name 100den fazla karakter olamaz.');
-                    return;
-                }
-                if (!validateFullName(fullName)) {
-                    alert('Lütfen yalnızca harf karakterleri içeren geçerli bir tam ad girin.');
-                    return;
-                }
-                //tc kısıtlamaları
-                if (tc.length !== 11) {
-                    alert('TC numarı 11 haneli olmalıdır.');
-                    return; // Fonksiyondan çık
-                }
-
-                //telefon kısıtlamaları
-                if (phoneNumber.length !== 10) {
-                    alert('Telefon numarası 10 haneli olmalıdır.');
-                    return;
-                }
-                //email kısıtlamaları
-                if (!validateEmail(email)) {
-                    alert('Lütfen geçerli bir e-posta adresi girin.');
-                    return;
-                }
-                //araba plakası kısıtlamaları.
-                if (vehiclePlate !== null && vehiclePlate.trim() !== "") {
-                    if (!validateVehiclePlate(vehiclePlate)) {
-                        alert('Lütfen geçerli bir araba plakası giriniz.');
-                        return;
-                    }
-                }
-                if (!validatePassword(sifre)) {
-                    return; // Kısıtlamaları geçemezse işlemi durdur
-                }
-
-                //KISITLAMALAR BİTİŞ...
+                //alert(kullaniciID+","+fullName+","+tc+","+phoneNumber+","+durum+","+email+","+sifre+","+vehiclePlate+","+gender);
 
                 $.ajax({
                     url: 'Controller/update_user.php',
