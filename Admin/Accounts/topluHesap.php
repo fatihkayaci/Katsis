@@ -17,9 +17,9 @@
         <button type="button" class="btn-custom-outline" id="saveButton">Kaydet</button>
         </div>
 
-        <div class="search-box">
-            <i class="fas fa-search search-icon" aria-hidden="true"></i>
-            <input type="text" class="search-input" placeholder="Arama...">
+        <div class="input-group">
+          <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
+          <input type="text" class="form-control" placeholder="Arama...">
         </div>
     </div>
 </div>  
@@ -106,7 +106,51 @@
     var saveButton = document.getElementById('saveButton');
 
     saveButton.addEventListener('click', function() {
+        var kiraciUserNameInputs = document.getElementsByName('kiraciUserName');
+        var katMalikiUserNameInputs = document.getElementsByName('katMalikiUserName');
+        var apartman_id = $('input[name="apartman_id"]').val();
+        var blok = document.getElementsByName('blok');
+        var daire = document.getElementsByName('daire');
+
+        console.log("blok Name = "+blok +"Daire Name = " + daire);
+        var userNameArray = []; //bu tamam
+        var durumArray = [];// tamam
+        //DEVAM EDİLECEK
+        var blokArray = [];
+        var daireArray = [];
         
+
+        for (var i = 0; i < kiraciUserNameInputs.length; i++) {
+            if (kiraciUserNameInputs[i].value.trim() !== "") {
+                userNameArray.push(kiraciUserNameInputs[i].value);
+                durumArray.push("kiracı");
+            }
+        }
+        
+        for (var i = 0; i < katMalikiUserNameInputs.length; i++) {
+            if (katMalikiUserNameInputs[i].value.trim() !== "") {
+                userNameArray.push(katMalikiUserNameInputs[i].value);
+                durumArray.push("kat Maliki");
+            }
+        }
+        console.log("durum = " + JSON.stringify(durumArray));
+        console.log("User Name Array = " + JSON.stringify(userNameArray));
+
+        $.ajax({
+            url: 'Controller/demo2.php',
+            type: 'POST',
+            data: {
+                userNameArray: JSON.stringify(userNameArray),
+                durumArray: JSON.stringify(durumArray),
+                apartman_id: apartman_id
+            },
+            success: function(response) {
+                alert(response);
+            },
+            error: function(error) {
+                console.error(error);
+            }
+        });
     });
     </script>
 

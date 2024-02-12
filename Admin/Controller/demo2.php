@@ -8,14 +8,18 @@ try {
     $durumArray = json_decode($_POST['durumArray'], true);
     $apartman_id = $_POST['apartman_id'];
 
-    print_r($userNameArray);
 
     $t = "Y";
     $rol = 3;
     $popup = 0;
 
-    foreach ($userNameArray as $userName) {
-       
+    foreach ($userNameArray as $index => $userName) {
+        // Eğer kullanıcı adı boşsa veya sadece boşluklardan oluşuyorsa ekleme işlemini atla
+        if (trim($userName) === '') {
+            continue;
+        }
+
+        $durum = $durumArray[$index] ?? ''; // Kullanıcı adına karşılık gelen durumu al
         $sql = "INSERT INTO tbl_users (userName, durum, apartman_id, rol, popup, userStatus) 
                 VALUES (:userName, :durum, :apartman_id, :rol, :popup, :userStatus)";
     

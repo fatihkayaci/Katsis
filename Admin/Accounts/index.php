@@ -49,6 +49,9 @@ try {
         }
     }
     //DURUM kontrol edilecek
+   /* $sql2 = "SELECT *
+    FROM  tbl_users 
+    WHERE apartman_id =" . $_SESSION["apartID"] . " AND rol = 3";*/
     $sql2 = "SELECT *
     FROM tbl_users
     INNER JOIN tbl_daireler ON tbl_users.apartman_id = tbl_daireler.apartman_id
