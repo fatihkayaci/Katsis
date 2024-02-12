@@ -43,33 +43,37 @@ try {
         	        	</div>
                         <h5 class="user-name"><?php echo $row["userName"]; ?></h5>
         	        </div>
-                    <hr class="horizontal dark mt-0">
-        			<div class="ps-3 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+
+        			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                         <label for="tc">T.C. Kimlik No</label>
-                        <p id="tc"><?php echo $row["tc"]; ?></p>
+                        <input class="form-inpt-duzenle" type="text"  id="tc" name="tc" value="<?php echo $row["tc"]; ?>">
         			</div>
-                    <hr class="horizontal dark mt-0">
-                    <div class="ps-3 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                         <label for="phoneNumber">Telefon Numarası</label>
-                        <p id="phoneNumber"><?php echo $row["phoneNumber"]; ?></p>
+                        <input class="form-inpt-duzenle" type="text"  id="phoneNumber" name="phoneNumber" value="<?php echo $row["phoneNumber"]; ?>">
         			</div>
-                    <hr class="horizontal dark mt-0">
-                    <div class="ps-3 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                         <label for="userEmail">E-Posta</label>
-                        <p id="userEmail"><?php echo $row["userEmail"]; ?></p>
+                        <input class="form-inpt-duzenle" type="text"  id="userEmail" name="userEmail" value="<?php echo $row["userEmail"]; ?>">
         			</div>
-                    <hr class="horizontal dark mt-0">
-                    <div class="ps-3 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                         <label for="gender">Cinsiyet</label>
-                        <p id="gender"><?php echo $row["gender"]; ?></p>
+                        <select class="form-inpt-duzenle select-fix" id="gender">
+                            <option value="Erkek" <?php echo ($row["gender"] == "Erkek" ? 'selected' : '') ?>>Erkek</option>
+                            <option value="Kadın" <?php echo ($row["gender"] == "Kadın" ? 'selected' : '') ?>>Kadın</option>
+                        </select>
         			</div>
+
+        	    	<div class="user-btn-area">
+        	    	    <button type="button" id="submit" name="submit1" class="btn-black-outline">Bilgileri Güncelle</button>
+        	    	</div>
 
         		</div>
         	</div>
         </div>
     </div>
 
-    <div class="col-xl-5 col-lg-8 col-md-12 col-sm-12 col-12">
+    <div class="col-xl-6 col-lg-8 col-md-12 col-sm-12 col-12">
         <div class="h-100">	
             <div class="contact-form">                
 
@@ -79,69 +83,69 @@ try {
         	    		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         	    			<h6 class="mb-2">Daire Bilgileri</h6>
         	    		</div>
-
-                        <hr class="horizontal dark mt-3">
-                        
-        	    		<div class="bilgi-p col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-        	    			<p class="bilgi-p">Daire :</p>
+        	    		<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+        	    			<label for="daire">Daire</label>
+        	    			<input class="form-inpt-duzenle" type="text"  id="daire" name="daire" value="Daire">
         	    		</div>
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                            <p class="bilgi-p">Daire Yazılacak</p>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+        	    			<label for="kullaniciNo">Kullanıcı No</label>
+        	    			<input class="form-inpt-duzenle" type="text"  id="kullaniciNo" name="kullaniciNo" value="Kullanıcı No">
         	    		</div>
-
-                        <hr class="horizontal dark mt-0">
-
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                            <p class="bilgi-p">Kullanıcı No :</p>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+        	    			<label for="giris">Giriş Tarihi</label>
+        	    			<input class="form-inpt-duzenle" type="text"  id="giris" name="giris" value="giris tarihi">
         	    		</div>
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                            <p class="bilgi-p">Kullanıcı No Yazılacak</p>
-        	    		</div>
-
-                        <hr class="horizontal dark mt-0">
-
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                            <p class="bilgi-p">Giriş Tarihi :</p>
-        	    		</div>
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                            <p class="bilgi-p">Giriş Tarihi Yazılacak</p>
-        	    		</div>
-
-                        <hr class="horizontal dark mt-0">
-
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                            <p class="bilgi-p">Son Oturum Açma Tarihi :</p>
-        	    		</div>
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                            <p class="bilgi-p">Son Oturum Açma Tarihi yazılacak</p>
-        	    		</div>
-
-                        <hr class="horizontal dark mt-0">
-
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                            <p class="bilgi-p">Parola :</p>
-        	    		</div>
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                            <p class="bilgi-p">Parola yazılacak</p>
-        	    		</div>
-
-                        <hr class="horizontal dark mt-0">
-
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                            <p class="bilgi-p">Araç Plakası :</p>
-        	    		</div>
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                            <p class="bilgi-p">Araç Plakası yazılacak</p>
+        	    		<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+        	    			<label for="oturum">Son Oturum Açma Tarihi</label>
+        	    			<input class="form-inpt-duzenle" type="oturum"  id="oturum" name="oturum" value="Son Oturum Açma Tarihi">
         	    		</div>
                     </div>
+        	    	<div class="row">
+        	    	    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        	    	        <div class="text-right">
+        	    	            <button type="button" id="submit" name="submit1" class="btn-black-outline">Bilgileri Güncelle</button>
+        	    	        </div>
+        	    	    </div>
+        	    	</div>
         	    	
+        	    </form>
+
+        		<hr class="horizontal dark mt-0">
+
+        	    <form id="" method="post" action="">
+
+        	    	<div class="row">
+                		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                		    <h6 class="mt-3 mb-2 mt-4">Parola Değiştirme</h6>
+                		</div>
+                		<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                		    <label for="parola">Mevcut Parola</label>
+                		    <input class="form-inpt-duzenle" name="parola" type="password"  id="parola" placeholder="Mevcut Parolanızı Giriniz">
+                		</div>
+                		<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                		    <label for="parolaYeni">Yeni Parola</label>
+                		    <input class="form-inpt-duzenle" name="parolaYeni" type="password"  id="parolaYeni" placeholder="Yeni Parolanızı Giriniz">
+                		</div>
+                		<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                		    <label for="parolaYeniTekrar">Yeni Parola Tekrar</label>
+                		    <input class="form-inpt-duzenle" name="parolaYeniTekrar" type="password"  id="parolaYeniTekrar" placeholder="Yeni Parolanızı Tekrar Giriniz">
+                		</div>
+        	    	</div>
+        	    	<div class="row">
+        	    	    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        	    	        <div class="text-right">
+        	    	            <button type="button" id="submit" name="submit" class="btn-black-outline">Parola Değiştir</button>
+        	    	        </div>
+        	    	    </div>
+        	    	</div>
+
         	    </form>
 
         	</div>
         </div> 
     </div>
 
-    <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
+    <div class="col-xl-3 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="h-100">
         	<div class="contact-form">
         		<div class="account-settings">
