@@ -32,8 +32,8 @@ try {
         <div class="input-group-div">
 
             <div class="input-group1">
-              <button class="btn-custom-outline">Buton</button>
-              <button class="btn-custom-outline">Buton</button>
+              <button class="btn-custom-outline">Daire Ekle</button>
+              <button class="btn-custom-outline">Blok Ekle</button>
             </div>
 
             <div class="input-group">

@@ -27,72 +27,168 @@ try {
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
     if ($result) {
-        ?>
+        foreach ($result as $row) {
+    ?>
 
-        <div class="table-responsive-vertical cener-table">
-        
-            <div class="input-group-div">
+<div class="emp-profile row">
 
-                <div class="input-group1">
-                  <button class="btn-custom-outline">Buton</button>
-                  <button class="btn-custom-outline">Buton</button>
-                </div>
+    <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+        <div class="h-100">
+        	<div class="contact-form">
+        		<div class="account-settings">
 
-                <div class="input-group">
-                  <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
-                  <input type="text" class="form-control" placeholder="Arama...">
-                </div>
-            </div>
-            <table id="example" class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>Ad Soyad</th>
-                        <th>T.C.</th>
-                        <th>Telefon Numarası</th>
-                        <th>Durum</th>
-                        <th>E-Posta</th>
-                        <th>Şifre</th>
-                        <th>Araç Plakası</th>
-                        <th>Cinsiyet</th>
-                        <th>Güncelle</th>
-                    </tr>
-                </thead>
+                    <div class="user-profile">
+        	        	<div class="user-avatar">
+        	        		<p>YF</p>
+        	        	</div>
+                        <h5 class="user-name"><?php echo $row["userName"]; ?></h5>
+        	        </div>
 
-                <?php
-                foreach ($result as $row) {
-                ?>   
-                    <tbody>
-                        <tr data-userid="<?php echo $row["userID"]; ?>">
-                            <td data-title="Ad Soyad" contenteditable="true"><?php echo $row["userName"]; ?></td>
-                            <td data-title="T.C." contenteditable="true"><?php echo $row["tc"]; ?></td>
-                            <td data-title="Telefon Numarası" contenteditable="true"><?php echo $row["phoneNumber"]; ?></td>
-                            <td data-title="Durum" contenteditable="true">
-                            <select class="input-select">
-                                <option value="katmaliki"<?php echo ($row["durum"] == "katmaliki" ? 'selected' : '') ?>>katmaliki</option>
-                                <option value="kiracı" <?php echo ($row["durum"] == "kiracı" ? 'selected' : '') ?>>kiracı</option>
-                            </select>
-                            </td>
-                            <td data-title="E-Posta" contenteditable="true"><?php echo $row["userEmail"]; ?></td>
-                            <td data-title="Şifre" contenteditable="true"><?php echo $row["userPass"]; ?></td>
-                            <td data-title="Araç Plakası" contenteditable="true"><?php echo $row["plate"]; ?></td>
-                            <td data-title="Cinsiyet" contenteditable="true">
-                            <select class="input-select">
-                                <option value="Erkek" <?php echo ($row["gender"] == "Erkek" ? 'selected' : '') ?>>Erkek</option>
-                                <option value="Kadın" <?php echo ($row["gender"] == "Kadın" ? 'selected' : '') ?>>Kadın</option>
-                            </select>
-                            </td>
+        			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <label for="tc">T.C. Kimlik No</label>
+                        <input class="form-inpt" type="text"  id="tc" name="tc" value="<?php echo $row["tc"]; ?>">
+        			</div>
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <label for="phoneNumber">Telefon Numarası</label>
+                        <input class="form-inpt" type="text"  id="phoneNumber" name="phoneNumber" value="<?php echo $row["phoneNumber"]; ?>">
+        			</div>
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <label for="userEmail">E-Posta</label>
+                        <input class="form-inpt" type="text"  id="userEmail" name="userEmail" value="<?php echo $row["userEmail"]; ?>">
+        			</div>
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <label for="gender">Cinsiyet</label>
+                        <select class="form-inpt select-fix" id="gender">
+                            <option value="Erkek" <?php echo ($row["gender"] == "Erkek" ? 'selected' : '') ?>>Erkek</option>
+                            <option value="Kadın" <?php echo ($row["gender"] == "Kadın" ? 'selected' : '') ?>>Kadın</option>
+                        </select>
+        			</div>
 
-                            <td data-title="Güncelle"><button class="updateButton table-a">Güncelle</button></td>
-                        </tr>
-                    <?php
-                    }
-                    ?>
+        	    	<div class="user-btn-area">
+        	    	    <button type="button" id="submit" name="submit1" class="btn-black-outline">Bilgileri Güncelle</button>
+        	    	</div>
 
-                    </tbody>
-                </table>
+        		</div>
+        	</div>
+        </div>
+    </div>
+
+    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+        <div class="h-100">	
+            <div class="contact-form">                
+
+        	    <form id="" method="post" action="">
+
+        	    	<div class="row">
+        	    		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        	    			<h6 class="mb-2">Daire Bilgileri</h6>
+        	    		</div>
+        	    		<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+        	    			<label for="daire">Daire</label>
+        	    			<input class="form-inpt" type="text"  id="daire" name="daire" value="Daire">
+        	    		</div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+        	    			<label for="kullaniciNo">Kullanıcı No</label>
+        	    			<input class="form-inpt" type="text"  id="kullaniciNo" name="kullaniciNo" value="Kullanıcı No">
+        	    		</div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+        	    			<label for="giris">Giriş Tarihi</label>
+        	    			<input class="form-inpt" type="text"  id="giris" name="giris" value="giris tarihi">
+        	    		</div>
+        	    		<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+        	    			<label for="oturum">Son Oturum Açma Tarihi</label>
+        	    			<input class="form-inpt" type="oturum"  id="oturum" name="oturum" value="Son Oturum Açma Tarihi">
+        	    		</div>
+                    </div>
+        	    	<div class="row">
+        	    	    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        	    	        <div class="text-right">
+        	    	            <button type="button" id="submit" name="submit1" class="btn-black-outline">Bilgileri Güncelle</button>
+        	    	        </div>
+        	    	    </div>
+        	    	</div>
+        	    	
+        	    </form>
+
+        		<hr class="horizontal dark mt-0">
+
+        	    <form id="" method="post" action="">
+
+        	    	<div class="row">
+                		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                		    <h6 class="mt-3 mb-2 mt-4">Parola Değiştirme</h6>
+                		</div>
+                		<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                		    <label for="parola">Mevcut Parola</label>
+                		    <input class="form-inpt" name="parola" type="password"  id="parola" placeholder="Mevcut Parolanızı Giriniz">
+                		</div>
+                		<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                		    <label for="parolaYeni">Yeni Parola</label>
+                		    <input class="form-inpt" name="parolaYeni" type="password"  id="parolaYeni" placeholder="Yeni Parolanızı Giriniz">
+                		</div>
+                		<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                		    <label for="parolaYeniTekrar">Yeni Parola Tekrar</label>
+                		    <input class="form-inpt" name="parolaYeniTekrar" type="password"  id="parolaYeniTekrar" placeholder="Yeni Parolanızı Tekrar Giriniz">
+                		</div>
+        	    	</div>
+        	    	<div class="row">
+        	    	    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        	    	        <div class="text-right">
+        	    	            <button type="button" id="submit" name="submit" class="btn-black-outline">Parola Değiştir</button>
+        	    	        </div>
+        	    	    </div>
+        	    	</div>
+
+        	    </form>
+
+        	</div>
+        </div> 
+    </div>
+
+    <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+        <div class="h-100">
+        	<div class="contact-form">
+        		<div class="account-settings">
+
+                    <div class="btn-box-users">
+                        <button class="btn-box-outline">Düzenle</button>
+                        <div>
+                        <button class="btn-box-outline">Borç</button>
+                        <button class="btn-box-outline">Tahsilat</button>
+                        </div>
+                    </div>
+
+                    <div class="borc-box">
+                        <a href="">
+                            <p class="borc">borç yazar burda be</p>
+                            <p class="para">30 TL</p>
+                        </a>
+
+                        <a href="">
+                            <p class="borc">borç yazar burda be</p>
+                            <p class="para">30 TL</p>
+                        </a>
+
+                        <a href="">
+                            <p class="borc">borç yazar burda be</p>
+                            <p class="para">30 TL</p>
+                        </a>
+
+                        <a href="">
+                            <p class="borc">borç yazar burda be</p>
+                            <p class="para">30 TL</p>
+                        </a>
+                    </div>                        
+
+        		</div>
+        	</div>
+        </div>
+    </div>
+    
+</div>
+  
     <?php
-    } else {
-        echo "0 results";
+    }
     }
 } catch (PDOException $e) {
     echo "Bağlantı hatası: " . $e->getMessage();

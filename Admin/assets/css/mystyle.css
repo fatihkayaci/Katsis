@@ -169,7 +169,6 @@ overflow: auto;
   width: 100%;
   min-width: 350px;
   flex-wrap: wrap;
-  
 }
 
 .col {
@@ -694,4 +693,225 @@ background-color: #f9bdbb;
 
 .margin-10 {
   margin-right: -10px !important;
+}
+
+/* ====================================== */
+
+/* kullanıcı duzenle css */
+
+.emp-profile{
+  padding: 2%;
+  margin-top: 1%;
+  margin-bottom: 1%;
+  border-radius: 0.5rem;
+}
+
+.contact-form {
+  border-radius: 18px;
+  background: #fff;
+  padding: 45px 50px 50px;
+  margin-bottom: 30px;
+  -webkit-border-radius: 18px;
+  -moz-border-radius: 18px;
+  border: 0;
+  border: 1px solid #0d0c2218;
+  box-shadow: 10px 10px 5px 2px #277de018;
+}
+
+.user-profile {
+  margin: 0 0 1rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.user-profile .user-avatar {
+  margin: 0 0 1rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.user-profile .user-avatar p {
+  width: 90px;
+  height: 90px;
+  -webkit-border-radius: 100px;
+  -moz-border-radius: 100px;
+  border-radius: 100px;
+  background-color: #277CE0;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 50px;
+  font-family: 'poppins-medium';
+}
+.user-name {
+  margin: 0 0 0.5rem 0;
+  font-family: 'poppins-regular';
+  letter-spacing: 1px;
+}
+
+.user-profile h6.user-email {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: #9fa8b9;
+text-transform: none;
+}
+
+.about {
+  margin: 2rem 0 0 0;
+  text-align: center;
+}
+.about h5 {
+  margin: 0 0 15px 0;
+}
+.about p {
+  font-size: 0.825rem;
+}
+.form-control {
+  border: 1px solid #cfd1d8;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  font-size: .825rem;
+  margin-top: 10px;
+}
+.contact-form label {
+  margin-top: 10px;
+}
+
+.form-inpt {
+    width: 100%;
+    min-width: 200px;
+    height: 42px;
+    border-radius: 4px;
+    border: 1px solid #cfd1d8;
+    outline: none;
+    background: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    color: #0d0c22;
+    padding: 12px 15px;
+    display: block;
+    transition: 0.3s;
+    margin-bottom: 20px;
+}
+.form-inpt::placeholder {
+    font-size: 14px;
+    font-weight: 500;
+    color: #686A6C;
+}
+
+.form-inpt:focus {
+  font-size: 14px;
+  font-weight: 500;
+  color: #0d0c22;
+  border: 1px solid #277CE0;
+}
+
+.select-fix {
+  padding: 5px 10px !important;
+}
+
+.btn-black-outline {
+  height: 45px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background-color: #277CE0;
+  color: #fff;
+  padding: 0px 20px;
+  transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  text-decoration: none;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-family: 'poppins-regular';
+  font-weight: 500;
+  margin-top: 10px;
+}
+
+.btn-black-outline:hover {
+  border: 1px solid #277CE0;
+  background-color: transparent;
+  color: #0d0c22;
+}
+
+.user-btn-area {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-box-users {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn-box-outline {
+  height: 40px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  box-shadow: 0px 0px 5px 1px #277de034;
+  background-color: transparent;
+  color: #0d0c22;
+  padding: 0px 10px;
+  transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  text-decoration: none;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-family: 'poppins-regular';
+  font-weight: 500;
+}
+
+.btn-box-outline:hover {
+  border: 1px solid #277CE0;
+}
+
+.borc-box {
+  margin-top: 50px;
+}
+
+.borc-box a {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  height: 52px;
+  background-color: #fff;
+  color: #000;
+  box-shadow: 0px 0px 5px 1px #277de034;
+  border-radius: 8px;
+  border: 1px solid #cfd1d8;
+  margin-top: 20px;
+  padding: 0px 10px;
+  transition: 0.3s;
+}
+
+.borc-box a:hover {
+  background-color: #277CE0;
+  color: #fff;
+  box-shadow: 2px 2px 5px 1px #bebebe;
+  border-radius: 8px;
+  border: 1px solid #277CE0;
+}
+
+.borc {
+  margin: 0;
+}
+
+.para {
+  margin: 0;
 }
