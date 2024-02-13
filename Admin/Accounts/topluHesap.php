@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Toplu Hesap Ekleme</title>
@@ -10,19 +10,19 @@
 
 <body>
 
-<div class="table-responsive-vertical cener-table">
-    <div class="input-group-div">
+    <div class="table-responsive-vertical cener-table">
+        <div class="input-group-div">
 
-        <div class="input-group1">
-        <button type="button" class="btn-custom-outline" id="saveButton">Kaydet</button>
-        </div>
+            <div class="input-group1">
+                <button type="button" class="btn-custom-outline" id="saveButton">Kaydet</button>
+            </div>
 
-        <div class="input-group">
-          <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
-          <input type="text" class="form-control" placeholder="Arama...">
+            <div class="input-group">
+                <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
+                <input type="text" class="form-control" placeholder="Arama...">
+            </div>
         </div>
     </div>
-</div>  
 
     <div class="row">
         <div class="col-md-6 col">
@@ -104,38 +104,44 @@
     ?>
     <script type="text/javascript">
     var saveButton = document.getElementById('saveButton');
-
     saveButton.addEventListener('click', function() {
         var kiraciUserNameInputs = document.getElementsByName('kiraciUserName');
         var katMalikiUserNameInputs = document.getElementsByName('katMalikiUserName');
-        var apartman_id = $('input[name="apartman_id"]').val();
         var blok = document.getElementsByName('blok');
         var daire = document.getElementsByName('daire');
+        var apartman_id = $('input[name="apartman_id"]').val();
 
-        console.log("blok Name = "+blok +"Daire Name = " + daire);
-        var userNameArray = []; //bu tamam
-        var durumArray = [];// tamam
-        //DEVAM EDİLECEK
+        var userNameArray = [];
+        var durumArray = [];
         var blokArray = [];
         var daireArray = [];
-        
 
         for (var i = 0; i < kiraciUserNameInputs.length; i++) {
             if (kiraciUserNameInputs[i].value.trim() !== "") {
                 userNameArray.push(kiraciUserNameInputs[i].value);
                 durumArray.push("kiracı");
+                blokArray.push(blok[i].innerText);
+                daireArray.push(daire[i].innerText);
             }
         }
-        
+
         for (var i = 0; i < katMalikiUserNameInputs.length; i++) {
             if (katMalikiUserNameInputs[i].value.trim() !== "") {
                 userNameArray.push(katMalikiUserNameInputs[i].value);
                 durumArray.push("kat Maliki");
+                blokArray.push(blok[i].innerText);
+                daireArray.push(daire[i].innerText);
             }
         }
-        console.log("durum = " + JSON.stringify(durumArray));
-        console.log("User Name Array = " + JSON.stringify(userNameArray));
 
+        console.log("Durum: " + JSON.stringify(durumArray));
+        console.log("Kullanıcı Adları: " + JSON.stringify(userNameArray));
+        console.log("Blok Adları: " + JSON.stringify(blokArray));
+        console.log("Daire Sayıları: " + JSON.stringify(daireArray));
+        /*
+                        blokArray: JSON.stringify(blokArray),
+                        daireArray: JSON.stringify(daireArray),*/
+        // AJAX request
         $.ajax({
             url: 'Controller/demo2.php',
             type: 'POST',
@@ -146,6 +152,26 @@
             },
             success: function(response) {
                 alert(response);
+                if (response == 1) {
+                    $.ajax({
+                        url: 'Controller/demo3.php',
+                        type: 'POST',
+                        data: {
+                            blokArray: JSON.stringify(blokArray),
+                            daireArray: JSON.stringify(daireArray),
+                            durumArray: JSON.stringify(durumArray)
+                        },
+                        success: function(secondResponse) {
+                            alert(secondResponse);
+                            if (secondResponse == 1) {
+                                location.reload();
+                            }
+                        },
+                        error: function(secondError) {
+                            console.error(secondError);
+                        }
+                    });
+                }
             },
             error: function(error) {
                 console.error(error);

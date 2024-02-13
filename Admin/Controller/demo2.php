@@ -34,6 +34,7 @@ try {
     }
 
     echo 1;
+    $_SESSION['lastID'] = $conn->lastInsertId();
 } catch (PDOException $e) {
     echo $e->getMessage(); // Hata mesajını ekrana yazdır
 }
