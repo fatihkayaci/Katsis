@@ -785,7 +785,7 @@ try {
             });
         });
 
-        var rows = document.querySelectorAll('tr');
+        /*var rows = document.querySelectorAll('tr');
         rows.forEach(function(row) {
             row.addEventListener('click', function() {
                 var userID = row.getAttribute('data-userid');
@@ -793,5 +793,5 @@ try {
                 window.location.href = 'index.php?parametre=custom&userID=' + encodeURIComponent(
                     userID);
             });
-        });
+        });*/
         </script>

@@ -103,7 +103,39 @@
     }
     ?>
     <script type="text/javascript">
-    var saveButton = document.getElementById('saveButton');
+    // Sayfa yüklendiğinde mevcut input değerlerini bir diziye kaydetme
+    var initialData = [];
+
+    window.onload = function() {
+        var kiraciUserNameInputs = document.getElementsByName('kiraciUserName');
+        var katMalikiUserNameInputs = document.getElementsByName('katMalikiUserName');
+        var blok = document.getElementsByName('blok');
+        var daire = document.getElementsByName('daire');
+
+        for (var i = 0; i < kiraciUserNameInputs.length; i++) {
+            if (kiraciUserNameInputs[i].value.trim() !== "") {
+                initialData.push({
+                    userName: kiraciUserNameInputs[i].value,
+                    durum: "kiracı",
+                    blok: blok[i].innerText,
+                    daire: daire[i].innerText
+                });
+            }
+        }
+
+        for (var i = 0; i < katMalikiUserNameInputs.length; i++) {
+            if (katMalikiUserNameInputs[i].value.trim() !== "") {
+                initialData.push({
+                    userName: katMalikiUserNameInputs[i].value,
+                    durum: "kat Maliki",
+                    blok: blok[i].innerText,
+                    daire: daire[i].innerText
+                });
+            }
+        }
+    };
+
+    // Save buttona basıldığında verileri karşılaştırma ve sunucuya gönderme
     saveButton.addEventListener('click', function() {
         var kiraciUserNameInputs = document.getElementsByName('kiraciUserName');
         var katMalikiUserNameInputs = document.getElementsByName('katMalikiUserName');
@@ -111,43 +143,49 @@
         var daire = document.getElementsByName('daire');
         var apartman_id = $('input[name="apartman_id"]').val();
 
-        var userNameArray = [];
-        var durumArray = [];
-        var blokArray = [];
-        var daireArray = [];
+        var newEntries = [];
 
+        // Yeni eklenen verileri bulma
         for (var i = 0; i < kiraciUserNameInputs.length; i++) {
             if (kiraciUserNameInputs[i].value.trim() !== "") {
-                userNameArray.push(kiraciUserNameInputs[i].value);
-                durumArray.push("kiracı");
-                blokArray.push(blok[i].innerText);
-                daireArray.push(daire[i].innerText);
+                var entry = {
+                    userName: kiraciUserNameInputs[i].value,
+                    durum: "kiracı",
+                    blok: blok[i].innerText,
+                    daire: daire[i].innerText
+                };
+                newEntries.push(entry);
             }
         }
 
         for (var i = 0; i < katMalikiUserNameInputs.length; i++) {
             if (katMalikiUserNameInputs[i].value.trim() !== "") {
-                userNameArray.push(katMalikiUserNameInputs[i].value);
-                durumArray.push("kat Maliki");
-                blokArray.push(blok[i].innerText);
-                daireArray.push(daire[i].innerText);
+                var entry = {
+                    userName: katMalikiUserNameInputs[i].value,
+                    durum: "kat Maliki",
+                    blok: blok[i].innerText,
+                    daire: daire[i].innerText
+                };
+                newEntries.push(entry);
             }
         }
 
-        console.log("Durum: " + JSON.stringify(durumArray));
-        console.log("Kullanıcı Adları: " + JSON.stringify(userNameArray));
-        console.log("Blok Adları: " + JSON.stringify(blokArray));
-        console.log("Daire Sayıları: " + JSON.stringify(daireArray));
-        /*
-                        blokArray: JSON.stringify(blokArray),
-                        daireArray: JSON.stringify(daireArray),*/
-        // AJAX request
+        // Karşılaştırma
+        var toSend = newEntries.filter(function(entry) {
+            return !initialData.some(function(initialEntry) {
+                return initialEntry.userName === entry.userName &&
+                    initialEntry.durum === entry.durum &&
+                    initialEntry.blok === entry.blok &&
+                    initialEntry.daire === entry.daire;
+            });
+        });
+        
+        console.log("ToSend:", toSend);
         $.ajax({
             url: 'Controller/demo2.php',
             type: 'POST',
             data: {
-                userNameArray: JSON.stringify(userNameArray),
-                durumArray: JSON.stringify(durumArray),
+                toSend: JSON.stringify(toSend),
                 apartman_id: apartman_id
             },
             success: function(response) {
@@ -157,9 +195,7 @@
                         url: 'Controller/demo3.php',
                         type: 'POST',
                         data: {
-                            blokArray: JSON.stringify(blokArray),
-                            daireArray: JSON.stringify(daireArray),
-                            durumArray: JSON.stringify(durumArray)
+                            toSend: JSON.stringify(toSend)
                         },
                         success: function(secondResponse) {
                             alert(secondResponse);
@@ -179,7 +215,6 @@
         });
     });
     </script>
-
 </body>
 
 </html>
