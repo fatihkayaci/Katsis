@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Toplu Hesap Ekleme</title>
@@ -10,19 +10,19 @@
 
 <body>
 
-<div class="table-responsive-vertical cener-table">
-    <div class="input-group-div">
+    <div class="table-responsive-vertical cener-table">
+        <div class="input-group-div">
 
-        <div class="input-group1">
-        <button type="button" class="btn-custom-outline" id="saveButton">Kaydet</button>
-        </div>
+            <div class="input-group1">
+                <button type="button" class="btn-custom-outline" id="saveButton">Kaydet</button>
+            </div>
 
-        <div class="input-group">
-          <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
-          <input type="text" class="form-control" placeholder="Arama...">
+            <div class="input-group">
+                <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
+                <input type="text" class="form-control" placeholder="Arama...">
+            </div>
         </div>
     </div>
-</div>  
 
     <div class="row">
         <div class="col-md-6 col">
@@ -103,49 +103,111 @@
     }
     ?>
     <script type="text/javascript">
-    var saveButton = document.getElementById('saveButton');
+    // Sayfa yüklendiğinde mevcut input değerlerini bir diziye kaydetme
+    var initialData = [];
 
-    saveButton.addEventListener('click', function() {
+    window.onload = function() {
         var kiraciUserNameInputs = document.getElementsByName('kiraciUserName');
         var katMalikiUserNameInputs = document.getElementsByName('katMalikiUserName');
-        var apartman_id = $('input[name="apartman_id"]').val();
         var blok = document.getElementsByName('blok');
         var daire = document.getElementsByName('daire');
 
-        console.log("blok Name = "+blok +"Daire Name = " + daire);
-        var userNameArray = []; //bu tamam
-        var durumArray = [];// tamam
-        //DEVAM EDİLECEK
-        var blokArray = [];
-        var daireArray = [];
-        
-
         for (var i = 0; i < kiraciUserNameInputs.length; i++) {
             if (kiraciUserNameInputs[i].value.trim() !== "") {
-                userNameArray.push(kiraciUserNameInputs[i].value);
-                durumArray.push("kiracı");
+                initialData.push({
+                    userName: kiraciUserNameInputs[i].value,
+                    durum: "kiracı",
+                    blok: blok[i].innerText,
+                    daire: daire[i].innerText
+                });
             }
         }
-        
+
         for (var i = 0; i < katMalikiUserNameInputs.length; i++) {
             if (katMalikiUserNameInputs[i].value.trim() !== "") {
-                userNameArray.push(katMalikiUserNameInputs[i].value);
-                durumArray.push("kat Maliki");
+                initialData.push({
+                    userName: katMalikiUserNameInputs[i].value,
+                    durum: "kat Maliki",
+                    blok: blok[i].innerText,
+                    daire: daire[i].innerText
+                });
             }
         }
-        console.log("durum = " + JSON.stringify(durumArray));
-        //console.log("User Name Array = " + JSON.stringify(userNameArray));
+    };
 
+    // Save buttona basıldığında verileri karşılaştırma ve sunucuya gönderme
+    saveButton.addEventListener('click', function() {
+        var kiraciUserNameInputs = document.getElementsByName('kiraciUserName');
+        var katMalikiUserNameInputs = document.getElementsByName('katMalikiUserName');
+        var blok = document.getElementsByName('blok');
+        var daire = document.getElementsByName('daire');
+        var apartman_id = $('input[name="apartman_id"]').val();
+
+        var newEntries = [];
+
+        // Yeni eklenen verileri bulma
+        for (var i = 0; i < kiraciUserNameInputs.length; i++) {
+            if (kiraciUserNameInputs[i].value.trim() !== "") {
+                var entry = {
+                    userName: kiraciUserNameInputs[i].value,
+                    durum: "kiracı",
+                    blok: blok[i].innerText,
+                    daire: daire[i].innerText
+                };
+                newEntries.push(entry);
+            }
+        }
+
+        for (var i = 0; i < katMalikiUserNameInputs.length; i++) {
+            if (katMalikiUserNameInputs[i].value.trim() !== "") {
+                var entry = {
+                    userName: katMalikiUserNameInputs[i].value,
+                    durum: "kat Maliki",
+                    blok: blok[i].innerText,
+                    daire: daire[i].innerText
+                };
+                newEntries.push(entry);
+            }
+        }
+
+        // Karşılaştırma
+        var toSend = newEntries.filter(function(entry) {
+            return !initialData.some(function(initialEntry) {
+                return initialEntry.userName === entry.userName &&
+                    initialEntry.durum === entry.durum &&
+                    initialEntry.blok === entry.blok &&
+                    initialEntry.daire === entry.daire;
+            });
+        });
+        
+        console.log("ToSend:", toSend);
         $.ajax({
             url: 'Controller/demo2.php',
             type: 'POST',
             data: {
-                userNameArray: JSON.stringify(userNameArray),
-                durumArray: JSON.stringify(durumArray),
+                toSend: JSON.stringify(toSend),
                 apartman_id: apartman_id
             },
             success: function(response) {
                 alert(response);
+                if (response == 1) {
+                    $.ajax({
+                        url: 'Controller/demo3.php',
+                        type: 'POST',
+                        data: {
+                            toSend: JSON.stringify(toSend)
+                        },
+                        success: function(secondResponse) {
+                            alert(secondResponse);
+                            if (secondResponse == 1) {
+                                location.reload();
+                            }
+                        },
+                        error: function(secondError) {
+                            console.error(secondError);
+                        }
+                    });
+                }
             },
             error: function(error) {
                 console.error(error);
@@ -153,7 +215,6 @@
         });
     });
     </script>
-
 </body>
 
 </html>

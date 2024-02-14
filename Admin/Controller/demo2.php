@@ -3,27 +3,21 @@ include("../../DB/dbconfig.php");
 
 try {
     session_start();
- 
-    $userNameArray = json_decode($_POST['userNameArray'], true);
-    $durumArray = json_decode($_POST['durumArray'], true);
+    $addedUserIds = array();
+    $toSend = json_decode($_POST['toSend'], true);
     $apartman_id = $_POST['apartman_id'];
-
-    //print_r($durumArray);
 
     $t = "Y";
     $rol = 3;
     $popup = 0;
 
-    foreach ($userNameArray as $index => $userName) {
-        // Eğer kullanıcı adı boşsa veya sadece boşluklardan oluşuyorsa ekleme işlemini atla
-        if (trim($userName) === '') {
-            continue;
-        }
+    foreach ($toSend as $data) {
+        $userName = $data['userName'];
+        $durum = $data['durum'];
 
-        $durum = $durumArray[$index] ?? ''; // Kullanıcı adına karşılık gelen durumu al
         $sql = "INSERT INTO tbl_users (userName, durum, apartman_id, rol, popup, userStatus) 
                 VALUES (:userName, :durum, :apartman_id, :rol, :popup, :userStatus)";
-    
+
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':userName', $userName);
         $stmt->bindParam(':durum', $durum);
@@ -32,8 +26,10 @@ try {
         $stmt->bindParam(':rol', $rol);
         $stmt->bindParam(':popup', $popup);
         $stmt->execute();
+        $addedUserIds[] = $conn->lastInsertId();
     }
-
+    $_SESSION['addedUserIds'] = $addedUserIds;
+    //echo json_encode($addedUserIds);
     echo 1;
 } catch (PDOException $e) {
     echo $e->getMessage(); // Hata mesajını ekrana yazdır

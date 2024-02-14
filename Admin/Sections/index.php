@@ -52,9 +52,9 @@ try {
               
             </div>
 
-            <div class="input-group">
-              <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
-              <input type="text" class="form-control" placeholder="Arama...">
+            <div class="search-box">
+                <i class="fas fa-search search-icon" aria-hidden="true"></i>
+                <input type="text" class="search-input" placeholder="Arama...">
             </div>
         </div>
 

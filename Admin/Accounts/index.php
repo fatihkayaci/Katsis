@@ -23,16 +23,16 @@
                 <button class="adduser btn-custom-outline">Kullanıcı Ekle</button>
                 <button class="toplu btn-custom-outline">Toplu Kullanıcı Ekle Ve Düzelt</button>
 
-
                 <button class="topluGuncelle btn-custom-outline" id="guncelleButton"
                     style="display: none;">Güncelle</button>
                 <button class="topluSil btn-custom-outline" id="silButton" style="display: none;">Sil</button>
             </div>
 
-            <div class="input-group">
-                <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
-                <input type="text" class="form-control" placeholder="Arama...">
+            <div class="search-box">
+                <i class="fas fa-search search-icon" aria-hidden="true"></i>
+                <input type="text" class="search-input" placeholder="Arama...">
             </div>
+
         </div>
     </div>
     <?php
@@ -49,22 +49,15 @@ try {
         }
     }
     //DURUM kontrol edilecek
-   /*$sql2 = "SELECT *
+   /* $sql2 = "SELECT *
+    FROM  tbl_users 
+    WHERE apartman_id =" . $_SESSION["apartID"] . " AND rol = 3";*/
+    $sql2 = "SELECT *
     FROM tbl_users
     INNER JOIN tbl_daireler ON tbl_users.apartman_id = tbl_daireler.apartman_id
     WHERE tbl_users.apartman_id = " . $_SESSION["apartID"] . " 
     AND tbl_users.rol = 3
-    AND (tbl_daireler.kiraciID = tbl_users.userID OR tbl_daireler.katMalikiID = tbl_users.userID)";*/
-
-    $sql2 = "SELECT * 
-    FROM tbl_users 
-    WHERE tbl_users.apartman_id = " . $_SESSION["apartID"] . " 
-    AND tbl_users.rol = 3";
-    /*$sql2 = "SELECT *
-    FROM tbl_users
-    INNER JOIN tbl_daireler ON tbl_users.apartman_id = tbl_daireler.apartman_id
-    WHERE tbl_users.apartman_id = " . $_SESSION["apartID"] . " 
-    AND tbl_users.rol = 3";*/
+    AND (tbl_daireler.kiraciID = tbl_users.userID OR tbl_daireler.katMalikiID = tbl_users.userID)";
 
    /*$sql2 = "SELECT d.blok_adi, d.daire_sayisi, u.*
     FROM tbl_daireler d 
@@ -95,8 +88,8 @@ try {
                         <th><input id="mainCheckbox" type="checkbox" onclick="toggleMainCheckbox()"/></th>
                         <th>Ad Soyad</th>
                         <th>Telefon Numarası</th>
-                        <!--<th>Blok Adı</th>
-                        <th>Kapı Numarası</th>-->
+                        <th>Blok Adı</th>
+                        <th>Kapı Numarası</th>
                         <th>Durum</th>
                         <th></th>
                     </tr>
@@ -110,6 +103,8 @@ try {
                             <td data-title="Seç"> <input type="checkbox"  onclick="toggleMainCheckbox()"/></td>
                             <td data-title="Ad Soyad" ><?php echo $row["userName"]; ?></td>
                             <td data-title="Telefon Numarası"><?php echo $row["phoneNumber"]; ?></td>
+                            <td data-title="Blok Adı"><?php echo $row["blok_adi"]; ?></td>
+                            <td data-title="Kapı Numarası"><?php echo $row["daire_sayisi"]; ?></td>
                             <td data-title="Durum"><?php echo $row["durum"]; ?></td>
 
                             <td data-title="Seçenekler">
@@ -790,7 +785,7 @@ try {
             });
         });
 
-        var rows = document.querySelectorAll('tr');
+        /*var rows = document.querySelectorAll('tr');
         rows.forEach(function(row) {
             row.addEventListener('click', function() {
                 var userID = row.getAttribute('data-userid');
@@ -798,5 +793,5 @@ try {
                 window.location.href = 'index.php?parametre=custom&userID=' + encodeURIComponent(
                     userID);
             });
-        });
+        });*/
         </script>
