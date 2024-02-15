@@ -263,9 +263,10 @@ try {
                  <tr id="mainTr">
                   <?php  foreach ($blokList as $s ){
                         echo '<tr><td>'.$s["blok_adi"].'</td>
-                        <td>'.$s["daire_sayisi"].'</td> <td> <button title="Sil"  onclick="deleteBlok('.$s["blok_id"].')"> <span class="material-symbols-outlined">
-                        delete </span> </button></td> 
-                        <td> <button id="btnn4" title="Düzenle"> <span  class="material-symbols-outlined">stylus_note</span> </button></td></tr>
+                        <td>'.$s["daire_sayisi"].'</td> <td>  
+                        <span onclick="deleteBlok('.$s["blok_id"].')" class="material-symbols-outlined">delete</span>
+                        </td> 
+                        <td> <span  class="material-symbols-outlined">stylus_note</span> </td></tr>
                         ';
 
                   }  ?>
@@ -495,13 +496,15 @@ function saveBlok(){
 
             url: 'Controller/blok_add.php',
             type: 'POST',
+            dataType: 'json', 
             data: {
                 blokValue: blokInput,
                 id:t,
             },
             success: function(response) {
-              if(response ==1){
-               
+                
+              if(response.status ==1){
+              
 
                 var mainTr = document.getElementById("mainTr");
         var td1 = document.createElement("td");
@@ -514,16 +517,14 @@ function saveBlok(){
         
         td2.textContent = "0";
         // td3'e bir buton ekleyelim
-        var button = document.createElement("button");
-        button.setAttribute("title", "Sil");
-        button.innerHTML = "<span class='material-symbols-outlined'> delete </span>";
-        td3.appendChild(button);
+       
+        td3.innerHTML = "<span onclick=\"deleteBlok('" +response.blok_id+ "')\" class='material-symbols-outlined'>delete</span>";
+
         
         // td4'e bir buton ekleyelim
-        var button2 = document.createElement("button");
-        button2.setAttribute("title", "Sil");
-        button2.innerHTML = "<span  class='material-symbols-outlined'>stylus_note </span>";
-        td4.appendChild(button2);        
+       
+        
+        td4.innerHTML = "<span  class='material-symbols-outlined'>stylus_note </span>"; 
 
 
         // Yeni td elemanlarını tr içine ekleyin
@@ -544,7 +545,7 @@ function saveBlok(){
               
             },
             error: function(error) {
-                console.error(error);
+               alert("fgs");
             }
 
         });
@@ -552,7 +553,28 @@ function saveBlok(){
 }
 
 function deleteBlok(id){
-    alert(id);
+    
+
+    $.ajax({
+
+        url: 'Controller/blok_delete.php',
+        type: 'POST',
+        dataType: 'json', 
+        data: {
+            
+            id:id,
+    },
+    success: function(response) {
+    
+        alert(response.msg);
+    },
+    error: function(error) {
+       alert(error);
+    }
+
+});
+
+
 }
 
 
