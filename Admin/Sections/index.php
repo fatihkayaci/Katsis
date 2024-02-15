@@ -208,13 +208,14 @@ try {
 
     <form id="userFormDaire" class="login-form">
 
-        <h4 class="form-signin-heading" id="pop-head"></h4>
+        <h2 class="form-signin-heading">Daire Ekle</h2>
         
         <input type="hidden" id="hiddenDaireID" />
         <input type="hidden" id="turDaire" />
 
-        <div class="row">
-            <div class="col-md-12 col-btn">
+        <div class="row w-90 min-w">
+            <div class="col-md-6 col-btn">
+                <label for="userInput">Daire</label>
                 <input class="input" type="text" list="Users" id="userInput" oninput="getUserID()" />
                 <datalist id="Users">
                     <?php 
@@ -223,16 +224,21 @@ try {
                         }
                     ?>
                 </datalist>
-                <input class="input" type="date" value="<?php echo date('Y-m-d'); ?>" id="dateInput" />
             </div>
 
+            <div class="col-md-6 col-btn mt-3">
+            <label for="dateInput">Giriş Tarih</label>
+                <input class="input" type="date" value="<?php echo date('Y-m-d'); ?>" id="dateInput" />
+            </div>
         </div>
 
         <hr class="horizontal dark w-100">
 
-        <div class="row row-btns">
-            <button type="button" class="btn-custom" id="saveButton" onclick="save()">Kaydet</button>
-            <button type="button" class="btn-custom-close" onclick="closePopupDaire()">Kapat</button>
+        <div class="row w-90">
+                <div class="col-md-12 col-btn">
+                <button type="button" class="btn-custom" id="saveButton" onclick="save()">Kaydet</button>
+                <button type="button" class="btn-custom-close" onclick="closePopupDaire()">Kapat</button>
+            </div>
         </div>
 
     </form>
