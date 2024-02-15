@@ -72,7 +72,6 @@ try {
                         <th>Blok Adı</th>
                         <th>Kapı Numarası</th>
                         <th>Durum</th>
-                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -82,64 +81,11 @@ try {
                     ?>
                     <tr data-userid="<?php echo $row["userID"]; ?>">
                             <td data-title="Seç"> <input type="checkbox"  onclick="toggleMainCheckbox()"/></td>
-                            <td data-title="Ad Soyad" ><?php echo $row["userName"]; ?></td>
-                            <td data-title="Telefon Numarası"><?php echo $row["phoneNumber"]; ?></td>
-                            <td data-title="Blok Adı"><?php echo $row["blok_adi"]; ?></td>
-                            <td data-title="Kapı Numarası"><?php echo $row["daire_sayisi"]; ?></td>
-                            <td data-title="Durum"><?php echo $row["durum"]; ?></td>
-
-                            <td data-title="Seçenekler">
-                                <li class="nav-item dropdown pe-1 d-flex settings">
-                                      <a href="javascript:;" class="nav-link text-body nav-link font-weight-bold mb-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fa-solid fa-ellipsis-vertical"></i>
-                                      </a>
-                                  <ul class="dropdown-menu dropdown-menu-end1 ayar-1 px-1 margin-10" aria-labelledby="dropdownMenuButton">
-                                    <li class="mb-1">
-                                      <a id="duzenleLink" class="dropdown-item border-radius-md" href="index?parametre=custom">
-                                        <div class="d-flex">
-                                          <div class="my-auto">
-                                            <i class="fa-solid fa-pen i-color me-3"></i>
-                                          </div>
-                                          <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="text-sm font-weight-normal mb-1">
-                                              <span class="font-weight-bold">Düzenle</span>
-                                            </h6>
-                                          </div>
-                                        </div>
-                                      </a>
-                                    </li>
-                                    <li class="mb-1">
-                                      <button class="updateButton dropdown-item border-radius-md">
-                                        <div class="d-flex">
-                                          <div class="my-auto">
-                                            <i class="fa-solid fa-floppy-disk i-color me-3"></i>
-                                          </div>
-                                          <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="text-sm font-weight-normal mb-0">
-                                              <span class="font-weight-bold">Güncelle</span>
-                                            </h6>
-                                          </div>
-                                        </div>
-                                      </button>
-                                    </li>
-                                    <li class="mb-0">
-                                      <button class="deleteButton dropdown-item border-radius-md">
-                                        <div class="d-flex">
-                                          <div class="my-auto">
-                                            <i class="fa-solid fa-trash i-color me-3"></i>
-                                          </div>
-                                          <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="text-sm font-weight-normal mb-0">
-                                              <span class="font-weight-bold">Sil</span>
-                                            </h6>
-                                          </div>
-                                        </div>
-                                      </button>
-                                    </li>
-                                  </ul>
-                                </li>
-                            </td>
-
+                            <td data-title="Ad Soyad" id="git-ac"><?php echo $row["userName"]; ?></td>
+                            <td data-title="Telefon Numarası" id="git-ac"><?php echo $row["phoneNumber"]; ?></td>
+                            <td data-title="Blok Adı" id="git-ac"><?php echo $row["blok_adi"]; ?></td>
+                            <td data-title="Kapı Numarası" id="git-ac"><?php echo $row["daire_sayisi"]; ?></td>
+                            <td data-title="Durum" id="git-ac"><?php echo $row["durum"]; ?></td>
                         </tr>
                     <?php
                     }
@@ -766,7 +712,7 @@ try {
             });
         });
 
-       var rows = document.querySelectorAll('tr');
+       var rows = document.querySelectorAll('#git-ac');
         rows.forEach(function(row) {
             row.addEventListener('click', function() {
                 var userID = row.getAttribute('data-userid');
