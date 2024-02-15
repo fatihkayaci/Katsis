@@ -107,7 +107,7 @@ overflow: auto;
 }
 .login-form-toplu {
   width: 50%;
-  max-width: 500px;
+  max-width: 450px;
   min-width: 350px;
   min-height: auto;
   display: flex;
@@ -142,7 +142,7 @@ overflow: auto;
 
 .login-form-daire {
   width: 50%;
-  max-width: 500px;
+  max-width: 450px;
   min-width: 350px;
   min-height: auto;
   display: flex;
@@ -173,17 +173,11 @@ overflow: auto;
   overflow-x: hidden;
 }
 
-@media (max-width: 350px) {
-  .login-form, .login-form-toplu, .login-form-daire, .login-form1 {
-    min-width: 260px;
-  }
-}
-
 .form-signin-heading {
   font-size: 1.75rem;
   margin-top: 18px;
   margin-bottom: 28px;
-  width: 95%;
+  width: 90%;
   padding: 0px 12px;
   color: #0d0c22;
 }
@@ -1125,4 +1119,10 @@ border-top: 1px solid rgba(0, 0, 0, 0.12);
   color: #277CE0;
   transform: scale(1.1);
   transition: 0.3s;
+}
+
+@media (max-width: 350px) {
+  .login-form, .login-form-toplu, .login-form-daire, .login-form1, .row {
+    min-width: 260px;
+  }
 }

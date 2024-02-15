@@ -110,7 +110,7 @@ try {
 
             <h2 class="form-signin-heading">Kullanıcı Ekleme</h2>
 
-            <div class="row">
+            <div class="row w-90">
                 <div class="col-md-6 col">
                     <label for="userName">Ad Soyad :</label>
                     <input class="input" type="text" name="userName" placeholder="İsminizi Giriniz." required><br>
@@ -122,7 +122,7 @@ try {
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row w-90">
                 <div class="col-md-6 col">
                     <label for="phoneNumber">Telefon Numarası :</label>
                     <input class="input" type="text" name="phoneNumber" pattern="[0-9]{10}"
@@ -130,14 +130,14 @@ try {
                 </div>
 
                 <div class="col-md-6 col">
-                    <label for="userEmail">E-Posta (opsiyonel) :</label>
+                    <label for="userEmail">E-Posta :</label>
                     <input class="input" type="text" name="userEmail" placeholder="Email adresi"><br>
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row w-90">
                 <div class="col-md-6 col margint">
-                    <label for="plate">Araba Plakası (opsiyonel) :</label>
+                    <label for="plate">Araba Plakası :</label>
                     <input class="input" type="text" name="plate" placeholder="Araba plakası (opsiyonel)"><br>
                 </div>
 
@@ -150,14 +150,14 @@ try {
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row w-90">
                 <div class="col-md-6 col">
                     <input class="input" type="text" name="apartman_id" value=<?php echo $_SESSION["apartID"]; ?>
                         hidden>
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row w-90">
                 <div class="col-md-12 col-btn">
                     <button type="button" class="daireEkle btn-custom-daire">Daire Ekle</button>
                 </div>
@@ -168,7 +168,7 @@ try {
 
             <hr class="horizontal dark mt-4 w-100">
 
-            <div class="row">
+            <div class="row w-90">
                 <div class="col-md-12 col-btn">
                     <button type="button" class="btn-custom" id="saveButton">Kaydet</button>
                     <button type="button" class="btn-custom-close" onclick="closePopup()">Kapat</button>
@@ -185,7 +185,7 @@ try {
 
             <h2 class="form-signin-heading">oluşturma şeklini seçiniz!</h2>
 
-            <div class="row">
+            <div class="row w-90">
                 <div class="col-md-12 col-btn">
                     <a class="ahref btn-custom" href="index?parametre=TopluHesap">Toplu Hesap</a>
                     <button class="btn-custom" type="button">Excel İle Dışarıdan Aktar</button>
@@ -195,7 +195,7 @@ try {
 
             <hr class="horizontal dark w-100">
 
-            <div class="row">
+            <div class="row w-90">
                 <div class="col-md-12 col-btn">
                     <button type="button" class="btn-custom-close" onclick="closeToplu()">Kapat</button>
                 </div>
@@ -209,7 +209,7 @@ try {
 
             <h2 class="form-signin-heading">Daire Ekleme</h2>
 
-            <div class="row">
+            <div class="row w-90">
                 <div class="col-md-12 col-btn">
                     <label for="options">Daire:</label>
                     <select class="input" id="optionsBlok" name="options">
@@ -224,7 +224,7 @@ try {
                 </div>
             </div>
 
-            <div class="row mt-4">
+            <div class="row w-90 mt-4">
                 <div class="col-md-12 col-btn">
                     <button type="button" class="btn-custom" id="ekle" onclick="newDaire()">Ekle</button>
                     <button type="button" class="btn-custom-close" onclick="closeDaire()">Kapat</button>
