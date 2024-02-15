@@ -60,41 +60,41 @@ try {
 //contenteditable="true"
     if ($result) {
        ?>
-        
-        <div class="table-responsive-vertical cener-table">
 
-            <table id="example" class="table table-hover">
-                <thead>
-                    <tr>
-                        <th><input id="mainCheckbox" type="checkbox" onclick="toggleMainCheckbox()"/></th>
-                        <th>Ad Soyad</th>
-                        <th>Telefon Numarası</th>
-                        <th>Blok Adı</th>
-                        <th>Kapı Numarası</th>
-                        <th>Durum</th>
-                    </tr>
-                </thead>
-                <tbody>
-                
+    <div class="table-responsive-vertical cener-table">
+
+        <table id="example" class="table table-hover">
+            <thead>
+                <tr>
+                    <th><input id="mainCheckbox" type="checkbox" onclick="toggleMainCheckbox()" /></th>
+                    <th>Ad Soyad</th>
+                    <th>Telefon Numarası</th>
+                    <th>Blok Adı</th>
+                    <th>Kapı Numarası</th>
+                    <th>Durum</th>
+                </tr>
+            </thead>
+            <tbody>
+
                 <?php
                 foreach ($result as $row) {
                     ?>
-                    <tr data-userid="<?php echo $row["userID"]; ?>">
-                            <td data-title="Seç"> <input type="checkbox"  onclick="toggleMainCheckbox()"/></td>
-                            <td data-title="Ad Soyad" id="git-ac"><?php echo $row["userName"]; ?></td>
-                            <td data-title="Telefon Numarası" id="git-ac"><?php echo $row["phoneNumber"]; ?></td>
-                            <td data-title="Blok Adı" id="git-ac"><?php echo $row["blok_adi"]; ?></td>
-                            <td data-title="Kapı Numarası" id="git-ac"><?php echo $row["daire_sayisi"]; ?></td>
-                            <td data-title="Durum" id="git-ac"><?php echo $row["durum"]; ?></td>
-                        </tr>
-                    <?php
+                <tr data-userid="<?php echo $row["userID"]; ?>" class="git-ac">
+                    <td data-title="Seç"> <input type="checkbox" onclick="toggleMainCheckbox()" /></td>
+                    <td data-title="Ad Soyad"><?php echo $row["userName"]; ?></td>
+                    <td data-title="Telefon Numarası"><?php echo $row["phoneNumber"]; ?></td>
+                    <td data-title="Blok Adı"><?php echo $row["blok_adi"]; ?></td>
+                    <td data-title="Kapı Numarası"><?php echo $row["daire_sayisi"]; ?></td>
+                    <td data-title="Durum"><?php echo $row["durum"]; ?></td>
+                </tr>
+                <?php
                     }
                     ?>
 
-                </tbody>
-            </table>
-        </div>
-<?php
+            </tbody>
+        </table>
+    </div>
+    <?php
     } else {
         echo "0 results";
     }
@@ -712,13 +712,13 @@ try {
             });
         });
 
-       var rows = document.querySelectorAll('#git-ac');
+        var rows = document.querySelectorAll('.git-ac');
         rows.forEach(function(row) {
             row.addEventListener('click', function() {
                 var userID = row.getAttribute('data-userid');
                 // userID'yi URL'ye ekleyerek sayfayı yeniden yönlendir
                 window.location.href = 'index.php?parametre=custom&userID=' + encodeURIComponent(
-                    userID);
+                userID);
             });
         });
         </script>
