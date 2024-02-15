@@ -714,7 +714,18 @@ try {
 
         var rows = document.querySelectorAll('.git-ac');
         rows.forEach(function(row) {
-            row.addEventListener('click', function() {
+            row.addEventListener('click', function(event) {
+                // Checkbox içinde bir tıklama olup olmadığını kontrol et
+                var isCheckboxClicked = event.target.tagName === 'INPUT' && event.target.getAttribute(
+                    'type') === 'checkbox';
+
+                // Eğer checkbox'a tıklanmışsa işlemi durdur
+                if (isCheckboxClicked) {
+                    event.stopPropagation();
+                    return;
+                }
+
+                // Checkbox dışında bir yere tıklandıysa userID'yi al ve yönlendir
                 var userID = row.getAttribute('data-userid');
                 // userID'yi URL'ye ekleyerek sayfayı yeniden yönlendir
                 window.location.href = 'index.php?parametre=custom&userID=' + encodeURIComponent(
