@@ -48,34 +48,15 @@ try {
             $optionsBlok .= '<option name="optionsBlok" value="' . $row['blok_adi']." Blok - Daire ".$row['daire_sayisi'] . '">' .$row['blok_adi']." Blok - Daire ". $row['daire_sayisi'] . '</option>';
         }
     }
-    //DURUM kontrol edilecek
-   /* $sql2 = "SELECT *
-    FROM  tbl_users 
-    WHERE apartman_id =" . $_SESSION["apartID"] . " AND rol = 3";*/
-    $sql2 = "SELECT *
-    FROM tbl_users
-    INNER JOIN tbl_daireler ON tbl_users.apartman_id = tbl_daireler.apartman_id
-    WHERE tbl_users.apartman_id = " . $_SESSION["apartID"] . " 
-    AND tbl_users.rol = 3
-    AND (tbl_daireler.kiraciID = tbl_users.userID OR tbl_daireler.katMalikiID = tbl_users.userID)";
-
-   /*$sql2 = "SELECT d.blok_adi, d.daire_sayisi, u.*
-    FROM tbl_daireler d 
-    LEFT JOIN tbl_users u ON d.apartman_id = u.apartman_id
-    WHERE d.apartman_id = " . $_SESSION["apartID"] . " 
-    AND u.rol = 3
-    AND (d.kiraciID = u.userID OR d.katMalikiID = u.userID)";*/
-
+    $sql2 = "SELECT u.*, d.blok_adi, d.daire_sayisi
+    FROM tbl_users u
+    LEFT JOIN tbl_daireler d ON u.userID = d.kiraciID OR u.userID = d.katMalikiID
+    WHERE rol=3 AND u.apartman_id = " .  $_SESSION["apartID"];
     
-/*$sql2 = "SELECT u.*, d.blok_adi, d.daire_sayisi 
-    FROM tbl_users u 
-    INNER JOIN tbl_daireler d ON u.apartman_id = d.apartman_id
-    WHERE u.apartman_id = " . $_SESSION["apartID"] . " AND rol = 3"; */
     $stmt = $conn->prepare($sql2);
     $stmt->execute();
-    
-    // Sonuç kümesinin satır sayısını kontrol etme
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 //contenteditable="true"
     if ($result) {
        ?>
@@ -785,7 +766,7 @@ try {
             });
         });
 
-        /*var rows = document.querySelectorAll('tr');
+       var rows = document.querySelectorAll('tr');
         rows.forEach(function(row) {
             row.addEventListener('click', function() {
                 var userID = row.getAttribute('data-userid');
@@ -793,5 +774,5 @@ try {
                 window.location.href = 'index.php?parametre=custom&userID=' + encodeURIComponent(
                     userID);
             });
-        });*/
+        });
         </script>

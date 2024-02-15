@@ -136,6 +136,7 @@
     };
 
     // Save buttona basıldığında verileri karşılaştırma ve sunucuya gönderme
+    
     saveButton.addEventListener('click', function() {
         var kiraciUserNameInputs = document.getElementsByName('kiraciUserName');
         var katMalikiUserNameInputs = document.getElementsByName('katMalikiUserName');
