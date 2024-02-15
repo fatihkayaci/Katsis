@@ -108,7 +108,7 @@ try {
                             <td data-title="Durum"><?php echo $row["durum"]; ?></td>
 
                             <td data-title="Seçenekler">
-                                <li class="nav-item dropdown pe-2 d-flex settings">
+                                <li class="nav-item dropdown pe-1 d-flex settings">
                                       <a href="javascript:;" class="nav-link text-body nav-link font-weight-bold mb-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="fa-solid fa-ellipsis-vertical"></i>
                                       </a>
@@ -141,7 +141,7 @@ try {
                                         </div>
                                       </button>
                                     </li>
-                                    <li class="mb-1">
+                                    <li class="mb-0">
                                       <button class="deleteButton dropdown-item border-radius-md">
                                         <div class="d-flex">
                                           <div class="my-auto">

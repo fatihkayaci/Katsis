@@ -79,7 +79,7 @@ tfoot input {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: baseline;
+  justify-content: start;
   text-align: left;
   background-color: #fff;
   border-radius: 15px;
@@ -96,7 +96,7 @@ height: 100%;
 top: 0;
 left: 0;
 flex-direction: column;
-justify-content: baseline;
+justify-content: start;
 align-items: center;
 padding: 20px;
 background: #0000009a;
@@ -130,7 +130,7 @@ overflow: auto;
   top: 0;
   left: 0;
   flex-direction: column;
-  justify-content: baseline;
+  justify-content: start;
   align-items: center;
   padding: 20px;
   background: #0000009a;
@@ -173,6 +173,11 @@ overflow: auto;
   overflow-x: hidden;
 }
 
+@media (max-width: 350px) {
+  .login-form, .login-form-toplu, .login-form-daire, .login-form1 {
+    min-width: 260px;
+  }
+}
 
 .form-signin-heading {
   font-size: 1.75rem;
@@ -194,7 +199,7 @@ overflow: auto;
   min-width: 200px;
   display: flex;
   flex-direction: column;
-  justify-content: baseline;
+  justify-content: start;
   align-items: center;
   text-align: left;
 }
@@ -203,9 +208,19 @@ overflow: auto;
   min-width: 200px;
   display: flex;
   flex-direction: column;
-  justify-content: baseline;
+  justify-content: start;
   align-items: center;
   text-align: left;
+}
+.col-blok {
+  width: 50%;
+  min-width: 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: center;
+  text-align: left;
+  margin-bottom: 28px;
 }
 
 label {
@@ -233,8 +248,8 @@ label {
 }
 
 .input {
-  width: 90%;
-  min-width: 200px;
+  width: 100%;
+  min-width: 150px;
   height: 42px;
   background-color: #fff;
   color: #0d0c22;
@@ -273,6 +288,15 @@ label {
   box-shadow: 0 -1px 10px rgba(13,12,34, 0.3);
 }
 
+.blok-btn {
+  margin-bottom: 0;
+  height: 42px;
+  min-width: 0px;
+}
+.min-w {
+  min-width: 0px;
+}
+
 .btn-custom-daire {
   max-width: 420px;
   width: 100%;
@@ -302,7 +326,7 @@ label {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-
+  
 }
 
 .btn-custom-close {
@@ -497,7 +521,7 @@ box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
 
 .btn-custom-outline {
   min-height: 40px;
-  border: 1px solid rgba(0, 0, 0, 0.12);
+  border: 1px solid #d2d6da;
   background-color: transparent;
   color: #0d0c22;
   padding: 0px 20px;
@@ -513,7 +537,7 @@ box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
 }
 
 .btn-custom-outline:hover {
-  border: 1px solid #0d0c22;
+  border: 1px solid #277CE0;
 }
 
 .input-select {
@@ -801,9 +825,6 @@ text-transform: none;
   color: #0d0c22;
 }
 
-.bilgi-p {
-}
-
 .form-inpt {
     width: 100%;
     min-width: 200px;
@@ -1012,4 +1033,96 @@ font-size: 14px;
 font-weight: 500;
 color: #0d0c22;
 border: 1px solid #277CE0;
+}
+
+/* ===================================== */
+/* blok ekleme tablosu */
+
+.table-blok {
+width: 90%;
+min-width: 0;
+padding: 0.75rem;
+max-width: 100%;
+margin-bottom: 1rem;
+font-size: 16px;
+color: #333;
+border-collapse: collapse;
+}
+
+.table-blok > thead > tr,
+.table-blok > tbody > tr,
+.table-blok > tfoot > tr {
+-webkit-transition: all 0.3s ease;
+-o-transition: all 0.3s ease;
+transition: all 0.3s ease;
+}
+.table-blok > thead > tr > th,
+.table-blok > tbody > tr > th,
+.table-blok > tfoot > tr > th,
+.table-blok > thead > tr > td,
+.table-blok > tbody > tr > td,
+.table-blok > tfoot > tr > td {
+text-align: center;
+height: 60px;
+vertical-align: middle;
+border-top: 0;
+-webkit-transition: all 0.3s ease;
+-o-transition: all 0.3s ease;
+transition: all 0.3s ease;
+}
+.table-blok > thead > tr > th {
+font-weight: 500;
+color: #000;
+vertical-align: middle;
+border-bottom: 1px solid rgb(0, 0, 0);
+}
+
+.table-blok thead tr th {
+  border-radius: 10px;
+  background-color: #f8f9fa;
+}
+
+.table-blok {
+  background-color: #f8f9fa;
+  border-radius: 10px;
+}
+
+.table-blok td{
+  background-color: #fff;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.table-blok > caption + thead > tr:first-child > th,
+.table-blok > colgroup + thead > tr:first-child > th,
+.table-blok > thead:first-child > tr:first-child > th,
+.table-blok > caption + thead > tr:first-child > td,
+.table-blok > colgroup + thead > tr:first-child > td,
+.table-blok > thead:first-child > tr:first-child > td {
+border-top: 0;
+}
+.table-blok > tbody + tbody {
+border-top: 1px solid rgba(0, 0, 0, 0.12);
+}
+.table-blok .table-blok {
+background-color: #fff;
+border-top: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+@media (max-width: 350px) {
+  .table-blok {
+    font-size: 14px;
+  }
+}
+
+.blok-ico i{
+  color: #0d0c22;
+  padding: 4px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.blok-ico:hover i {
+  color: #277CE0;
+  transform: scale(1.1);
+  transition: 0.3s;
 }

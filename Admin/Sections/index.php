@@ -111,12 +111,12 @@ try {
                     <td data-title="Bakiye">00,0 ₺</td>
 
                         <td data-title="Seçenekler">
-                            <li class="nav-item dropdown pe-2 d-flex settings">
+                            <li class="nav-item dropdown pe-1 d-flex settings">
                                   <a href="javascript:;" class="nav-link text-body nav-link font-weight-bold mb-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="fa-solid fa-ellipsis-vertical"></i>
                                   </a>
                               <ul class="dropdown-menu dropdown-menu-end1 ayar-1 px-1 margin-10" aria-labelledby="dropdownMenuButton">
-                                <li class="mb-2">
+                                <li class="mb-1">
                                   <a class="dropdown-item border-radius-md" href="javascript:;">
                                     <div class="d-flex">
                                       <div class="my-auto">
@@ -130,7 +130,7 @@ try {
                                     </div>
                                   </a>
                                 </li>
-                                <li class="mb-1">
+                                <li class="mb-0">
                                   <a class="dropdown-item border-radius-md" href="../logout">
                                     <div class="d-flex">
                                       <div class="my-auto">
@@ -176,7 +176,7 @@ try {
 
         <div class="row">
             <div class="col-md-12 col-btn">
-            <label for="userInput">Kullanıcılar :</label>
+                <label for="userInput">Kullanıcılar :</label>
                 <input class="input" type="text" list="Users" id="userInput" oninput="getUserID()" />
                 <datalist id="Users">
                     <?php 
@@ -246,27 +246,42 @@ try {
 
     <form id="userFormBlok" class="login-form">
 
-        <h4 class="form-signin-heading"></h4>
-        
+        <h2 class="form-signin-heading">Blok Ekle</h2>
 
-        <div class="row">
-            <div class="col-md-12 col-btn">
-                <label>Yeni Blok Adı :</label>
-                <input class="input" type="text"  id="blokInput" maxLength = "5" />
-            <button type="button" class="btn-custom" id="saveButton" onclick="saveBlok()">Kaydet</button>
+            <div class="row w-90 min-w">
 
-                <table>
+                <div class="col-md-6 col-blok">
+                    <label for="blokInput">Yeni Blok Adı :</label>
+                    <input class="input min-w mb-0" type="text"  id="blokInput" maxLength = "5" />
+                </div>
+
+                <div class="col-md-6 col-blok">
+                    <button type="button" class="btn-custom blok-btn" id="saveButton" onclick="saveBlok()">Kaydet</button>
+                </div>
+            </div>
+
+            <hr class="horizontal mt-0 dark w-100">
+
+                <table class="table-blok">
                  <tr>
                     <th>Blok Adı </th>
                     <th>Daire Sayısı </th>
+                    <th>Sil</th>
+                    <th>Düzenle</th>
                  </tr>       
                  <tr id="mainTr">
                   <?php  foreach ($blokList as $s ){
-                        echo '<tr><td>'.$s["blok_adi"].'</td>
-                        <td>'.$s["daire_sayisi"].'</td> <td>  
-                        <span onclick="deleteBlok('.$s["blok_id"].')" class="material-symbols-outlined">delete</span>
-                        </td> 
-                        <td> <span  class="material-symbols-outlined">stylus_note</span> </td></tr>
+                        echo '
+                        <tr>
+                            <td>'.$s["blok_adi"].'</td>
+                            <td>'.$s["daire_sayisi"].'</td>
+                            <td>  
+                                <span class="blok-ico" onclick="deleteBlok('.$s["blok_id"].')"><i class="fa-solid fa-trash"></i></span>
+                            </td> 
+                            <td>
+                                <span class="blok-ico"><i class="fa-solid fa-pen"></i></span> 
+                            </td>
+                        </tr>
                         ';
 
                   }  ?>
@@ -274,15 +289,13 @@ try {
                  </tr> 
 
                 </table>
-                
-            </div>
-
-        </div>
 
         <hr class="horizontal dark w-100">
 
         <div class="row row-btns">
-            <button type="button" class="btn-custom-close" onclick="closePopupBlok()">Kapat</button>
+            <div class="col-md-12">
+                <button type="button" class="btn-custom-close" onclick="closePopupBlok()">Kapat</button>
+            </div>
         </div>
 
     </form>
