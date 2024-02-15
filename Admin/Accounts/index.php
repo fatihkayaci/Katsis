@@ -56,7 +56,7 @@ try {
     $stmt = $conn->prepare($sql2);
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
+
 //contenteditable="true"
     if ($result) {
        ?>
@@ -766,7 +766,7 @@ try {
             });
         });
 
-       /* var rows = document.querySelectorAll('tr');
+       var rows = document.querySelectorAll('tr');
         rows.forEach(function(row) {
             row.addEventListener('click', function() {
                 var userID = row.getAttribute('data-userid');
@@ -774,5 +774,5 @@ try {
                 window.location.href = 'index.php?parametre=custom&userID=' + encodeURIComponent(
                     userID);
             });
-        });*/
+        });
         </script>
