@@ -217,28 +217,42 @@ try {
 
         <div class="row w-90 min-w">
             <div class="col-md-6 col-btn">
-                <label for="userInput">Daire</label>
-                <input class="input" type="text" list="Users" id="userInput" oninput="getUserID()" />
-                <datalist id="Users">
-                    <?php 
-                        foreach($UserList as $user){
-                            echo '<option data-user-id="' . $user['userID'] . '">' . $user['userName'] . '</option>';
-                        }
-                    ?>
-                </datalist>
+                <label for="userInput">No :    *</label>
+                <input class="input" type="text"  id="userInput"  required />
             </div>
 
-            <div class="col-md-6 col-btn mt-3">
-                <label for="dateInput">Giriş Tarih</label>
-                <input class="input" type="date" value="<?php echo date('Y-m-d'); ?>" id="dateInput" />
+            <div class="col-md-6 col-btn">
+                <label for="userInput">Kat :</label>
+                <input class="input" type="text"  id="userInput" />
             </div>
+            <div class="col-md-6 col-btn">
+                <label for="userInput">Blok :    *</label>
+                <input class="input" type="text"  id="userInput"  required />
+            </div>
+            <div class="col-md-6 col-btn">
+                <label for="userInput">Daire Grubu :</label>
+                <input class="input" type="text"  id="userInput"  />
+            </div>
+            <div class="col-md-6 col-btn">
+                <label for="userInput">Brüt m² :</label>
+                <input class="input" type="text"  id="userInput" />
+            </div>
+            <div class="col-md-6 col-btn">
+                <label for="userInput">Net m² :</label>
+                <input class="input" type="text"  id="userInput"  />
+            </div>
+            <div class="col-md-6 col-btn">
+                <label for="userInput">Arsa Payı :</label>
+                <input class="input" type="text"  id="userInput"  />
+            </div>
+            
         </div>
 
         <hr class="horizontal dark w-100">
 
         <div class="row w-90">
             <div class="col-md-12 col-btn">
-                <button type="button" class="btn-custom" id="saveButton" onclick="save()">Kaydet</button>
+                <button type="submit" class="btn-custom" id="saveButton" >Kaydet</button>
                 <button type="button" class="btn-custom-close" onclick="closePopupDaire()">Kapat</button>
             </div>
         </div>
