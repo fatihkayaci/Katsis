@@ -233,6 +233,27 @@ try {
         <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+        <script type="text/javascript">
+        $.fn.extend({
+            alterCheck: function(tablo) {
+                if ($("" + tablo + " input[type='checkbox']:first").is(":checked")) {
+                    return this.each(function() {
+                        this.checked = true;
+                    });
+                } else {
+                    return this.each(function() {
+                        this.checked = false;
+                    });
+                }
+            }
+        
+        });
+        $("#example input[type='checkbox']:first").click(function() {
+            $("#example input[type='checkbox']").alterCheck('#example');
+        });
+        </script>
+
         <script type="text/javascript">
         var selectedValuesArray = [];
         var selectedDurumArray = [];
@@ -683,3 +704,4 @@ try {
             });
         });*/
         </script>
+
