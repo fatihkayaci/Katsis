@@ -26,7 +26,8 @@
                 <i class="fas fa-search search-icon" aria-hidden="true"></i>
                 <input type="text" class="search-input" placeholder="Arama...">
             </div>
-
+            <button id="openEdit" onclick="openEdit ()">AÇ</button>
+            <button id="closeEdit" onclick="closeEdit()">KAPAT</button>
         </div>
     </div>
     <?php
@@ -75,8 +76,8 @@ try {
                     ?>
                 <tr data-userid="<?php echo $row["userID"]; ?>" class="git-ac">
                     <td data-title="Seç"> <input type="checkbox" onclick="toggleMainCheckbox()" /></td>
-                    <td data-title="Ad Soyad"><?php echo $row["userName"]; ?></td>
-                    <td data-title="Telefon Numarası"><?php echo $row["phoneNumber"]; ?></td>
+                    <td data-title="Ad Soyad" contenteditable="false"><?php echo $row["userName"]; ?></td>
+                    <td data-title="Telefon Numarası" contenteditable="false"><?php echo $row["phoneNumber"]; ?></td>
                     <td data-title="Blok Adı"><?php echo $row["blok_adi"]; ?></td>
                     <td data-title="Kapı Numarası"><?php echo $row["daire_sayisi"]; ?></td>
                     <td data-title="Durum"><?php echo $row["durum"]; ?></td>
@@ -384,43 +385,8 @@ try {
             return regex.test(userName);
             event.preventDefault(); // Formun gönderimini engelle
         }
-        /*
-                function validateEmail(userEmail) {
-                    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                    return regex.test(userEmail);
-                    event.preventDefault(); // Formun gönderimini engelle
-                }
 
-                function validateVehiclePlate(plate) {
-                    //const regex = /^\d{2}\s[A-ZÇĞİÖŞÜ]{1,3}\s\d{2,3}\s?[A-ZÇĞİÖŞÜ]{0,1}\s?[0-9]{0,3}$/; BOŞLUKLU İSTERSEK.
-                    const regex = /^\d{2}[A-ZÇĞİÖŞÜ]{1,3}\d{2,3}?[A-ZÇĞİÖŞÜ]{0,1}?[0-9]{0,3}$/;
-                    return regex.test(plate);
-                    event.preventDefault(); // Formun gönderimini engelle
-                }
-                //parola için kısıtlama
-                function validatePassword(sifre) {
-                    // Parola en az 8 karakterden oluşmalıdır.
-                    if (sifre.length < 8) {
-                        alert('Parola en az 8 karakterden oluşmalıdır.');
-                        return false;
-                    }
-
-                    // Parola 50 karakterden fazla olmamalıdır.
-                    if (sifre.length > 50) {
-                        alert('Parola 50 karakterden fazla olamaz.');
-                        return false;
-                    }
-
-                    // Parolada en az bir büyük harf, bir küçük harf, bir sayı ve bir özel karakter olmalıdır.
-                    if (!/(?=.[a-zÇçĞğİıÖöŞşÜü])(?=.[A-ZÇçĞğİıÖöŞşÜü])(?=.*\d)[A-Za-zÇçĞğİıÖöŞşÜü\d]/.test(sifre)) {
-                        alert('Parola güçlü değil. Lütfen en az bir büyük harf, bir küçük harf ve bir sayı içersin.');
-                        return false;
-                    }
-                    // Tüm kısıtlamalar geçildiyse true döndür
-                    return true;
-                }*/
-
-        function kisitlamalar(userName /*, tc, phoneNumber, userEmail, plate*/ ) {
+        function kisitlamalar(userName) {
             if (userName.length < 3) {
                 alert('Full Name en az 3 karakter olmalıdır.');
                 return;
@@ -433,29 +399,6 @@ try {
                 alert('Lütfen yalnızca harf karakterleri içeren geçerli bir tam ad girin.');
                 return;
             }
-            /*            //tc kısıtlamaları
-                        if (tc.length !== 11) {
-                            alert('TC numarı 11 haneli olmalıdır.');
-                            return; // Fonksiyondan çık
-                        }
-
-                        //telefon kısıtlamaları
-                        if (phoneNumber.length !== 10) {
-                            alert('Telefon numarası 10 haneli olmalıdır.');
-                            return;
-                        }
-                        //email kısıtlamaları
-                        if (!validateEmail(userEmail)) {
-                            alert('Lütfen geçerli bir e-posta adresi girin.');
-                            return;
-                        }
-                        //araba plakası kısıtlamaları.
-                        if (plate !== null && plate.trim() !== "") {
-                            if (!validateVehiclePlate(plate)) {
-                                alert('Lütfen geçerli bir araba plakası giriniz.');
-                                return;
-                            }
-                        }*/
             return true;
         }
 
@@ -470,23 +413,17 @@ try {
                     var userID = row.getAttribute('data-userid');
                     var userName = row.querySelector('td:nth-child(2)').textContent;
                     var phoneNumber = row.querySelector('td:nth-child(3)').textContent;
-                    var userEmail = row.querySelector('td:nth-child(5)').textContent;
-                    var plate = row.querySelector('td:nth-child(6)').textContent;
-                    var gender = row.querySelector('td:nth-child(7) select').value;
-
+                    
                     var checkbox = row.querySelector('input[type="checkbox"]');
                     if (checkbox.checked) {
-                        if (kisitlamalar(userName /*, tc, phoneNumber, userEmail, plate*/ )) {
+                        if (kisitlamalar(userName)) {
                             $.ajax({
                                 url: 'Controller/update_user.php',
                                 type: 'POST',
                                 data: {
                                     userID: userID,
                                     userName: userName,
-                                    phoneNumber: phoneNumber,
-                                    userEmail: userEmail,
-                                    plate: plate,
-                                    gender: gender
+                                    phoneNumber: phoneNumber
                                 },
                                 success: function(response) {
                                     if (response == 1) {
@@ -504,7 +441,6 @@ try {
         });
         // Toplu silme işlemi için butonları seç
         var topluSilButton = document.getElementById('silButton');
-
 
         // Silme işlemi butonuna tıklanınca bu fonksiyon çalışacak
         topluSilButton.addEventListener('click', function() {
@@ -537,7 +473,6 @@ try {
         });
 
         var saveButton = document.getElementById('saveButton');
-
         saveButton.addEventListener('click', function() {
             var userName = $('input[name="userName"]').val();
             var tc = $('input[name="tc"]').val();
@@ -705,8 +640,29 @@ try {
                 });
             });
         });
-
-        var rows = document.querySelectorAll('.git-ac');
+        function openEdit() {
+        var editableCells = document.querySelectorAll('td[contenteditable="false"]');
+        editableCells.forEach(function(cell) {
+            var isEditable = cell.getAttribute('contenteditable');
+            if (isEditable === "true") {
+                cell.setAttribute('contenteditable', 'false');
+            } else {
+                cell.setAttribute('contenteditable', 'true');
+            }
+        });
+    }
+    function closeEdit() {
+        var editableCells = document.querySelectorAll('td[contenteditable="true"]');
+        editableCells.forEach(function(cell) {
+            var isEditable = cell.getAttribute('contenteditable');
+            if (isEditable === "true") {
+                cell.setAttribute('contenteditable', 'false');
+            } else {
+                cell.setAttribute('contenteditable', 'true');
+            }
+        });
+    }
+      /*  var rows = document.querySelectorAll('.git-ac');
         rows.forEach(function(row) {
             row.addEventListener('click', function(event) {
                 // Checkbox içinde bir tıklama olup olmadığını kontrol et
@@ -725,5 +681,5 @@ try {
                 window.location.href = 'index.php?parametre=custom&userID=' + encodeURIComponent(
                 userID);
             });
-        });
+        });*/
         </script>
