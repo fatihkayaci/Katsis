@@ -1,9 +1,3 @@
-<!--
-    sonradan eklenecekler işlemler kısmı eklenecek.
-    icra durumu
-    bakiye.
-    <td contenteditable="true">' .base64_decode($row["userPass"]) . '</td>
--->
 <!DOCTYPE html>
 <html lang="en">
 
