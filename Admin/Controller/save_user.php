@@ -23,7 +23,6 @@ try {
     $plate = $_POST['plate'];
     $gender = $_POST['gender'];
     $elemanSayisi = count($durumArray);
-    
     // DurumArray boşsa kayıt yapmayı dene
     if (empty($durumArray)) {
         $userPass = randomPassword();

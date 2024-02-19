@@ -46,7 +46,9 @@ try {
     $sql2 = "SELECT u.*, d.blok_adi, d.daire_sayisi
     FROM tbl_users u
     LEFT JOIN tbl_daireler d ON u.userID = d.kiraciID OR u.userID = d.katMalikiID
-    WHERE rol=3 AND u.apartman_id = " .  $_SESSION["apartID"];
+    WHERE rol=3 AND u.apartman_id = " .  $_SESSION["apartID"] . "
+    ORDER BY u.userID ASC";
+
     
     $stmt = $conn->prepare($sql2);
     $stmt->execute();
@@ -156,7 +158,6 @@ try {
                 <div class="col-md-12 col-btn">
                     <button type="button" class="daireEkle btn-custom-daire">Daire Ekle</button>
                 </div>
-                <!--<button type="button" class="Artı btn btn-primary">+</button>-->
             </div>
             <div class="indexAdd">
             </div>
@@ -256,6 +257,7 @@ try {
         var selectedDurumArray = [];
         var sayac = 0;
 
+
         function newDaire() {
             // Seçilen değeri al
 
@@ -306,7 +308,6 @@ try {
 
             closeDaire();
 
-
             sayac++;
         }
         //mainCheckbox da sıkıntı var
@@ -317,17 +318,14 @@ try {
             var silButton = document.getElementById('silButton');
             var enAzBirSecili = false;
 
-
             checkboxes.forEach(function(checkbox) {
                 if (checkbox !== mainCheckbox && checkbox.checked) {
                     enAzBirSecili = true;
                 }
             });
-
             if (mainCheckbox.checked) {
                 enAzBirSecili = true;
             }
-
             if (enAzBirSecili) {
                 guncelleButton.style.display = 'inline-block';
                 silButton.style.display = 'inline-block';
@@ -337,8 +335,6 @@ try {
             }
         }
 
-
-
         $('.adduser').click(function() {
             $('#popup').show().css('display', 'flex').delay(100).queue(function(next) {
                 $('#popup').css('opacity', '1');
@@ -347,7 +343,6 @@ try {
                 next();
             });
         });
-
 
         function closePopup() {
             $('#userForm').css('opacity', '0').css('transform', 'translateY(-180px)').delay(100).queue(function(next) {
@@ -396,6 +391,13 @@ try {
                 next();
             });
         }
+        //burası her data-userid değeri değiştiğinde altına çizgi koyar //
+        var trElements = document.querySelectorAll('tr.git-ac');
+        for (var i = 0; i < trElements.length; i++) {
+            if (trElements[i].dataset.userid !== trElements[i + 1]?.dataset.userid) {
+                trElements[i].style.borderBottom = '3px solid black';
+            }
+        }
 
         //kısıtlama ile ilgili fonksiyonlar başlangıç...
         function validateFullName(userName) {
@@ -431,7 +433,7 @@ try {
                     var userID = row.getAttribute('data-userid');
                     var userName = row.querySelector('td:nth-child(2)').textContent;
                     var phoneNumber = row.querySelector('td:nth-child(3)').textContent;
-                    
+
                     var checkbox = row.querySelector('input[type="checkbox"]');
                     if (checkbox.checked) {
                         if (kisitlamalar(userName)) {
@@ -502,6 +504,7 @@ try {
             var optionsBlok = $('select#optionsBlok').val();
             var blokArray = [];
             var durumArray = [];
+            console.log(userName + "," + tc + "," + phoneNumber + "," + userEmail + "," + plate + "," + gender);
 
             for (var i = 0; i < selectedDurumArray.length; i++) {
                 var durumParcalari = selectedDurumArray[i].split(',');
@@ -547,9 +550,7 @@ try {
                         apartman_id: apartman_id
                     },
                     success: function(response) {
-                        alert(response);
                         if (response == 1) {
-
                             $.ajax({
                                 url: 'Controller/demo.php',
                                 type: 'POST',
@@ -559,6 +560,7 @@ try {
                                     durumArray: JSON.stringify(durumArray)
                                 },
                                 success: function(secondResponse) {
+                                    alert(secondResponse);
                                     if (secondResponse == 1) {
                                         location.reload();
                                     }
@@ -658,47 +660,54 @@ try {
                 });
             });
         });
+
         function openEdit() {
-        var editableCells = document.querySelectorAll('td[contenteditable="false"]');
-        editableCells.forEach(function(cell) {
-            var isEditable = cell.getAttribute('contenteditable');
-            if (isEditable === "true") {
-                cell.setAttribute('contenteditable', 'false');
-            } else {
-                cell.setAttribute('contenteditable', 'true');
-            }
-        });
-    }
-    function closeEdit() {
-        var editableCells = document.querySelectorAll('td[contenteditable="true"]');
-        editableCells.forEach(function(cell) {
-            var isEditable = cell.getAttribute('contenteditable');
-            if (isEditable === "true") {
-                cell.setAttribute('contenteditable', 'false');
-            } else {
-                cell.setAttribute('contenteditable', 'true');
-            }
-        });
-    }
-      /*  var rows = document.querySelectorAll('.git-ac');
-        rows.forEach(function(row) {
-            row.addEventListener('click', function(event) {
-                // Checkbox içinde bir tıklama olup olmadığını kontrol et
-                var isCheckboxClicked = event.target.tagName === 'INPUT' && event.target.getAttribute(
-                    'type') === 'checkbox';
-
-                // Eğer checkbox'a tıklanmışsa işlemi durdur
-                if (isCheckboxClicked) {
-                    event.stopPropagation();
-                    return;
+            var editableCells = document.querySelectorAll('td[contenteditable="false"]');
+            editableCells.forEach(function(cell) {
+                var isEditable = cell.getAttribute('contenteditable');
+                if (isEditable === "true") {
+                    cell.setAttribute('contenteditable', 'false');
+                } else {
+                    cell.setAttribute('contenteditable', 'true');
                 }
-
-                // Checkbox dışında bir yere tıklandıysa userID'yi al ve yönlendir
-                var userID = row.getAttribute('data-userid');
-                // userID'yi URL'ye ekleyerek sayfayı yeniden yönlendir
-                window.location.href = 'index.php?parametre=custom&userID=' + encodeURIComponent(
-                userID);
             });
-        });*/
+        }
+
+        function closeEdit() {
+            var editableCells = document.querySelectorAll('td[contenteditable="true"]');
+            editableCells.forEach(function(cell) {
+                var isEditable = cell.getAttribute('contenteditable');
+                if (isEditable === "true") {
+                    cell.setAttribute('contenteditable', 'false');
+                } else {
+                    cell.setAttribute('contenteditable', 'true');
+                }
+            });
+            demofunction();
+        }
+
+        function demofunction() {
+            var rows = document.querySelectorAll('.git-ac');
+            rows.forEach(function(row) {
+                row.addEventListener('click', function(event) {
+                    // Checkbox içinde bir tıklama olup olmadığını kontrol et
+                    var isCheckboxClicked = event.target.tagName === 'INPUT' && event.target
+                        .getAttribute(
+                            'type') === 'checkbox';
+
+                    // Eğer checkbox'a tıklanmışsa işlemi durdur
+                    if (isCheckboxClicked) {
+                        event.stopPropagation();
+                        return;
+                    }
+
+                    // Checkbox dışında bir yere tıklandıysa userID'yi al ve yönlendir
+                    var userID = row.getAttribute('data-userid');
+                    // userID'yi URL'ye ekleyerek sayfayı yeniden yönlendir
+                    window.location.href = 'index.php?parametre=custom&userID=' + encodeURIComponent(
+                        userID);
+                });
+            });
+        }
         </script>
 
