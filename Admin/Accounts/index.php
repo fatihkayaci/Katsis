@@ -553,9 +553,7 @@ try {
                         apartman_id: apartman_id
                     },
                     success: function(response) {
-                        alert(response);
                         if (response == 1) {
-
                             $.ajax({
                                 url: 'Controller/demo.php',
                                 type: 'POST',
@@ -565,6 +563,7 @@ try {
                                     durumArray: JSON.stringify(durumArray)
                                 },
                                 success: function(secondResponse) {
+                                    alert(secondResponse);
                                     if (secondResponse == 1) {
                                         location.reload();
                                     }
