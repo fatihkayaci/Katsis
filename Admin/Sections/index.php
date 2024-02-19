@@ -2,7 +2,7 @@
 $idapartman =$_SESSION["apartID"];
 
 ?>
- <input type="hidden" id="hiddenDaireID2" value = <?php echo $idapartman?>  />
+<input type="hidden" id="hiddenDaireID2" value=<?php echo $idapartman?> />
 
 <?php
 $sql = "SELECT * FROM tbl_users WHERE apartman_id = " . $idapartman. " AND rol = 3";
@@ -42,35 +42,35 @@ try {
     if ($result) {
     ?>
 
-        <div class="table-responsive-vertical cener-table">
-        
-        <div class="input-group-div">
+<div class="table-responsive-vertical cener-table">
 
-            <div class="input-group1">
-            <button class="btn-custom-outline" onclick="openPopupBlok()">Blok Ekle</button>
-              <button class="btn-custom-outline" onclick="openPopupDaire()">Daire Ekle</button>
-              
-            </div>
+    <div class="input-group-div">
 
-            <div class="search-box">
-                <i class="fas fa-search search-icon" aria-hidden="true"></i>
-                <input type="text" class="search-input" placeholder="Arama...">
-            </div>
+        <div class="input-group1">
+            <button class="btn-custom-outline" onclick="openPopupBlok()">Bloklar</button>
+            <button class="btn-custom-outline" onclick="openPopupDaire()">Daire Ekle</button>
+
         </div>
 
-            <table id="table" class="table table-hover">
-                <thead>
-                    <tr>
-                        <th><input type="checkbox"/></th>
-                        <th>Blok Adı</th>
-                        <th>Kapı No</th>
-                        <th>Kiracı</th>
-                        <th></th>
-                        <th>Kat Maliki</th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead>
+        <div class="search-box">
+            <i class="fas fa-search search-icon" aria-hidden="true"></i>
+            <input type="text" class="search-input" placeholder="Arama...">
+        </div>
+    </div>
+
+    <table id="table" class="table table-hover">
+        <thead>
+            <tr>
+                <th><input type="checkbox" /></th>
+                <th>Blok Adı</th>
+                <th>Kapı No</th>
+                <th>Kiracı</th>
+                <th></th>
+                <th>Kat Maliki</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
 
         <?php
 
@@ -78,16 +78,16 @@ try {
 
         ?>
 
-            <tbody>
-                
-                <tr id=<?php echo $row["daire_id"]; ?>>
+        <tbody>
 
-                    <td data-title="Seç"> <input type="checkbox"/></td>
+            <tr id=<?php echo $row["daire_id"]; ?>>
 
-                    <td data-title="Blok Adı"><?php echo $row["blok_adi"]; ?></td>
+                <td data-title="Seç"> <input type="checkbox" /></td>
 
-                    <td data-title="Kapı No"><?php echo $row["daire_sayisi"]; ?></td>
-                    
+                <td data-title="Blok Adı"><?php echo $row["blok_adi"]; ?></td>
+
+                <td data-title="Kapı No"><?php echo $row["daire_sayisi"]; ?></td>
+
                 <?php
                    if($row["kiraciID"]==null) {
                   echo ' <td data-title="0"><button type="button" class="table-a" onclick="openPopup('.$row["daire_id"].',0)">Kiracı ekle + </button></td>';
@@ -108,53 +108,55 @@ try {
 
                 ?>
 
-                    <td data-title="Bakiye">00,0 ₺</td>
+                <td data-title="Bakiye">00,0 ₺</td>
 
-                        <td data-title="Seçenekler">
-                            <li class="nav-item dropdown pe-1 d-flex settings">
-                                  <a href="javascript:;" class="nav-link text-body nav-link font-weight-bold mb-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa-solid fa-ellipsis-vertical"></i>
-                                  </a>
-                              <ul class="dropdown-menu dropdown-menu-end1 ayar-1 px-1 margin-10" aria-labelledby="dropdownMenuButton">
-                                <li class="mb-1">
-                                  <a class="dropdown-item border-radius-md" href="javascript:;">
+                <td data-title="Seçenekler">
+                    <li class="nav-item dropdown pe-1 d-flex settings">
+                        <a href="javascript:;" class="nav-link text-body nav-link font-weight-bold mb-0"
+                            id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end1 ayar-1 px-1 margin-10"
+                            aria-labelledby="dropdownMenuButton">
+                            <li class="mb-1">
+                                <a class="dropdown-item border-radius-md" href="javascript:;">
                                     <div class="d-flex">
-                                      <div class="my-auto">
-                                        <i class="fa-solid fa-pen i-color me-3"></i>
-                                      </div>
-                                      <div class="d-flex flex-column justify-content-center">
-                                        <h6 class="text-sm font-weight-normal mb-1">
-                                          <span class="font-weight-bold">Düzenle</span>
-                                        </h6>
-                                      </div>
+                                        <div class="my-auto">
+                                            <i class="fa-solid fa-pen i-color me-3"></i>
+                                        </div>
+                                        <div class="d-flex flex-column justify-content-center">
+                                            <h6 class="text-sm font-weight-normal mb-1">
+                                                <span class="font-weight-bold">Düzenle</span>
+                                            </h6>
+                                        </div>
                                     </div>
-                                  </a>
-                                </li>
-                                <li class="mb-0">
-                                  <a class="dropdown-item border-radius-md" href="../logout">
-                                    <div class="d-flex">
-                                      <div class="my-auto">
-                                        <i class="fa-solid fa-trash i-color me-3"></i>
-                                      </div>
-                                      <div class="d-flex flex-column justify-content-center">
-                                        <h6 class="text-sm font-weight-normal mb-0">
-                                          <span class="font-weight-bold">Sil</span>
-                                        </h6>
-                                      </div>
-                                    </div>
-                                  </a>
-                                </li>
-                              </ul>
+                                </a>
                             </li>
-                        </td>
-                    </tr>
-        <?php
+                            <li class="mb-0">
+                                <a class="dropdown-item border-radius-md" href="../logout">
+                                    <div class="d-flex">
+                                        <div class="my-auto">
+                                            <i class="fa-solid fa-trash i-color me-3"></i>
+                                        </div>
+                                        <div class="d-flex flex-column justify-content-center">
+                                            <h6 class="text-sm font-weight-normal mb-0">
+                                                <span class="font-weight-bold">Sil</span>
+                                            </h6>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </td>
+            </tr>
+            <?php
         }
         ?>
-                </tbody>
-            </table>
-        </div>
-    <?php
+        </tbody>
+    </table>
+</div>
+<?php
     } else {
         echo "0 results";
     }
@@ -170,7 +172,7 @@ try {
     <form id="userForm" class="login-form">
 
         <h4 class="form-signin-heading" id="pop-head"></h4>
-        
+
         <input type="hidden" id="hiddenDaireID" />
         <input type="hidden" id="turDaire" />
 
@@ -209,34 +211,48 @@ try {
     <form id="userFormDaire" class="login-form">
 
         <h2 class="form-signin-heading">Daire Ekle</h2>
-        
+
         <input type="hidden" id="hiddenDaireID" />
         <input type="hidden" id="turDaire" />
 
         <div class="row w-90 min-w">
             <div class="col-md-6 col-btn">
-                <label for="userInput">Daire</label>
-                <input class="input" type="text" list="Users" id="userInput" oninput="getUserID()" />
-                <datalist id="Users">
-                    <?php 
-                        foreach($UserList as $user){
-                            echo '<option data-user-id="' . $user['userID'] . '">' . $user['userName'] . '</option>';
-                        }
-                    ?>
-                </datalist>
+                <label for="userInput">No :    *</label>
+                <input class="input" type="text"  id="userInput"  required />
             </div>
 
-            <div class="col-md-6 col-btn mt-3">
-            <label for="dateInput">Giriş Tarih</label>
-                <input class="input" type="date" value="<?php echo date('Y-m-d'); ?>" id="dateInput" />
+            <div class="col-md-6 col-btn">
+                <label for="userInput">Kat :</label>
+                <input class="input" type="text"  id="userInput" />
             </div>
+            <div class="col-md-6 col-btn">
+                <label for="userInput">Blok :    *</label>
+                <input class="input" type="text"  id="userInput"  required />
+            </div>
+            <div class="col-md-6 col-btn">
+                <label for="userInput">Daire Grubu :</label>
+                <input class="input" type="text"  id="userInput"  />
+            </div>
+            <div class="col-md-6 col-btn">
+                <label for="userInput">Brüt m² :</label>
+                <input class="input" type="text"  id="userInput" />
+            </div>
+            <div class="col-md-6 col-btn">
+                <label for="userInput">Net m² :</label>
+                <input class="input" type="text"  id="userInput"  />
+            </div>
+            <div class="col-md-6 col-btn">
+                <label for="userInput">Arsa Payı :</label>
+                <input class="input" type="text"  id="userInput"  />
+            </div>
+            
         </div>
 
         <hr class="horizontal dark w-100">
 
         <div class="row w-90">
-                <div class="col-md-12 col-btn">
-                <button type="button" class="btn-custom" id="saveButton" onclick="save()">Kaydet</button>
+            <div class="col-md-12 col-btn">
+                <button type="submit" class="btn-custom" id="saveButton" >Kaydet</button>
                 <button type="button" class="btn-custom-close" onclick="closePopupDaire()">Kapat</button>
             </div>
         </div>
@@ -252,49 +268,49 @@ try {
 
     <form id="userFormBlok" class="login-form">
 
-        <h2 class="form-signin-heading">Blok Ekle</h2>
+        <h2 class="form-signin-heading">Bloklar</h2>
 
-            <div class="row w-90 min-w">
+        <div class="row w-90 min-w">
 
-                <div class="col-md-6 col-blok">
-                    <label for="blokInput">Yeni Blok Adı :</label>
-                    <input class="input min-w mb-0" type="text"  id="blokInput" maxLength = "5" />
-                </div>
-
-                <div class="col-md-6 col-blok">
-                    <button type="button" class="btn-custom blok-btn" id="saveButton" onclick="saveBlok()">Kaydet</button>
-                </div>
+            <div class="col-md-6 col-blok">
+                <label for="blokInput">Blok Ekle :</label>
+                <input class="input min-w mb-0" type="text" id="blokInput" maxLength="5" placeholder="Blok Adı" />
             </div>
 
-            <hr class="horizontal mt-0 dark w-100">
+            <div class="col-md-6 col-blok">
+                <button type="button" class="btn-custom blok-btn" id="saveButton" onclick="saveBlok()">Kaydet</button>
+            </div>
+        </div>
 
-                <table class="table-blok">
-                 <tr>
-                    <th>Blok Adı </th>
-                    <th>Daire Sayısı </th>
-                    <th>Sil</th>
-                    <th>Düzenle</th>
-                 </tr>       
-                 <tr id="mainTr">
-                  <?php  foreach ($blokList as $s ){
+        <hr class="horizontal mt-0 dark w-100">
+
+        <table class="table-blok">
+            <tr>
+                <th>Blok Adı </th>
+                <th>Daire Sayısı </th>
+                <th>Sil</th>
+                <th>Düzenle</th>
+            </tr>
+            <tr id="mainTr">
+                <?php  foreach ($blokList as $s ){
                         echo '
-                        <tr>
+                        <tr id="blk-'.$s["blok_id"].'">
                             <td>'.$s["blok_adi"].'</td>
                             <td>'.$s["daire_sayisi"].'</td>
                             <td>  
                                 <span class="blok-ico" onclick="deleteBlok('.$s["blok_id"].')"><i class="fa-solid fa-trash"></i></span>
                             </td> 
                             <td>
-                                <span class="blok-ico"><i class="fa-solid fa-pen"></i></span> 
+                                <span class="blok-ico" onclick="editBlok('.$s["blok_id"].')"      ><i class="fa-solid fa-pen"></i></span> 
                             </td>
                         </tr>
                         ';
 
                   }  ?>
-                    
-                 </tr> 
 
-                </table>
+            </tr>
+
+        </table>
 
         <hr class="horizontal dark w-100">
 
@@ -318,7 +334,7 @@ function openPopup(daire_id, tur) {
     // Belirli bir ID'ye sahip <tr> elementini seç
     var trElement = document.getElementById(daire_id);
     var label_tarih = document.getElementById("label_tarih");
-   
+
 
     // <td> elemanlarını seç
     var tdElements = trElement.getElementsByTagName('td');
@@ -335,7 +351,7 @@ function openPopup(daire_id, tur) {
     if (tur == 0) {
         head += " (Kiracı)";
         $('#label_tarih').html("Taşınma Tarihi :");
-    } else if (tur == 1) {   
+    } else if (tur == 1) {
         head += " (Kat Maliki)";
         $('#label_tarih').html("Satın Alma Tarihi :");
     }
@@ -359,7 +375,7 @@ function closePopup() {
     $('#userInput').focus(function() {
         $(this).css('border-color', '#3BB4D7');
     });
- 
+
     $('#userForm').css('opacity', '0').css('transform', 'translateY(-180px)').delay(100).queue(function(next) {
         $('#popup2').css('opacity', '0').delay(300).queue(function(nextInner) {
             $(this).hide().css('display', 'none');
@@ -370,7 +386,7 @@ function closePopup() {
 }
 
 
-function openPopupDaire(){
+function openPopupDaire() {
     $('#popupDaireEkle').show().css('display', 'flex').delay(100).queue(function(next) {
         $('#popupDaireEkle').css('opacity', '1');
         $('#userFormDaire').css('opacity', '1');
@@ -379,7 +395,7 @@ function openPopupDaire(){
     });
 }
 
-function openPopupBlok(){
+function openPopupBlok() {
     $('#popupBlokEkle').show().css('display', 'flex').delay(100).queue(function(next) {
         $('#popupBlokEkle').css('opacity', '1');
         $('#userFormBlok').css('opacity', '1');
@@ -388,13 +404,14 @@ function openPopupBlok(){
     });
 }
 $('#blokInput').focus(function() {
-        $(this).css('border-color', '#3BB4D7');
-    });
+    $(this).css('border-color', '#3BB4D7');
+});
+
 function closePopupBlok() {
     $('#blokInput').css('border-color', '#000000');
-  
-    
- 
+
+
+
     $('#userFormBlok').css('opacity', '0').css('transform', 'translateY(-180px)').delay(100).queue(function(next) {
         $('#popupBlokEkle').css('opacity', '0').delay(300).queue(function(nextInner) {
             $(this).hide().css('display', 'none');
@@ -405,9 +422,9 @@ function closePopupBlok() {
 }
 
 function closePopupDaire() {
-    
-    
- 
+
+
+
     $('#userFormDaire').css('opacity', '0').css('transform', 'translateY(-180px)').delay(100).queue(function(next) {
         $('#popupDaireEkle').css('opacity', '0').delay(300).queue(function(nextInner) {
             $(this).hide().css('display', 'none');
@@ -483,16 +500,16 @@ function save() {
                 // <td> elemanlarını seç
                 var tdElements = trElement.getElementsByTagName('td');
 
-                if(turr == 0){
-                    tdElements[3].innerText ="";
-                    tdElements[3].innerText =response;
-                }else if(turr == 1){
-                    tdElements[5].innerText ="";
-                    tdElements[5].innerText =response;
+                if (turr == 0) {
+                    tdElements[3].innerText = "";
+                    tdElements[3].innerText = response;
+                } else if (turr == 1) {
+                    tdElements[5].innerText = "";
+                    tdElements[5].innerText = response;
                 }
 
 
-               
+
             },
             error: function(error) {
                 console.error(error);
@@ -504,9 +521,9 @@ function save() {
 }
 
 
-function saveBlok(){
-    var blokInput = document.getElementById('blokInput').value;  
-    var t = document.getElementById('hiddenDaireID2').value; 
+function saveBlok() {
+    var blokInput = document.getElementById('blokInput').value;
+    var t = document.getElementById('hiddenDaireID2').value;
     blokInput = blokInput.replace(/\s/g, "");
     if (blokInput == null || blokInput === "") {
         $('#blokInput').css('border-color', 'red');
@@ -515,109 +532,186 @@ function saveBlok(){
 
             url: 'Controller/blok_add.php',
             type: 'POST',
-            dataType: 'json', 
+            dataType: 'json',
             data: {
                 blokValue: blokInput,
-                id:t,
+                id: t,
             },
             success: function(response) {
-                
-              if(response.status ==1){
-              
 
-                var mainTr = document.getElementById("mainTr");
-        var td1 = document.createElement("td");
-        var td2 = document.createElement("td");
-        var td3 = document.createElement("td");
-        var td4 = document.createElement("td");
-
-        // Burada her bir td elementinin içeriğini doldurabilirsiniz, örneğin:
-        td1.textContent = blokInput;
-        
-        td2.textContent = "0";
-        // td3'e bir buton ekleyelim
-       
-        td3.innerHTML = "<span onclick=\"deleteBlok('" +response.blok_id+ "')\" class='material-symbols-outlined'>delete</span>";
-
-        
-        // td4'e bir buton ekleyelim
-       
-        
-        td4.innerHTML = "<span  class='material-symbols-outlined'>stylus_note </span>"; 
+                if (response.status == 1) {
 
 
-        // Yeni td elemanlarını tr içine ekleyin
-        var newTr = document.createElement("tr");
-        newTr.appendChild(td1);
-        newTr.appendChild(td2);
-        newTr.appendChild(td3);
-        newTr.appendChild(td4);
+                    var mainTr = document.getElementById("mainTr");
+                    var td1 = document.createElement("td");
+                    var td2 = document.createElement("td");
+                    var td3 = document.createElement("td");
+                    var td4 = document.createElement("td");
 
-        // Tabloya yeni tr'yi en sona ekle
-        mainTr.parentNode.appendChild(newTr);
-        document.getElementById('blokInput').value = "";
-       
+                    // Burada her bir td elementinin içeriğini doldurabilirsiniz, örneğin:
+                    td1.textContent = blokInput;
+
+                    td2.textContent = "0";
+                    // td3'e bir buton ekleyelim
+
+                    td3.innerHTML = "<span class='blok-ico' onclick=\"deleteBlok('" + response.blok_id +
+                        "')\" ><i class='fa-solid fa-trash'></i></span>";
+
+
+                    // td4'e bir buton ekleyelim
+
+
+                    td4.innerHTML = "<span  class='blok-ico' onclick=\"editBlok('" + response.blok_id +
+                        "')\" ><i class='fa-solid fa-pen'></i></span>";
+
+
+                    // Yeni td elemanlarını tr içine ekleyin
+                    var newTr = document.createElement("tr");
+                    newTr.setAttribute("id", "blk-" + response.blok_id);
+                    newTr.appendChild(td1);
+                    newTr.appendChild(td2);
+                    newTr.appendChild(td3);
+                    newTr.appendChild(td4);
+
+                    // Tabloya yeni tr'yi en sona ekle
+                    mainTr.parentNode.appendChild(newTr);
+                    document.getElementById('blokInput').value = "";
 
 
 
-              }
-              
+
+                }
+
             },
             error: function(error) {
-               alert("fgs");
+                alert("hata: Müşteri temsilciniz ile iletişime geçiniz.");
             }
 
         });
     }
 }
 
-function deleteBlok(id){
-    
+function deleteBlok(id) {
+    if (confirm("Bloğu silmek istediğinizden emin misiniz?")) {
 
-    $.ajax({
+        $.ajax({
 
-        url: 'Controller/blok_delete.php',
-        type: 'POST',
-        dataType: 'json', 
-        data: {
-            
-            id:id,
-    },
-    success: function(response) {
-    
-        alert(response.msg);
-    },
-    error: function(error) {
-       alert(error);
+            url: 'Controller/blok_delete.php',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+
+                id: id,
+            },
+            success: function(response) {
+                if (response.sts == 1) {
+                    var trr = document.getElementById('blk-' + id);
+                    trr.remove();
+                }
+                alert(response.msg);
+
+            },
+            error: function(error) {
+                alert(error);
+            }
+
+        });
     }
-
-});
-
 
 }
 
 
+function editBlok(id) {
+    $('#blk-' + id).css('background-color', '#445784');
+
+
+    $('#blk-' + id).find('td:eq(2) span').css('display', 'none');
+    var trashIcon = $('<i class="fa-solid fa-xmark"></i>');
+    var newSpan = $('<span>').addClass('blok-ico').append(trashIcon);
+    $('#blk-' + id).find('td:eq(2)').append(newSpan);
+
+
+    $('#blk-' + id).find('td:eq(3) span').css('display', 'none');
+    var trashIcon = $('<i class="fa-solid fa-check"></i>');
+    var newSpan1 = $('<span>').addClass('blok-ico').append(trashIcon);
+    $('#blk-' + id).find('td:eq(3)').append(newSpan1);
+
+
+    var temp = $('#blk-' + id).find('td:eq(0)').text();
+
+    $('#blk-' + id).find('td:eq(0)').attr('contenteditable', true);
+    $('#blk-' + id).find('td:eq(0)').on('input', function() {
+        if (this.textContent.length > 5) {
+            this.textContent = this.textContent.slice(0, 5);
+        }
+    });
 
 
 
+
+    newSpan.click(function() {
+        reeditBlok(id);
+        $('#blk-' + id).find('td:eq(0)').text(temp);
+    });
+
+    newSpan1.click(function() {
+        var temp1 = $('#blk-' + id).find('td:eq(0)').text();
+        $.ajax({
+
+            url: 'Controller/blok_update.php',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+
+                id: id,
+                temp1:temp1,
+            },
+            success: function(response) {
+               
+
+            },
+            error: function(error) {
+                 
+            }
+
+        });
+
+
+        reeditBlok(id);
+
+    });
+
+}
+
+
+function reeditBlok(id) {
+    $('#blk-' + id).find('td:eq(3) span:eq(1)').remove();
+    $('#blk-' + id).find('td:eq(2) span:eq(1)').remove();
+
+    $('#blk-' + id).find('td:eq(3) span:eq(0)').css('display', 'block');
+    $('#blk-' + id).find('td:eq(2) span:eq(0)').css('display', 'block');
+
+    $('#blk-' + id).css('background-color', '#f8f9fa');
+    $('#blk-' + id).find('td:eq(0)').attr('contenteditable', false);
+}
 </script>
 
 <script type="text/javascript">
-    $.fn.extend({
-        alterCheck: function(tablo) {
-            if ($("" + tablo + " input[type='checkbox']:first").is(":checked")) {
-                return this.each(function() {
-                    this.checked = true;
-                });
-            } else {
-                return this.each(function() {
-                    this.checked = false;
-                });
-            }
+$.fn.extend({
+    alterCheck: function(tablo) {
+        if ($("" + tablo + " input[type='checkbox']:first").is(":checked")) {
+            return this.each(function() {
+                this.checked = true;
+            });
+        } else {
+            return this.each(function() {
+                this.checked = false;
+            });
         }
+    }
 
-    });
-    $("#table input[type='checkbox']:first").click(function() {
-        $("#table input[type='checkbox']").alterCheck('#table');
-    });
+});
+$("#table input[type='checkbox']:first").click(function() {
+    $("#table input[type='checkbox']").alterCheck('#table');
+});
 </script>

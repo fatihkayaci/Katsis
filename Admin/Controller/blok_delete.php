@@ -36,7 +36,7 @@ if ($result['daire_sayisi'] <= 0) {
     
         // Başarılı bir yanıt oluştur
         $response = array(
-            
+            "sts"=>"1",
             "msg" => "Blok Başarıyla Silindi"
         );
     } catch (Exception $e) {
@@ -51,7 +51,7 @@ if ($result['daire_sayisi'] <= 0) {
 
 } else {
     $response = array(
-            
+        "sts"=>"0",   
         "msg" => "Blok ile İlişkili Daireler Olduğu İçin Silinemez. "
     );
 }
