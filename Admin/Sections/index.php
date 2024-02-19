@@ -219,44 +219,42 @@ try {
 
         <div class="row">
             <div class="col-md-6 col-btn">
+                <input class="input" type="text"  id="userInput"  required="" />
                 <label for="userInput">No :    *</label>
-                <input class="input" type="text"  id="userInput"  required />
             </div>
 
-            <div class="col-md-6 col-btn">
+            <div class="col-md-6 col">
+                <input class="input" type="text"  id="userInput" required="" />
                 <label for="userInput">Kat :</label>
-                <input class="input" type="text"  id="userInput" />
             </div>
-            <div class="col-md-6 col-btn">
+            <div class="col-md-6 col">
+                <input class="input" type="text"  id="userInput"  required="" />
                 <label for="userInput">Blok :    *</label>
-                <input class="input" type="text"  id="userInput"  required />
             </div>
-            <div class="col-md-6 col-btn">
+            <div class="col-md-6 col">
+                <input class="input" type="text"  id="userInput" required="" />
                 <label for="userInput">Daire Grubu :</label>
-                <input class="input" type="text"  id="userInput"  />
             </div>
-            <div class="col-md-6 col-btn">
+            <div class="col-md-6 col">
+                <input class="input" type="text"  id="userInput" required=""/>
                 <label for="userInput">Brüt m² :</label>
-                <input class="input" type="text"  id="userInput" />
             </div>
-            <div class="col-md-6 col-btn">
+            <div class="col-md-6 col">
+                <input class="input" type="text"  id="userInput"  required=""/>
                 <label for="userInput">Net m² :</label>
-                <input class="input" type="text"  id="userInput"  />
             </div>
-            <div class="col-md-6 col-btn">
+            <div class="col-md-6 col">
+                <input class="input" type="text"  id="userInput" required="" />
                 <label for="userInput">Arsa Payı :</label>
-                <input class="input" type="text"  id="userInput"  />
             </div>
             
         </div>
 
         <hr class="horizontal dark w-100">
 
-        <div class="row w-90">
-            <div class="col-md-12 col-btn">
-                <button type="submit" class="btn-custom" id="saveButton" >Kaydet</button>
-                <button type="button" class="btn-custom-close" onclick="closePopupDaire()">Kapat</button>
-            </div>
+        <div class="row row-btn">
+            <button type="button" class="btn-custom-close" onclick="closePopupDaire()">Kapat</button>
+            <button type="submit" class="btn-custom" id="saveButton" >Kaydet</button>
         </div>
 
     </form>
