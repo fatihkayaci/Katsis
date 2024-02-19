@@ -9,13 +9,12 @@
             
         <div class="row">
             <div class="col-md-6 col">
+                <input type="text" class="form-controlxy input" id="apartman_adi" name="apartman_adi" required="">
                 <label for="apartman_adi">Apartman Adı</label>
-                <input type="text" class="form-control input" id="apartman_adi" name="apartman_adi" required>
             </div>
             <div class="col-md-6 col margint">
-                <label for="blokSay">blok sayısı</label>
-                <input type="number" class="form-control input" id="blokSay" name="blokSay" value="1" max="20" min="1" required>
-                
+                <input type="number" class="form-controlxy input" id="blokSay" name="blokSay" value="1" max="20" min="1" required="">
+                <label for="blokSay">blok sayısı</label>                
             </div>
         </div>
 
@@ -204,7 +203,6 @@ inputElement.addEventListener('input', function() {
 });
 
 function tableCreate(rowCount) {
-
     tableContainer.innerHTML = ''; // Temizleme işlemi, her çağrıda tabloyu sıfırlar.
 
     // Tablo oluşturma
@@ -213,55 +211,54 @@ function tableCreate(rowCount) {
     // Başlık satırı ekleme
     var headerRow = table.insertRow(0);
     var blockHeader = headerRow.insertCell(0);
-    blockHeader.innerHTML = '<label>Blok</label>';
+    blockHeader.innerHTML = '<p>Blok</p>';
+    blockHeader.setAttribute("align", "center");
 
     var apartmentHeader = headerRow.insertCell(1);
-    apartmentHeader.innerHTML = '<label>Daire Sayısı</label>';
+    apartmentHeader.innerHTML = '<p>Daire Sayısı</p>';
+    apartmentHeader.setAttribute("align", "center");
 
     // Satırları oluşturma
     for (var i = 1; i <= rowCount; i++) {
-
-
         var row = table.insertRow(i);
+        
         var input = document.createElement("input");
         input.className = 'form-group form-group input1';
         input.type = "text";
         input.maxLength = 5;
         input.name = "inputText" + i; // Set a unique name for each input if needed
         input.id = 'row3' + i;
-        // Insert the text input element into the first cell of the row
+        
         var blockCell = row.insertCell(0);
         blockCell.appendChild(input);
+        blockCell.setAttribute("align", "center");
 
-
-
-
-
-        var apartmentCell = row.insertCell(1); // Satırın ikinci hücresine erişim sağla
-        var inputElement = document.createElement('input'); // input öğesi oluştur
+        var apartmentCell = row.insertCell(1);
+        var inputElement = document.createElement('input');
         inputElement.max = 1000;
         inputElement.min = 1;
-        inputElement.className = 'form-group form-group input1'; // class adını belirle, boşluğu unutma
-        inputElement.name = 'daireSayisi'; // inputun adını belirle
-        inputElement.id = 'row' + i; // inputun benzersiz kimliğini belirle
-        inputElement.value = 1; // başlangıç değerini belirle
-        inputElement.required = true; // zorunlu olup olmadığını belirle,
+        inputElement.className = 'form-group form-group input1';
+        inputElement.name = 'daireSayisi';
+        inputElement.id = 'row' + i;
+        inputElement.value = 1;
+        inputElement.required = true;
+        
+        apartmentCell.appendChild(inputElement);
+        apartmentCell.setAttribute("align", "center");
 
-
-
-
-        apartmentCell.appendChild(inputElement); // hücreye input öğesini ekle
         var descreption = row.insertCell(2);
         var descreptionElement = document.createElement('p');
         inputElement.type = 'text';
-        descreptionElement.className = 'form-control' + 'form-group form-control1';
+        descreptionElement.className = 'form-controlxy' + 'form-group form-control1';
         descreptionElement.name = 'descreption';
         descreptionElement.id = 'row2' + i;
         descreption.appendChild(descreptionElement);
+        descreption.setAttribute("align", "center");
     }
 
     tableContainer.appendChild(table);
 }
+
 
 function rowListin(enteredNumber) {
 

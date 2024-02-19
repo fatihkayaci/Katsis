@@ -171,15 +171,14 @@ try {
 
     <form id="userForm" class="login-form">
 
-        <h4 class="form-signin-heading" id="pop-head"></h4>
+        <h2 class="form-signin-heading" id="pop-head"></h2>
 
         <input type="hidden" id="hiddenDaireID" />
         <input type="hidden" id="turDaire" />
 
         <div class="row">
             <div class="col-md-12 col-btn">
-                <label for="userInput">Kullanıcılar :</label>
-                <input class="input" type="text" list="Users" id="userInput" oninput="getUserID()" />
+                <input class="input" type="text" list="Users" id="userInput" required="" oninput="getUserID()" />
                 <datalist id="Users">
                     <?php 
                         foreach($UserList as $user){
@@ -187,17 +186,20 @@ try {
                         }
                     ?>
                 </datalist>
+                <label for="userInput">Kullanıcılar :</label>
+            </div>
+            <div class="col-md-12 col-btn">
+                <input class="input" type="date" value="<?php echo date('Y-m-d'); ?>" id="dateInput" required=""/>
                 <label id="label_tarih" for="dateInput">1</label>
-                <input class="input" type="date" value="<?php echo date('Y-m-d'); ?>" id="dateInput" />
             </div>
 
         </div>
 
         <hr class="horizontal dark w-100">
 
-        <div class="row row-btns">
-            <button type="button" class="btn-custom" id="saveButton" onclick="save()">Kaydet</button>
+        <div class="row row-btn">
             <button type="button" class="btn-custom-close" onclick="closePopup()">Kapat</button>
+            <button type="button" class="btn-custom" id="saveButton" onclick="save()">Kaydet</button>
         </div>
 
     </form>
@@ -215,10 +217,9 @@ try {
         <input type="hidden" id="hiddenDaireID" />
         <input type="hidden" id="turDaire" />
 
-        <div class="row w-90 min-w">
+        <div class="row">
             <div class="col-md-6 col-btn">
-                <label for="userInput">Daire</label>
-                <input class="input" type="text" list="Users" id="userInput" oninput="getUserID()" />
+                <input class="input min-w" type="text" list="Users" id="userInput" required="" oninput="getUserID()" />
                 <datalist id="Users">
                     <?php 
                         foreach($UserList as $user){
@@ -226,21 +227,20 @@ try {
                         }
                     ?>
                 </datalist>
+                <label for="userInput">Daire</label>
             </div>
 
             <div class="col-md-6 col-btn mt-3">
+                <input class="input" type="date" value="<?php echo date('Y-m-d'); ?>" id="dateInput" required=""/>
                 <label for="dateInput">Giriş Tarih</label>
-                <input class="input" type="date" value="<?php echo date('Y-m-d'); ?>" id="dateInput" />
             </div>
         </div>
 
         <hr class="horizontal dark w-100">
 
-        <div class="row w-90">
-            <div class="col-md-12 col-btn">
-                <button type="button" class="btn-custom" id="saveButton" onclick="save()">Kaydet</button>
-                <button type="button" class="btn-custom-close" onclick="closePopupDaire()">Kapat</button>
-            </div>
+        <div class="row row-btn">
+            <button type="button" class="btn-custom-close" onclick="closePopupDaire()">Kapat</button>
+            <button type="button" class="btn-custom" id="saveButton" onclick="save()">Kaydet</button>
         </div>
 
     </form>
@@ -256,15 +256,15 @@ try {
 
         <h2 class="form-signin-heading">Bloklar</h2>
 
-        <div class="row w-90 min-w">
+        <div class="row">
 
-            <div class="col-md-6 col-blok">
+            <div class="col-blok w-70">
+                <input class="input min-w mb-0" type="text" id="blokInput" maxLength="5" required=""/>
                 <label for="blokInput">Blok Ekle :</label>
-                <input class="input min-w mb-0" type="text" id="blokInput" maxLength="5" placeholder="Blok Adı" />
             </div>
 
-            <div class="col-md-6 col-blok">
-                <button type="button" class="btn-custom blok-btn" id="saveButton" onclick="saveBlok()">Kaydet</button>
+            <div class="col-blok w-30">
+                <button type="button" class="btn-custom-daire ekle-btn blok-btn" id="saveButton" onclick="saveBlok()">Ekle</button>
             </div>
         </div>
 
@@ -300,10 +300,8 @@ try {
 
         <hr class="horizontal dark w-100">
 
-        <div class="row row-btns">
-            <div class="col-md-12">
-                <button type="button" class="btn-custom-close" onclick="closePopupBlok()">Kapat</button>
-            </div>
+        <div class="row row-btn">
+                <button type="button" class="btn-custom-close w-100 me-0" onclick="closePopupBlok()">Kapat</button>
         </div>
 
     </form>
@@ -346,6 +344,7 @@ function openPopup(daire_id, tur) {
 
 
     $('#popup2').show().css('display', 'flex').delay(100).queue(function(next) {
+        $('body').css('overflow', 'hidden');
         $('#popup2').css('opacity', '1');
         $('#userForm').css('opacity', '1');
         $('#userForm').css('transform', 'translateY(0)');
@@ -366,6 +365,7 @@ function closePopup() {
         $('#popup2').css('opacity', '0').delay(300).queue(function(nextInner) {
             $(this).hide().css('display', 'none');
             nextInner();
+            $('body').css('overflow', 'auto');
         });
         next();
     });
@@ -373,6 +373,8 @@ function closePopup() {
 
 
 function openPopupDaire() {
+    $('body').css('overflow', 'hidden');
+
     $('#popupDaireEkle').show().css('display', 'flex').delay(100).queue(function(next) {
         $('#popupDaireEkle').css('opacity', '1');
         $('#userFormDaire').css('opacity', '1');
@@ -382,6 +384,8 @@ function openPopupDaire() {
 }
 
 function openPopupBlok() {
+    $('body').css('overflow', 'hidden');
+
     $('#popupBlokEkle').show().css('display', 'flex').delay(100).queue(function(next) {
         $('#popupBlokEkle').css('opacity', '1');
         $('#userFormBlok').css('opacity', '1');
@@ -396,12 +400,11 @@ $('#blokInput').focus(function() {
 function closePopupBlok() {
     $('#blokInput').css('border-color', '#000000');
 
-
-
     $('#userFormBlok').css('opacity', '0').css('transform', 'translateY(-180px)').delay(100).queue(function(next) {
         $('#popupBlokEkle').css('opacity', '0').delay(300).queue(function(nextInner) {
             $(this).hide().css('display', 'none');
             nextInner();
+            $('body').css('overflow', 'auto');
         });
         next();
     });
@@ -409,12 +412,11 @@ function closePopupBlok() {
 
 function closePopupDaire() {
 
-
-
     $('#userFormDaire').css('opacity', '0').css('transform', 'translateY(-180px)').delay(100).queue(function(next) {
         $('#popupDaireEkle').css('opacity', '0').delay(300).queue(function(nextInner) {
             $(this).hide().css('display', 'none');
             nextInner();
+            $('body').css('overflow', 'auto');
         });
         next();
     });

@@ -15,7 +15,7 @@
 
             <div class="input-group1">
                 <button class="adduser btn-custom-outline">Kullanıcı Ekle</button>
-                <button class="toplu btn-custom-outline">Toplu Kullanıcı Ekle Ve Düzelt</button>
+                <button class="toplu btn-custom-outline">Toplu İşlemler</button>
 
                 <button class="topluGuncelle btn-custom-outline" id="guncelleButton"
                     style="display: none;">Güncelle</button>
@@ -105,54 +105,54 @@ try {
 
             <h2 class="form-signin-heading">Kullanıcı Ekleme</h2>
 
-            <div class="row w-90">
+            <div class="row mb-1">
                 <div class="col-md-6 col">
+                    <input class="input" type="text" name="userName" required="">
                     <label for="userName">Ad Soyad :</label>
-                    <input class="input" type="text" name="userName" placeholder="İsminizi Giriniz." required><br>
                 </div>
 
                 <div class="col-md-6 col">
+                    <input class="input" type="text" name="tc" required="" require>
                     <label for="tc">T.C. Kimlik No :</label>
-                    <input class="input" type="text" name="tc" placeholder="T.C. giriniz." required><br>
                 </div>
             </div>
 
-            <div class="row w-90">
+            <div class="row">
                 <div class="col-md-6 col">
+                    <input class="input tel" type="number" name="phoneNumber" required="">
                     <label for="phoneNumber">Telefon Numarası :</label>
-                    <input class="input" type="text" name="phoneNumber" pattern="[0-9]{10}"
-                        placeholder="e.g., 5551234567" required><br>
                 </div>
 
                 <div class="col-md-6 col">
+                    <input class="input" type="text" name="userEmail" required="">
                     <label for="userEmail">E-Posta :</label>
-                    <input class="input" type="text" name="userEmail" placeholder="Email adresi"><br>
                 </div>
             </div>
 
-            <div class="row w-90">
+            <div class="row">
                 <div class="col-md-6 col margint">
-                    <label for="plate">Araba Plakası :</label>
-                    <input class="input" type="text" name="plate" placeholder="Araba plakası (opsiyonel)"><br>
+                    <input class="input" type="text" name="plate" required="">
+                    <label for="plate">Araç Plakası</label>
                 </div>
 
                 <div class="col-md-6 col">
-                    <label for="gender">Cinsiyet :</label>
-                    <select class="input" id="gender">
+                    <select class="input" id="gender" required="">
+                        <option style="display: none;" value="" selected disabled></option>
                         <option value="Erkek">Erkek</option>
                         <option value="Kadın">Kadın</option>
                     </select>
+                    <label for="gender">Cinsiyet :</label>
                 </div>
             </div>
 
-            <div class="row w-90">
+            <div class="row">
                 <div class="col-md-6 col">
                     <input class="input" type="text" name="apartman_id" value=<?php echo $_SESSION["apartID"]; ?>
                         hidden>
                 </div>
             </div>
 
-            <div class="row w-90">
+            <div class="row">
                 <div class="col-md-12 col-btn">
                     <button type="button" class="daireEkle btn-custom-daire">Daire Ekle</button>
                 </div>
@@ -161,13 +161,11 @@ try {
             <div class="indexAdd">
             </div>
 
-            <hr class="horizontal dark mt-4 w-100">
+            <hr class="horizontal dark mt-0 w-100">
 
-            <div class="row w-90">
-                <div class="col-md-12 col-btn">
-                    <button type="button" class="btn-custom" id="saveButton">Kaydet</button>
-                    <button type="button" class="btn-custom-close" onclick="closePopup()">Kapat</button>
-                </div>
+            <div class="row row-btn">
+                <button type="button" class="btn-custom-close" onclick="closePopup()">Kapat</button>
+                <button type="button" class="btn-custom" id="saveButton">Kaydet</button>
             </div>
 
 
@@ -180,19 +178,19 @@ try {
 
             <h2 class="form-signin-heading">oluşturma şeklini seçiniz!</h2>
 
-            <div class="row w-90">
-                <div class="col-md-12 col-btn">
-                    <a class="ahref btn-custom" href="index?parametre=TopluHesap">Toplu Hesap</a>
-                    <button class="btn-custom" type="button">Excel İle Dışarıdan Aktar</button>
+            <div class="row">
+                <div class="col-md-12 col-btn mb-0">
+                    <a class="ahref btn-custom-daire w-100" href="index?parametre=TopluHesap">Toplu Hesap</a>
+                    <button class="btn-custom-daire w-100" type="button">Excel İle Dışarıdan Aktar</button>
                     <!--bakılacak excel-->
                 </div>
             </div>
 
             <hr class="horizontal dark w-100">
 
-            <div class="row w-90">
+            <div class="row">
                 <div class="col-md-12 col-btn">
-                    <button type="button" class="btn-custom-close" onclick="closeToplu()">Kapat</button>
+                    <button type="button" class="btn-custom-close w-100" onclick="closeToplu()">Kapat</button>
                 </div>
             </div>
 
@@ -205,25 +203,24 @@ try {
             <h2 class="form-signin-heading">Daire Ekleme</h2>
 
             <div class="row w-90">
-                <div class="col-md-12 col-btn">
-                    <label for="options">Daire:</label>
-                    <select class="input" id="optionsBlok" name="options">
+                <div class="col-btn">
+                    <select class="input" id="optionsBlok" name="options" required="">
                         <?php echo $optionsBlok; ?>
                     </select>
-
-                    <label for="durum">Durum :</label>
+                    <label for="options">Daire:</label>
+                </div>
+                <div class="col-btn">
                     <select class="input" id="durum">
                         <option value="katmaliki">kat Maliki</option>
                         <option value="kiracı">kiracı</option>
                     </select>
+                    <label for="durum">Durum :</label>
                 </div>
             </div>
 
-            <div class="row w-90 mt-4">
-                <div class="col-md-12 col-btn">
-                    <button type="button" class="btn-custom" id="ekle" onclick="newDaire()">Ekle</button>
-                    <button type="button" class="btn-custom-close" onclick="closeDaire()">Kapat</button>
-                </div>
+            <div class="row row-btn">
+                <button type="button" class="btn-custom-close" onclick="closeDaire()">Kapat</button>
+                <button type="button" class="btn-custom" id="ekle" onclick="newDaire()">Ekle</button>
             </div>
 
         </form>

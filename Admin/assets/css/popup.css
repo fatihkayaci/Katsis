@@ -17,17 +17,18 @@
 }
 
 .login-form-start {
+    padding: 5px 15px;
     width: 50%;
-    max-width: 450px;
+    max-width: 400px;
     min-width: 350px;
     min-height: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: baseline;
+    justify-content: start;
     text-align: left;
     background-color: #fff;
-    border-radius: 15px;
+    border-radius: 4px;
     opacity: 0;
     transform: translateY(-180px);
     transition: 0.5s;
@@ -38,11 +39,16 @@
     border-radius: 15px;
     display: flex;
     flex-direction: row;
-    justify-content: baseline;
+    justify-content: center;
     align-items: center;
     flex-wrap: wrap;
     width: 100%;
-    min-width: 200px;
+    min-width: 70px;
+}
+
+.daire-area td {
+    position: relative;
+    width: 50%;
 }
 
 tbody {
@@ -58,40 +64,48 @@ tbody {
     color: #ff0e0e;
 }
 
-.col1 {
-    width: 100%;
-    min-width: 100px;
-    display: flex;
-    flex-direction: column;
-    justify-content: baseline;
-    align-items: center;
-    text-align: left;
+.input1 {
+  width: 50%;
+  min-width: 70px;
+  padding: 5px 0;
+  font-size: 14px;
+  color: #0d0c22;
+  border: none;
+  border-bottom: 1px solid #0d0c22;
+  outline: none;
+  background: transparent;
+  font-family: 'poppins-regular';
+  transition: 0.5s;
 }
 
-.input1 {
-    width: 90%;
-    min-width: 200px;
-    height: 42px;
-    background-color: #fff;
-    color: #0d0c22;
-    border: 1px solid #6b7280;;
-    border-radius: 12px;
-    padding: 5px 15px;
-    transition: 0.5s;
-    outline: none;
-    font-size: 13px;
-    margin-bottom: 8px;
-    font-family: 'poppins-regular';
+.input1:focus,
+.input1:valid  {
+  border-color: #277CE0;
 }
-  
-.input1:focus {
-  border-color: #0d0c22;
-  box-shadow: 0 0 0 4px rgb(0 0 0 / 10%); 
+
+.input1:focus ~ label,
+.input1:valid ~ label {
+  top: -30px;
+  left: 5px;
+  font-size: 12px;
 }
   
 .form-control1 {
     color: #ff0e0e;
 }
+
+.form-group {
+    width: 50%;
+    min-width: 100px;
+    margin-top: 5px;
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    text-align: left;
+    position: relative;
+  }
 
 .dropdown-menu {
     z-index: 9998;

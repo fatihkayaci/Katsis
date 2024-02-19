@@ -39,7 +39,7 @@ tfoot input {
   display: none;
   position: fixed;
   width: 100%;
-  min-height: 100%;
+  height: 100%;
   top: 0;
   left: 0;
   flex-direction: column;
@@ -72,9 +72,8 @@ tfoot input {
 
 
 .login-form {
-  padding: 5px 15px;
   width: 50%;
-  max-width: 400px;
+  max-width: 450px;
   min-width: 350px;
   min-height: auto;
   display: flex;
@@ -83,7 +82,7 @@ tfoot input {
   justify-content: start;
   text-align: left;
   background-color: #fff;
-  border-radius: 4px;
+  border-radius: 15px;
   opacity: 0;
   transform: translateY(-180px);
   transition: 0.5s;
@@ -107,9 +106,8 @@ transition: 0.3s;
 overflow: auto;
 }
 .login-form-toplu {
-  padding: 5px 15px;
   width: 50%;
-  max-width: 400px;
+  max-width: 450px;
   min-width: 350px;
   min-height: auto;
   display: flex;
@@ -118,7 +116,7 @@ overflow: auto;
   justify-content: space-evenly;
   text-align: left;
   background-color: #fff;
-  border-radius: 4px;
+  border-radius: 15px;
   opacity: 0;
   transform: translateY(-180px);
   transition: 0.5s;
@@ -143,9 +141,8 @@ overflow: auto;
 }
 
 .login-form-daire {
-  padding: 5px 15px;
   width: 50%;
-  max-width: 400px;
+  max-width: 450px;
   min-width: 350px;
   min-height: auto;
   display: flex;
@@ -154,7 +151,7 @@ overflow: auto;
   justify-content: space-evenly;
   text-align: left;
   background-color: #fff;
-  border-radius: 4px;
+  border-radius: 15px;
   opacity: 0;
   transform: translateY(-180px);
   transition: 0.5s;
@@ -178,9 +175,9 @@ overflow: auto;
 
 .form-signin-heading {
   font-size: 1.75rem;
-  margin-top: 8px;
+  margin-top: 18px;
   margin-bottom: 28px;
-  width: 100%;
+  width: 90%;
   padding: 0px 12px;
   color: #0d0c22;
 }
@@ -193,49 +190,39 @@ overflow: auto;
 
 .col {
   width: 50%;
-  min-width: 100px;
-  margin-top: 5px;
-  margin-bottom: 30px;
+  min-width: 200px;
   display: flex;
   flex-direction: column;
   justify-content: start;
   align-items: center;
   text-align: left;
-  position: relative;
 }
 .col-btn {
   width: 100%;
   min-width: 200px;
-  margin-top: 5px;
-  margin-bottom: 30px;
   display: flex;
   flex-direction: column;
   justify-content: start;
   align-items: center;
   text-align: left;
-  position: relative;
 }
 .col-blok {
+  width: 50%;
+  min-width: 0px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: end;
   align-items: center;
   text-align: left;
   margin-bottom: 28px;
-  position: relative;
 }
 
 label {
-  position: absolute;
-  top:0;
-  left: 10px;
-  padding: 10px 0;
-  font-size: 14px;
+  width: 90%;
+  margin: 0px 0 4px;
   color: #0d0c22;
-  pointer-events: none;
-  transition: .5s;
-  font-family: 'poppins-regular';
-  font-weight: 100;
+  font-family: 'poppins-medium';
+  font-weight: 500;
 }
 
 .row-btns {
@@ -256,70 +243,51 @@ label {
 
 .input {
   width: 100%;
-  min-width: 70px;
-  padding: 5px 0;
-  font-size: 14px;
+  min-width: 150px;
+  height: 42px;
+  background-color: #fff;
   color: #0d0c22;
-  border: none;
-  border-bottom: 1px solid #0d0c22;
-  outline: none;
-  background: transparent;
-  font-family: 'poppins-regular';
+  border: 1px solid #6b7280;;
+  border-radius: 12px;
+  padding: 5px 15px;
   transition: 0.5s;
+  outline: none;
+  font-size: 13px;
+  margin-bottom: 8px;
+  font-family: 'poppins-regular';
 }
 
-.input:focus,
-.input:valid  {
-  border-color: #277CE0;
-}
-
-.input:focus ~ label,
-.input:valid ~ label {
-  top: -30px;
-  left: 5px;
-  font-size: 12px;
-}
-
-.tel::-webkit-outer-spin-button,
-.tel::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-   margin: 0;
-}
-
-.tel[type=number] {
-  -moz-appearance: textfield;
-}
-
-.row-btn {
-  flex-wrap: nowrap;
-  justify-content: end;
-  align-items: center;
-  padding: 0 12px;
+.input:focus {
+  border-color: #0d0c22;
+  box-shadow: 0 0 0 4px rgb(0 0 0 / 10%); 
 }
 
 .btn-custom {
-  width: 92px;
+  max-width: 420px;
+  width: 100%;
   height: 40px;
-  margin-bottom: 8px;
+  margin-bottom: 18px;
   transition: 0.5s;
-  background-color: #33b249;
+  background-color: #0d0c22;
   color: #fff;
-  border: 1px solid #33b249;
+  border: none;
   font-size: 16px;
   cursor: pointer;
-  border-radius: 4px;
+  border-radius: 12px;
   font-family: 'poppins-medium';
   font-weight: 500;
 }
 
 .btn-custom:hover {
-  border: 1px solid #186625;
-  background-color: #186625;
+  box-shadow: 0 -1px 10px rgba(13,12,34, 0.3);
 }
 
 .blok-btn {
   margin-bottom: 0;
   height: 42px;
+  min-width: 0px;
+}
+.min-w {
   min-width: 0px;
 }
 
@@ -328,27 +296,19 @@ label {
   width: 100%;
   height: 40px;
   margin-bottom: 18px;
-  transition: 0.3s;
-  font-size: 16px;
-  cursor: pointer;
-  border-radius: 4px;
-  font-family: 'poppins-medium';
-  font-weight: 500;
+  transition: 0.5s;
   background-color: #277CE0;
   color: #fff;
-  outline: none;
-  border: 1px solid #277CE0;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 12px;
+  font-family: 'poppins-medium';
+  font-weight: 500;
 }
 
 .btn-custom-daire:hover {
-  background-color: #1c5aa1;
-  border: 1px solid #1c5aa1;
-}
-
-.ekle-btn {
-  width: 92px;
-  max-width: 92px;
-  margin-bottom: 0;
+  box-shadow: 0 -1px 10px rgba(13,12,34, 0.3);
 }
 
 .ahref {
@@ -360,27 +320,27 @@ label {
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  
 }
 
 .btn-custom-close {
-  width: 92px;
+  max-width: 420px;
+  width: 100%;
   height: 40px;
-  margin-bottom: 8px;
-  margin-right: 12px;
+  margin-bottom: 18px;
   transition: 0.5s;
-  background-color: #555555;
-  border: 1px solid #555555;
+  background-color: #686A6C;
   color: #fff;
+  border: none;
   font-size: 16px;
   font-family: 'poppins-medium';
   font-weight: 500;
   cursor: pointer;
-  border-radius: 4px;
+  border-radius: 12px;
 }
 
 .btn-custom-close:hover {
-  border: 1px solid #3a3a3a;
-  background-color: #3a3a3a;
+  box-shadow: 0 -1px 10px rgba(13,12,34, 0.3);
 }
 
 .indexAdd {
@@ -392,10 +352,15 @@ label {
 }
 
 @media screen and (max-width: 1040px) {
+  .input, label, .col, .row, .form-signin-heading {
+      width: 100%;
+  }
   .btn-size {
       width: 40%;
   }
- 
+  .margint {
+      margin-top: 20px;
+  }
   .input1 {
       min-width: 100px;
   }
@@ -406,65 +371,6 @@ label {
       font-size: 1.25rem;
   }
 }
-
-body::-webkit-scrollbar {
-width: 5px;
-border-radius: 50px;
-}
-
-/* Track */
-body::-webkit-scrollbar-track {
-background: #f1f1f100; 
-border-radius: 50px;
-}
-
-/* Handle */
-body::-webkit-scrollbar-thumb {
-background: #888; 
-border-radius: 50px;
-}
-
-
-/* Handle on hover */
-body::-webkit-scrollbar-thumb:hover {
-background: #555; 
-border-radius: 50px;
-}
-
-
-#sidenav-main {
-  overflow: hidden;
-  transition: 0.5s;
-}
-
-#sidenav-main:hover {
-  overflow: auto;
-}
-
-#sidenav-main::-webkit-scrollbar {
-width: 5px;
-border-radius: 50px;
-}
-
-/* Track */
-#sidenav-main::-webkit-scrollbar-track {
-background: transparent; 
-border-radius: 50px;
-}
-
-/* Handle */
-#sidenav-main::-webkit-scrollbar-thumb {
-background: #C9CACA; 
-border-radius: 50px;
-}
-
-
-/* Handle on hover */
-#sidenav-main::-webkit-scrollbar-thumb:hover {
-background: #888; 
-border-radius: 50px;
-}
-
 
 
 .login-form::-webkit-scrollbar {
@@ -620,6 +526,7 @@ box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
   cursor: pointer;
   border-radius: 4px;
   font-family: 'poppins-regular';
+  font-weight: 500;
   margin-right: 10px;
 }
 
@@ -689,12 +596,12 @@ border-bottom: 1px solid rgb(0, 0, 0);
 
 .table thead tr th {
   background-color: #e0e0e0;
-  border-radius: 4px;
+  border-radius: 10px;
 }
 
 .table {
   background-color: #e0e0e0;
-  border-radius: 4px;
+  border-radius: 10px;
 }
 
 .table td{
@@ -734,10 +641,6 @@ color: #0d0c22;
 
 .settings {
   width: auto;
-}
-
-.form-signin-heading {
-  padding: 0;
 }
 
 #demo {
@@ -1130,7 +1033,7 @@ border: 1px solid #277CE0;
 /* blok ekleme tablosu */
 
 .table-blok {
-width: 100%;
+width: 90%;
 min-width: 0;
 padding: 0.75rem;
 max-width: 100%;
@@ -1222,17 +1125,4 @@ border-top: 1px solid rgba(0, 0, 0, 0.12);
   .login-form, .login-form-toplu, .login-form-daire, .login-form1, .row {
     min-width: 260px;
   }
-  .input, label, .col {
-    width: 100%;
-    min-width: 200px;
-  }
-
-  .ekle-btn {
-    min-width: auto;
-    width: auto;
-  }
-}
-
-.min-w {
-  min-width: 0px;
 }
