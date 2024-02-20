@@ -34,35 +34,7 @@
 
 
     ////////////////////////////////////
-    try {
-      $sql = "INSERT INTO tbl_blok (apartman_idd,  blok_adi, daire_sayisi) VALUES ";
-      $values1 = array();
-    
-      $apartman_id = $lastInsertedRow["apartman_id"];
-    
-      for ($i = 0; $i < count($BlokArray); $i++) {
-          $daire_sayisi = $BlokArray[$i];
-          $blok_adi = $BloknameArray[$i];
-          $values1[] = "( $apartman_id, '" . "$blok_adi', '" . "$daire_sayisi')";
-
-        }
-      
-      $sql .= implode(", ", $values1);
-      $stmt = $conn->prepare($sql);
-      $stmt->execute();
-      
-      echo "Veri başarıyla eklendi";
-    } catch (PDOException $e) {
-      echo "Hata: " . $e->getMessage();
-    }
-
-
-////////burada kaldım
-    $sql45 = "SELECT * FROM tbl_blok WHERE apartman_id = :lastInsertedId";
-    $stmt33 = $conn->prepare($sql45);
-    $stmt33->bindParam(":lastInsertedId", $lastInsertedId);
-    $stmt33->execute();
-
+   
 
 
   
@@ -75,7 +47,63 @@
     $lastInsertedRow = $stmt3->fetch(PDO::FETCH_ASSOC);  //DEĞER CEPTE
      
 
-    
+    ////////////////////////////////////////
+
+    try {
+      $sql = "INSERT INTO tbl_blok (apartman_idd, blok_adi, daire_sayisi) VALUES ";
+      $values1 = array();
+  
+      $apartman_id = $lastInsertedRow["apartman_id"];
+  
+      for ($i = 0; $i < count($BlokArray); $i++) {
+          $daire_sayisi = $BlokArray[$i];
+          $blok_adi = $BloknameArray[$i];
+          $values1[] = "(?, ?, ?)";
+      }
+  
+      $sql .= implode(", ", $values1);
+      $stmt = $conn->prepare($sql);
+  
+      // Değişkenlerin türlerini belirterek bindParam kullanarak parametreleri bağlayın
+      for ($i = 0; $i < count($BlokArray); $i++) {
+          $stmt->bindParam(($i * 3) + 1, $apartman_id, PDO::PARAM_INT);
+          $stmt->bindParam(($i * 3) + 2, $BloknameArray[$i], PDO::PARAM_STR);
+          $stmt->bindParam(($i * 3) + 3, $BlokArray[$i], PDO::PARAM_INT);
+      }
+  
+      $stmt->execute();
+      
+      echo "Veri başarıyla eklendi";
+  } catch (PDOException $e) {
+      echo "Hata: " . $e->getMessage();
+  }
+  
+
+
+////////burada kaldım
+    $sql45 = "SELECT * FROM tbl_blok WHERE apartman_idd = :lastInsertedId";
+    $stmt33 = $conn->prepare($sql45);
+    $stmt33->bindParam(":lastInsertedId", $lastInsertedId);
+    $stmt33->execute();
+    $rows = $stmt33->fetchAll(PDO::FETCH_ASSOC);
+    $blokIdMapping = [];
+// $rows içindeki verileri döngüye alıyoruz
+foreach ($rows as $row) {
+  // Blok adını anahtar, blok id'yi değer olarak atıyoruz
+  $blokIdMapping[$row['blok_adi']] = $row['blok_id'];
+}
+
+
+
+
+
+
+
+
+
+
+
+
     try {
       $sql = "INSERT INTO tbl_daireler (apartman_id, daire_sayisi, blok_adi) VALUES ";
       $values = array();
@@ -84,8 +112,8 @@
   
       for ($i = 0; $i < count($BlokArray); $i++) {
           $daire_sayisi = $BlokArray[$i];
-          $blok_adi = $BloknameArray[$i];
-  
+          $blok_adi =$blokIdMapping[ $BloknameArray[$i]];
+          
           for ($j = 1; $j <= $daire_sayisi; $j++) {
               $values[] = "( $apartman_id, $j,'" . "$blok_adi')";
           }

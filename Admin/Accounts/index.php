@@ -66,8 +66,7 @@ try {
                 foreach ($result as $row) {
                 ?>
             <tr data-userid="<?php echo $row["userID"]; ?>" id="tr-<?php echo $row["userID"]; ?>" class="git-ac">
-                <td data-title="Seç"> <input id="check-<?php echo $row["userID"]; ?>" class="check1" type="checkbox"
-                        onclick="toggleMainCheckbox(<?php echo $row['userID']; ?>)" /></td>
+                <td data-title="Seç"> <input id="check-<?php echo $row["userID"]; ?>" class="check1" type="checkbox" onclick="toggleMainCheckbox(<?php echo $row['userID']; ?>)" /></td>
                 <td data-title="Ad Soyad" contenteditable="false"><?php echo $row["userName"]; ?></td>
                 <td data-title="Telefon Numarası" contenteditable="false"><?php echo $row["phoneNumber"]; ?></td>
                 <td data-title="Blok Adi"><?php echo $row["blok_adi"]; ?></td>
