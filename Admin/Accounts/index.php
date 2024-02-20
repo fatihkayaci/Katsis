@@ -424,7 +424,7 @@ function closeDaire() {
 var trElements = document.querySelectorAll('tr.git-ac');
 for (var i = 0; i < trElements.length; i++) {
     if (trElements[i].dataset.userid !== trElements[i + 1]?.dataset.userid) {
-        trElements[i].style.borderBottom = '3px solid black';
+        trElements[i].style.borderBottom = '1px solid #e6e6e6';
     }
 }
 
