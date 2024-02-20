@@ -10,26 +10,7 @@
 </head>
 
 <body>
-    <div class="table-responsive-vertical cener-table">
-        <div class="input-group-div">
-
-            <div class="input-group1">
-                <button class="adduser btn-custom-outline">Kullanıcı Ekle</button>
-                <button class="toplu btn-custom-outline">Toplu İşlemler</button>
-
-                <button class="topluGuncelle btn-custom-outline" id="guncelleButton"
-                    style="display: none;">Güncelle</button>
-                <button class="topluSil btn-custom-outline" id="silButton" style="display: none;">Sil</button>
-            </div>
-
-            <div class="search-box">
-                <i class="fas fa-search search-icon" aria-hidden="true"></i>
-                <input type="text" class="search-input" placeholder="Arama...">
-            </div>
-            <button id="openEdit" onclick="openEdit ()">AÇ</button>
-            <button id="closeEdit" onclick="closeEdit()">KAPAT</button>
-        </div>
-    </div>
+    
     <?php
     $optionsBlok = '';
     $optionsDurum = '';
@@ -60,10 +41,29 @@ try {
 
     <div class="table-responsive-vertical cener-table">
 
-        <table id="example" class="table table-hover">
+        <div class="input-group-div">
+
+            <div class="input-group1">
+                <button class="adduser btn-custom-outline">Kullanıcı Ekle</button>
+                <button class="toplu btn-custom-outline">Toplu İşlemler</button>
+
+                <button class="topluGuncelle btn-custom-outline" id="guncelleButton"
+                    style="display: none;">Güncelle</button>
+                <button class="topluSil btn-custom-outline" id="silButton" style="display: none;">Sil</button>
+            </div>
+
+            <div class="search-box">
+                <i class="fas fa-search search-icon" aria-hidden="true"></i>
+                <input type="text" class="search-input" placeholder="Arama...">
+            </div>
+            <button id="openEdit" onclick="openEdit ()">AÇ</button>
+            <button id="closeEdit" onclick="closeEdit()">KAPAT</button>
+        </div>
+
+        <table id="example" class="users-table">
             <thead>
-                <tr>
-                    <th><input id="mainCheckbox" type="checkbox" onclick="toggleMainCheckbox()" /></th>
+                <tr class="users-table-info">
+                    <th><input id="mainCheckbox" type="checkbox" onclick="toggleMainCheckbox('-1')" /></th>
                     <th>Ad Soyad</th>
                     <th>Telefon Numarası</th>
                     <th>Blok Adı</th>
@@ -75,9 +75,9 @@ try {
 
                 <?php
                 foreach ($result as $row) {
-                    ?>
-                <tr data-userid="<?php echo $row["userID"]; ?>" class="git-ac">
-                    <td data-title="Seç"> <input type="checkbox" onclick="toggleMainCheckbox()" /></td>
+                ?>
+                <tr data-userid="<?php echo $row["userID"]; ?>" id="tr-<?php echo $row["userID"]; ?>" class="git-ac">
+                    <td data-title="Seç"> <input id="check-<?php echo $row["userID"]; ?>" type="checkbox" onclick="toggleMainCheckbox(<?php echo $row['userID']; ?>)" /></td>
                     <td data-title="Ad Soyad" contenteditable="false"><?php echo $row["userName"]; ?></td>
                     <td data-title="Telefon Numarası" contenteditable="false"><?php echo $row["phoneNumber"]; ?></td>
                     <td data-title="Blok Adı"><?php echo $row["blok_adi"]; ?></td>
@@ -85,8 +85,8 @@ try {
                     <td data-title="Durum"><?php echo $row["durum"]; ?></td>
                 </tr>
                 <?php
-                    }
-                    ?>
+                }
+                ?>
 
             </tbody>
         </table>
@@ -233,26 +233,6 @@ try {
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
         <script type="text/javascript">
-        $.fn.extend({
-            alterCheck: function(tablo) {
-                if ($("" + tablo + " input[type='checkbox']:first").is(":checked")) {
-                    return this.each(function() {
-                        this.checked = true;
-                    });
-                } else {
-                    return this.each(function() {
-                        this.checked = false;
-                    });
-                }
-            }
-        
-        });
-        $("#example input[type='checkbox']:first").click(function() {
-            $("#example input[type='checkbox']").alterCheck('#example');
-        });
-        </script>
-
-        <script type="text/javascript">
         var selectedValuesArray = [];
         var selectedDurumArray = [];
         var sayac = 0;
@@ -311,12 +291,34 @@ try {
             sayac++;
         }
         //mainCheckbox da sıkıntı var
-        function toggleMainCheckbox() {
+
+        $.fn.extend({
+            alterCheck: function(tablo) {
+                if ($("#mainCheckbox").is(":checked")) {
+                    return this.each(function() {
+                        this.checked = true;
+                    });
+                } else {
+                    return this.each(function() {
+                        this.checked = false;
+                    });
+                }
+            }
+        
+        });
+        $("#mainCheckbox").click(function() {
+            $("#example input[type='checkbox']").alterCheck('#example');
+        });
+
+
+        function toggleMainCheckbox(id) {
+
             var mainCheckbox = document.getElementById('mainCheckbox');
             var checkboxes = document.querySelectorAll('input[type="checkbox"]');
             var guncelleButton = document.getElementById('guncelleButton');
             var silButton = document.getElementById('silButton');
             var enAzBirSecili = false;
+            
 
             checkboxes.forEach(function(checkbox) {
                 if (checkbox !== mainCheckbox && checkbox.checked) {
@@ -328,15 +330,32 @@ try {
             }
             if (enAzBirSecili) {
                 guncelleButton.style.display = 'inline-block';
-                silButton.style.display = 'inline-block';
+                silButton.style.display = 'inline-block';        
             } else {
                 guncelleButton.style.display = 'none';
                 silButton.style.display = 'none';
             }
+
+            var checkbox2 = document.getElementById('check-' + id);
+
+            if(checkbox2.checked) {
+                $('#tr-' + id).css('background-color', '#ff0000');
+            } else {
+                $('#tr-' + id).css('background-color', '#00ff00');
+            }
+
+            if(id < 0) {
+                $('.git-ac').css('background-color', '#ff0000');
+            } else {
+                $('.git-ac').css('background-color', '#00ff00');
+            }
+
+            
         }
 
         $('.adduser').click(function() {
             $('#popup').show().css('display', 'flex').delay(100).queue(function(next) {
+                $('body').css('overflow', 'hidden');
                 $('#popup').css('opacity', '1');
                 $('#userForm').css('opacity', '1');
                 $('#userForm').css('transform', 'translateY(0)');
@@ -349,6 +368,7 @@ try {
                 $('#popup').css('opacity', '0').delay(300).queue(function(nextInner) {
                     $(this).hide().css('display', 'none');
                     nextInner();
+                    $('body').css('overflow', 'auto');
                 });
                 next();
             });
@@ -356,6 +376,7 @@ try {
 
         $('.toplu').click(function() {
             $('#topluPopup').show().css('display', 'flex').delay(100).queue(function(next) {
+                $('body').css('overflow', 'hidden');
                 $('#topluPopup').css('opacity', '1');
                 $('#userForm2').css('opacity', '1');
                 $('#userForm2').css('transform', 'translateY(0)');
@@ -368,6 +389,7 @@ try {
                 $('#topluPopup').css('opacity', '0').delay(300).queue(function(nextInner) {
                     $(this).hide().css('display', 'none');
                     nextInner();
+                    $('body').css('overflow', 'auto');
                 });
                 next();
             });
@@ -375,6 +397,7 @@ try {
 
         $('.daireEkle').click(function() {
             $('#dairePopup').show().css('display', 'flex').delay(100).queue(function(next) {
+                $('body').css('overflow', 'hidden');
                 $('#dairePopup').css('opacity', '1');
                 $('#userForm1').css('opacity', '1');
                 $('#userForm1').css('transform', 'translateY(0)');
@@ -387,6 +410,7 @@ try {
                 $('#dairePopup').css('opacity', '0').delay(300).queue(function(nextInner) {
                     $(this).hide().css('display', 'none');
                     nextInner();
+                    $('body').css('overflow', 'auto');
                 });
                 next();
             });
