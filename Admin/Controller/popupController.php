@@ -31,6 +31,40 @@
     
     $lastInsertedId = $conn->lastInsertId();
 
+
+
+    ////////////////////////////////////
+    try {
+      $sql = "INSERT INTO tbl_blok (apartman_idd,  blok_adi, daire_sayisi) VALUES ";
+      $values1 = array();
+    
+      $apartman_id = $lastInsertedRow["apartman_id"];
+    
+      for ($i = 0; $i < count($BlokArray); $i++) {
+          $daire_sayisi = $BlokArray[$i];
+          $blok_adi = $BloknameArray[$i];
+          $values1[] = "( $apartman_id, '" . "$blok_adi', '" . "$daire_sayisi')";
+
+        }
+      
+      $sql .= implode(", ", $values1);
+      $stmt = $conn->prepare($sql);
+      $stmt->execute();
+      
+      echo "Veri başarıyla eklendi";
+    } catch (PDOException $e) {
+      echo "Hata: " . $e->getMessage();
+    }
+
+
+////////burada kaldım
+    $sql45 = "SELECT * FROM tbl_blok WHERE apartman_id = :lastInsertedId";
+    $stmt33 = $conn->prepare($sql45);
+    $stmt33->bindParam(":lastInsertedId", $lastInsertedId);
+    $stmt33->execute();
+
+
+
   
     $sql3 = "SELECT * FROM tbl_apartman WHERE apartman_id = :lastInsertedId";
     $stmt3 = $conn->prepare($sql3);
@@ -66,37 +100,8 @@
       echo "Hata: " . $e->getMessage();
   }
   
-////////////////////////////////////
-try {
-    $sql = "INSERT INTO tbl_blok (apartman_idd,  blok_adi, daire_sayisi) VALUES ";
-    $values1 = array();
-
-    $apartman_id = $lastInsertedRow["apartman_id"];
-
-    for ($i = 0; $i < count($BlokArray); $i++) {
-        $daire_sayisi = $BlokArray[$i];
-        $blok_adi = $BloknameArray[$i];
-        $values1[] = "( $apartman_id, '" . "$blok_adi', '" . "$daire_sayisi')";
-        
-      }
-    
-    $sql .= implode(", ", $values1);
-    $stmt = $conn->prepare($sql);
-    $stmt->execute();
-
-    echo "Veri başarıyla eklendi";
-} catch (PDOException $e) {
-    echo "Hata: " . $e->getMessage();
-}
 
 /////////////////////////////////
-
-
-
-
-
-
-
 
 
 $sql3 = "UPDATE tbl_users SET apartman_id = :apartman_id WHERE userEmail = :userEmail";
@@ -108,14 +113,4 @@ $stmt4->execute();
 
 
 $conn = null;
-
-
-
-
-
-
-
-
-
-    
 ?>
