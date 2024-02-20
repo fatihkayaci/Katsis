@@ -1,15 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kullanıcılar</title>
-    <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css"> -->
-</head>
 
-<body>
     
     <?php
     $optionsBlok = '';
@@ -50,14 +40,16 @@ try {
                 <button class="topluGuncelle btn-custom-outline" id="guncelleButton"
                     style="display: none;">Güncelle</button>
                 <button class="topluSil btn-custom-outline" id="silButton" style="display: none;">Sil</button>
+
+                <button id="openEdit" onclick="openEdit ()">AÇ</button>
+                <button id="closeEdit" onclick="closeEdit()">KAPAT</button>
             </div>
 
             <div class="search-box">
                 <i class="fas fa-search search-icon" aria-hidden="true"></i>
                 <input type="text" class="search-input" placeholder="Arama...">
             </div>
-            <button id="openEdit" onclick="openEdit ()">AÇ</button>
-            <button id="closeEdit" onclick="closeEdit()">KAPAT</button>
+            
         </div>
 
         <table id="example" class="users-table">
@@ -227,7 +219,6 @@ try {
         </form>
     </div>
 
-    <body>
         <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
