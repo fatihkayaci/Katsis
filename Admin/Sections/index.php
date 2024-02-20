@@ -47,8 +47,8 @@ try {
     <div class="input-group-div">
 
         <div class="input-group1">
-            <button class="btn-custom-outline" onclick="openPopupBlok()">Bloklar</button>
-            <button class="btn-custom-outline" onclick="openPopupDaire()">Daire Ekle</button>
+            <button class="btn-custom-outline bcoc1" onclick="openPopupBlok()">Bloklar</button>
+            <button class="btn-custom-outline bcoc2" onclick="openPopupDaire()">Daire Ekle</button>
 
         </div>
 
@@ -58,9 +58,9 @@ try {
         </div>
     </div>
 
-    <table id="table" class="table table-hover">
+    <table id="table" class="users-table">
         <thead>
-            <tr>
+            <tr class="users-table-info">
                 <th><input type="checkbox" /></th>
                 <th>Blok Adı</th>
                 <th>Kapı No</th>
@@ -80,7 +80,7 @@ try {
 
         <tbody>
 
-            <tr id=<?php echo $row["daire_id"]; ?>>
+            <tr id=<?php echo $row["daire_id"]; ?> class="git-ac">
 
                 <td data-title="Seç"> <input type="checkbox" /></td>
 
@@ -90,7 +90,7 @@ try {
 
                 <?php
                    if($row["kiraciID"]==null) {
-                  echo ' <td data-title="0"><button type="button" class="table-a" onclick="openPopup('.$row["daire_id"].',0)">Kiracı ekle + </button></td>';
+                  echo ' <td data-title="0"><button type="button" class="table-a tca1" onclick="openPopup('.$row["daire_id"].',0)">Kiracı ekle + </button></td>';
 
                    }else{
                     echo ' <td data-title="0">'.$listt[$row["kiraciID"]].' </td>  '; 
@@ -99,7 +99,7 @@ try {
                    echo ' <td data-title="Bakiye">00,0 ₺</td> ';
 
                    if($row["katMalikiID"]==null) {
-                    echo '<td data-title="1"><button type="button" class="table-a" onclick="openPopup('.$row["daire_id"].',1)">Kat Maliki ekle + </button></td>
+                    echo '<td data-title="1"><button type="button" class="table-a tca2" onclick="openPopup('.$row["daire_id"].',1)">Kat Maliki ekle + </button></td>
                     ';
   
                     }else{
@@ -114,7 +114,7 @@ try {
                     <li class="nav-item dropdown pe-1 d-flex settings">
                         <a href="javascript:;" class="nav-link text-body nav-link font-weight-bold mb-0"
                             id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                            <i class="fa-solid fa-ellipsis"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end1 ayar-1 px-1 margin-10"
                             aria-labelledby="dropdownMenuButton">

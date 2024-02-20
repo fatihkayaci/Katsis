@@ -548,10 +548,8 @@ border-radius: 50px;
 }
 
 .table-a {
-  height: 35px;
-  border: 1px solid #277CE0;
-  background-color: transparent;
-  color: #277CE0;
+  min-width: 130px;
+  height: 30px;
   transition: all 0.3s;
   -webkit-transition: all 0.5s;
   text-decoration: none;
@@ -562,14 +560,40 @@ border-radius: 50px;
   font-weight: 500;
 }
 
-.table-a:hover {
-  background-color: #277CE0;
+.tca1 {
+  border: 1px solid #20c997;
+  background-color: transparent;
+  color: #20c997;
+}
+
+.tca1:hover {
+  background-color: #20c997;
   color: #ffffff;
   box-shadow: 0 0 20px #6fc5ff50;
 }
 
-.table-a:active {
-  background-color: #3d94cf;
+.tca1:active {
+  background-color: #20c997;
+  transition: all 0.25s;
+  -webkit-transition: all 0.25s;
+  box-shadow: none;
+  transform: scale(0.98);
+}
+
+.tca2 {
+  border: 1px solid #17c1e8;
+  background-color: transparent;
+  color: #17c1e8;
+}
+
+.tca2:hover {
+  background-color: #17c1e8;
+  color: #ffffff;
+  box-shadow: 0 0 20px #6fc5ff50;
+}
+
+.tca2:active {
+  background-color: #17c1e8;
   transition: all 0.25s;
   -webkit-transition: all 0.25s;
   box-shadow: none;
@@ -642,6 +666,10 @@ box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
   border: 1px solid #277CE0;
 }
 
+.bcoc1 {
+  
+}
+
 .input-select {
   width: 90%;
   min-width: 120px;
@@ -670,6 +698,7 @@ box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
   -webkit-transition: none;
   -o-transition: none;
   transition: none;
+  white-space: nowrap;
 }
 
 .users-table-info {
@@ -684,9 +713,18 @@ box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
   border-bottom: 1px solid #F8F9FA;
 }
 
+.git-ac:hover,
+.git-ac-color:hover { /* Yeni sınıfı burada ekleyin */
+    background-color: #00000011;
+}
+
+.git-ac-color{
+  background-color: #2f49d11a !important;
+}
+
+.users-table th,
 .users-table td {
-  padding-top: 15px;
-  padding-bottom: 15px;
+  padding: 15px;
 }
 
 .users-table .active {

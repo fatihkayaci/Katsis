@@ -288,15 +288,15 @@ function toggleAll(masterCheckbox) {
     for (var i = 0; i < checkboxes.length; i++) {
         checkboxes[i].checked = masterCheckbox.checked;
     }
-    if(masterCheckbox.checked){
+    if (masterCheckbox.checked) {
         $('#guncelleButton').css('display', 'inline-block');
         $('#silButton').css('display', 'inline-block');
 
-        $('.git-ac').css('background-color', '#F5F5DC');
-    }else if(!masterCheckbox.checked){
+        $('.git-ac').addClass('git-ac-color');
+    } else if (!masterCheckbox.checked) {
         $('#guncelleButton').css('display', 'none');
         $('#silButton').css('display', 'none');
-        $('.git-ac').css('background-color', '#fff');
+        $('.git-ac').removeClass('git-ac-color');
     }
 
 
@@ -348,9 +348,9 @@ function toggleMainCheckbox(id) {
     var checkbox2 = document.getElementById('check-' + id);
 
     if (checkbox2.checked) {
-        $('#tr-' + id).css('background-color', '#F5F5DC');
+        $('#tr-' + id).addClass('git-ac-color');
     } else {
-        $('#tr-' + id).css('background-color', '#fff');
+        $('#tr-' + id).removeClass('git-ac-color');
     }
 
   
@@ -424,7 +424,7 @@ function closeDaire() {
 var trElements = document.querySelectorAll('tr.git-ac');
 for (var i = 0; i < trElements.length; i++) {
     if (trElements[i].dataset.userid !== trElements[i + 1]?.dataset.userid) {
-        trElements[i].style.borderBottom = '1px solid #e6e6e6';
+        trElements[i].style.borderBottom = '2px solid #ebebeb';
     }
 }
 
