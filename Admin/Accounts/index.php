@@ -291,10 +291,12 @@ function toggleAll(masterCheckbox) {
     if(masterCheckbox.checked){
         $('#guncelleButton').css('display', 'inline-block');
         $('#silButton').css('display', 'inline-block');
+
+        $('.git-ac').css('background-color', '#F5F5DC');
     }else if(!masterCheckbox.checked){
         $('#guncelleButton').css('display', 'none');
         $('#silButton').css('display', 'none');
-
+        $('.git-ac').css('background-color', '#fff');
     }
 
 
@@ -319,20 +321,8 @@ for (var i = 0; i < checkboxes.length; i++) {
 
 
 
-
-
-
-
-
-
-$("#mainCheckbox").click(function() {
-    $("#example input[type='checkbox']").alterCheck('#example');
-});
-
-
 function toggleMainCheckbox(id) {
 
-    var mainCheckbox = document.getElementById('mainCheckbox');
     var checkboxes = document.querySelectorAll('input[type="checkbox"]');
     var guncelleButton = document.getElementById('guncelleButton');
     var silButton = document.getElementById('silButton');
@@ -340,13 +330,11 @@ function toggleMainCheckbox(id) {
 
 
     checkboxes.forEach(function(checkbox) {
-        if (checkbox !== mainCheckbox && checkbox.checked) {
+        if ( checkbox.checked) {
             enAzBirSecili = true;
         }
     });
-    if (mainCheckbox.checked) {
-        enAzBirSecili = true;
-    }
+   
     if (enAzBirSecili) {
         guncelleButton.style.display = 'inline-block';
         silButton.style.display = 'inline-block';
@@ -355,19 +343,17 @@ function toggleMainCheckbox(id) {
         silButton.style.display = 'none';
     }
 
+
+    
     var checkbox2 = document.getElementById('check-' + id);
 
     if (checkbox2.checked) {
-        $('#tr-' + id).css('background-color', '#ff0000');
+        $('#tr-' + id).css('background-color', '#F5F5DC');
     } else {
-        $('#tr-' + id).css('background-color', '#00ff00');
+        $('#tr-' + id).css('background-color', '#fff');
     }
 
-    if (id < 0) {
-        $('.git-ac').css('background-color', '#ff0000');
-    } else {
-        $('.git-ac').css('background-color', '#00ff00');
-    }
+  
 
 
 }
