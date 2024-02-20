@@ -31,6 +31,7 @@ try {
     <div class="input-group-div">
 
         <div class="input-group1">
+            
             <button class="adduser btn-custom-outline bcoc1">Kullanıcı Ekle</button>
             <button class="toplu btn-custom-outline bcoc2">Toplu İşlemler</button>
 
@@ -41,7 +42,7 @@ try {
             <!-- Düzenlemeye bunu yap -->
             <label class="switch">
               <input type="checkbox">
-              <span class="slider"></span>
+              <span class="slider round"></span>
             </label>
 
         </div>
