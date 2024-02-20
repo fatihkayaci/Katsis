@@ -1,4 +1,8 @@
 <?php
+/*
+durum boş ise email kontrolü yapmıyor.
+
+*/
 session_start();
 include("../../DB/dbconfig.php");
 $i=0;
@@ -25,30 +29,38 @@ try {
     $elemanSayisi = count($durumArray);
     // DurumArray boşsa kayıt yapmayı dene
     if (empty($durumArray)) {
-        $userPass = randomPassword();
-        $hashedPassword = base64_encode($userPass);
-        $t = "Y";
+        $emailCheckSQL = "SELECT COUNT(*) FROM tbl_users WHERE userEmail = :userEmail";
+        $emailCheckStmt = $conn->prepare($emailCheckSQL);
+        $emailCheckStmt->bindParam(':userEmail', $userEmail);
+        $emailCheckStmt->execute();
 
-        $sql = "INSERT INTO tbl_users (userName, tc, phoneNumber, durum, userEmail, userPass, plate, gender, apartman_id, rol, popup, userStatus) VALUES 
-        (:userName, :tc, :phoneNumber, :durum, :userEmail, :userPass, :plate, :gender, :apartman_id, :rol, :popup, :userStatus)";
-
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':userName', $userName);
-        $stmt->bindParam(':tc', $tc);
-        $stmt->bindParam(':phoneNumber', $phoneNumber);
-        $stmt->bindValue(':durum', null, PDO::PARAM_NULL); // DurumArray boş olduğunda null atar
-        $stmt->bindValue(':userEmail', null, PDO::PARAM_NULL); // Boş değeri atanır
-        $stmt->bindParam(':userPass', $hashedPassword);
-        $stmt->bindParam(':plate', $plate);
-        $stmt->bindParam(':gender', $gender);
-        $stmt->bindParam(':userStatus', $t);
-        $stmt->bindParam(':apartman_id', $apartman_id);
-        $rol = 3;
-        $popup = 0;
-        $stmt->bindParam(':rol', $rol);
-        $stmt->bindParam(':popup', $popup);
-        $stmt->execute();
-
+        if ($emailCheckStmt->fetchColumn() > 0) {
+            echo "Bu e-posta adresi zaten var. Lütfen farklı bir e-posta adresi seçiniz.";
+        } else{
+            $userPass = randomPassword();
+            $hashedPassword = base64_encode($userPass);
+            $t = "Y";
+    
+            $sql = "INSERT INTO tbl_users (userName, tc, phoneNumber, durum, userEmail, userPass, plate, gender, apartman_id, rol, popup, userStatus) VALUES 
+            (:userName, :tc, :phoneNumber, :durum, :userEmail, :userPass, :plate, :gender, :apartman_id, :rol, :popup, :userStatus)";
+    
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':userName', $userName);
+            $stmt->bindParam(':tc', $tc);
+            $stmt->bindParam(':phoneNumber', $phoneNumber);
+            $stmt->bindValue(':durum', null, PDO::PARAM_NULL); // DurumArray boş olduğunda null atar
+            $stmt->bindValue(':userEmail', null, PDO::PARAM_NULL); // Boş değeri atanır
+            $stmt->bindParam(':userPass', $hashedPassword);
+            $stmt->bindParam(':plate', $plate);
+            $stmt->bindParam(':gender', $gender);
+            $stmt->bindParam(':userStatus', $t);
+            $stmt->bindParam(':apartman_id', $apartman_id);
+            $rol = 3;
+            $popup = 0;
+            $stmt->bindParam(':rol', $rol);
+            $stmt->bindParam(':popup', $popup);
+            $stmt->execute();
+        }
         echo 1;
     } else {
         // DurumArray doluysa normal kayıt işlemlerini yap
@@ -78,6 +90,7 @@ try {
                 $stmt->bindParam(':rol', $rol);
                 $stmt->bindParam(':popup', $popup);
                 $stmt->execute();
+                break;
             } else {
                 // E-posta adresi doluysa, benzersizlik kontrolü yap
                 $emailCheckSQL = "SELECT COUNT(*) FROM tbl_users WHERE userEmail = :userEmail";
@@ -112,6 +125,7 @@ try {
                     $stmt->bindParam(':rol', $rol);
                     $stmt->bindParam(':popup', $popup);
                     $stmt->execute();
+                    break;
                 }
             }
         }

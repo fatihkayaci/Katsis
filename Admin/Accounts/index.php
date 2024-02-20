@@ -550,6 +550,7 @@ try {
                         apartman_id: apartman_id
                     },
                     success: function(response) {
+                        alert(response);
                         if (response == 1) {
                             $.ajax({
                                 url: 'Controller/demo.php',
@@ -685,7 +686,7 @@ try {
             });
             demofunction();
         }
-
+//isim düzeltilecek
         function demofunction() {
             var rows = document.querySelectorAll('.git-ac');
             rows.forEach(function(row) {
