@@ -31,20 +31,31 @@ try {
     <div class="input-group-div">
 
         <div class="input-group1">
-            <button class="adduser btn-custom-outline">Kullanıcı Ekle</button>
-            <button class="toplu btn-custom-outline">Toplu İşlemler</button>
+            <button class="adduser btn-custom-outline bcoc1">Kullanıcı Ekle</button>
+            <button class="toplu btn-custom-outline bcoc2">Toplu İşlemler</button>
 
-            <button class="topluGuncelle btn-custom-outline" id="guncelleButton"
-                style="display: none;">Güncelle</button>
-            <button class="topluSil btn-custom-outline" id="silButton" style="display: none;">Sil</button>
-
+            <!-- bunu sil (düzenleme alanı) -->
             <button id="openEdit" onclick="openEdit ()">AÇ</button>
             <button id="closeEdit" onclick="closeEdit()">KAPAT</button>
+
+            <!-- Düzenlemeye bunu yap -->
+            <label class="switch">
+              <input type="checkbox">
+              <span class="slider"></span>
+            </label>
+
         </div>
 
-        <div class="search-box">
-            <i class="fas fa-search search-icon" aria-hidden="true"></i>
-            <input type="text" class="search-input" placeholder="Arama...">
+        <div class="input-group1">
+            <button class="topluGuncelle btn-custom-outline bcoc3" id="guncelleButton"
+                style="display: none;">Güncelle</button>
+            <button class="topluSil btn-custom-outline bcoc4" id="silButton" style="display: none;">Sil</button>
+        
+
+            <div class="search-box">
+                <i class="fas fa-search search-icon" aria-hidden="true"></i>
+                <input type="text" class="search-input" placeholder="Arama...">
+            </div>
         </div>
 
     </div>
@@ -82,7 +93,39 @@ try {
 </div>
 <?php
     } else {
-        echo "0 results";
+?>
+
+<div class="table-responsive-vertical cener-table">
+
+    <div class="input-group-div">
+
+        <div class="input-group1">
+            <button class="adduser btn-custom-outline bcoc1">Kullanıcı Ekle</button>
+            <button class="toplu btn-custom-outline bcoc2">Toplu İşlemler</button>
+        </div>
+
+        <div class="search-box">
+            <i class="fas fa-search search-icon" aria-hidden="true"></i>
+            <input type="text" class="search-input" placeholder="Arama...">
+        </div>
+
+    </div>
+
+    <table id="example" class="users-table">
+        <thead>
+            <tr class="users-table-info">
+                
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="git-ac">
+                <td>Kullanıcı Bulunmamaktadır</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<?php
     }
 } catch (PDOException $e) {
     echo "Bağlantı hatası: " . $e->getMessage();

@@ -85,8 +85,8 @@ try {
 
         <hr class="horizontal mt-0 dark w-100">
 
-        <table class="table-blok">
-            <tr>
+        <table class="users-table">
+            <tr class="users-table-info">
                 <th>Blok Adı </th>
                 <th>Daire Sayısı </th>
                 <th>Sil</th>
@@ -98,7 +98,7 @@ try {
                 foreach ($blokList as $s ){
                      $blokIdMapping[$s['blok_id']] = $s['blok_adi'];
                         echo '
-                        <tr id="blk-'.$s["blok_id"].'">
+                        <tr class="git-ac" id="blk-'.$s["blok_id"].'">
                             <td>'.$s["blok_adi"].'</td>
                             <td>'.$s["daire_sayisi"].'</td>
                             <td>  
@@ -134,7 +134,7 @@ try {
 
 
 
-    <table id="table" class="table table-hover">
+    <table id="table" class="users-table">
         <thead>
             <tr class="users-table-info">
                 <th><input type="checkbox" /></th>
@@ -195,7 +195,7 @@ try {
                         <ul class="dropdown-menu dropdown-menu-end1 ayar-1 px-1 margin-10"
                             aria-labelledby="dropdownMenuButton">
                             <li class="mb-1">
-                                <a class="dropdown-item border-radius-md" href="javascript:;">
+                                <a class="dropdown-item border-radius-md" href="">
                                     <div class="d-flex">
                                         <div class="my-auto">
                                             <i class="fa-solid fa-pen i-color me-3"></i>
@@ -209,7 +209,7 @@ try {
                                 </a>
                             </li>
                             <li class="mb-0">
-                                <a class="dropdown-item border-radius-md" href="../logout">
+                                <a class="dropdown-item border-radius-md" href="">
                                     <div class="d-flex">
                                         <div class="my-auto">
                                             <i class="fa-solid fa-trash i-color me-3"></i>
