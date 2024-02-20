@@ -80,8 +80,8 @@ try {
                     <td data-title="Seç"> <input id="check-<?php echo $row["userID"]; ?>" type="checkbox" onclick="toggleMainCheckbox(<?php echo $row['userID']; ?>)" /></td>
                     <td data-title="Ad Soyad" contenteditable="false"><?php echo $row["userName"]; ?></td>
                     <td data-title="Telefon Numarası" contenteditable="false"><?php echo $row["phoneNumber"]; ?></td>
-                    <td data-title="Blok Adı"><?php echo $row["blok_adi"]; ?></td>
-                    <td data-title="Kapı Numarası"><?php echo $row["daire_sayisi"]; ?></td>
+                    <td data-title="Blok Adi" ><?php echo $row["blok_adi"]; ?></td>
+                    <td data-title="Kapi Numarasi"><?php echo $row["daire_sayisi"]; ?></td>
                     <td data-title="Durum"><?php echo $row["durum"]; ?></td>
                 </tr>
                 <?php
@@ -231,6 +231,30 @@ try {
         <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+        <script type="text/javascript">
+        $.fn.extend({
+            alterCheck: function(tablo) {
+                if ($("" + tablo + " input[type='checkbox']:first").is(":checked")) {
+                    return this.each(function() {
+                        this.checked = true;
+                        guncelleButton.style.display = 'inline-block';
+                        silButton.style.display = 'inline-block';
+                    });
+                } else {
+                    return this.each(function() {
+                        this.checked = false;
+                        guncelleButton.style.display = 'none';
+                        silButton.style.display = 'none';
+                    });
+                }
+            }
+
+        });
+        $("#example input[type='checkbox']:first").click(function() {
+            $("#example input[type='checkbox']").alterCheck('#example');
+        });
+        </script>
 
         <script type="text/javascript">
         var selectedValuesArray = [];
@@ -491,18 +515,26 @@ try {
             var guncelleButton = document.getElementById('guncelleButton');
             var silButton = document.getElementById('silButton');
             var checkboxes = document.querySelectorAll('#example tbody input[type="checkbox"]:checked');
+            
             checkboxes.forEach(function(checkbox) {
                 var row = checkbox.closest('tr');
                 var userID = row.getAttribute('data-userid');
-
+                var blok_adi = row.querySelector('td[data-title="Blok Adi"]').textContent;
+                var daire_sayisi = row.querySelector('td[data-title="Kapi Numarasi"]').textContent;
+                var durum = row.querySelector('td[data-title="Durum"]').textContent;
+                alert(blok_adi+" "+daire_sayisi+" "+durum);
                 // Sunucuya silme isteği gönder
                 $.ajax({
-                    url: 'Controller/delete_user.php',
+                    url: 'Controller/demo4.php',
                     type: 'POST',
                     data: {
-                        userID: userID
+                        userID: userID,
+                        blok_adi:  blok_adi,
+                        daire_sayisi: daire_sayisi,
+                        durum :durum
                     },
                     success: function(response) {
+                        alert(response);
                         if (response == 1) {
                             row.remove();
                         }
@@ -710,7 +742,7 @@ try {
             });
             demofunction();
         }
-//isim düzeltilecek
+        //isim düzeltilecek
         function demofunction() {
             var rows = document.querySelectorAll('.git-ac');
             rows.forEach(function(row) {
@@ -735,4 +767,3 @@ try {
             });
         }
         </script>
-
