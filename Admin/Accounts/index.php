@@ -50,14 +50,16 @@ try {
                 <button class="topluGuncelle btn-custom-outline" id="guncelleButton"
                     style="display: none;">Güncelle</button>
                 <button class="topluSil btn-custom-outline" id="silButton" style="display: none;">Sil</button>
+
+                <button id="openEdit" onclick="openEdit ()">AÇ</button>
+                <button id="closeEdit" onclick="closeEdit()">KAPAT</button>
             </div>
 
             <div class="search-box">
                 <i class="fas fa-search search-icon" aria-hidden="true"></i>
                 <input type="text" class="search-input" placeholder="Arama...">
             </div>
-            <button id="openEdit" onclick="openEdit ()">AÇ</button>
-            <button id="closeEdit" onclick="closeEdit()">KAPAT</button>
+            
         </div>
 
         <table id="example" class="users-table">

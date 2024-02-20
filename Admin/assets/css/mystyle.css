@@ -672,32 +672,46 @@ box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
   transition: none;
 }
 
-.users-table td {
+.users-table-info {
+  height: 48px;
+  border-bottom: 1.2px solid #dadbe4;
+  font-size: 14px;
+  border-radius: 10px;
+}
+.git-ac {
+  background-color: #fff;
   border-top: 1px solid #eee;
   border-bottom: 1px solid #eee;
+  border: 2px blue dashed;
+}
+
+.users-table td {
   padding-top: 15px;
   padding-bottom: 15px;
 }
 
 .users-table .active {
-  background-color: #fff;
+  background-color: #2f49d11a;
   border-top: 1px solid #eee;
   border-bottom: 1px solid #eee;
   padding-top: 15px;
   padding-bottom: 15px;
-}
-
-
-.users-table-info {
-  height: 48px;
-  border-bottom: 1.2px solid #dadbe4;
-  font-size: 14px;
 }
 
 .settings {
   justify-content: end;
   align-items: end;
   width: 100%;
+}
+
+td:first-child,
+th:first-child {
+  border-radius: 10px 0 0 10px;
+}
+
+td:last-child,
+th:last-child {
+  border-radius: 0 10px 10px 0;
 }
 
 /* ====================================== */
