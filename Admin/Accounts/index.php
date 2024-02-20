@@ -232,29 +232,6 @@ try {
 
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-        <script type="text/javascript">
-        $.fn.extend({
-            alterCheck: function(tablo) {
-                if ($("" + tablo + " input[type='checkbox']:first").is(":checked")) {
-                    return this.each(function() {
-                        this.checked = true;
-                        guncelleButton.style.display = 'inline-block';
-                        silButton.style.display = 'inline-block';
-                    });
-                } else {
-                    return this.each(function() {
-                        this.checked = false;
-                        guncelleButton.style.display = 'none';
-                        silButton.style.display = 'none';
-                    });
-                }
-            }
-
-        });
-        $("#example input[type='checkbox']:first").click(function() {
-            $("#example input[type='checkbox']").alterCheck('#example');
-        });
-        </script>
 
         <script type="text/javascript">
         var selectedValuesArray = [];
@@ -321,14 +298,18 @@ try {
                 if ($("#mainCheckbox").is(":checked")) {
                     return this.each(function() {
                         this.checked = true;
+                        guncelleButton.style.display = 'inline-block';
+                        silButton.style.display = 'inline-block';
                     });
                 } else {
                     return this.each(function() {
                         this.checked = false;
+                        guncelleButton.style.display = 'none';
+                        silButton.style.display = 'none';
                     });
                 }
             }
-        
+
         });
         $("#mainCheckbox").click(function() {
             $("#example input[type='checkbox']").alterCheck('#example');
