@@ -189,7 +189,7 @@ try {
                 <label for="userInput">Kullanıcılar :</label>
             </div>
             <div class="col-md-12 col-btn">
-                <input class="input" type="date" value="<?php echo date('Y-m-d'); ?>" id="dateInput" required=""/>
+                <input class="input" type="date" value="<?php echo date('Y-m-d'); ?>" id="dateInput" required="" />
                 <label id="label_tarih" for="dateInput">1</label>
             </div>
 
@@ -219,42 +219,49 @@ try {
 
         <div class="row">
             <div class="col-md-6 col-btn">
-                <input class="input" type="text"  id="userInput"  required="" />
-                <label for="userInput">No :    *</label>
+                <input class="input" type="text" id="daireNo" required="" />
+                <label id="daireNoLabel" for="daireNo">No : *</label>
             </div>
 
             <div class="col-md-6 col">
-                <input class="input" type="text"  id="userInput" required="" />
+                <input class="input" type="text" id="userInput" required="" />
                 <label for="userInput">Kat :</label>
             </div>
             <div class="col-md-6 col">
-                <input class="input" type="text"  id="userInput"  required="" />
-                <label for="userInput">Blok :    *</label>
+                <select class="input" id="userInput" required="">
+                    <option style="display: none;" value="" disabled selected></option>
+                    <option value="blok1" selected>Blok 1</option>
+                    <option value="blok2">Blok 2</option>
+                    <option value="blok3">Blok 3</option>
+                    <!-- Diğer blokları eklemeye devam edebilirsiniz -->
+                </select>
+                <label for="userInput">Blok: *</label>
             </div>
+
             <div class="col-md-6 col">
-                <input class="input" type="text"  id="userInput" required="" />
+                <input class="input" type="text" id="userInput" required="" />
                 <label for="userInput">Daire Grubu :</label>
             </div>
             <div class="col-md-6 col">
-                <input class="input" type="text"  id="userInput" required=""/>
+                <input class="input" type="text" id="userInput" required="" />
                 <label for="userInput">Brüt m² :</label>
             </div>
             <div class="col-md-6 col">
-                <input class="input" type="text"  id="userInput"  required=""/>
+                <input class="input" type="text" id="userInput" required="" />
                 <label for="userInput">Net m² :</label>
             </div>
             <div class="col-md-6 col">
-                <input class="input" type="text"  id="userInput" required="" />
+                <input class="input" type="text" id="userInput" required="" />
                 <label for="userInput">Arsa Payı :</label>
             </div>
-            
+
         </div>
 
         <hr class="horizontal dark w-100">
 
         <div class="row row-btn">
             <button type="button" class="btn-custom-close" onclick="closePopupDaire()">Kapat</button>
-            <button type="submit" class="btn-custom" id="saveButton" >Kaydet</button>
+            <button type="button" class="btn-custom" id="saveButton" onclick="SaveDaire()">Kaydet</button>
         </div>
 
     </form>
@@ -273,12 +280,13 @@ try {
         <div class="row">
 
             <div class="col-blok w-70">
-                <input class="input min-w mb-0" type="text" id="blokInput" maxLength="5" required=""/>
+                <input class="input min-w mb-0" type="text" id="blokInput" maxLength="5" required="" />
                 <label for="blokInput">Blok Ekle :</label>
             </div>
 
             <div class="col-blok w-30">
-                <button type="button" class="btn-custom-daire ekle-btn blok-btn" id="saveButton" onclick="saveBlok()">Ekle</button>
+                <button type="button" class="btn-custom-daire ekle-btn blok-btn" id="saveButton"
+                    onclick="saveBlok()">Ekle</button>
             </div>
         </div>
 
@@ -315,7 +323,7 @@ try {
         <hr class="horizontal dark w-100">
 
         <div class="row row-btn">
-                <button type="button" class="btn-custom-close w-100 me-0" onclick="closePopupBlok()">Kapat</button>
+            <button type="button" class="btn-custom-close w-100 me-0" onclick="closePopupBlok()">Kapat</button>
         </div>
 
     </form>
@@ -666,14 +674,14 @@ function editBlok(id) {
             data: {
 
                 id: id,
-                temp1:temp1,
+                temp1: temp1,
             },
             success: function(response) {
-               
+
 
             },
             error: function(error) {
-                 
+
             }
 
         });
@@ -696,6 +704,27 @@ function reeditBlok(id) {
     $('#blk-' + id).css('background-color', '#f8f9fa');
     $('#blk-' + id).find('td:eq(0)').attr('contenteditable', false);
 }
+
+////////////////////// Daire   işlemleri //////////////////////
+function SaveDaire() {
+    var daireNo = document.getElementById("daireNo").value;
+    if (daireNo == "") {
+        $('#daireNo').css('border-color', '#ff0000');
+        $('#daireNoLabel').css('color', '#ff0000');
+
+    }
+
+
+}
+$('#daireNo').blur(function() {
+    $('#daireNo').css('border-color', '#0d0c22');
+    $('#daireNoLabel').css('color', '#0d0c22');
+});
+
+$('#daireNo').focus(function() {
+    $('#daireNo').css('border-color', '#277ce0');
+    $('#daireNoLabel').css('color', '#277ce0');
+});
 </script>
 
 <script type="text/javascript">

@@ -14,7 +14,7 @@
             </div>
             <div class="col-md-6 col margint">
                 <input type="number" class="form-controlxy input" id="blokSay" name="blokSay" value="1" max="20" min="1" required="">
-                <label for="blokSay">blok sayısı</label>                
+                <label for="blokSay">Blok Sayısı</label>                
             </div>
         </div>
 
