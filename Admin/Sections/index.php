@@ -58,6 +58,82 @@ try {
         </div>
     </div>
 
+
+
+
+
+
+<!-- Popup blok eklemek için-->
+<div id="popupBlokEkle" class="form-popup">
+
+    <form id="userFormBlok" class="login-form">
+
+        <h2 class="form-signin-heading">Bloklar</h2>
+
+        <div class="row">
+
+            <div class="col-blok w-70">
+                <input class="input min-w mb-0" type="text" id="blokInput" maxLength="5" required="" />
+                <label for="blokInput">Blok Ekle :</label>
+            </div>
+
+            <div class="col-blok w-30">
+                <button type="button" class="btn-custom-daire ekle-btn blok-btn" id="saveButton"
+                    onclick="saveBlok()">Ekle</button>
+            </div>
+        </div>
+
+        <hr class="horizontal mt-0 dark w-100">
+
+        <table class="table-blok">
+            <tr>
+                <th>Blok Adı </th>
+                <th>Daire Sayısı </th>
+                <th>Sil</th>
+                <th>Düzenle</th>
+            </tr>
+            <tr id="mainTr">
+                <?php  
+                 $blokIdMapping = [];
+                foreach ($blokList as $s ){
+                     $blokIdMapping[$s['blok_id']] = $s['blok_adi'];
+                        echo '
+                        <tr id="blk-'.$s["blok_id"].'">
+                            <td>'.$s["blok_adi"].'</td>
+                            <td>'.$s["daire_sayisi"].'</td>
+                            <td>  
+                                <span class="blok-ico" onclick="deleteBlok('.$s["blok_id"].')"><i class="fa-solid fa-trash"></i></span>
+                            </td> 
+                            <td>
+                                <span class="blok-ico" onclick="editBlok('.$s["blok_id"].')"><i class="fa-solid fa-pen"></i></span> 
+                            </td>
+                        </tr>
+                        ';
+
+                  }  ?>
+
+            </tr>
+
+        </table>
+
+        <hr class="horizontal dark w-100">
+
+        <div class="row row-btn">
+            <button type="button" class="btn-custom-close w-100 me-0" onclick="closePopupBlok()">Kapat</button>
+        </div>
+
+    </form>
+
+</div>
+
+
+
+
+
+
+
+
+
     <table id="table" class="table table-hover">
         <thead>
             <tr>
@@ -84,7 +160,7 @@ try {
 
                 <td data-title="Seç"> <input type="checkbox" /></td>
 
-                <td data-title="Blok Adı"><?php echo $row["blok_adi"]; ?></td>
+                <td data-title="Blok Adı"><?php echo $blokIdMapping[$row["blok_adi"]];  ?></td>
 
                 <td data-title="Kapı No"><?php echo $row["daire_sayisi"]; ?></td>
 
@@ -270,65 +346,6 @@ try {
 
 
 
-<!-- Popup blok eklemek için-->
-<div id="popupBlokEkle" class="form-popup">
-
-    <form id="userFormBlok" class="login-form">
-
-        <h2 class="form-signin-heading">Bloklar</h2>
-
-        <div class="row">
-
-            <div class="col-blok w-70">
-                <input class="input min-w mb-0" type="text" id="blokInput" maxLength="5" required="" />
-                <label for="blokInput">Blok Ekle :</label>
-            </div>
-
-            <div class="col-blok w-30">
-                <button type="button" class="btn-custom-daire ekle-btn blok-btn" id="saveButton"
-                    onclick="saveBlok()">Ekle</button>
-            </div>
-        </div>
-
-        <hr class="horizontal mt-0 dark w-100">
-
-        <table class="table-blok">
-            <tr>
-                <th>Blok Adı </th>
-                <th>Daire Sayısı </th>
-                <th>Sil</th>
-                <th>Düzenle</th>
-            </tr>
-            <tr id="mainTr">
-                <?php  foreach ($blokList as $s ){
-                        echo '
-                        <tr id="blk-'.$s["blok_id"].'">
-                            <td>'.$s["blok_adi"].'</td>
-                            <td>'.$s["daire_sayisi"].'</td>
-                            <td>  
-                                <span class="blok-ico" onclick="deleteBlok('.$s["blok_id"].')"><i class="fa-solid fa-trash"></i></span>
-                            </td> 
-                            <td>
-                                <span class="blok-ico" onclick="editBlok('.$s["blok_id"].')"      ><i class="fa-solid fa-pen"></i></span> 
-                            </td>
-                        </tr>
-                        ';
-
-                  }  ?>
-
-            </tr>
-
-        </table>
-
-        <hr class="horizontal dark w-100">
-
-        <div class="row row-btn">
-            <button type="button" class="btn-custom-close w-100 me-0" onclick="closePopupBlok()">Kapat</button>
-        </div>
-
-    </form>
-
-</div>
 
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 
