@@ -32,7 +32,7 @@
 
         <div class="row">
             <div class="col-md-12 col-btn">
-                <button id="kaydetbtn" class="btn-custom send-form" onclick="kaydet()">Kaydet</button>
+                <button id="kaydetbtn" class="btn-custom send-form w-100" onclick="kaydet()">Kaydet</button>
             </div>
         </div>
 
