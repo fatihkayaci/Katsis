@@ -1,0 +1,86 @@
+saveButton.addEventListener('click', function() {
+    var userName = $('input[name="userName"]').val();
+    var tc = $('input[name="tc"]').val();
+    var phoneNumber = $('input[name="phoneNumber"]').val();
+    var userEmail = $('input[name="userEmail"]').val();
+    var plate = $('input[name="plate"]').val();
+    var gender = $('select#gender').val();
+    var apartman_id = $('input[name="apartman_id"]').val();
+    var optionsBlok = $('select#optionsBlok').val();
+    var blokArray = [];
+    var durumArray = [];
+    console.log(userName + "," + tc + "," + phoneNumber + "," + userEmail + "," + plate + "," + gender);
+
+    for (var i = 0; i < selectedDurumArray.length; i++) {
+        var durumParcalari = selectedDurumArray[i].split(',');
+
+        for (var j = 0; j < durumParcalari.length; j++) {
+            durumArray.push(durumParcalari[j]);
+        }
+    }
+
+    console.log("durum Array = " + JSON.stringify(durumArray));
+
+    for (var i = 0; i < selectedValuesArray.length; i++) {
+        var element = selectedValuesArray[i];
+        var match = element.match(/\d+/);
+        var letterPart = element.charAt(0);
+        var numberPart = match ? match[0] : null;
+
+        /*console.log("element = " + element + ", letterpart = " + letterPart + ", numberpart = " +
+            numberPart);*/
+
+        var blokElement = {
+            letter: letterPart,
+            number: numberPart
+        };
+
+        blokArray.push(blokElement);
+    }
+
+    console.log("blok Array = " + JSON.stringify(blokArray));
+
+    if (kisitlamalar(userName /* tc, phoneNumber, userEmail, plate*/ )) {
+        $.ajax({
+            url: 'Controller/save_user.php',
+            type: 'POST',
+            data: {
+                userName: userName,
+                tc: tc,
+                phoneNumber: phoneNumber,
+                durumArray: JSON.stringify(durumArray),
+                userEmail: userEmail,
+                plate: plate,
+                gender: gender,
+                apartman_id: apartman_id
+            },
+            success: function(response) {
+                alert(response);
+                if (response == 1) {
+                    $.ajax({
+                        url: 'Controller/demo.php',
+                        type: 'POST',
+                        data: {
+                            blokArray: JSON.stringify(blokArray), // Diziyi JSON dizesine dönüştür
+                            durumArray: JSON.stringify(durumArray)
+                        },
+                        success: function(secondResponse) {
+                            alert(secondResponse);
+                            if (secondResponse == 1) {
+                                location.reload();
+                            }
+                        },
+                        error: function(secondError) {
+                            console.error(secondError);
+                        }
+                    });
+                }
+            },
+            error: function(error) {
+                console.error(error);
+            }
+        });
+    } else {
+        return;
+    }
+});

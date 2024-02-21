@@ -3,7 +3,11 @@
     $optionsDurum = '';
 try {
     //burada yeni eklendi css eklenmesi lazım.
-    $sql = "SELECT blok_adi, daire_sayisi FROM tbl_daireler WHERE apartman_id = " . $_SESSION["apartID"];
+    $sql = "SELECT d.blok_adi, d.daire_sayisi, b.blok_adi
+        FROM tbl_daireler d
+        INNER JOIN tbl_blok b ON d.blok_adi = b.blok_id
+        WHERE d.apartman_id = " . $_SESSION["apartID"];
+
     $result = $conn->query($sql);
 
     if ($result->rowCount() > 0) {
@@ -11,11 +15,13 @@ try {
             $optionsBlok .= '<option name="optionsBlok" value="' . $row['blok_adi']." Blok - Daire ".$row['daire_sayisi'] . '">' .$row['blok_adi']." Blok - Daire ". $row['daire_sayisi'] . '</option>';
         }
     }
-    $sql2 = "SELECT u.*, d.blok_adi, d.daire_sayisi
+    $sql2 = "SELECT u.*, b.blok_adi AS blok_adi, d.daire_sayisi
     FROM tbl_users u
     LEFT JOIN tbl_daireler d ON u.userID = d.kiraciID OR u.userID = d.katMalikiID
+    LEFT JOIN tbl_blok b ON d.blok_adi = b.blok_id
     WHERE rol=3 AND u.apartman_id = " .  $_SESSION["apartID"] . "
     ORDER BY u.userID ASC";
+
 
     
     $stmt = $conn->prepare($sql2);
@@ -198,7 +204,7 @@ try {
 
         <div class="row row-btn">
             <button type="button" class="btn-custom-close" onclick="closePopup()">Kapat</button>
-            <button type="button" class="btn-custom" id="saveButton">Kaydet</button>
+            <button type="button" class="btn-custom"  onclick="saveUser()" id="saveButton">Kaydet</button>
         </div>
 
 
@@ -571,9 +577,9 @@ topluSilButton.addEventListener('click', function() {
     guncelleButton.style.display = 'none';
     silButton.style.display = 'none';
 });
-
-var saveButton = document.getElementById('saveButton');
-saveButton.addEventListener('click', function() {
+//bakılacak
+//var saveButton = document.getElementById('saveButton');
+function saveUser(){
     var userName = $('input[name="userName"]').val();
     var tc = $('input[name="tc"]').val();
     var phoneNumber = $('input[name="phoneNumber"]').val();
@@ -636,8 +642,7 @@ saveButton.addEventListener('click', function() {
                         url: 'Controller/demo.php',
                         type: 'POST',
                         data: {
-                            blokArray: JSON.stringify(
-                                blokArray), // Diziyi JSON dizesine dönüştür
+                            blokArray: JSON.stringify(blokArray), // Diziyi JSON dizesine dönüştür
                             durumArray: JSON.stringify(durumArray)
                         },
                         success: function(secondResponse) {
@@ -659,7 +664,7 @@ saveButton.addEventListener('click', function() {
     } else {
         return;
     }
-});
+};
 
 
 var updateButtons = document.querySelectorAll('.updateButton');

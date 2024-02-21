@@ -16,9 +16,10 @@ try {
         $sadeceDaire = $blokElement['number'];
         foreach($durumArray as $durum ){
             if ($durum == "kiracı") {
-                $sql  = "UPDATE tbl_daireler
-                         SET kiraciID = (SELECT userID FROM tbl_users WHERE userID = :lastID)
-                         WHERE blok_adi = :sadeceBlok AND daire_sayisi = :sadeceDaire AND apartman_id = " . $_SESSION["apartID"];
+                $sql  = "UPDATE tbl_daireler d
+                         INNER JOIN tbl_blok b ON d.blok_adi = b.blok_id
+                         SET d.kiraciID = (SELECT userID FROM tbl_users WHERE userID = :lastID)
+                         WHERE b.blok_adi = :sadeceBlok AND d.daire_sayisi = :sadeceDaire AND d.apartman_id = " . $_SESSION["apartID"];
                          // PDO sorgusunu hazırla ve çalıştır
                         $stmt = $conn->prepare($sql);
                         $stmt->bindParam(':lastID', $lastID, PDO::PARAM_INT);
@@ -27,9 +28,10 @@ try {
                         $stmt->execute();
                          break;
             } else if ($durum == "katmaliki") {
-                $sql  = "UPDATE tbl_daireler
-                         SET katmalikiID = (SELECT userID FROM tbl_users WHERE userID = :lastID)
-                         WHERE blok_adi = :sadeceBlok AND daire_sayisi = :sadeceDaire AND apartman_id = " . $_SESSION["apartID"];
+                $sql  = "UPDATE tbl_daireler d
+                         INNER JOIN tbl_blok b ON d.blok_adi = b.blok_id
+                         SET d.katmalikiID = (SELECT userID FROM tbl_users WHERE userID = :lastID)
+                         WHERE b.blok_adi = :sadeceBlok AND d.daire_sayisi = :sadeceDaire AND d.apartman_id = " . $_SESSION["apartID"];
                          // PDO sorgusunu hazırla ve çalıştır
                         $stmt = $conn->prepare($sql);
                         $stmt->bindParam(':lastID', $lastID, PDO::PARAM_INT);
