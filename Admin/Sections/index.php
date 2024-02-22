@@ -138,13 +138,13 @@ try {
         <thead>
             <tr class="users-table-info">
                 <th><input type="checkbox" /></th>
-                <th>Blok Adı</th>
-                <th>Kapı No</th>
-                <th>Kiracı</th>
-                <th></th>
-                <th>Kat Maliki</th>
-                <th></th>
-                <th></th>
+                <th onclick="sortTable(1)">Blok Adı <i id="icon-table" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(2)">Kapı No <i id="icon-table" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(3)">Kiracı <i id="icon-table" class="fa-solid fa-sort-down"></i></th>
+                <th class="ayar-i" onclick="sortTable(4)"><i id="icon-table" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(5)">Kat Maliki <i id="icon-table" class="fa-solid fa-sort-down"></i></th>
+                <th class="ayar-i" onclick="sortTable(6)"><i id="icon-table" class="fa-solid fa-sort-down"></i></th>
+                <th class="ayar-i" onclick="sortTable(7)"><i id="icon-table" class="fa-solid fa-sort-down"></i></th>
             </tr>
         </thead>
 
@@ -349,6 +349,45 @@ try {
 
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 
+<script>
+function sortTable(n) {
+  var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+  table = document.getElementById("table");
+  switching = true;
+  dir = "asc"; 
+  while (switching) {
+    switching = false;
+    rows = table.rows;
+    for (i = 1; i < (rows.length - 1); i++) {
+      shouldSwitch = false;
+      x = rows[i].getElementsByTagName("TD")[n];
+      y = rows[i + 1].getElementsByTagName("TD")[n];
+      if (dir == "asc") {
+        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+          shouldSwitch= true;
+          break;
+        }
+         
+      } else if (dir == "desc") {
+        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+          shouldSwitch = true;
+          break;
+        }
+      }
+    }
+    if (shouldSwitch) {
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+      switchcount ++;      
+    } else {
+      if (switchcount == 0 && dir == "asc") {
+        dir = "desc";
+        switching = true;
+      }
+    }
+  }
+}
+</script>
 
 <script>
 closePopup();

@@ -612,10 +612,12 @@ box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  width: 100%;
+  width: 98%;
   padding: 10px 20px;
   overflow-x: auto;
   overflow-y: hidden;
+  background-color: #fff;
+  border-radius: 15px;
 }
 
 @media (max-width: 768px) {
@@ -682,7 +684,7 @@ box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
 
 .bcoc3 {
   border: 1px solid #d2d6da;
-  background-color: #ff7f0e  ;
+  background-color: #ff7f0e;/* #009fff denenir */
   color: #fff;
 }
 .bcoc3:hover {
@@ -724,20 +726,71 @@ box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
 
 .users-table {
   width: 90%;
-  text-align: center;
-  border-collapse: collapse;
+  margin-top: 20px;
+  text-align: left;
+  border-collapse: separate;
+  border-spacing: 0;
   -webkit-transition: none;
   -o-transition: none;
   transition: none;
   white-space: nowrap;
+  border-radius: 5px;
+  overflow: hidden;
+  background-color: #fff;
 }
 
 .users-table-info {
-  height: 48px;
-  border-bottom: 1.2px solid #F8F9FA;
   font-size: 14px;
-  border-radius: 10px;
+  border-radius: 1em;
 }
+th:first-child {
+  border-radius: 5px 0 0 5px;
+  border-left: 1px solid #d2d6da!important;
+}
+th {
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  text-transform: capitalize;
+  border: 0;
+  border-top: 1px solid #d2d6da!important;
+  border-bottom: 1px solid #d2d6da!important;
+  position: relative;
+  cursor: pointer;
+}
+th:last-child {
+  border-radius: 0 5px 5px 0;
+  border-right: 1px solid #d2d6da!important;
+}
+
+th i {
+  vertical-align: top;
+  margin-left: 5px;
+}
+.ayar-i {
+  vertical-align: top;
+}
+
+.fa-sort-down.rotate {
+  transform: rotate(180deg);
+}
+
+table tbody tr:first-child td:first-child {
+ border-top-left-radius: 5px;
+}
+
+table tbody tr:last-child td:first-child {
+ border-bottom-left-radius: 5px;
+}
+
+table tbody tr:first-child td:last-child {
+ border-top-right-radius: 5px;
+}
+
+table tbody tr:last-child td:last-child {
+ border-bottom-right-radius: 5px;
+}
+
 .git-ac {
   background-color: #fff;
   border-top: 1px solid #F8F9FA;
@@ -755,7 +808,8 @@ box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
 
 .users-table th,
 .users-table td {
-  padding: 15px;
+  padding: 12px 15px;
+  text-align: left;
 }
 
 .users-table .active {
@@ -763,8 +817,6 @@ box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
 }
 
 .settings {
-  justify-content: end;
-  align-items: end;
   width: 100%;
 }
 
