@@ -688,8 +688,8 @@ function deleteBlok(id) {
 
 
 function editBlok(id) {
-    $('#blk-' + id).css('background-color', '#445784');
-
+    $('#blk-' + id).css('background-color', '#2f49d11a');
+    $('#blk-' + id).css('border', '1px solid #000');
 
     $('#blk-' + id).find('td:eq(2) span').css('display', 'none');
     var trashIcon = $('<i class="fa-solid fa-xmark"></i>');
@@ -757,7 +757,7 @@ function reeditBlok(id) {
     $('#blk-' + id).find('td:eq(3) span:eq(0)').css('display', 'block');
     $('#blk-' + id).find('td:eq(2) span:eq(0)').css('display', 'block');
 
-    $('#blk-' + id).css('background-color', '#f8f9fa');
+    $('#blk-' + id).css('background-color', '#fff');
     $('#blk-' + id).find('td:eq(0)').attr('contenteditable', false);
 }
 
