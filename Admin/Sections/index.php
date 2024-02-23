@@ -42,7 +42,7 @@ try {
     if ($result) {
     ?>
 
-<div class="table-responsive-vertical cener-table">
+<div class="cener-table">
 
     <div class="input-group-div">
 
@@ -89,8 +89,8 @@ try {
             <tr class="users-table-info">
                 <th>Blok Adı </th>
                 <th>Daire Sayısı </th>
-                <th>Sil</th>
-                <th>Düzenle</th>
+                <th></th>
+                <th></th>
             </tr>
             <tr id="mainTr">
                 <?php  
@@ -144,7 +144,7 @@ try {
                 <th class="ayar-i" onclick="sortTable(4)"><i id="icon-table4" class="fa-solid fa-sort-down"></i></th>
                 <th onclick="sortTable(5)">Kat Maliki <i id="icon-table5" class="fa-solid fa-sort-down"></i></th>
                 <th class="ayar-i" onclick="sortTable(6)"><i id="icon-table6" class="fa-solid fa-sort-down"></i></th>
-                <th class="ayar-i" onclick="sortTable(7)"><i id="icon-table7" class="fa-solid fa-sort-down"></i></th>
+                <th class="ayar-i"></th>
             </tr>
         </thead>
 
@@ -363,12 +363,12 @@ function sortTable(n) {
       x = rows[i].getElementsByTagName("TD")[n];
       y = rows[i + 1].getElementsByTagName("TD")[n];
 
-      for (var j = 1; j < 8; j++) {
+        for (var j = 1; j < 8; j++) {
             if(n != j){
                 $('#icon-table' + j).removeClass("rotate");
                 $('#icon-table' + j).removeClass("opacity");
             }
-          }
+        }
 
       if (dir == "asc") {
         if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {

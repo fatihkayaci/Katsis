@@ -32,7 +32,7 @@ try {
     if ($result) {
        ?>
 
-<div class="table-responsive-vertical cener-table">
+<div class="cener-table">
 
     <div class="input-group-div">
 
@@ -71,11 +71,11 @@ try {
         <thead>
             <tr class="users-table-info">
                 <th><input id="mainCheckbox" type="checkbox" onclick="toggleAll(this)" /></th>
-                <th>Ad Soyad</th>
-                <th>Telefon Numarası</th>
-                <th>Blok Adı</th>
-                <th>Kapı Numarası</th>
-                <th>Durum</th>
+                <th onclick="sortTable(1)">Ad Soyad <i id="icon-table1" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(2)">Telefon Numarası <i id="icon-table2" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(3)">Blok Adı <i id="icon-table3" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(4)">Kapı Numarası <i id="icon-table4" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(5)">Durum <i id="icon-table5" class="fa-solid fa-sort-down"></i></th>
             </tr>
         </thead>
         <tbody>
@@ -102,7 +102,7 @@ try {
     } else {
 ?>
 
-<div class="table-responsive-vertical cener-table">
+<div class="cener-table">
 
     <div class="input-group-div">
 
@@ -269,6 +269,57 @@ try {
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
+
+<script>
+function sortTable(n) {
+  var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+  table = document.getElementById("example");
+  switching = true;
+  dir = "asc"; 
+  while (switching) {
+    switching = false;
+    rows = table.rows;
+    for (i = 1; i < (rows.length - 1); i++) {
+      shouldSwitch = false;
+      x = rows[i].getElementsByTagName("TD")[n];
+      y = rows[i + 1].getElementsByTagName("TD")[n];
+
+        for (var j = 1; j < 8; j++) {
+            if(n != j){
+                $('#icon-table' + j).removeClass("rotate");
+                $('#icon-table' + j).removeClass("opacity");
+            }
+        }
+
+      if (dir == "asc") {
+        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+          shouldSwitch= true;
+          $('#icon-table' + n).removeClass("rotate");
+          $('#icon-table' + n).addClass("opacity");
+          break;
+        }
+      } else if (dir == "desc") {
+        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+          shouldSwitch = true;
+          $('#icon-table' + n).addClass("rotate");
+          $('#icon-table' + n).addClass("opacity");
+          break;
+        }
+      }
+    }
+    if (shouldSwitch) {
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+      switchcount ++;      
+    } else {
+      if (switchcount == 0 && dir == "asc") {
+        dir = "desc";
+        switching = true;
+      }
+    }
+  }
+}
+</script>
 
 <script type="text/javascript">
 var selectedValuesArray = [];

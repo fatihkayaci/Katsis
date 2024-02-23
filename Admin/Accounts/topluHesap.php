@@ -1,28 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Toplu Hesap Ekleme</title>
-</head>
-
-<body>
-
-    <div class="table-responsive-vertical cener-table">
+<div class="cener-table">
         <div class="input-group-div">
 
             <div class="input-group1">
                 <button type="button" class="btn-custom-outline" id="saveButton">Kaydet</button>
             </div>
-
-            <div class="input-group">
-                <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
-                <input type="text" class="form-control" placeholder="Arama...">
+            <div class="input-group1">
+                <div class="search-box">
+                    <i class="fas fa-search search-icon" aria-hidden="true"></i>
+                    <input type="text" class="search-input" placeholder="Arama...">
+                </div>
             </div>
+            
         </div>
-    </div>
+   
 
     <div class="row">
         <div class="col-md-6 col">
@@ -43,10 +34,10 @@
 
         if ($result) {
             echo '
-            <div class="table-responsive-vertical shadow-z-1 cener-table">
-                <table id="example" class="table table-hover table-mc-light-blue">
+            <div class="cener-table">
+                <table id="example" class="table users-table">
                     <thead>
-                        <tr>
+                        <tr class="users-table-info">
                             <th>Blok Adı</th>
                             <th>Daire Sayısı</th>
                             <th>Kiracı Adı</th>
@@ -77,7 +68,7 @@
 
                 // Kiracı ve Kat Maliki bilgileri var mı kontrolü
                 if ($kiraciBilgisi && $katMalikiBilgisi) {
-                    echo '<tr data-userid="">
+                    echo '<tr data-userid="" class="git-ac">
                                 <td data-title="Blok Adı" name="blok">' . $blokAdi . '</td>
                                 <td data-title="Daire Sayısı" name="daire">' . $daireSayisi . '</td>
                                 <td data-title="Kiracı Adı"><input type="text" name="kiraciUserName" value="' . $kiraciBilgisi['userName'] . '" /></td>
@@ -85,7 +76,7 @@
                             </tr>';
                 } else {
                     // Kullanıcı bilgileri bulunamadıysa, hata mesajı veya başka bir işlem
-                    echo '<tr data-userid="">
+                    echo '<tr data-userid="" class="git-ac">
                                 <td data-title="Blok Adı" name="blok">' . $blokAdi . '</td>
                                 <td data-title="Daire Sayısı" name="daire">' . $daireSayisi . '</td>
                                 <td data-title="Kiracı Adı"><input class="input-select" type="text" name="kiraciUserName" value="' . ($kiraciBilgisi ? $kiraciBilgisi['userName'] : '') . '" /></td>
@@ -94,7 +85,8 @@
                 }
             }
             echo '</tbody>
-                </table>';
+                </table>
+            </div>';
         } else {
             echo "0 results";
         }
