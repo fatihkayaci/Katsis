@@ -138,13 +138,13 @@ try {
         <thead>
             <tr class="users-table-info">
                 <th><input type="checkbox" /></th>
-                <th onclick="sortTable(1)">Blok Adı <i id="icon-table" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(2)">Kapı No <i id="icon-table" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(3)">Kiracı <i id="icon-table" class="fa-solid fa-sort-down"></i></th>
-                <th class="ayar-i" onclick="sortTable(4)"><i id="icon-table" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(5)">Kat Maliki <i id="icon-table" class="fa-solid fa-sort-down"></i></th>
-                <th class="ayar-i" onclick="sortTable(6)"><i id="icon-table" class="fa-solid fa-sort-down"></i></th>
-                <th class="ayar-i" onclick="sortTable(7)"><i id="icon-table" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(1)">Blok Adı <i id="icon-table1" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(2)">Kapı No <i id="icon-table2" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(3)">Kiracı <i id="icon-table3" class="fa-solid fa-sort-down"></i></th>
+                <th class="ayar-i" onclick="sortTable(4)"><i id="icon-table4" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(5)">Kat Maliki <i id="icon-table5" class="fa-solid fa-sort-down"></i></th>
+                <th class="ayar-i" onclick="sortTable(6)"><i id="icon-table6" class="fa-solid fa-sort-down"></i></th>
+                <th class="ayar-i" onclick="sortTable(7)"><i id="icon-table7" class="fa-solid fa-sort-down"></i></th>
             </tr>
         </thead>
 
@@ -362,15 +362,26 @@ function sortTable(n) {
       shouldSwitch = false;
       x = rows[i].getElementsByTagName("TD")[n];
       y = rows[i + 1].getElementsByTagName("TD")[n];
+
+      for (var j = 1; j < 8; j++) {
+            if(n != j){
+                $('#icon-table' + j).removeClass("rotate");
+                $('#icon-table' + j).removeClass("opacity");
+            }
+          }
+
       if (dir == "asc") {
         if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
           shouldSwitch= true;
+          $('#icon-table' + n).removeClass("rotate");
+          $('#icon-table' + n).addClass("opacity");
           break;
         }
-         
       } else if (dir == "desc") {
         if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
           shouldSwitch = true;
+          $('#icon-table' + n).addClass("rotate");
+          $('#icon-table' + n).addClass("opacity");
           break;
         }
       }

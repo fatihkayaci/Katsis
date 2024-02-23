@@ -766,6 +766,7 @@ th:last-child {
 th i {
   vertical-align: top;
   margin-left: 5px;
+  opacity: 0.5;
 }
 .ayar-i {
   vertical-align: top;
@@ -773,6 +774,10 @@ th i {
 
 .fa-sort-down.rotate {
   transform: rotate(180deg);
+}
+
+.fa-sort-down.opacity {
+  opacity: 1;
 }
 
 table tbody tr:first-child td:first-child {
