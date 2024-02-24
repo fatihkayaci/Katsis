@@ -4619,7 +4619,6 @@ fieldset:disabled .btn {
   font-size: var(--bs-nav-link-font-size);
   font-weight: var(--bs-nav-link-font-weight);
   color: var(--bs-nav-link-color);
-  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -10725,7 +10724,7 @@ fieldset:disabled .btn {
 }
 
 .bg-gray-100 {
-  background-color: #f8f9fa !important;
+  background-color: #F6F7FB !important;
 }
 
 .bg-gray-200 {
@@ -12252,6 +12251,10 @@ fieldset:disabled .btn {
 
   .me-sm-n4 {
     margin-right: -1.5rem !important;
+  }
+
+  .me-sm-n4x {
+    margin-right: -0.752rem !important;
   }
 
   .me-sm-n5 {
@@ -22206,7 +22209,7 @@ hr.horizontal.gray-light {
 }
 
 .border-radius-xl {
-  border-radius: 1rem;
+  border-radius: 15px;
 }
 
 .border-radius-2xl {
@@ -22652,12 +22655,12 @@ html {
   padding: 0;
   box-shadow: none;
   z-index: 99;
+  background-color: #fff;
 }
 
 .navbar-vertical.navbar-expand-xs .navbar-collapse {
   display: block;
   overflow: auto;
-  height: 100vh;
 }
 
 .navbar-vertical.navbar-expand-xs>[class*="container"] {
@@ -22697,9 +22700,33 @@ html {
   pointer-events: none;
 }
 
-.navbar-vertical.navbar-expand-xs .navbar-nav .nav-item {
+.leftbar .navbar-vertical.navbar-expand-xs .navbar-nav .nav-item {
   width: 100%;
+  transition: ease-out 0.1s;
 }
+.leftbar .nav-item.active {
+  color: #fff;
+  border-left: 5px solid #277CE0;
+  border-radius: 4px;
+  background-color: rgba(39, 125, 224, 0.1);
+  font-weight: 600;
+}
+
+.leftbar .nav-item.active .nav-link-text {
+  font-weight: 600;
+}
+
+.leftbar .nav-item:hover {
+  border-left: 5px solid #277CE0;
+  border-radius: 4px;
+  background-color: #F6F7FB;
+}
+
+.leftbar .nav-item:hover .nav-link-text,
+.leftbar .nav-item:hover .nav-ico i {
+  color: #344767 !important;
+}
+
 
 .navbar-vertical.navbar-expand-xs .navbar-nav>.nav-item {
   margin-top: 0.125rem;
@@ -23298,7 +23325,7 @@ html {
   }
 
   .sidenav.fixed-start~.main-content {
-    margin-left: 17.125rem;
+    margin-left: 16.125rem;
   }
 
   .sidenav.fixed-end~.main-content {
@@ -23374,13 +23401,13 @@ html {
 
 .navbar-vertical .navbar-nav .nav-link.active {
   font-weight: 600;
-  box-shadow: 0 20px 27px 0 rgba(0, 0, 0, 0.05);
-  border-radius: 0.5rem;
+  border-radius: 4px;
 }
 
 .navbar-vertical .navbar-nav>.nav-item .nav-link.active {
-  color: #344767;
-  background-color: #fff;
+  color: #277CE0;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-left: 5px solid #277CE0;
 }
 
 .navbar-vertical .navbar-nav>.nav-item .nav-link.active .icon {
