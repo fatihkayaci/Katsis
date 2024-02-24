@@ -226,7 +226,8 @@ overflow: auto;
 }
 
 .login-form label,
-.login-form-start label {
+.login-form-start label,
+.login-form-daire label {
   position: absolute;
   top:0;
   left: 10px;
@@ -702,7 +703,6 @@ box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
   background-color: #9e2020;
 }
 
-
 .input-select {
   width: 90%;
   min-width: 120px;
@@ -710,8 +710,8 @@ box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
   height: 32px;
   background-color: transparent;
   color: #0d0c22;
-  border: none;
-  border-bottom: 1px solid #6b7280;
+  border: 1px solid #b6b6b6;
+  border-radius: 4px;
   padding: 5px 10px;
   transition: 0.5s;
   outline: none;
@@ -721,8 +721,6 @@ box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
 
 .input-select:focus {
   border-color: #0d0c22;
-  border: 1px solid #6b7280;
-  border-radius: 4px;
   box-shadow: 0 0 10px 4px #0000001a; 
 }
 
@@ -1212,9 +1210,29 @@ border-top: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 .blok-ico:hover i {
-  color: #277CE0;
+  color: #ff7f0e;
   transform: scale(1.1);
   transition: 0.3s;
+}
+
+.color-red:hover i{
+  color: #d63031;
+}
+
+.blok-ico .xmark1 {
+  color: #d63031;
+}
+
+.blok-ico:hover .xmark1 {
+  color: #9e2020;
+}
+
+.blok-ico .check1 {
+  color: #33b249;
+}
+
+.blok-ico:hover .check1 {
+  color: #186625;
 }
 
 @media (max-width: 350px) {
