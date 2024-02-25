@@ -19,6 +19,7 @@ foreach($UserList as $list){
     $listt[$list['userID']] = $list['userName'];
 }
 try {
+
 $sql = "SELECT * FROM tbl_blok WHERE apartman_idd = " . $idapartman;
 $stmt = $conn->prepare($sql);
 $stmt->execute();
@@ -29,6 +30,20 @@ $blokList = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }catch (PDOException $e) {
     echo "Bağlantı hatası: " . $e->getMessage();
 }
+
+try {
+    
+    $sql = "SELECT * FROM tbl_grup WHERE apartman_id = " . $idapartman;
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    
+    $grupList=[];
+    $grupList = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    }catch (PDOException $e) {
+        echo "Bağlantı hatası: " . $e->getMessage();
+    }
+
 
 
 try {
@@ -63,37 +78,37 @@ try {
 
 
 
-<!-- Popup blok eklemek için-->
-<div id="popupBlokEkle" class="form-popup">
+    <!-- Popup blok eklemek için-->
+    <div id="popupBlokEkle" class="form-popup">
 
-    <form id="userFormBlok" class="login-form">
+        <form id="userFormBlok" class="login-form">
 
-        <h2 class="form-signin-heading">Bloklar</h2>
+            <h2 class="form-signin-heading">Bloklar</h2>
 
-        <div class="row">
+            <div class="row">
 
-            <div class="col-blok w-70">
-                <input class="input min-w mb-0" type="text" id="blokInput" maxLength="5" required="" />
-                <label for="blokInput">Blok Ekle :</label>
+                <div class="col-blok w-70">
+                    <input class="input min-w mb-0" type="text" id="blokInput" maxLength="5" required="" />
+                    <label for="blokInput">Blok Ekle :</label>
+                </div>
+
+                <div class="col-blok w-30">
+                    <button type="button" class="btn-custom-daire ekle-btn blok-btn" id="saveButton"
+                        onclick="saveBlok()">Ekle</button>
+                </div>
             </div>
 
-            <div class="col-blok w-30">
-                <button type="button" class="btn-custom-daire ekle-btn blok-btn" id="saveButton"
-                    onclick="saveBlok()">Ekle</button>
-            </div>
-        </div>
+            <hr class="horizontal mt-0 dark w-100">
 
-        <hr class="horizontal mt-0 dark w-100">
-
-        <table class="users-table">
-            <tr class="users-table-info">
-                <th>Blok Adı </th>
-                <th>Daire Sayısı </th>
-                <th></th>
-                <th></th>
-            </tr>
-            <tr id="mainTr">
-                <?php  
+            <table class="users-table">
+                <tr class="users-table-info">
+                    <th>Blok Adı </th>
+                    <th>Daire Sayısı </th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                <tr id="mainTr">
+                    <?php  
                  $blokIdMapping = [];
                 foreach ($blokList as $s ){
                      $blokIdMapping[$s['blok_id']] = $s['blok_adi'];
@@ -112,19 +127,19 @@ try {
 
                   }  ?>
 
-            </tr>
+                </tr>
 
-        </table>
+            </table>
 
-        <hr class="horizontal dark w-100">
+            <hr class="horizontal dark w-100">
 
-        <div class="row row-btn">
-            <button type="button" class="btn-custom-close w-100 me-0" onclick="closePopupBlok()">Kapat</button>
-        </div>
+            <div class="row row-btn">
+                <button type="button" class="btn-custom-close w-100 me-0" onclick="closePopupBlok()">Kapat</button>
+            </div>
 
-    </form>
+        </form>
 
-</div>
+    </div>
 
 
 
@@ -290,8 +305,7 @@ try {
 
         <h2 class="form-signin-heading">Daire Ekle</h2>
 
-        <input type="hidden" id="hiddenDaireID" />
-        <input type="hidden" id="turDaire" />
+        <input type="hidden" id="DaireSaveID" value=<?php  echo $idapartman ?> />
 
         <div class="row">
             <div class="col-md-6 col-btn">
@@ -300,35 +314,47 @@ try {
             </div>
 
             <div class="col-md-6 col">
-                <input class="input" type="text" id="userInput" required="" />
-                <label for="userInput">Kat :</label>
+                <input class="input" type="text" id="daireKat" required="" />
+                <label for="daireKat">Kat :</label>
             </div>
             <div class="col-md-6 col">
-                <select class="input" id="userInput" required="">
+                <select class="input" id="daireBlok" required="">
                     <option style="display: none;" value="" disabled selected></option>
-                    <option value="blok1" selected>Blok 1</option>
-                    <option value="blok2">Blok 2</option>
-                    <option value="blok3">Blok 3</option>
-                    <!-- Diğer blokları eklemeye devam edebilirsiniz -->
+                    <?php
+
+                foreach ($blokList as $s ){
+                    echo "  <option value='".$s['blok_id']."'>".$s['blok_adi']."</option>";
+
+                }
+                  ?>
                 </select>
-                <label for="userInput">Blok: *</label>
+                <label id="daireBlokLabel" for="daireBlok">Blok: *</label>
             </div>
 
             <div class="col-md-6 col">
-                <input class="input" type="text" id="userInput" required="" />
-                <label for="userInput">Daire Grubu :</label>
+                <select class="input" id="daireGrup" required="">
+                    <option style="display: none;" value="" disabled selected></option>
+                    <?php
+
+                        foreach ($grupList as $s ){
+                            echo "  <option value='".$s['grup_id']."'>".$s['grup_adi']."</option>";
+
+                        }
+                    ?>
+                </select>
+                <label for="daireGrup">Daire Grubu :</label>
             </div>
             <div class="col-md-6 col">
-                <input class="input" type="text" id="userInput" required="" />
-                <label for="userInput">Brüt m² :</label>
+                <input class="input" type="text" id="daireBrut" required="" />
+                <label for="daireBrut">Brüt m² :</label>
             </div>
             <div class="col-md-6 col">
-                <input class="input" type="text" id="userInput" required="" />
-                <label for="userInput">Net m² :</label>
+                <input class="input" type="text" id="daireNet" required="" />
+                <label for="daireNet">Net m² :</label>
             </div>
             <div class="col-md-6 col">
-                <input class="input" type="text" id="userInput" required="" />
-                <label for="userInput">Arsa Payı :</label>
+                <input class="input" type="text" id="dairePay" required="" />
+                <label for="dairePay">Arsa Payı :</label>
             </div>
 
         </div>
@@ -350,53 +376,54 @@ try {
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 
 <script>
+    sortTable(1)
 function sortTable(n) {
-  var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-  table = document.getElementById("table");
-  switching = true;
-  dir = "asc"; 
-  while (switching) {
-    switching = false;
-    rows = table.rows;
-    for (i = 1; i < (rows.length - 1); i++) {
-      shouldSwitch = false;
-      x = rows[i].getElementsByTagName("TD")[n];
-      y = rows[i + 1].getElementsByTagName("TD")[n];
+    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+    table = document.getElementById("table");
+    switching = true;
+    dir = "asc";
+    while (switching) {
+        switching = false;
+        rows = table.rows;
+        for (i = 1; i < (rows.length - 1); i++) {
+            shouldSwitch = false;
+            x = rows[i].getElementsByTagName("TD")[n];
+            y = rows[i + 1].getElementsByTagName("TD")[n];
 
-        for (var j = 1; j < 8; j++) {
-            if(n != j){
-                $('#icon-table' + j).removeClass("rotate");
-                $('#icon-table' + j).removeClass("opacity");
+            for (var j = 1; j < 8; j++) {
+                if (n != j) {
+                    $('#icon-table' + j).removeClass("rotate");
+                    $('#icon-table' + j).removeClass("opacity");
+                }
+            }
+
+            if (dir == "asc") {
+                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                    shouldSwitch = true;
+                    $('#icon-table' + n).removeClass("rotate");
+                    $('#icon-table' + n).addClass("opacity");
+                    break;
+                }
+            } else if (dir == "desc") {
+                if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                    shouldSwitch = true;
+                    $('#icon-table' + n).addClass("rotate");
+                    $('#icon-table' + n).addClass("opacity");
+                    break;
+                }
             }
         }
-
-      if (dir == "asc") {
-        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-          shouldSwitch= true;
-          $('#icon-table' + n).removeClass("rotate");
-          $('#icon-table' + n).addClass("opacity");
-          break;
+        if (shouldSwitch) {
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+            switchcount++;
+        } else {
+            if (switchcount == 0 && dir == "asc") {
+                dir = "desc";
+                switching = true;
+            }
         }
-      } else if (dir == "desc") {
-        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-          shouldSwitch = true;
-          $('#icon-table' + n).addClass("rotate");
-          $('#icon-table' + n).addClass("opacity");
-          break;
-        }
-      }
     }
-    if (shouldSwitch) {
-      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-      switching = true;
-      switchcount ++;      
-    } else {
-      if (switchcount == 0 && dir == "asc") {
-        dir = "desc";
-        switching = true;
-      }
-    }
-  }
 }
 </script>
 
@@ -775,14 +802,63 @@ function reeditBlok(id) {
 ////////////////////// Daire   işlemleri //////////////////////
 function SaveDaire() {
     var daireNo = document.getElementById("daireNo").value;
+    var daireKat = document.getElementById("daireKat").value;
+    var daireBlok = document.getElementById("daireBlok").value;
+    var daireGrup = document.getElementById("daireGrup").value;
+    var daireBrut = document.getElementById("daireBrut").value;
+    var daireNet = document.getElementById("daireNet").value;
+    var dairePay = document.getElementById("dairePay").value;
+    var id = document.getElementById("DaireSaveID").value;
+    var f = true;
+
     if (daireNo == "") {
         $('#daireNo').css('border-color', '#ff0000');
         $('#daireNoLabel').css('color', '#ff0000');
+        f = false;
+    }
+    if (daireBlok == "") {
+        $('#daireBlok').css('border-color', '#ff0000');
+        $('#daireBlokLabel').css('color', '#ff0000');
+        f = false;
+    }
+
+    if (f) {
+        $.ajax({
+            url: 'Controller/daire_add.php',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                daireNo: daireNo,
+                daireKat: daireKat,
+                daireBlok: daireBlok,
+                daireGrup: daireGrup,
+                daireBrut: daireBrut,
+                daireNet: daireNet,
+                dairePay: dairePay,
+                id: id // id değeri burada belirtilmelidir
+            },
+            success: function(response) {
+                if(response.status==1){
+                    closePopupDaire();
+                    alert(response.msg);
+                    location.reload();
+                }else if (response.status==0){
+                    alert(response.error);
+                }
+                
+            },
+            error: function(error) {
+                alert("f");
+            }
+        });
+ 
 
     }
 
-
 }
+
+
+
 $('#daireNo').blur(function() {
     $('#daireNo').css('border-color', '#0d0c22');
     $('#daireNoLabel').css('color', '#0d0c22');
@@ -791,6 +867,16 @@ $('#daireNo').blur(function() {
 $('#daireNo').focus(function() {
     $('#daireNo').css('border-color', '#277ce0');
     $('#daireNoLabel').css('color', '#277ce0');
+});
+
+$('#daireBlok').blur(function() {
+    $('#daireBlok').css('border-color', '#0d0c22');
+    $('#daireBlokLabel').css('color', '#0d0c22');
+});
+
+$('#daireBlok').focus(function() {
+    $('#daireBlok').css('border-color', '#277ce0');
+    $('#daireBlokLabel').css('color', '#277ce0');
 });
 </script>
 
