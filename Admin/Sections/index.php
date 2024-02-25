@@ -117,7 +117,7 @@ try {
                             <td>'.$s["blok_adi"].'</td>
                             <td>'.$s["daire_sayisi"].'</td>
                             <td>  
-                                <span class="blok-ico" onclick="deleteBlok('.$s["blok_id"].')"><i class="fa-solid fa-trash"></i></span>
+                                <span class="blok-ico color-red" onclick="deleteBlok('.$s["blok_id"].')"><i class="fa-solid fa-trash"></i></span>
                             </td> 
                             <td>
                                 <span class="blok-ico" onclick="editBlok('.$s["blok_id"].')"><i class="fa-solid fa-pen"></i></span> 
@@ -658,7 +658,7 @@ function saveBlok() {
                     td2.textContent = "0";
                     // td3'e bir buton ekleyelim
 
-                    td3.innerHTML = "<span class='blok-ico' onclick=\"deleteBlok('" + response.blok_id +
+                    td3.innerHTML = "<span class='blok-ico color-red' onclick=\"deleteBlok('" + response.blok_id +
                         "')\" ><i class='fa-solid fa-trash'></i></span>";
 
 
@@ -672,6 +672,7 @@ function saveBlok() {
                     // Yeni td elemanlarını tr içine ekleyin
                     var newTr = document.createElement("tr");
                     newTr.setAttribute("id", "blk-" + response.blok_id);
+                    newTr.setAttribute("class", "git-ac"); 
                     newTr.appendChild(td1);
                     newTr.appendChild(td2);
                     newTr.appendChild(td3);
@@ -726,17 +727,16 @@ function deleteBlok(id) {
 
 
 function editBlok(id) {
-    $('#blk-' + id).css('background-color', '#2f49d11a');
-    $('#blk-' + id).css('border', '1px solid #000');
+    $('#blk-' + id).addClass('active');
 
     $('#blk-' + id).find('td:eq(2) span').css('display', 'none');
-    var trashIcon = $('<i class="fa-solid fa-xmark"></i>');
+    var trashIcon = $('<i class="fa-solid fa-xmark xmark1"></i>');
     var newSpan = $('<span>').addClass('blok-ico').append(trashIcon);
     $('#blk-' + id).find('td:eq(2)').append(newSpan);
 
 
     $('#blk-' + id).find('td:eq(3) span').css('display', 'none');
-    var trashIcon = $('<i class="fa-solid fa-check"></i>');
+    var trashIcon = $('<i class="fa-solid fa-check check1"></i>');
     var newSpan1 = $('<span>').addClass('blok-ico').append(trashIcon);
     $('#blk-' + id).find('td:eq(3)').append(newSpan1);
 
@@ -795,7 +795,7 @@ function reeditBlok(id) {
     $('#blk-' + id).find('td:eq(3) span:eq(0)').css('display', 'block');
     $('#blk-' + id).find('td:eq(2) span:eq(0)').css('display', 'block');
 
-    $('#blk-' + id).css('background-color', '#fff');
+    $('#blk-' + id).removeClass('active');
     $('#blk-' + id).find('td:eq(0)').attr('contenteditable', false);
 }
 
