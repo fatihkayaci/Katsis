@@ -52,7 +52,7 @@ if(isset($_POST['btn-login']))
   $_SESSION["mail"] =$email;
 
   if($_SESSION['rol'] ==1 ){
-    $user_login->redirect('Admin/index');
+    $user_login->redirect('Admin/index?parametre=dashboard');
   }else if($_SESSION['rol'] ==3){
     $user_login->redirect('Kullanici/giris');
   }
