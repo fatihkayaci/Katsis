@@ -579,7 +579,6 @@ function getSelectedOption(inputElement) {
 }
 
 
-
 function save() {
     var userr = document.getElementById('userInput').value;
     var turr = document.getElementById("turDaire").value;
