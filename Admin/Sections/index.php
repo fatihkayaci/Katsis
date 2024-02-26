@@ -269,15 +269,18 @@ try {
 
         <div class="row">
             <div class="col-md-12 col-btn">
-                <input class="input" type="text" list="Users" id="userInput" required="" oninput="getUserID()" />
-                <datalist id="Users">
-                    <?php 
-                        foreach($UserList as $user){
-                            echo '<option data-user-id="' . $user['userID'] . '">' . $user['userName'] . '</option>';
-                        }
-                    ?>
-                </datalist>
-                <label for="userInput">Kullanıcılar :</label>
+                <div class="select-div">
+                    <input class="search-selectx input" type="text" list="Users" id="userInput" required="" oninput="getUserID()" />
+                    <label class="selectx-label" for="userInput">Kullanıcılar :</label>
+                    <ul class="value-listx">
+                        <?php 
+                            foreach($UserList as $user){
+                             echo '                                        
+                                <li class="li-select" data-user-id="' . $user['userID'] . '">' . $user['userName'] . '</li>';
+                            }
+                        ?>
+                    </ul>
+                </div>
             </div>
             <div class="col-md-12 col-btn">
                 <input class="input" type="date" value="<?php echo date('Y-m-d'); ?>" id="dateInput" required="" />
@@ -898,4 +901,69 @@ $.fn.extend({
 $("#table input[type='checkbox']:first").click(function() {
     $("#table input[type='checkbox']").alterCheck('#table');
 });
+
+
+
+const inputField = document.querySelector('.search-selectx');
+const dropdown = document.querySelector('.value-listx');
+const dropdownArray = [... document.querySelectorAll('.li-select')];
+console.log(typeof dropdownArray)
+dropdown.classList.add('open');
+inputField.focus();
+let valueArray = [];
+dropdownArray.forEach(item => {
+  valueArray.push(item.textContent);
+});
+
+const closeDropdown = () => {
+  dropdown.classList.remove('open');
+}
+
+inputField.addEventListener('input', () => {
+  dropdown.classList.add('open');
+  let inputValue = inputField.value.toLowerCase();
+  let valueSubstring;
+  if (inputValue.length > 0) {
+    for (let j = 0; j < valueArray.length; j++) {
+      if (!(inputValue.substring(0, inputValue.length) === valueArray[j].substring(0, inputValue.length).toLowerCase())) {
+        dropdownArray[j].classList.add('closed');/* yeni ibaresi gelicek */
+      } else {
+        dropdownArray[j].classList.remove('closed');
+      }
+    }
+  } else {
+    for (let i = 0; i < dropdownArray.length; i++) {
+      dropdownArray[i].classList.remove('closed');
+    }
+  }
+});
+
+dropdownArray.forEach(item => {
+  item.addEventListener('click', (evt) => {
+    inputField.value = item.textContent;
+    dropdownArray.forEach(dropdown => {
+      dropdown.classList.add('closed');
+    });
+  });
+})
+
+inputField.addEventListener('focus', () => {
+   dropdown.classList.add('open');
+   dropdownArray.forEach(dropdown => {
+     dropdown.classList.remove('closed');
+   });
+});
+
+inputField.addEventListener('blur', () => {
+  dropdown.classList.remove('open');
+});
+
+document.addEventListener('click', (evt) => {
+  const isDropdown = dropdown.contains(evt.target);
+  const isInput = inputField.contains(evt.target);
+  if (!isDropdown && !isInput) {
+    dropdown.classList.remove('open');
+  }
+});
+
 </script>

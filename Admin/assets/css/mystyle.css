@@ -1393,5 +1393,96 @@ input:checked + .slider:before {
 
 .header-ico:hover i,
 .header-ico1:hover i {
-  color: #344767 !important;
+  color: #277CE0 !important;
+}
+/* ====================================== */
+
+/* select arama css */
+
+.select-div {
+  position: relative;
+  width: 100%;
+  min-width: 70px;
+  margin-top: 5px;
+  margin-bottom: 30px;
+}
+
+.search-selectx,
+.value-listx {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.select-div label {
+  left: -5px;
+}
+
+.search-selectx:focus ~ .selectx-label,
+.search-selectx:valid ~ .selectx-label {
+  top: -30px;
+  left: -6px;
+  font-size: 12px;
+}
+
+.search-selectx {
+  transition: .3s ease-in-out;
+  
+  &:hover {
+    cursor: pointer;
+  }
+  
+  &:focus,
+  &.open {
+    outline: 0;
+    color: #000;
+    
+    &::-webkit-input-placeholder {
+      color: #000;
+    }
+  }
+}
+
+.value-listx {
+  width: 100%;
+  list-style: none;
+  margin-top: 33px;
+  max-height: 0;
+  transition: .3s ease-in-out;
+  z-index: 9999;
+  overflow: hidden;
+  background-color: #fff;
+  
+  &.open {
+   max-height: 320px;
+   overflow: auto;
+   border: 1px solid #cccccc;
+   border-radius: 4px;
+  }
+  
+  .li-select {
+    position: relative;
+    width: calc(100% + 32px);
+    margin-left: -32px;
+    padding: 0.2rem 1rem;
+    font-size: 14px;
+    cursor: pointer;
+    transition: .3s;
+    opacity: 1;
+    font-weight: 600;
+    
+    
+    &:hover {
+      background-color: #ececec;
+      color: #17c1e8;
+    }
+    
+    &.closed {
+      max-height: 0;
+      overflow: hidden;
+      padding: 0;
+      opacity: 0;
+    }
+  }
 }
