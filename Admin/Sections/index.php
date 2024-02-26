@@ -270,7 +270,7 @@ try {
         <div class="row">
             <div class="col-md-12 col-btn">
                 <div class="select-div">
-                    <input class="search-selectx input" type="text" list="Users" id="userInput" required="" oninput="getUserID()" />
+                    <input class="search-selectx input" type="text" list="Users" id="userInput" required="" />
                     <label class="selectx-label" for="userInput">Kullanıcılar :</label>
                     <ul class="value-listx">
                         <?php 
@@ -553,18 +553,6 @@ document.getElementById('userInput').addEventListener('input', function() {
 
 <script>
 var selectedUserID;
-
-function getUserID() {
-    var userInput = document.getElementById("userInput");
-    var selectedOption = getSelectedOption(userInput);
-
-    if (selectedOption) {
-        selectedUserID = selectedOption.getAttribute("data-user-id");
-        console.log("Seçilen Kullanıcının ID'si: " + selectedUserID);
-        // Burada istediğiniz işlemleri yapabilirsiniz
-    }
-}
-
 function getSelectedOption(inputElement) {
     var value = inputElement.value.toLowerCase();
     var options = inputElement.list.options;
@@ -939,6 +927,7 @@ inputField.addEventListener('input', () => {
 
 dropdownArray.forEach(item => {
   item.addEventListener('click', (evt) => {
+    selectedUserID=evt.target.dataset.userId;
     inputField.value = item.textContent;
     dropdownArray.forEach(dropdown => {
       dropdown.classList.add('closed');
