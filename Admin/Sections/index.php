@@ -67,9 +67,16 @@ try {
 
         </div>
 
-        <div class="search-box">
-            <i class="fas fa-search search-icon" aria-hidden="true"></i>
-            <input type="text" class="search-input" placeholder="Arama...">
+         <div class="input-group1">
+            <button class="topluGuncelle btn-custom-outline bcoc3" id="guncelleButton"
+                style="display: none;">Güncelle</button>
+            <button class="topluSil btn-custom-outline bcoc4" id="silButton" style="display: none;">Sil</button>
+        
+
+            <div class="search-box">
+                <i class="fas fa-search search-icon" aria-hidden="true"></i>
+                <input type="text" class="search-input" placeholder="Arama...">
+            </div>
         </div>
     </div>
 
@@ -152,7 +159,7 @@ try {
     <table id="table" class="users-table">
         <thead>
             <tr class="users-table-info">
-                <th><input type="checkbox" /></th>
+                <th><input  id="mainCheckbox" type="checkbox" onclick="toggleAll(this)" /></th>
                 <th onclick="sortTable(1)">Blok Adı <i id="icon-table1" class="fa-solid fa-sort-down"></i></th>
                 <th onclick="sortTable(2)">Kapı No <i id="icon-table2" class="fa-solid fa-sort-down"></i></th>
                 <th onclick="sortTable(3)">Kiracı <i id="icon-table3" class="fa-solid fa-sort-down"></i></th>
@@ -171,9 +178,9 @@ try {
 
         <tbody>
 
-            <tr id=<?php echo $row["daire_id"]; ?> class="git-ac">
+            <tr id=<?php echo $row["daire_id"]; ?> id="tr-<?php echo $row["daire_id"]; ?>" class="git-ac">
 
-                <td data-title="Seç"> <input type="checkbox" /></td>
+                <td data-title="Seç"><input id="check-<?php echo $row["daire_id"]; ?>" class="check1" type="checkbox" onclick="toggleMainCheckbox(<?php echo $row['daire_id']; ?>)" /></td>
 
                 <td data-title="Blok Adı"><?php echo $blokIdMapping[$row["blok_adi"]];  ?></td>
 
@@ -181,7 +188,7 @@ try {
 
                 <?php
                    if($row["kiraciID"]==null) {
-                  echo ' <td data-title="0"><button type="button" class="table-a tca1" onclick="openPopup('.$row["daire_id"].',0)">Kiracı ekle + </button></td>';
+                  echo ' <td data-title="0"><button type="button" class="table-a tca1" onclick="openPopup('.$row["daire_id"].',0)">Kiracı Ekle + </button></td>';
 
                    }else{
                     echo ' <td data-title="0">'.$listt[$row["kiraciID"]].' </td>  '; 
@@ -190,7 +197,7 @@ try {
                    echo ' <td data-title="Bakiye">00,0 ₺</td> ';
 
                    if($row["katMalikiID"]==null) {
-                    echo '<td data-title="1"><button type="button" class="table-a tca2" onclick="openPopup('.$row["daire_id"].',1)">Kat Maliki ekle + </button></td>
+                    echo '<td data-title="1"><button type="button" class="table-a tca2" onclick="openPopup('.$row["daire_id"].',1)">Kat Maliki Ekle + </button></td>
                     ';
   
                     }else{
@@ -954,4 +961,83 @@ document.addEventListener('click', (evt) => {
   }
 });
 
+
+
+// checkbox işlemi 
+function toggleAll(masterCheckbox) {
+
+
+var checkboxes = document.getElementsByClassName('check1');
+for (var i = 0; i < checkboxes.length; i++) {
+    checkboxes[i].checked = masterCheckbox.checked;
+}
+if (masterCheckbox.checked) {
+    $('#guncelleButton').css('display', 'inline-block');
+    $('#silButton').css('display', 'inline-block');
+
+    $('.git-ac').addClass('git-ac-color');
+} else if (!masterCheckbox.checked) {
+    $('#guncelleButton').css('display', 'none');
+    $('#silButton').css('display', 'none');
+    $('.git-ac').removeClass('git-ac-color');
+}
+}
+
+
+function toggleMainCheckbox(id) {
+
+var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+var guncelleButton = document.getElementById('guncelleButton');
+var silButton = document.getElementById('silButton');
+var enAzBirSecili = false;
+
+
+checkboxes.forEach(function(checkbox) {
+    if ( checkbox.checked) {
+        enAzBirSecili = true;
+    }
+});
+
+if (enAzBirSecili) {
+        guncelleButton.style.display = 'inline-block';
+        silButton.style.display = 'inline-block';
+    } else {
+        guncelleButton.style.display = 'none';
+        silButton.style.display = 'none';
+    }
+
+
+
+
+var checkbox2 = document.getElementById('check-' + id);
+
+if (checkbox2.checked) {
+    $('#' + id).addClass('git-ac-color');
+} else {
+   
+    $('#' + id).removeClass('git-ac-color');
+}
+
+
+
+
+}
+
+
+
+
+// Herhangi bir alt checkbox işaret kaldırıldığında, "Hepsini Seç" kutusunu kaldırır
+var checkboxes = document.getElementsByClassName('check1');
+for (var i = 0; i < checkboxes.length; i++) {
+    checkboxes[i].addEventListener('change', function() {
+        var allChecked = true;
+        for (var j = 0; j < checkboxes.length; j++) {
+            if (!checkboxes[j].checked) {
+                allChecked = false;
+                break;
+            }
+        }
+        document.getElementById('mainCheckbox').checked = allChecked;
+    });
+}
 </script>
