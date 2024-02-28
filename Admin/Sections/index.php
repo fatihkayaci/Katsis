@@ -894,23 +894,7 @@ $('#daireBlok').focus(function() {
 </script>
 
 <script type="text/javascript">
-$.fn.extend({
-    alterCheck: function(tablo) {
-        if ($("" + tablo + " input[type='checkbox']:first").is(":checked")) {
-            return this.each(function() {
-                this.checked = true;
-            });
-        } else {
-            return this.each(function() {
-                this.checked = false;
-            });
-        }
-    }
 
-});
-$("#table input[type='checkbox']:first").click(function() {
-    $("#table input[type='checkbox']").alterCheck('#table');
-});
 
 
 
@@ -984,6 +968,7 @@ function toggleAll(masterCheckbox) {
 
 
 var checkboxes = document.getElementsByClassName('check1');
+
 for (var i = 0; i < checkboxes.length; i++) {
     checkboxes[i].checked = masterCheckbox.checked;
 }
@@ -1089,8 +1074,14 @@ function filtrele() {
         // Eğer filtre metni herhangi bir hücrede bulunuyorsa, satırı göster; aksi takdirde gizle
         if (display) {
             tr[i].style.display = "";
+          tr[i].querySelector('.check-style input[type="checkbox"]').classList.add('check1');
+
+
         } else {
             tr[i].style.display = "none";
+            tr[i].querySelector('.check-style input[type="checkbox"]').classList.remove('check1');
+
+
         }
     }
 }
