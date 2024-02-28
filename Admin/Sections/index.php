@@ -159,7 +159,15 @@ try {
     <table id="table" class="users-table">
         <thead>
             <tr class="users-table-info">
-                <th><input  id="mainCheckbox" type="checkbox" onclick="toggleAll(this)" /></th>
+                <th class="check-style">
+                    <input  id="mainCheckbox" type="checkbox" onclick="toggleAll(this)" />
+                    <label for="mainCheckbox" class="check">
+                      <svg width="18px" height="18px" viewBox="0 0 18 18">
+                        <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
+                        <polyline points="1 9 7 14 15 4"></polyline>
+                      </svg>
+                    </label>
+                </th>
                 <th onclick="sortTable(1)">Blok Adı <i id="icon-table1" class="fa-solid fa-sort-down"></i></th>
                 <th onclick="sortTable(2)">Kapı No <i id="icon-table2" class="fa-solid fa-sort-down"></i></th>
                 <th onclick="sortTable(3)">Kiracı <i id="icon-table3" class="fa-solid fa-sort-down"></i></th>
@@ -180,7 +188,15 @@ try {
 
             <tr id=<?php echo $row["daire_id"]; ?> id="tr-<?php echo $row["daire_id"]; ?>" class="git-ac">
 
-                <td data-title="Seç"><input id="check-<?php echo $row["daire_id"]; ?>" class="check1" type="checkbox" onclick="toggleMainCheckbox(<?php echo $row['daire_id']; ?>)" /></td>
+                <td data-title="Seç" class="check-style" >
+                    <input id="check-<?php echo $row["daire_id"]; ?>" class="check1" type="checkbox" onclick="toggleMainCheckbox(<?php echo $row['daire_id']; ?>)" />
+                    <label for="check-<?php echo $row["daire_id"]; ?>" class="check">
+                      <svg width="18px" height="18px" viewBox="0 0 18 18">
+                        <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
+                        <polyline points="1 9 7 14 15 4"></polyline>
+                      </svg>
+                    </label>
+                </td>
 
                 <td data-title="Blok Adı"><?php echo $blokIdMapping[$row["blok_adi"]];  ?></td>
 
