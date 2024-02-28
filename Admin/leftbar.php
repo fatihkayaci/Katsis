@@ -19,31 +19,30 @@
           <h6 class="ps-4 ms-2 text-xs font-weight-bolder opacity-6">Ana Başlıklar</h6>
         </li>
 
-        <li class="nav-item active mb-1">
-          <a class="nav-link" href="index?parametre=dashboard">
-
+        <a class="nav-item" href="index?parametre=dashboard">
+          <li class="nav-link mb-1">
             <div class="nav-ico">
               <i class="fa-solid fa-house"></i>
             </div>
             <span class="nav-link-text ms-1 py-1">Ana Sayfa</span>
-          </a>
-        </li>
-        <li class="nav-item my-1">
-          <a class="nav-link " href="index?parametre=Accounts">
+          </li>
+        </a>
+        <a class="nav-item " href="index?parametre=Accounts">
+          <li class="nav-link my-1">
             <div class="nav-ico">
               <i class="fa-solid fa-users"></i>
             </div>
             <span class="nav-link-text ms-1 py-1">Kullanıcılar</span>
-          </a>
-        </li>
-        <li class="nav-item my-1">
-          <a class="nav-link  " href="index?parametre=Sections">
+          </li>
+        </a>
+        <a class="nav-item  " href="index?parametre=Sections">
+          <li class="nav-link my-1">
             <div class="nav-ico">
               <i class="fa-solid fa-building"></i>
             </div>
             <span class="nav-link-text ms-1 py-1">Bölümler</span>
-          </a>
-        </li>
+          </li>
+        </a>
         
         <hr class="horizontal dark m-0">
         
@@ -51,24 +50,26 @@
           <h6 class="ps-4 ms-2 text-xs font-weight-bolder opacity-6">Hesap Ayarları</h6>
         </li>
 
-        <li class="nav-item">
-          <a class="nav-link" href="../pages/profile.html">
+        <a class="nav-item" href="../pages/profile.html">
+          <li class="nav-link">
             <div class="nav-ico">
               <i class="fa-solid fa-user"></i>
             </div>
             <span class="nav-link-text ms-1">Profilim</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link  " href="../logout">
+          </li>
+        </a>
+        <a class="nav-item  " href="../logout">
+          <li class="nav-link">
             <div class="nav-ico">
             <i class="fa-solid fa-right-from-bracket"></i>
             </div>
             <span class="nav-link-text ms-1">Çıkış Yap</span>
-          </a>
-        </li>
+          </li>
+        </a>
       </ul>
       <hr class="horizontal dark">
+
+      
     </div>
     
   </aside>
@@ -225,6 +226,53 @@
   <script src="assets/js/core/popper.min.js"></script>
   <script src="assets/js/core/bootstrap.min.js"></script>
   <script src="assets/js/plugins/chartjs.min.js"></script>
+  
+  <script>
+  // Tüm nav linklerini seçin
+  const navLinks = document.querySelectorAll('.nav-item');
+
+  // Her bir nav linki için bir olay dinleyici ekleyin
+  navLinks.forEach(link => {
+    link.addEventListener('click', function(event) {
+      // Tüm nav linklerinden active sınıfını kaldırın
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+      });
+
+      this.classList.add('active');
+
+      const selectedParam = this.getAttribute('href').split('=')[1];
+      localStorage.setItem('selectedLink', selectedParam);
+    });
+  });
+
+  // Sayfa yüklendiğinde seçili bağlantıyı geri yükleyin
+  window.addEventListener('load', function() {
+    const selectedParam = localStorage.getItem('selectedLink');
+    if (selectedParam) {
+      const selectedLink = document.querySelector(`.nav-item[href*="${selectedParam}"]`);
+      if (selectedLink) {
+        selectedLink.classList.add('active');
+      }
+    } else {
+      // localStorage'da seçili bağlantı yoksa, varsayılan olarak dashboard'u seç
+      const defaultLink = document.querySelector('.nav-item[href*="dashboard"]');
+      if (defaultLink) {
+        defaultLink.classList.add('active');
+        localStorage.setItem('selectedLink', 'dashboard');
+      }
+    }
+  });
+
+  // Çıkış yapıldığında localStorage'daki seçili bağlantıyı temizle
+  function logout() {
+    localStorage.removeItem('selectedLink');
+    // Burada gerektiğinde başka çıkış işlemleri de gerçekleştirebilirsiniz
+  }
+</script>
+
+
+  
   <script>
 
   document.addEventListener('DOMContentLoaded', function () {
