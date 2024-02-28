@@ -1,5 +1,6 @@
-
-
+<?php
+$idapartman =$_SESSION["apartID"];
+?>
 
 <body class="g-sidenav-show bg-gray-100">
   <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start " id="sidenav-main">
@@ -27,7 +28,7 @@
             <span class="nav-link-text ms-1 py-1">Ana Sayfa</span>
           </li>
         </a>
-        <a class="nav-item " href="index?parametre=Accounts">
+        <a class="nav-item" href="index?parametre=Accounts">
           <li class="nav-link my-1">
             <div class="nav-ico">
               <i class="fa-solid fa-users"></i>
@@ -35,7 +36,7 @@
             <span class="nav-link-text ms-1 py-1">Kullanıcılar</span>
           </li>
         </a>
-        <a class="nav-item  " href="index?parametre=Sections">
+        <a class="nav-item" href="index?parametre=Sections">
           <li class="nav-link my-1">
             <div class="nav-ico">
               <i class="fa-solid fa-building"></i>
@@ -58,7 +59,7 @@
             <span class="nav-link-text ms-1">Profilim</span>
           </li>
         </a>
-        <a class="nav-item  " href="../logout">
+        <a class="nav-item" href="../logout">
           <li class="nav-link">
             <div class="nav-ico">
             <i class="fa-solid fa-right-from-bracket"></i>
@@ -69,7 +70,26 @@
       </ul>
       <hr class="horizontal dark">
 
-      
+<?php
+$sql = " SELECT * FROM tbl_apartman where apartman_id = $idapartman ";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+
+    // Sonuç kümesinin satır sayısını kontrol etme
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+?>
+      <div class="apart-col">
+
+        <hr class="horizontal mt-0 mb-1 dark w-100">
+        
+        <div class="apart-ad">
+          <div class="apart-ico">
+            <i class="fa-solid fa-building"></i>
+          </div>
+          <p class="apart-text"><?php echo $result['apartman_name']; ?></p>
+        </div>
+      </div>
+
     </div>
     
   </aside>
