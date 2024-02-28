@@ -51,7 +51,7 @@ $idapartman =$_SESSION["apartID"];
           <h6 class="ps-4 ms-2 text-xs font-weight-bolder opacity-6">Hesap Ayarları</h6>
         </li>
 
-        <a class="nav-item" href="../pages/profile.html">
+        <a class="nav-item" href="index?parametre=profile">
           <li class="nav-link">
             <div class="nav-ico">
               <i class="fa-solid fa-user"></i>
@@ -192,13 +192,13 @@ $sql = " SELECT * FROM tbl_apartman where apartman_id = $idapartman ";
                   </ul>
                 </li>
                 <li class="nav-item dropdown pe-2 d-flex align-items-center">
-                  <a href="javascript:;" class="nav-link nav-link header-ico font-weight-bold mb-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                  <a href="" class="nav-link nav-link header-ico font-weight-bold mb-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fa-solid fa-user toggle-icon me-2 me-sm-1"></i>
                     <span class="d-sm-inline toggle-icon d-none"><?php  echo $_SESSION["userName"]; ?></span>
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end px-2" aria-labelledby="dropdownMenuButton">
                     <li class="mb-1">
-                      <a class="dropdown-item border-radius-md" href="javascript:;">
+                      <a class="dropdown-item border-radius-md" href="index?parametre=profile">
                         <div class="d-flex py-1">
                           <div class="my-auto">
                             <i class="fa-solid fa-user avatar avatar-sm bg-gradient-light i-color me-3"></i>

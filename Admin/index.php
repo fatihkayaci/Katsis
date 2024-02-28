@@ -22,11 +22,13 @@ $stmt->execute();
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     $idApartman= $row['apartman_id'];
     $userName = $row['userName'];
+    $userID = $row['userID'];
 }
 
 $_SESSION["pageName"]="Dashboard";
 $_SESSION["userName"] =$userName;
 $_SESSION["apartID"] =$idApartman;
+$_SESSION["userID"] =$userID;
 
 $indexx= "";
 
@@ -63,9 +65,16 @@ else if($indexx == 'Sections'){
 }   
 else if($indexx == 'dashboard'){
     include ("Dashboard/index.php");
-    echo "<script>pagename('DASHBOARD');</script>";
+    echo "<script>pagename('ANA SAYFA');</script>";
     echo "<script>
             localStorage.setItem('selectedLink', 'dashboard');
+         </script>";
+}
+else if($indexx == 'profile'){
+    include ("profile/profile.php");
+    echo "<script>pagename('PROFİL');</script>";
+    echo "<script>
+            localStorage.setItem('selectedLink', 'profile');
          </script>";
 }
 
