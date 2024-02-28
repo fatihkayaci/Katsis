@@ -107,7 +107,7 @@ try {
 
             <hr class="horizontal mt-0 dark w-100">
 
-            <table class="users-table">
+            <table class="users-table table-blok">
                 <tr class="users-table-info">
                     <th>Blok Adı </th>
                     <th>Daire Sayısı </th>
