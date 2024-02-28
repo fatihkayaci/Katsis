@@ -70,7 +70,15 @@ try {
     <table id="example" class="users-table">
         <thead>
             <tr class="users-table-info">
-                <th><input id="mainCheckbox" type="checkbox" onclick="toggleAll(this)" /></th>
+                <th class="check-style">
+                    <input id="mainCheckbox" type="checkbox" onclick="toggleAll(this)" />
+                    <label for="mainCheckbox" class="check">
+                      <svg width="18px" height="18px" viewBox="0 0 18 18">
+                        <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
+                        <polyline points="1 9 7 14 15 4"></polyline>
+                      </svg>
+                    </label>
+                </th>
                 <th onclick="sortTable(1)">Ad Soyad <i id="icon-table1" class="fa-solid fa-sort-down"></i></th>
                 <th onclick="sortTable(2)">Telefon Numarası <i id="icon-table2" class="fa-solid fa-sort-down"></i></th>
                 <th onclick="sortTable(3)">Blok Adı <i id="icon-table3" class="fa-solid fa-sort-down"></i></th>
@@ -84,7 +92,15 @@ try {
                 foreach ($result as $row) {
                 ?>
             <tr data-userid="<?php echo $row["userID"]; ?>" id="tr-<?php echo $row["userID"]; ?>" class="git-ac">
-                <td data-title="Seç"> <input id="check-<?php echo $row["userID"]; ?>" class="check1" type="checkbox" onclick="toggleMainCheckbox(<?php echo $row['userID']; ?>)" /></td>
+                <td data-title="Seç" class="check-style">
+                    <input id="check-<?php echo $row["userID"]; ?>" class="check1" type="checkbox" onclick="toggleMainCheckbox(<?php echo $row['userID']; ?>)" />
+                    <label for="check-<?php echo $row["userID"]; ?>" class="check">
+                      <svg width="18px" height="18px" viewBox="0 0 18 18">
+                        <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
+                        <polyline points="1 9 7 14 15 4"></polyline>
+                      </svg>
+                    </label>
+                </td>
                 <td data-title="Ad Soyad" contenteditable="false"><?php echo $row["userName"]; ?></td>
                 <td data-title="Telefon Numarası" contenteditable="false"><?php echo $row["phoneNumber"]; ?></td>
                 <td data-title="Blok Adi"><?php echo $row["blok_adi"]; ?></td>
