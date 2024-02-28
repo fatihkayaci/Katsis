@@ -61,7 +61,7 @@ try {
 
             <div class="search-box">
                 <i class="fas fa-search search-icon" aria-hidden="true"></i>
-                <input type="text" class="search-input" placeholder="Arama...">
+                <input type="text" class="search-input" id="searchValue" onkeyup="filtrele()" placeholder="Arama...">
             </div>
         </div>
 
@@ -845,5 +845,42 @@ function demofunction() {
                 userID);
         });
     });
+}
+
+
+
+// filtreleme search ile
+function filtrele() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("searchValue");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("example");
+    tr = table.getElementsByTagName("tr");
+
+    // Her satırı kontrol et
+    for (i = 0; i < tr.length; i++) {
+        // İlk satır başlıksa atla
+        if (tr[i].getElementsByTagName("th").length > 0) {
+            continue;
+        }
+        // Her hücreyi kontrol et
+        var display = false;
+        td = tr[i].getElementsByTagName("td");
+        for (var j = 0; j < td.length; j++) {
+            if (td[j]) {
+                txtValue = td[j].textContent || td[j].innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    display = true;
+                    break;
+                }
+            }
+        }
+        // Eğer filtre metni herhangi bir hücrede bulunuyorsa, satırı göster; aksi takdirde gizle
+        if (display) {
+            tr[i].style.display = "";
+        } else {
+            tr[i].style.display = "none";
+        }
+    }
 }
 </script>

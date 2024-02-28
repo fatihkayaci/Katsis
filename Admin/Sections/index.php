@@ -1067,18 +1067,33 @@ function filtrele() {
     filter = input.value.toUpperCase();
     table = document.getElementById("table");
     tr = table.getElementsByTagName("tr");
-  
+
+    // Her satırı kontrol et
     for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("td")[0];
-      if (td) {
-        txtValue = td.textContent || td.innerText;
-        if (txtValue.toUpperCase().indexOf(filter) === 0) {
-          
-        } else {
-          tr[i].style.display = "none";
+        // İlk satır başlıksa atla
+        if (tr[i].getElementsByTagName("th").length > 0) {
+            continue;
         }
-      }
+        // Her hücreyi kontrol et
+        var display = false;
+        td = tr[i].getElementsByTagName("td");
+        for (var j = 0; j < td.length; j++) {
+            if (td[j]) {
+                txtValue = td[j].textContent || td[j].innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    display = true;
+                    break;
+                }
+            }
+        }
+        // Eğer filtre metni herhangi bir hücrede bulunuyorsa, satırı göster; aksi takdirde gizle
+        if (display) {
+            tr[i].style.display = "";
+        } else {
+            tr[i].style.display = "none";
+        }
     }
-  }
+}
+
 </script>
 
