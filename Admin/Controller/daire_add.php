@@ -29,7 +29,7 @@ try {
 
     // Yeni eklenen kaydın blok_id değerini al
     $msg =" Daire Başarıyla Eklendi";
-
+    addDSayisi($daireBlok);
     // Başarılı olduğunda JSON yanıtı hazırla
     $response = array(
         "status" => 1,
@@ -49,6 +49,26 @@ try {
     // JSON formatında yanıtı gönder
     header('Content-Type: application/json');
     echo json_encode($response);
+}
+
+
+
+
+
+function addDSayisi($id){
+    try {
+        // PDO bağlantısı $conn değişkeni ile sağlanmalıdır, bunu varsayarak devam ediyorum
+        global $conn;
+       
+        $sql = "UPDATE tbl_blok SET daire_sayisi = daire_sayisi + 1 WHERE blok_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(1, $id, PDO::PARAM_INT);
+        // Sorguyu çalıştırma
+        $stmt->execute();
+    
+    } catch (PDOException $e) {
+        echo "Hata: " . $e->getMessage(); // Hatanın ekrana basılması veya uygun bir şekilde işlenmesi
+    }
 }
 
 
