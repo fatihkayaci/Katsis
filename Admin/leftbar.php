@@ -80,11 +80,11 @@ $sql = " SELECT * FROM tbl_apartman where apartman_id = $idapartman ";
 ?>
       <div class="apart-col">
 
-        <hr class="horizontal mt-0 mb-1 dark w-100">
+        <hr class="horizontal mt-0 mb-2 dark w-100">
         
         <div class="apart-ad">
           <div class="apart-ico">
-            <i class="fa-solid fa-building"></i>
+          <i class="fa-solid fa-earth-americas"></i>
           </div>
           <p class="apart-text"><?php echo $result['apartman_name']; ?></p>
         </div>
