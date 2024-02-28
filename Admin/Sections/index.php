@@ -75,7 +75,7 @@ try {
 
             <div class="search-box">
                 <i class="fas fa-search search-icon" aria-hidden="true"></i>
-                <input type="text" class="search-input" placeholder="Arama...">
+                <input type="text" id="searchValue" class="search-input" placeholder="Arama..."  onkeyup="filtrele()">
             </div>
         </div>
     </div>
@@ -1040,4 +1040,29 @@ for (var i = 0; i < checkboxes.length; i++) {
         document.getElementById('mainCheckbox').checked = allChecked;
     });
 }
+
+
+
+// arama filtreleme
+
+function filtrele() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("searchValue");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("table");
+    tr = table.getElementsByTagName("tr");
+  
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[0];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) === 0) {
+          
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
 </script>
+
