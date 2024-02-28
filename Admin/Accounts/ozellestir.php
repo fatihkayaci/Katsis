@@ -38,8 +38,20 @@ try {
         		<div class="account-settings">
 
                     <div class="user-profile">
+                        <?php
+                            $names = explode(" ", $row["userName"]);
+                            $initials = "";
+                            $count = 0;
+                            foreach ($names as $name) {
+                                $initials .= strtoupper(substr($name, 0, 1));
+                                $count++;
+                                if ($count == 2) {
+                                    break;
+                                }
+                            }
+                        ?>
         	        	<div class="user-avatar">
-        	        		<p>YF</p>
+        	        		<p><?php echo $initials; ?></p>
         	        	</div>
                         <h5 class="user-name"><?php echo $row["userName"]; ?></h5>
         	        </div>

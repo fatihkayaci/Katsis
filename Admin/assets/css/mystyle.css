@@ -1392,7 +1392,8 @@ input:checked + .slider:before {
 }
 
 .header-ico:hover i,
-.header-ico1:hover i {
+.header-ico1:hover i,
+.header-ico:hover .toggle-icon {
   color: #277CE0 !important;
 }
 /* ====================================== */

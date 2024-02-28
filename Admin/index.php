@@ -1,7 +1,6 @@
 <script>
 function pagename(temp) {
     document.getElementById('pageName').innerHTML = temp;
-
 }
 </script>
 
@@ -43,6 +42,9 @@ include('leftbar.php');
 if($indexx == 'Accounts'){
     include ("Accounts/index.php");
     echo "<script>pagename('KULLANICILAR');</script>";
+    echo "<script>
+            localStorage.setItem('selectedLink', 'Accounts');
+         </script>";
 }
 else if($indexx == 'TopluHesap'){
     include ("Accounts/topluHesap.php");
@@ -55,10 +57,16 @@ else if($indexx == 'custom'){
 else if($indexx == 'Sections'){
     include ("Sections/index.php");
     echo "<script>pagename('BÖLÜMLER');</script>";
+    echo "<script>
+            localStorage.setItem('selectedLink', 'Sections');
+         </script>";
 }   
 else if($indexx == 'dashboard'){
     include ("Dashboard/index.php");
     echo "<script>pagename('DASHBOARD');</script>";
+    echo "<script>
+            localStorage.setItem('selectedLink', 'dashboard');
+         </script>";
 }
 
 
