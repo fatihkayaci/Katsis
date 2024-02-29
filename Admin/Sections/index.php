@@ -70,7 +70,7 @@ try {
          <div class="input-group1">
             <button class="topluGuncelle btn-custom-outline bcoc3" id="guncelleButton"
                 style="display: none;">Güncelle</button>
-            <button class="topluSil btn-custom-outline bcoc4" id="silButton" style="display: none;">Sil</button>
+            <button class="topluSil btn-custom-outline bcoc4" id="silButton" onclick="daireSil(<?php echo $idapartman; ?>)" style="display: none;">Sil</button>
         
 
             <div class="search-box">
@@ -189,7 +189,7 @@ try {
             <tr id=<?php echo $row["daire_id"]; ?> id="tr-<?php echo $row["daire_id"]; ?>" class="git-ac">
 
                 <td data-title="Seç" class="check-style" >
-                    <input id="check-<?php echo $row["daire_id"]; ?>" class="check1" type="checkbox" onclick="toggleMainCheckbox(<?php echo $row['daire_id']; ?>)" />
+                    <input id="check-<?php echo $row["daire_id"]; ?>"  data-userid="<?php echo $row["blok_adi"]; ?>"  class="check1" type="checkbox" onclick="toggleMainCheckbox(<?php echo $row['daire_id']; ?>)" />
                     <label for="check-<?php echo $row["daire_id"]; ?>" class="check">
                       <svg width="18px" height="18px" viewBox="0 0 18 18">
                         <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
@@ -1085,6 +1085,101 @@ function filtrele() {
         }
     }
 }
+
+
+
+
+// Her bir td elemanının içindeki butonları kontrol et
+function checkForButton(tdElements) {
+    for (var i = 0; i < tdElements.length; i++) {
+        var buttons = tdElements[i].querySelectorAll('button');
+        if (buttons.length > 0) {
+            return true;
+        }
+    }
+    return false; // Döngü tamamlandıktan sonra buton bulunamazsa false döndür
+}
+
+function daireSil(id){
+    var checkedDaireIDs = [];
+var checkedBlokIDs = [];
+var checkboxes = document.querySelectorAll('.check1:checked');
+var f = false;
+var temp;
+
+checkboxes.forEach(function(checkbox) {
+    var tr = checkbox.closest('tr');
+    var td3 = tr.querySelectorAll('td:nth-child(4)');
+    var td5 = tr.querySelectorAll('td:nth-child(6)');
+    
+    if (checkForButton(td3) && checkForButton(td5)) {
+        var daireID = checkbox.id.replace('check-', '');
+        var blokID = checkbox.getAttribute("data-userid");
+        checkedBlokIDs.push(blokID);
+        checkedDaireIDs.push(daireID);
+    }
+});
+
+checkboxes.forEach(function(checkbox) {
+    var tr = checkbox.closest('tr');
+    var td32 = tr.querySelectorAll('td:nth-child(4)');
+    var td54 = tr.querySelectorAll('td:nth-child(6)');
+    
+    if (!(checkForButton(td32) && checkForButton(td54))) {
+        f = true;
+    }
+});
+
+if (f) {
+    temp = "Bu daireyi / daireleri silmek istediğinize emin misiniz?   (Seçilen daireler arasında kullanıcılar ile ilişkili daireler bulunmaktadır. İlişkisi bulunan daireler silinmeyecektir)";
+} else {
+    temp = "Bu daireyi silmek istediğinize emin misiniz?";
+}
+
+
+
+    if(confirm(temp)){
+        $.ajax({
+    url: 'Controller/daire_delete.php',
+    type: 'POST',
+    dataType: 'json',
+    data: {
+        checkedDaireIDs: checkedDaireIDs,
+        checkedBlokIDs:checkedBlokIDs,
+        id:id,
+    },
+    success: function(response) {
+       
+      if(response.sts){
+        alert(response.msg);
+        location.reload();
+
+        }
+       
+    },
+    error: function(xhr, status, error) {
+        var errorMessage = xhr.status + ': ' + xhr.statusText;
+        alert('Hata alındı: ' + errorMessage);
+    }
+});
+
+    }
+   
+
+
+
+
+
+
+
+
+
+
+    
+
+     
+}
+
 
 </script>
 

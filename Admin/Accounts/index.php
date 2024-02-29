@@ -894,8 +894,14 @@ function filtrele() {
         // Eğer filtre metni herhangi bir hücrede bulunuyorsa, satırı göster; aksi takdirde gizle
         if (display) {
             tr[i].style.display = "";
+          tr[i].querySelector('.check-style input[type="checkbox"]').classList.add('check1');
+
+
         } else {
             tr[i].style.display = "none";
+            tr[i].querySelector('.check-style input[type="checkbox"]').classList.remove('check1');
+
+
         }
     }
 }
