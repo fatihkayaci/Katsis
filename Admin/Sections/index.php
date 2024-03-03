@@ -69,7 +69,7 @@ try {
 
          <div class="input-group1">
             <button class="topluGuncelle btn-custom-outline bcoc3" id="guncelleButton"
-                style="display: none;">Güncelle</button>
+                style="display: none;"  onclick="openTopluPopup()" >Toplu Ekle/Güncelle</button>
             <button class="topluSil btn-custom-outline bcoc4" id="silButton" onclick="daireSil(<?php echo $idapartman; ?>)" style="display: none;">Sil</button>
         
 
@@ -335,13 +335,13 @@ try {
 
         <div class="row">
             <div class="col-md-6 col-btn">
-                <input class="input" type="text" id="daireNo" required="" />
-                <label id="daireNoLabel" for="daireNo">No : *</label>
+                <input class="input" type="text" id="daireNo" onkeypress="onlyNumberKey(event)" required="" />
+                <label id="daireNoLabel" for="daireNo" >No : *</label>
             </div>
 
             <div class="col-md-6 col">
-                <input class="input" type="text" id="daireKat" required="" />
-                <label for="daireKat">Kat :</label>
+                <input class="input" type="text" id="daireKat" onkeypress="onlyNumberKey(event)" required="" />
+                <label for="daireKat" >Kat :</label>
             </div>
             <div class="col-md-6 col">
                 <select class="input" id="daireBlok" required="">
@@ -371,15 +371,15 @@ try {
                 <label for="daireGrup">Daire Grubu :</label>
             </div>
             <div class="col-md-6 col">
-                <input class="input" type="text" id="daireBrut" required="" />
+                <input class="input" type="text" id="daireBrut" onkeypress="onlyNumberKey(event)" required="" />
                 <label for="daireBrut">Brüt m² :</label>
             </div>
             <div class="col-md-6 col">
-                <input class="input" type="text" id="daireNet" required="" />
+                <input class="input" type="text" id="daireNet" onkeypress="onlyNumberKey(event)" required="" />
                 <label for="daireNet">Net m² :</label>
             </div>
             <div class="col-md-6 col">
-                <input class="input" type="text" id="dairePay" required="" />
+                <input class="input" type="text" id="dairePay" onkeypress="onlyNumberKey(event)" required="" />
                 <label for="dairePay">Arsa Payı :</label>
             </div>
 
@@ -396,6 +396,78 @@ try {
 
 </div>
 
+
+<!-- Toplu bilgi eklemek için-->
+<div id="popupTopluEkle" class="form-popup">
+
+    <form id="userFormToplu" class="login-form">
+
+        <h2 class="form-signin-heading">Toplu Ekle/Güncelle</h2>
+
+        <input type="hidden" id="DaireSaveID" value=<?php  echo $idapartman ?> />
+
+        <div class="row">
+           
+
+            <div class="col-md-6 col">
+                <input class="input" type="text" id="daireKat1" onkeypress="onlyNumberKey(event)" required="" />
+                <label for="daireKat1" >Kat :</label>
+            </div>
+            <div class="col-md-6 col">
+                <select class="input" id="daireBlok1" required="">
+                    <option style="display: none;" value="" disabled selected></option>
+                    <?php
+
+                foreach ($blokList as $s ){
+                    echo "  <option value='".$s['blok_id']."'>".$s['blok_adi']."</option>";
+
+                }
+                  ?>
+                </select>
+                <label id="daireBlokLabel" for="daireBlok1">Blok: </label>
+            </div>
+
+            <div class="col-md-6 col">
+                <select class="input" id="daireGrup1" required="">
+                    <option style="display: none;" value="" disabled selected></option>
+                    <?php
+
+                        foreach ($grupList as $s ){
+                            echo "  <option value='".$s['grup_id']."'>".$s['grup_adi']."</option>";
+
+                        }
+                    ?>
+                </select>
+                <label for="daireGrup1">Daire Grubu :</label>
+            </div>
+            <div class="col-md-6 col">
+                <input class="input" type="text" id="daireBrut1" onkeypress="onlyNumberKey(event)" required="" />
+                <label for="daireBrut1">Brüt m² :</label>
+            </div>
+            <div class="col-md-6 col">
+                <input class="input" type="text" id="daireNet1" onkeypress="onlyNumberKey(event)" required="" />
+                <label for="daireNet1">Net m² :</label>
+            </div>
+            <div class="col-md-6 col">
+                <input class="input" type="text" id="dairePay1" onkeypress="onlyNumberKey(event)" required="" />
+                <label for="dairePay1">Arsa Payı :</label>
+            </div>
+            <div class="col-md-6 col">
+                
+                <label for="dairePay1">Not: Lütfen sadece güncellemek istediğiniz alanlara veri giriniz. Diğer alanları doldurmanız zorunlu değildir. Sadece veri girişi yapılan alanlar güncellenecektir. </label>
+            </div>             
+        </div>
+
+        <hr class="horizontal dark w-100">
+
+        <div class="row row-btn">
+            <button type="button" class="btn-custom-close" onclick="closePopupToplu()">Kapat</button>
+            <button type="button" class="btn-custom" id="saveButton" onclick="daireGuncel(<?php echo $idapartman; ?>)">Kaydet</button>
+        </div>
+
+    </form>
+
+</div>
 
 
 
@@ -513,6 +585,17 @@ function closePopup() {
     });
 }
 
+function openTopluPopup(){ 
+    $('body').css('overflow', 'hidden');
+
+$('#popupTopluEkle').show().css('display', 'flex').delay(100).queue(function(next) {
+    $('#popupTopluEkle').css('opacity', '1');
+    $('#userFormToplu').css('opacity', '1');
+    $('#userFormToplu').css('transform', 'translateY(0)');
+    next();
+});
+
+}
 
 function openPopupDaire() {
     $('body').css('overflow', 'hidden');
@@ -562,6 +645,17 @@ function closePopupDaire() {
         });
         next();
     });
+}
+function closePopupToplu() {
+
+$('#userFormToplu').css('opacity', '0').css('transform', 'translateY(-180px)').delay(100).queue(function(next) {
+    $('#popupTopluEkle').css('opacity', '0').delay(300).queue(function(nextInner) {
+        $(this).hide().css('display', 'none');
+        nextInner();
+        $('body').css('overflow', 'auto');
+    });
+    next();
+});
 }
 
 
@@ -1151,7 +1245,13 @@ if (f) {
     success: function(response) {
        
       if(response.sts){
-        alert(response.msg);
+       
+        if(response.str ==undefined){
+            alert("Silmeye Uygun Bir Daire Bulunamadı. Seçimlerinizi Gözden Geçiriniz.");
+        }else{
+            alert(response.msg);
+        }
+       
         location.reload();
 
         }
@@ -1166,19 +1266,67 @@ if (f) {
     }
    
 
+}
+
+function daireGuncel(id){
+    var checkedDaireIDs = [];
+    var daireKat = document.getElementById("daireKat1").value;
+    var daireBlok = document.getElementById("daireBlok1").value;
+    var daireGrup = document.getElementById("daireGrup1").value;
+    var daireBrut = document.getElementById("daireBrut1").value;
+    var daireNet = document.getElementById("daireNet1").value;
+    var dairePay = document.getElementById("dairePay1").value;
+    var checkboxes = document.querySelectorAll('.check1:checked');
+
+    alert(daireKat+daireBlok+daireGrup+daireBrut+daireNet+dairePay);
+    checkboxes.forEach(function(checkbox) {
+        var daireID = checkbox.id.replace('check-', '');
+        checkedDaireIDs.push(daireID);
+    });
 
 
-
-
-
-
-
-
+     $.ajax({
+    url: 'Controller/daire_toplu_update.php',
+    type: 'POST',
+    dataType: 'json',
+    data: {
+        checkedDaireIDs: checkedDaireIDs,
+        id:id,
+        daireKat:daireKat,
+        daireBlok:daireBlok,
+        daireGrup:daireGrup,
+        daireBrut:daireBrut,
+        daireNet:daireNet,
+        dairePay:dairePay,
+    },
+    success: function(response) {
+       
+      if(response.sts){
+            alert(response.msg);
+            location.reload();
+        }
+       
+    },
+    error: function(xhr, status, error) {
+        var errorMessage = xhr.status + ': ' + xhr.statusText;
+        alert('Hata alındı: ' + errorMessage);
+    }
+});
 
     
+   
 
-     
 }
+
+function onlyNumberKey(evt) {
+        // Klavyeden girilen karakterin ASCII değerini al
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        
+        // ASCII değerlerine göre, sadece sayı ve bazı kontrol karakterlerine izin ver
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            evt.preventDefault();
+        }
+    }
 
 
 </script>

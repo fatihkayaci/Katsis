@@ -18,9 +18,11 @@ try {
     $stmt = $conn->prepare($sql);
     $result = $stmt->execute();
     if ($result) {
+        $deletedRowCount = $stmt->rowCount(); 
         $response = array(
             "sts"=>"true",
-            "msg" => "Silme İşlemi Başarıyla Gerçekleşti"
+            "msg" => "Silme İşlemi Başarıyla Gerçekleşti",
+            "str"=> $deletedRowCount,
         );
         deleteDSayisi($checkedBlokIDs);
     } else {
