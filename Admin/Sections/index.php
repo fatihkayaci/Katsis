@@ -464,10 +464,7 @@ try {
                 <input class="input" type="text" id="dairePay1" onkeypress="onlyNumberKey(event)" required="" />
                 <label for="dairePay1">Arsa Payı :</label>
             </div>
-            <div class="col-md-6 col">
-                
-                <label for="dairePay1">Not: Lütfen sadece güncellemek istediğiniz alanlara veri giriniz. Diğer alanları doldurmanız zorunlu değildir. Sadece veri girişi yapılan alanlar güncellenecektir. </label>
-            </div>             
+                       
         </div>
 
         <p class="form-note"><span style="color: #ff0000;"> * </span> <strong> Not: </strong> Lütfen sadece güncellemek istediğiniz alanlara veri giriniz. Diğer alanları doldurmanız zorunlu değildir. Sadece veri girişi yapılan alanlar güncellenecektir.</p> 
