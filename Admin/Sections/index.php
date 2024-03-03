@@ -1276,7 +1276,7 @@ function daireGuncel(id){
     var dairePay = document.getElementById("dairePay1").value;
     var checkboxes = document.querySelectorAll('.check1:checked');
 
-    alert(daireKat+daireBlok+daireGrup+daireBrut+daireNet+dairePay);
+    
     checkboxes.forEach(function(checkbox) {
         var daireID = checkbox.id.replace('check-', '');
         checkedDaireIDs.push(daireID);
