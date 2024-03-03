@@ -24,15 +24,38 @@ try {
             "msg" => "Silme İşlemi Başarıyla Gerçekleşti",
             "str"=> $deletedRowCount,
         );
-        deleteDSayisi($checkedBlokIDs);
+
+    $sql = "SELECT blok_adi, COUNT(*) as adet FROM tbl_daireler WHERE apartman_id = :id GROUP BY blok_adi";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+    $stmt->execute();
+    
+    if ($stmt->rowCount() > 0) {
+    
+    $sql3 = "UPDATE tbl_blok SET daire_sayisi = 0 WHERE apartman_idd = $id";
+    $stmt3 = $conn->prepare($sql3);
+    $stmt3->execute();
+    
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    
+        $sql2 = "UPDATE tbl_blok SET daire_sayisi = :adet WHERE blok_id = :blok_id";
+    
+      
+        $stmt2 = $conn->prepare($sql2);
+        $stmt2->bindParam(':adet', $row['adet']);
+        $stmt2->bindParam(':blok_id', $row['blok_adi']);
+        $stmt2->execute();
+        
+    } 
+    }
+   
     } else {
         $response = array(
             "sts"=>"false",
             "msg" => "Silme İşlemi Başarısız!"
         );
     }
-
-      
 
 } catch (\Throwable $th) {
     $response = array(
@@ -42,26 +65,5 @@ try {
 }
 
 echo json_encode($response);
-
-function deleteDSayisi($ids) {
-    global $conn; // Bağlantıyı global olarak alıyoruz.
-
-    try {
-        // Her bir blok ID'si için tekrar eden değerleri gruplayarak ve sayılarını hesaplayarak bir dizi oluşturuyoruz.
-        $id_counts = array_count_values($ids);
-
-        // Her bir blok ID'si için güncelleme sorgusu oluşturup çalıştırıyoruz.
-        foreach ($id_counts as $id => $count) {
-            $sql = "UPDATE tbl_blok SET daire_sayisi = daire_sayisi - :count WHERE blok_id = :id";
-            $stmt = $conn->prepare($sql);
-            $stmt->bindParam(':count', $count, PDO::PARAM_INT);
-            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-            $stmt->execute();
-        }
-
-    } catch (PDOException $e) {
-        echo "Hata: " . $e->getMessage(); 
-    }
-}
 
 ?>

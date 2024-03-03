@@ -29,7 +29,30 @@ try {
 
     // Yeni eklenen kaydın blok_id değerini al
     $msg =" Daire Başarıyla Eklendi";
-    addDSayisi($daireBlok);
+    $sql = "SELECT blok_adi, COUNT(*) as adet FROM tbl_daireler WHERE apartman_id = :id GROUP BY blok_adi";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+    $stmt->execute();
+    
+    if ($stmt->rowCount() > 0) {
+    
+    $sql3 = "UPDATE tbl_blok SET daire_sayisi = 0 WHERE apartman_idd = $id";
+    $stmt3 = $conn->prepare($sql3);
+    $stmt3->execute();
+    
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    
+        $sql2 = "UPDATE tbl_blok SET daire_sayisi = :adet WHERE blok_id = :blok_id";
+    
+      
+        $stmt2 = $conn->prepare($sql2);
+        $stmt2->bindParam(':adet', $row['adet']);
+        $stmt2->bindParam(':blok_id', $row['blok_adi']);
+        $stmt2->execute();
+        
+    } 
+    }
     // Başarılı olduğunda JSON yanıtı hazırla
     $response = array(
         "status" => 1,
@@ -50,27 +73,6 @@ try {
     header('Content-Type: application/json');
     echo json_encode($response);
 }
-
-
-
-
-
-function addDSayisi($id){
-    try {
-        // PDO bağlantısı $conn değişkeni ile sağlanmalıdır, bunu varsayarak devam ediyorum
-        global $conn;
-       
-        $sql = "UPDATE tbl_blok SET daire_sayisi = daire_sayisi + 1 WHERE blok_id = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(1, $id, PDO::PARAM_INT);
-        // Sorguyu çalıştırma
-        $stmt->execute();
-    
-    } catch (PDOException $e) {
-        echo "Hata: " . $e->getMessage(); // Hatanın ekrana basılması veya uygun bir şekilde işlenmesi
-    }
-}
-
 
 ?>
 

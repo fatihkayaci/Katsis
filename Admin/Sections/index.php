@@ -1,7 +1,13 @@
 <?php
 $idapartman =$_SESSION["apartID"];
 
+
 ?>
+
+
+
+
+
 <input type="hidden" id="hiddenDaireID2" value=<?php echo $idapartman?> />
 
 <?php
@@ -67,15 +73,16 @@ try {
 
         </div>
 
-         <div class="input-group1">
-            <button class="topluGuncelle btn-custom-outline bcoc3" id="guncelleButton"
-                style="display: none;"  onclick="openTopluPopup()" >Toplu Ekle/Güncelle</button>
-            <button class="topluSil btn-custom-outline bcoc4" id="silButton" onclick="daireSil(<?php echo $idapartman; ?>)" style="display: none;">Sil</button>
-        
+        <div class="input-group1">
+            <button class="topluGuncelle btn-custom-outline bcoc3" id="guncelleButton" style="display: none;"
+                onclick="openTopluPopup()">Toplu Ekle/Güncelle</button>
+            <button class="topluSil btn-custom-outline bcoc4" id="silButton"
+                onclick="daireSil(<?php echo $idapartman; ?>)" style="display: none;">Sil</button>
+
 
             <div class="search-box">
                 <i class="fas fa-search search-icon" aria-hidden="true"></i>
-                <input type="text" id="searchValue" class="search-input" placeholder="Arama..."  onkeyup="filtrele()">
+                <input type="text" id="searchValue" class="search-input" placeholder="Arama..." onkeyup="filtrele()">
             </div>
         </div>
     </div>
@@ -160,12 +167,14 @@ try {
         <thead>
             <tr class="users-table-info">
                 <th class="check-style">
-                    <input  id="mainCheckbox" type="checkbox" onclick="toggleAll(this)" />
+                    <input id="mainCheckbox" type="checkbox" onclick="toggleAll(this)" />
                     <label for="mainCheckbox" class="check">
-                      <svg width="18px" height="18px" viewBox="0 0 18 18">
-                        <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
-                        <polyline points="1 9 7 14 15 4"></polyline>
-                      </svg>
+                        <svg width="18px" height="18px" viewBox="0 0 18 18">
+                            <path
+                                d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z">
+                            </path>
+                            <polyline points="1 9 7 14 15 4"></polyline>
+                        </svg>
                     </label>
                 </th>
                 <th onclick="sortTable(1)">Blok Adı <i id="icon-table1" class="fa-solid fa-sort-down"></i></th>
@@ -188,13 +197,16 @@ try {
 
             <tr id=<?php echo $row["daire_id"]; ?> id="tr-<?php echo $row["daire_id"]; ?>" class="git-ac">
 
-                <td data-title="Seç" class="check-style" >
-                    <input id="check-<?php echo $row["daire_id"]; ?>"  data-userid="<?php echo $row["blok_adi"]; ?>"  class="check1" type="checkbox" onclick="toggleMainCheckbox(<?php echo $row['daire_id']; ?>)" />
+                <td data-title="Seç" class="check-style">
+                    <input id="check-<?php echo $row["daire_id"]; ?>" data-userid="<?php echo $row["blok_adi"]; ?>"
+                        class="check1" type="checkbox" onclick="toggleMainCheckbox(<?php echo $row['daire_id']; ?>)" />
                     <label for="check-<?php echo $row["daire_id"]; ?>" class="check">
-                      <svg width="18px" height="18px" viewBox="0 0 18 18">
-                        <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
-                        <polyline points="1 9 7 14 15 4"></polyline>
-                      </svg>
+                        <svg width="18px" height="18px" viewBox="0 0 18 18">
+                            <path
+                                d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z">
+                            </path>
+                            <polyline points="1 9 7 14 15 4"></polyline>
+                        </svg>
                     </label>
                 </td>
 
@@ -336,12 +348,12 @@ try {
         <div class="row">
             <div class="col-md-6 col-btn">
                 <input class="input" type="text" id="daireNo" onkeypress="onlyNumberKey(event)" required="" />
-                <label id="daireNoLabel" for="daireNo" >No : *</label>
+                <label id="daireNoLabel" for="daireNo">No : *</label>
             </div>
 
             <div class="col-md-6 col">
                 <input class="input" type="text" id="daireKat" onkeypress="onlyNumberKey(event)" required="" />
-                <label for="daireKat" >Kat :</label>
+                <label for="daireKat">Kat :</label>
             </div>
             <div class="col-md-6 col">
                 <select class="input" id="daireBlok" required="">
@@ -407,11 +419,11 @@ try {
         <input type="hidden" id="DaireSaveID" value=<?php  echo $idapartman ?> />
 
         <div class="row">
-           
+
 
             <div class="col-md-6 col">
                 <input class="input" type="text" id="daireKat1" onkeypress="onlyNumberKey(event)" required="" />
-                <label for="daireKat1" >Kat :</label>
+                <label for="daireKat1">Kat :</label>
             </div>
             <div class="col-md-6 col">
                 <select class="input" id="daireBlok1" required="">
@@ -453,16 +465,18 @@ try {
                 <label for="dairePay1">Arsa Payı :</label>
             </div>
             <div class="col-md-6 col">
-                
-                <label for="dairePay1">Not: Lütfen sadece güncellemek istediğiniz alanlara veri giriniz. Diğer alanları doldurmanız zorunlu değildir. Sadece veri girişi yapılan alanlar güncellenecektir. </label>
-            </div>             
+
+                <label for="dairePay1">Not: Lütfen sadece güncellemek istediğiniz alanlara veri giriniz. Diğer alanları
+                    doldurmanız zorunlu değildir. Sadece veri girişi yapılan alanlar güncellenecektir. </label>
+            </div>
         </div>
 
         <hr class="horizontal dark w-100">
 
         <div class="row row-btn">
             <button type="button" class="btn-custom-close" onclick="closePopupToplu()">Kapat</button>
-            <button type="button" class="btn-custom" id="saveButton" onclick="daireGuncel(<?php echo $idapartman; ?>)">Kaydet</button>
+            <button type="button" class="btn-custom" id="saveButton"
+                onclick="daireGuncel(<?php echo $idapartman; ?>)">Kaydet</button>
         </div>
 
     </form>
@@ -474,7 +488,8 @@ try {
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 
 <script>
-    sortTable(1)
+sortTable(1)
+
 function sortTable(n) {
     var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
     table = document.getElementById("table");
@@ -585,15 +600,15 @@ function closePopup() {
     });
 }
 
-function openTopluPopup(){ 
+function openTopluPopup() {
     $('body').css('overflow', 'hidden');
 
-$('#popupTopluEkle').show().css('display', 'flex').delay(100).queue(function(next) {
-    $('#popupTopluEkle').css('opacity', '1');
-    $('#userFormToplu').css('opacity', '1');
-    $('#userFormToplu').css('transform', 'translateY(0)');
-    next();
-});
+    $('#popupTopluEkle').show().css('display', 'flex').delay(100).queue(function(next) {
+        $('#popupTopluEkle').css('opacity', '1');
+        $('#userFormToplu').css('opacity', '1');
+        $('#userFormToplu').css('transform', 'translateY(0)');
+        next();
+    });
 
 }
 
@@ -646,16 +661,17 @@ function closePopupDaire() {
         next();
     });
 }
+
 function closePopupToplu() {
 
-$('#userFormToplu').css('opacity', '0').css('transform', 'translateY(-180px)').delay(100).queue(function(next) {
-    $('#popupTopluEkle').css('opacity', '0').delay(300).queue(function(nextInner) {
-        $(this).hide().css('display', 'none');
-        nextInner();
-        $('body').css('overflow', 'auto');
+    $('#userFormToplu').css('opacity', '0').css('transform', 'translateY(-180px)').delay(100).queue(function(next) {
+        $('#popupTopluEkle').css('opacity', '0').delay(300).queue(function(nextInner) {
+            $(this).hide().css('display', 'none');
+            nextInner();
+            $('body').css('overflow', 'auto');
+        });
+        next();
     });
-    next();
-});
 }
 
 
@@ -670,6 +686,7 @@ document.getElementById('userInput').addEventListener('input', function() {
 
 <script>
 var selectedUserID;
+
 function getSelectedOption(inputElement) {
     var value = inputElement.value.toLowerCase();
     var options = inputElement.list.options;
@@ -765,7 +782,8 @@ function saveBlok() {
                     td2.textContent = "0";
                     // td3'e bir buton ekleyelim
 
-                    td3.innerHTML = "<span class='blok-ico color-red' onclick=\"deleteBlok('" + response.blok_id +
+                    td3.innerHTML = "<span class='blok-ico color-red' onclick=\"deleteBlok('" + response
+                        .blok_id +
                         "')\" ><i class='fa-solid fa-trash'></i></span>";
 
 
@@ -779,7 +797,7 @@ function saveBlok() {
                     // Yeni td elemanlarını tr içine ekleyin
                     var newTr = document.createElement("tr");
                     newTr.setAttribute("id", "blk-" + response.blok_id);
-                    newTr.setAttribute("class", "git-ac"); 
+                    newTr.setAttribute("class", "git-ac");
                     newTr.appendChild(td1);
                     newTr.appendChild(td2);
                     newTr.appendChild(td3);
@@ -945,20 +963,20 @@ function SaveDaire() {
                 id: id // id değeri burada belirtilmelidir
             },
             success: function(response) {
-                if(response.status==1){
+                if (response.status == 1) {
                     closePopupDaire();
                     alert(response.msg);
                     location.reload();
-                }else if (response.status==0){
+                } else if (response.status == 0) {
                     alert(response.error);
                 }
-                
+
             },
             error: function(error) {
                 alert("f");
             }
         });
- 
+
 
     }
 
@@ -988,71 +1006,68 @@ $('#daireBlok').focus(function() {
 </script>
 
 <script type="text/javascript">
-
-
-
-
 const inputField = document.querySelector('.search-selectx');
 const dropdown = document.querySelector('.value-listx');
-const dropdownArray = [... document.querySelectorAll('.li-select')];
+const dropdownArray = [...document.querySelectorAll('.li-select')];
 console.log(typeof dropdownArray)
 dropdown.classList.add('open');
 inputField.focus();
 let valueArray = [];
 dropdownArray.forEach(item => {
-  valueArray.push(item.textContent);
+    valueArray.push(item.textContent);
 });
 
 const closeDropdown = () => {
-  dropdown.classList.remove('open');
+    dropdown.classList.remove('open');
 }
 
 inputField.addEventListener('input', () => {
-  dropdown.classList.add('open');
-  let inputValue = inputField.value.toLowerCase();
-  let valueSubstring;
-  if (inputValue.length > 0) {
-    for (let j = 0; j < valueArray.length; j++) {
-      if (!(inputValue.substring(0, inputValue.length) === valueArray[j].substring(0, inputValue.length).toLowerCase())) {
-        dropdownArray[j].classList.add('closed');/* yeni ibaresi gelicek */
-      } else {
-        dropdownArray[j].classList.remove('closed');
-      }
+    dropdown.classList.add('open');
+    let inputValue = inputField.value.toLowerCase();
+    let valueSubstring;
+    if (inputValue.length > 0) {
+        for (let j = 0; j < valueArray.length; j++) {
+            if (!(inputValue.substring(0, inputValue.length) === valueArray[j].substring(0, inputValue.length)
+                    .toLowerCase())) {
+                dropdownArray[j].classList.add('closed'); /* yeni ibaresi gelicek */
+            } else {
+                dropdownArray[j].classList.remove('closed');
+            }
+        }
+    } else {
+        for (let i = 0; i < dropdownArray.length; i++) {
+            dropdownArray[i].classList.remove('closed');
+        }
     }
-  } else {
-    for (let i = 0; i < dropdownArray.length; i++) {
-      dropdownArray[i].classList.remove('closed');
-    }
-  }
 });
 
 dropdownArray.forEach(item => {
-  item.addEventListener('click', (evt) => {
-    selectedUserID=evt.target.dataset.userId;
-    inputField.value = item.textContent;
-    dropdownArray.forEach(dropdown => {
-      dropdown.classList.add('closed');
+    item.addEventListener('click', (evt) => {
+        selectedUserID = evt.target.dataset.userId;
+        inputField.value = item.textContent;
+        dropdownArray.forEach(dropdown => {
+            dropdown.classList.add('closed');
+        });
     });
-  });
 })
 
 inputField.addEventListener('focus', () => {
-   dropdown.classList.add('open');
-   dropdownArray.forEach(dropdown => {
-     dropdown.classList.remove('closed');
-   });
+    dropdown.classList.add('open');
+    dropdownArray.forEach(dropdown => {
+        dropdown.classList.remove('closed');
+    });
 });
 
 inputField.addEventListener('blur', () => {
-  dropdown.classList.remove('open');
+    dropdown.classList.remove('open');
 });
 
 document.addEventListener('click', (evt) => {
-  const isDropdown = dropdown.contains(evt.target);
-  const isInput = inputField.contains(evt.target);
-  if (!isDropdown && !isInput) {
-    dropdown.classList.remove('open');
-  }
+    const isDropdown = dropdown.contains(evt.target);
+    const isInput = inputField.contains(evt.target);
+    if (!isDropdown && !isInput) {
+        dropdown.classList.remove('open');
+    }
 });
 
 
@@ -1061,39 +1076,39 @@ document.addEventListener('click', (evt) => {
 function toggleAll(masterCheckbox) {
 
 
-var checkboxes = document.getElementsByClassName('check1');
+    var checkboxes = document.getElementsByClassName('check1');
 
-for (var i = 0; i < checkboxes.length; i++) {
-    checkboxes[i].checked = masterCheckbox.checked;
-}
-if (masterCheckbox.checked) {
-    $('#guncelleButton').css('display', 'inline-block');
-    $('#silButton').css('display', 'inline-block');
+    for (var i = 0; i < checkboxes.length; i++) {
+        checkboxes[i].checked = masterCheckbox.checked;
+    }
+    if (masterCheckbox.checked) {
+        $('#guncelleButton').css('display', 'inline-block');
+        $('#silButton').css('display', 'inline-block');
 
-    $('.git-ac').addClass('git-ac-color');
-} else if (!masterCheckbox.checked) {
-    $('#guncelleButton').css('display', 'none');
-    $('#silButton').css('display', 'none');
-    $('.git-ac').removeClass('git-ac-color');
-}
+        $('.git-ac').addClass('git-ac-color');
+    } else if (!masterCheckbox.checked) {
+        $('#guncelleButton').css('display', 'none');
+        $('#silButton').css('display', 'none');
+        $('.git-ac').removeClass('git-ac-color');
+    }
 }
 
 
 function toggleMainCheckbox(id) {
 
-var checkboxes = document.querySelectorAll('input[type="checkbox"]');
-var guncelleButton = document.getElementById('guncelleButton');
-var silButton = document.getElementById('silButton');
-var enAzBirSecili = false;
+    var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    var guncelleButton = document.getElementById('guncelleButton');
+    var silButton = document.getElementById('silButton');
+    var enAzBirSecili = false;
 
 
-checkboxes.forEach(function(checkbox) {
-    if ( checkbox.checked) {
-        enAzBirSecili = true;
-    }
-});
+    checkboxes.forEach(function(checkbox) {
+        if (checkbox.checked) {
+            enAzBirSecili = true;
+        }
+    });
 
-if (enAzBirSecili) {
+    if (enAzBirSecili) {
         guncelleButton.style.display = 'inline-block';
         silButton.style.display = 'inline-block';
     } else {
@@ -1104,14 +1119,14 @@ if (enAzBirSecili) {
 
 
 
-var checkbox2 = document.getElementById('check-' + id);
+    var checkbox2 = document.getElementById('check-' + id);
 
-if (checkbox2.checked) {
-    $('#' + id).addClass('git-ac-color');
-} else {
-   
-    $('#' + id).removeClass('git-ac-color');
-}
+    if (checkbox2.checked) {
+        $('#' + id).addClass('git-ac-color');
+    } else {
+
+        $('#' + id).removeClass('git-ac-color');
+    }
 
 
 
@@ -1168,7 +1183,7 @@ function filtrele() {
         // Eğer filtre metni herhangi bir hücrede bulunuyorsa, satırı göster; aksi takdirde gizle
         if (display) {
             tr[i].style.display = "";
-          tr[i].querySelector('.check-style input[type="checkbox"]').classList.add('check1');
+            tr[i].querySelector('.check-style input[type="checkbox"]').classList.add('check1');
 
 
         } else {
@@ -1194,81 +1209,82 @@ function checkForButton(tdElements) {
     return false; // Döngü tamamlandıktan sonra buton bulunamazsa false döndür
 }
 
-function daireSil(id){
+function daireSil(id) {
     var checkedDaireIDs = [];
-var checkedBlokIDs = [];
-var checkboxes = document.querySelectorAll('.check1:checked');
-var f = false;
-var temp;
+    var checkedBlokIDs = [];
+    var checkboxes = document.querySelectorAll('.check1:checked');
+    var f = false;
+    var temp;
 
-checkboxes.forEach(function(checkbox) {
-    var tr = checkbox.closest('tr');
-    var td3 = tr.querySelectorAll('td:nth-child(4)');
-    var td5 = tr.querySelectorAll('td:nth-child(6)');
-    
-    if (checkForButton(td3) && checkForButton(td5)) {
-        var daireID = checkbox.id.replace('check-', '');
-        var blokID = checkbox.getAttribute("data-userid");
-        checkedBlokIDs.push(blokID);
-        checkedDaireIDs.push(daireID);
+    checkboxes.forEach(function(checkbox) {
+        var tr = checkbox.closest('tr');
+        var td3 = tr.querySelectorAll('td:nth-child(4)');
+        var td5 = tr.querySelectorAll('td:nth-child(6)');
+
+        if (checkForButton(td3) && checkForButton(td5)) {
+            var daireID = checkbox.id.replace('check-', '');
+            var blokID = checkbox.getAttribute("data-userid");
+            checkedBlokIDs.push(blokID);
+            checkedDaireIDs.push(daireID);
+        }
+    });
+
+    checkboxes.forEach(function(checkbox) {
+        var tr = checkbox.closest('tr');
+        var td32 = tr.querySelectorAll('td:nth-child(4)');
+        var td54 = tr.querySelectorAll('td:nth-child(6)');
+
+        if (!(checkForButton(td32) && checkForButton(td54))) {
+            f = true;
+        }
+    });
+
+    if (f) {
+        temp =
+            "Bu daireyi / daireleri silmek istediğinize emin misiniz?   (Seçilen daireler arasında kullanıcılar ile ilişkili daireler bulunmaktadır. İlişkisi bulunan daireler silinmeyecektir)";
+    } else {
+        temp = "Bu daireyi silmek istediğinize emin misiniz?";
     }
-});
-
-checkboxes.forEach(function(checkbox) {
-    var tr = checkbox.closest('tr');
-    var td32 = tr.querySelectorAll('td:nth-child(4)');
-    var td54 = tr.querySelectorAll('td:nth-child(6)');
-    
-    if (!(checkForButton(td32) && checkForButton(td54))) {
-        f = true;
-    }
-});
-
-if (f) {
-    temp = "Bu daireyi / daireleri silmek istediğinize emin misiniz?   (Seçilen daireler arasında kullanıcılar ile ilişkili daireler bulunmaktadır. İlişkisi bulunan daireler silinmeyecektir)";
-} else {
-    temp = "Bu daireyi silmek istediğinize emin misiniz?";
-}
 
 
 
-    if(confirm(temp)){
+    if (confirm(temp)) {
         $.ajax({
-    url: 'Controller/daire_delete.php',
-    type: 'POST',
-    dataType: 'json',
-    data: {
-        checkedDaireIDs: checkedDaireIDs,
-        checkedBlokIDs:checkedBlokIDs,
-        id:id,
-    },
-    success: function(response) {
-       
-      if(response.sts){
-       
-        if(response.str ==undefined){
-            alert("Silmeye Uygun Bir Daire Bulunamadı. Seçimlerinizi Gözden Geçiriniz.");
-        }else{
-            alert(response.msg);
-        }
-       
-        location.reload();
+            url: 'Controller/daire_delete.php',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                checkedDaireIDs: checkedDaireIDs,
+                checkedBlokIDs: checkedBlokIDs,
+                id: id,
+            },
+            success: function(response) {
 
-        }
-       
-    },
-    error: function(xhr, status, error) {
-        var errorMessage = xhr.status + ': ' + xhr.statusText;
-        alert('Hata alındı: ' + errorMessage);
-    }
-});
+                if (response.sts) {
+
+                    if (response.str == undefined) {
+                        alert("Silmeye Uygun Bir Daire Bulunamadı. Seçimlerinizi Gözden Geçiriniz.");
+                    } else {
+                        alert(response.msg);
+                    }
+
+                    location.reload();
+
+                }
+
+            },
+            error: function(xhr, status, error) {
+                var errorMessage = xhr.status + ': ' + xhr.statusText;
+                alert('Hata alındı: ' + errorMessage);
+            }
+        });
 
     }
-   
+
 
 }
 
-function daireGuncel(id){
+function daireGuncel(id) {
     var checkedDaireIDs = [];
     var daireKat = document.getElementById("daireKat1").value;
     var daireBlok = document.getElementById("daireBlok1").value;
@@ -1278,56 +1294,53 @@ function daireGuncel(id){
     var dairePay = document.getElementById("dairePay1").value;
     var checkboxes = document.querySelectorAll('.check1:checked');
 
-    
+
     checkboxes.forEach(function(checkbox) {
         var daireID = checkbox.id.replace('check-', '');
         checkedDaireIDs.push(daireID);
     });
 
 
-     $.ajax({
-    url: 'Controller/daire_toplu_update.php',
-    type: 'POST',
-    dataType: 'json',
-    data: {
-        checkedDaireIDs: checkedDaireIDs,
-        id:id,
-        daireKat:daireKat,
-        daireBlok:daireBlok,
-        daireGrup:daireGrup,
-        daireBrut:daireBrut,
-        daireNet:daireNet,
-        dairePay:dairePay,
-    },
-    success: function(response) {
-       
-      if(response.sts){
-            alert(response.msg);
-            location.reload();
-        }
-       
-    },
-    error: function(xhr, status, error) {
-        var errorMessage = xhr.status + ': ' + xhr.statusText;
-        alert('Hata alındı: ' + errorMessage);
-    }
-});
+    $.ajax({
+        url: 'Controller/daire_toplu_update.php',
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            checkedDaireIDs: checkedDaireIDs,
+            id: id,
+            daireKat: daireKat,
+            daireBlok: daireBlok,
+            daireGrup: daireGrup,
+            daireBrut: daireBrut,
+            daireNet: daireNet,
+            dairePay: dairePay,
+        },
+        success: function(response) {
 
-    
-   
+            if (response.sts) {
+                alert(response.msg);
+                location.reload();
+            }
+
+        },
+        error: function(xhr, status, error) {
+            var errorMessage = xhr.status + ': ' + xhr.statusText;
+            alert('Hata alındı: ' + errorMessage);
+        }
+    });
+
+
+
 
 }
 
 function onlyNumberKey(evt) {
-        // Klavyeden girilen karakterin ASCII değerini al
-        var charCode = (evt.which) ? evt.which : evt.keyCode;
-        
-        // ASCII değerlerine göre, sadece sayı ve bazı kontrol karakterlerine izin ver
-        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-            evt.preventDefault();
-        }
+    // Klavyeden girilen karakterin ASCII değerini al
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+
+    // ASCII değerlerine göre, sadece sayı ve bazı kontrol karakterlerine izin ver
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        evt.preventDefault();
     }
-
-
+}
 </script>
-
