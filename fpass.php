@@ -34,7 +34,7 @@ if(isset($_POST['btn-submit']))
        <br /><br />
        Teşekkürler :)
        ";
-  $subject = "Password Reset";
+  $subject = "Parola Sıfırlama";
   
   $user->send_mail($email,$message,$subject);
   

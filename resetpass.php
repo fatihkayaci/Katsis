@@ -55,36 +55,58 @@ if(isset($_GET['id']) && isset($_GET['code']))
 ?>
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Password Reset</title>
-    <!-- Bootstrap -->
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
-    <link href="assets/styles.css" rel="stylesheet" media="screen">
-     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-  </head>
-  <body id="login">
-    <div class="container">
-     <div class='alert alert-success'>
-   <strong>Hello !</strong>  <?php echo $rows['userName'] ?> you are here to reset your forgetton password.
-  </div>
-        <form class="form-signin" method="post">
-        <h3 class="form-signin-heading">Password Reset.</h3><hr />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parola Değiştirme | Katsis</title>
+
+    <link href="assets/css/style.css" rel="stylesheet" media="screen">
+
+</head>
+<body id="login" class="loginbody">
+
+<div class="container">
+
+  <div class="login-box">
+
+  <div class="logo-box">
+    <img src="admin/assets/img/ico.png" alt="">
+  </div> 
+
+    <form class="login-form" method="post">
+
+      <h1 class="form-signin-heading">Katsis'e Hoşgeldiniz</h1>
+
+      <p class="form-signin-heading1">Hoşgeldiniz <strong><?php echo $rows['userName'] ?> </strong> Yeni Parolanızı Oluşturunuz</p>
+
         <?php
         if(isset($msg))
-  {
-   echo $msg;
-  }
-  ?>
-        <input type="password" class="input-block-level" placeholder="New Password" name="pass" required />
-        <input type="password" class="input-block-level" placeholder="Confirm New Password" name="confirm-pass" required />
-      <hr />
-        <button class="btn btn-large btn-primary" type="submit" name="btn-reset-pass">Reset Your Password</button>
+        {
+         echo $msg;
+        }
+        ?>
+
+        <label class="label-block-level" for="yeniparola">Yeni Parola</label>
+        <input type="password" class="input-block-level" placeholder="" id="yeniparola" name="pass" required />
+
+        <label class="label-block-level" for="yeniparola1">Yeni Parola Tekrar</label>
+        <input type="password" class="input-block-level" placeholder="" id="yeniparola1" name="confirm-pass" required />
+
+        <button class="btn-custom" type="submit" name="btn-reset-pass">Parolamı Sıfırla</button>
+
+        <p class="hesap">
+          <a href="index">Giriş Yap</a>
+        </p>
         
       </form>
+
+    </div> 
+
+    <div class="img-box">
+      <h1 class="form-signin-heading">KATSİS</h1>
+      <p class="form-signin-heading2">Bina Yönetiminde Güvenilir Çözüm!</p>
+      <img src="assets/img/img.png" alt="">
+    </div>  
 
     </div> <!-- /container -->
     <script src="bootstrap/js/jquery-1.9.1.min.js"></script>
