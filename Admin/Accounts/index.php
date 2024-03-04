@@ -41,7 +41,6 @@ try {
             <button class="adduser btn-custom-outline bcoc1">Kullanıcı Ekle</button>
             <button class="toplu btn-custom-outline bcoc2">Toplu İşlemler</button>
 
-            <!-- Düzenlemeye bunu yap -->
             <label class="switch">
                 <input type="checkbox" id="editToggle">
               <span class="slider round"></span>
@@ -62,6 +61,8 @@ try {
         </div>
 
     </div>
+
+    <hr class="horizontal dark mb-1 w-100">
 
     <table id="example" class="users-table">
         <thead>
@@ -109,6 +110,46 @@ try {
 
         </tbody>
     </table>
+
+    <hr class="horizontal dark mb-0 w-100">
+
+    <div class="input-group-div">
+
+        <div class="input-group1">
+
+            <div class="custom-select">
+              <select>
+                <option selected value="1">10</option>
+                <option value="2">20</option>
+                <option value="3">50</option>
+                <option value="4">100</option>
+              </select>
+            </div>
+
+            <p class="adet-txt">Adet Veri Gösteriliyor</p>
+
+        </div>
+
+        <div class="input-group1">
+
+            <ul class="pagination">
+            	<a href="#" class="pagination-arrow arrow-left">
+                    <i class="fa-solid fa-angle-left"></i>
+            	</a>
+            	<a href="#" class="pagination-number">1</a>
+            	<a href="#" class="pagination-number">2</a>
+            	<a href="#" class="pagination-number current-number">3</a>
+            	<a href="#" class="pagination-number">4</a>
+            	<a href="#" class="pagination-number">5</a>
+            	<a href="#" class="pagination-arrow arrow-right">
+                    <i class="fa-solid fa-angle-right"></i>
+            	</a>
+            </ul>
+
+        </div>
+
+    </div>
+
 </div>
 <?php
     } else {
@@ -281,6 +322,79 @@ try {
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
+<!-- =============================== -->
+<!-- select input start -->
+
+<script>
+var x, i, j, l, ll, selElmnt, a, b, c;
+    x = document.getElementsByClassName("custom-select");
+    l = x.length;
+    for (i = 0; i < l; i++) {
+        selElmnt = x[i].getElementsByTagName("select")[0];
+        ll = selElmnt.length;
+        a = document.createElement("DIV");
+        a.setAttribute("class", "select-selected");
+        a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
+        x[i].appendChild(a);
+        b = document.createElement("DIV");
+        b.setAttribute("class", "select-items select-hide");
+        for (j = 0; j < ll; j++) {
+            c = document.createElement("DIV");
+            c.innerHTML = selElmnt.options[j].innerHTML;
+            c.addEventListener("click", function (e) {
+                var y, i, k, s, h, sl, yl;
+                s = this.parentNode.parentNode.getElementsByTagName("select")[0];
+                sl = s.length;
+                h = this.parentNode.previousSibling;
+                for (i = 0; i < sl; i++) {
+                    if (s.options[i].innerHTML == this.innerHTML) {
+                        s.selectedIndex = i;
+                        h.innerHTML = this.innerHTML;
+                        y = this.parentNode.getElementsByClassName("same-as-selected");
+                        yl = y.length;
+                        for (k = 0; k < yl; k++) {
+                            y[k].removeAttribute("class");
+                        }
+                        this.setAttribute("class", "same-as-selected");
+                        break;
+                    }
+                }
+                h.click();
+            });
+            b.appendChild(c);
+        }
+        x[i].appendChild(b);
+        a.addEventListener("click", function (e) {
+            e.stopPropagation();
+            closeAllSelect(this);
+            this.nextSibling.classList.toggle("select-hide");
+            this.classList.toggle("select-arrow-active");
+        });
+    }
+    function closeAllSelect(elmnt) {
+        var x, y, i, xl, yl, arrNo = [];
+        x = document.getElementsByClassName("select-items");
+        y = document.getElementsByClassName("select-selected");
+        xl = x.length;
+        yl = y.length;
+        for (i = 0; i < yl; i++) {
+            if (elmnt == y[i]) {
+                arrNo.push(i)
+            } else {
+                y[i].classList.remove("select-arrow-active");
+            }
+        }
+        for (i = 0; i < xl; i++) {
+            if (arrNo.indexOf(i) === -1) {
+                x[i].classList.add("select-hide");
+            }
+        }
+    }
+    document.addEventListener("click", closeAllSelect);
+</script>
+
+<!-- select input end -->
+<!-- =============================== -->
 
 <script>
 function sortTable(n) {

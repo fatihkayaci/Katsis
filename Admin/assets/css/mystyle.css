@@ -635,7 +635,7 @@ box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
 /* -- Material Design Table style -------------- */
 .cener-table {
   display: flex;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
   flex-direction: column;
   padding: 10px 0px;
@@ -644,6 +644,7 @@ box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
   background-color: #fff;
   border-radius: 15px;
   margin: 1rem;
+  min-height: 87.5vh;
 }
 
 @media (max-width: 768px) {
@@ -664,7 +665,6 @@ box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
   justify-content: space-between;
   align-items: center;
   padding-top: 10px;
-  padding-bottom: 10px;
 }
 
 .input-group1 {
@@ -1233,9 +1233,10 @@ min-width: 0;
   position: relative;
   display: inline-block;
   width: 60px;
-  height: 34px;
+  height: 40px;
   margin: auto;
-  
+  border: 1px solid #d2d6da;
+  border-radius: 4px;
 }
 
 /* Hide default HTML checkbox */
@@ -1261,10 +1262,10 @@ min-width: 0;
 .slider:before {
   position: absolute;
   content: "";
-  height: 26px;
+  height: 28px;
   width: 26px;
   left: 4px;
-  bottom: 4px;
+  bottom: 5px;
   background-color: white;
   -webkit-transition: .4s;
   transition: .4s;
@@ -1272,25 +1273,17 @@ min-width: 0;
 
 input:checked + .slider {
   background-color: #20c997;
-}
-
-input:focus + .slider {
-  box-shadow: 0 0 1px #20c997;
+  border-radius: 4px;
 }
 
 input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
-}
-
-/* Rounded sliders */
-.slider.round {
-  border-radius: 34px;
+  -webkit-transform: translateX(22px);
+  -ms-transform: translateX(22px);
+  transform: translateX(22px);
 }
 
 .slider.round:before {
-  border-radius: 50%;
+  border-radius: 4px;
 }
 
 /* ============================================== */
@@ -1564,3 +1557,119 @@ input:checked + .slider:before {
   transition-delay: 0.15s;
 }
 
+/* =============================================== */
+
+/* select */
+
+.custom-select {
+  position: relative;
+  width: 70px;
+  margin-right: 10px;
+  z-index: 100000000000000000 !important;
+}
+
+.custom-select select {
+  display: none; /*hide original SELECT element:*/
+}
+
+.select-selected {
+  background-color: #fff;
+  border-radius: 4px;
+  width: 70px;
+  border: 1px solid #d2d6da;
+}
+.select-selected:hover {
+  background-color: #00000013;
+}
+
+/*style the arrow inside the select element:*/
+.select-selected:after {
+  position: absolute;
+  content: "";
+  top: 16px;
+  left: 10px;
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  border-color: #277CE0 transparent transparent transparent;
+}
+
+/*point the arrow upwards when the select box is open (active):*/
+.select-selected.select-arrow-active:after {
+  border-color: transparent transparent #277CE0 transparent;
+  top: 7px;
+}
+
+/*style the items (options), including the selected item:*/
+.select-items div,.select-selected {
+  font-weight: 600;
+  color: #277CE0;
+  padding: 7px 0px 7px 30px;
+  cursor: pointer;
+  user-select: none;
+}
+
+/*style items (options):*/
+.select-items {
+  position: absolute;
+  background-color: #fff;
+  border: 1px solid #d2d6da;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 99;
+  border-radius: 4px;
+}
+
+/*hide the items when the select box is closed:*/
+.select-hide {
+  display: none;
+}
+
+.select-items div:hover, .same-as-selected {
+  background-color: #00000013;
+  border-radius: 4px;
+}
+
+.adet-txt {
+  margin: auto;
+}
+
+.pagination {
+  list-style: none;
+  padding: 8px;
+  text-align: center;
+}
+.pagination a, .pagination li {
+  border-radius: 4px;
+  font-weight: 600;
+  color: #212121;
+  display: inline-block;
+  margin: 0;
+  transition: .15s ease-in;
+  cursor: pointer;
+  text-decoration: none;
+}
+.pagination a:hover {
+  background: #277CE01f;
+}
+.pagination .pagination-number,
+.pagination .pagination-arrow i {
+  vertical-align: middle;
+}
+.pagination .pagination-number {
+  font-family: sans-serif;
+  font-size: 14px;
+  text-align: center;
+  line-height: 24px;
+  width: 32px;
+  padding: 4px 0;
+}
+.pagination .pagination-number.current-number {
+  background: #277CE0;
+  color: #fff;
+}
+.pagination .pagination-arrow i {
+  font-size: 24px;
+  padding: 4px;
+}
