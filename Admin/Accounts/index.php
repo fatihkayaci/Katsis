@@ -41,13 +41,9 @@ try {
             <button class="adduser btn-custom-outline bcoc1">Kullanıcı Ekle</button>
             <button class="toplu btn-custom-outline bcoc2">Toplu İşlemler</button>
 
-            <!-- bunu sil (düzenleme alanı) -->
-            <button id="openEdit" onclick="openEdit ()">AÇ</button>
-            <button id="closeEdit" onclick="closeEdit()">KAPAT</button>
-
             <!-- Düzenlemeye bunu yap -->
             <label class="switch">
-              <input type="checkbox">
+                <input type="checkbox" id="editToggle">
               <span class="slider round"></span>
             </label>
 
@@ -814,54 +810,60 @@ deleteButtons.forEach(function(button) {
     });
 });
 
+// Checkbox durumuna göre düzenleme fonksiyonlarını etkinleştirme veya devre dışı bırakma
+document.getElementById("editToggle").addEventListener("change", function() {
+    if (this.checked) {
+        openEdit();
+        disableDemoFunction();
+    } else {
+        closeEdit();
+        enableDemoFunction();
+    }
+});
+
 function openEdit() {
     var editableCells = document.querySelectorAll('td[contenteditable="false"]');
     editableCells.forEach(function(cell) {
-        var isEditable = cell.getAttribute('contenteditable');
-        if (isEditable === "true") {
-            cell.setAttribute('contenteditable', 'false');
-        } else {
-            cell.setAttribute('contenteditable', 'true');
-        }
+        cell.setAttribute('contenteditable', 'true');
     });
 }
 
 function closeEdit() {
     var editableCells = document.querySelectorAll('td[contenteditable="true"]');
     editableCells.forEach(function(cell) {
-        var isEditable = cell.getAttribute('contenteditable');
-        if (isEditable === "true") {
-            cell.setAttribute('contenteditable', 'false');
-        } else {
-            cell.setAttribute('contenteditable', 'true');
-        }
+        cell.setAttribute('contenteditable', 'false');
     });
-    demofunction();
 }
-//isim düzeltilecek
-function demofunction() {
+
+function disableDemoFunction() {
     var rows = document.querySelectorAll('.git-ac');
     rows.forEach(function(row) {
-        row.addEventListener('click', function(event) {
-            // Checkbox içinde bir tıklama olup olmadığını kontrol et
-            var isCheckboxClicked = event.target.tagName === 'INPUT' && event.target
-                .getAttribute(
-                    'type') === 'checkbox';
-
-            // Eğer checkbox'a tıklanmışsa işlemi durdur
-            if (isCheckboxClicked) {
-                event.stopPropagation();
-                return;
-            }
-
-            // Checkbox dışında bir yere tıklandıysa userID'yi al ve yönlendir
-            var userID = row.getAttribute('data-userid');
-            // userID'yi URL'ye ekleyerek sayfayı yeniden yönlendir
-            window.location.href = 'index.php?parametre=custom&userID=' + encodeURIComponent(
-                userID);
-        });
+        row.removeEventListener('click', handleClick);
     });
 }
+
+function enableDemoFunction() {
+    var rows = document.querySelectorAll('.git-ac');
+    rows.forEach(function(row) {
+        row.addEventListener('click', handleClick);
+    });
+}
+
+function handleClick(event) {
+    var isCheckboxClicked = event.target.tagName === 'INPUT' && event.target.getAttribute('type') === 'checkbox';
+
+    if (isCheckboxClicked) {
+        event.stopPropagation();
+        return;
+    }
+
+    var userID = this.getAttribute('data-userid');
+    window.location.href = 'index.php?parametre=custom&userID=' + encodeURIComponent(userID);
+}
+
+enableDemoFunction();
+
+
 
 
 
