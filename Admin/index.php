@@ -76,6 +76,12 @@ else if($indexx == 'profile'){
     echo "<script>
             localStorage.setItem('selectedLink', 'profile');
          </script>";
+}else if($indexx == 'detail'){
+    include ("profile/profile.php");
+    echo "<script>pagename('PROFİL');</script>";
+    echo "<script>
+            localStorage.setItem('selectedLink', 'profile');
+         </script>";
 }
 
 

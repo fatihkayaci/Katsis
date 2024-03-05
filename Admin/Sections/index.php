@@ -813,7 +813,7 @@ function saveBlok() {
             },
             error: function(error) {
                 alert("hata: Müşteri temsilciniz ile iletişime geçiniz.");
-            }
+               }
 
         });
     }
@@ -873,9 +873,6 @@ function editBlok(id) {
         }
     });
 
-
-
-
     newSpan.click(function() {
         reeditBlok(id);
         $('#blk-' + id).find('td:eq(0)').text(temp);
@@ -921,6 +918,10 @@ function reeditBlok(id) {
     $('#blk-' + id).removeClass('active');
     $('#blk-' + id).find('td:eq(0)').attr('contenteditable', false);
 }
+
+
+
+
 
 ////////////////////// Daire   işlemleri //////////////////////
 function SaveDaire() {
