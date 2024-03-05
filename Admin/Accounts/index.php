@@ -37,13 +37,13 @@ try {
     <div class="input-group-div">
 
         <div class="input-group1">
-            
+
             <button class="adduser btn-custom-outline bcoc1">Kullanıcı Ekle</button>
             <button class="toplu btn-custom-outline bcoc2">Toplu İşlemler</button>
 
             <label class="switch">
                 <input type="checkbox" id="editToggle">
-              <span class="slider round"></span>
+                <span class="slider round"></span>
             </label>
 
         </div>
@@ -52,7 +52,7 @@ try {
             <button class="topluGuncelle btn-custom-outline bcoc3" id="guncelleButton"
                 style="display: none;">Güncelle</button>
             <button class="topluSil btn-custom-outline bcoc4" id="silButton" style="display: none;">Sil</button>
-        
+
 
             <div class="search-box">
                 <i class="fas fa-search search-icon" aria-hidden="true"></i>
@@ -70,10 +70,12 @@ try {
                 <th class="check-style">
                     <input id="mainCheckbox" type="checkbox" onclick="toggleAll(this)" />
                     <label for="mainCheckbox" class="check">
-                      <svg width="18px" height="18px" viewBox="0 0 18 18">
-                        <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
-                        <polyline points="1 9 7 14 15 4"></polyline>
-                      </svg>
+                        <svg width="18px" height="18px" viewBox="0 0 18 18">
+                            <path
+                                d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z">
+                            </path>
+                            <polyline points="1 9 7 14 15 4"></polyline>
+                        </svg>
                     </label>
                 </th>
                 <th onclick="sortTable(1)">Ad Soyad <i id="icon-table1" class="fa-solid fa-sort-down"></i></th>
@@ -90,12 +92,15 @@ try {
                 ?>
             <tr data-userid="<?php echo $row["userID"]; ?>" id="tr-<?php echo $row["userID"]; ?>" class="git-ac">
                 <td data-title="Seç" class="check-style">
-                    <input id="check-<?php echo $row["userID"]; ?>" class="check1" type="checkbox" onclick="toggleMainCheckbox(<?php echo $row['userID']; ?>)" />
+                    <input id="check-<?php echo $row["userID"]; ?>" class="check1" type="checkbox"
+                        onclick="toggleMainCheckbox(<?php echo $row['userID']; ?>)" />
                     <label for="check-<?php echo $row["userID"]; ?>" class="check">
-                      <svg width="18px" height="18px" viewBox="0 0 18 18">
-                        <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
-                        <polyline points="1 9 7 14 15 4"></polyline>
-                      </svg>
+                        <svg width="18px" height="18px" viewBox="0 0 18 18">
+                            <path
+                                d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z">
+                            </path>
+                            <polyline points="1 9 7 14 15 4"></polyline>
+                        </svg>
                     </label>
                 </td>
                 <td data-title="Ad Soyad" contenteditable="false"><?php echo $row["userName"]; ?></td>
@@ -118,12 +123,12 @@ try {
         <div class="input-group1">
 
             <div class="custom-select">
-              <select>
-                <option selected value="1">10</option>
-                <option value="2">20</option>
-                <option value="3">50</option>
-                <option value="4">100</option>
-              </select>
+                <select>
+                    <option selected value="1">10</option>
+                    <option value="2">20</option>
+                    <option value="3">50</option>
+                    <option value="4">100</option>
+                </select>
             </div>
 
             <p class="adet-txt">Adet Veri Gösteriliyor</p>
@@ -133,17 +138,17 @@ try {
         <div class="input-group1">
 
             <ul class="pagination">
-            	<a href="#" class="pagination-arrow arrow-left">
+                <a href="#" class="pagination-arrow arrow-left">
                     <i class="fa-solid fa-angle-left"></i>
-            	</a>
-            	<a href="#" class="pagination-number">1</a>
-            	<a href="#" class="pagination-number">2</a>
-            	<a href="#" class="pagination-number current-number">3</a>
-            	<a href="#" class="pagination-number">4</a>
-            	<a href="#" class="pagination-number">5</a>
-            	<a href="#" class="pagination-arrow arrow-right">
+                </a>
+                <a href="#" class="pagination-number">1</a>
+                <a href="#" class="pagination-number">2</a>
+                <a href="#" class="pagination-number current-number">3</a>
+                <a href="#" class="pagination-number">4</a>
+                <a href="#" class="pagination-number">5</a>
+                <a href="#" class="pagination-arrow arrow-right">
                     <i class="fa-solid fa-angle-right"></i>
-            	</a>
+                </a>
             </ul>
 
         </div>
@@ -174,7 +179,7 @@ try {
     <table id="example" class="users-table">
         <thead>
             <tr class="users-table-info">
-                
+
             </tr>
         </thead>
         <tbody>
@@ -257,7 +262,7 @@ try {
 
         <div class="row row-btn">
             <button type="button" class="btn-custom-close" onclick="closePopup()">Kapat</button>
-            <button type="button" class="btn-custom"  onclick="saveUser()" id="saveButton">Kaydet</button>
+            <button type="button" class="btn-custom" onclick="saveUser()" id="saveButton">Kaydet</button>
         </div>
 
 
@@ -327,70 +332,71 @@ try {
 
 <script>
 var x, i, j, l, ll, selElmnt, a, b, c;
-    x = document.getElementsByClassName("custom-select");
-    l = x.length;
-    for (i = 0; i < l; i++) {
-        selElmnt = x[i].getElementsByTagName("select")[0];
-        ll = selElmnt.length;
-        a = document.createElement("DIV");
-        a.setAttribute("class", "select-selected");
-        a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
-        x[i].appendChild(a);
-        b = document.createElement("DIV");
-        b.setAttribute("class", "select-items select-hide");
-        for (j = 0; j < ll; j++) {
-            c = document.createElement("DIV");
-            c.innerHTML = selElmnt.options[j].innerHTML;
-            c.addEventListener("click", function (e) {
-                var y, i, k, s, h, sl, yl;
-                s = this.parentNode.parentNode.getElementsByTagName("select")[0];
-                sl = s.length;
-                h = this.parentNode.previousSibling;
-                for (i = 0; i < sl; i++) {
-                    if (s.options[i].innerHTML == this.innerHTML) {
-                        s.selectedIndex = i;
-                        h.innerHTML = this.innerHTML;
-                        y = this.parentNode.getElementsByClassName("same-as-selected");
-                        yl = y.length;
-                        for (k = 0; k < yl; k++) {
-                            y[k].removeAttribute("class");
-                        }
-                        this.setAttribute("class", "same-as-selected");
-                        break;
+x = document.getElementsByClassName("custom-select");
+l = x.length;
+for (i = 0; i < l; i++) {
+    selElmnt = x[i].getElementsByTagName("select")[0];
+    ll = selElmnt.length;
+    a = document.createElement("DIV");
+    a.setAttribute("class", "select-selected");
+    a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
+    x[i].appendChild(a);
+    b = document.createElement("DIV");
+    b.setAttribute("class", "select-items select-hide");
+    for (j = 0; j < ll; j++) {
+        c = document.createElement("DIV");
+        c.innerHTML = selElmnt.options[j].innerHTML;
+        c.addEventListener("click", function(e) {
+            var y, i, k, s, h, sl, yl;
+            s = this.parentNode.parentNode.getElementsByTagName("select")[0];
+            sl = s.length;
+            h = this.parentNode.previousSibling;
+            for (i = 0; i < sl; i++) {
+                if (s.options[i].innerHTML == this.innerHTML) {
+                    s.selectedIndex = i;
+                    h.innerHTML = this.innerHTML;
+                    y = this.parentNode.getElementsByClassName("same-as-selected");
+                    yl = y.length;
+                    for (k = 0; k < yl; k++) {
+                        y[k].removeAttribute("class");
                     }
+                    this.setAttribute("class", "same-as-selected");
+                    break;
                 }
-                h.click();
-            });
-            b.appendChild(c);
-        }
-        x[i].appendChild(b);
-        a.addEventListener("click", function (e) {
-            e.stopPropagation();
-            closeAllSelect(this);
-            this.nextSibling.classList.toggle("select-hide");
-            this.classList.toggle("select-arrow-active");
+            }
+            h.click();
         });
+        b.appendChild(c);
     }
-    function closeAllSelect(elmnt) {
-        var x, y, i, xl, yl, arrNo = [];
-        x = document.getElementsByClassName("select-items");
-        y = document.getElementsByClassName("select-selected");
-        xl = x.length;
-        yl = y.length;
-        for (i = 0; i < yl; i++) {
-            if (elmnt == y[i]) {
-                arrNo.push(i)
-            } else {
-                y[i].classList.remove("select-arrow-active");
-            }
-        }
-        for (i = 0; i < xl; i++) {
-            if (arrNo.indexOf(i) === -1) {
-                x[i].classList.add("select-hide");
-            }
+    x[i].appendChild(b);
+    a.addEventListener("click", function(e) {
+        e.stopPropagation();
+        closeAllSelect(this);
+        this.nextSibling.classList.toggle("select-hide");
+        this.classList.toggle("select-arrow-active");
+    });
+}
+
+function closeAllSelect(elmnt) {
+    var x, y, i, xl, yl, arrNo = [];
+    x = document.getElementsByClassName("select-items");
+    y = document.getElementsByClassName("select-selected");
+    xl = x.length;
+    yl = y.length;
+    for (i = 0; i < yl; i++) {
+        if (elmnt == y[i]) {
+            arrNo.push(i)
+        } else {
+            y[i].classList.remove("select-arrow-active");
         }
     }
-    document.addEventListener("click", closeAllSelect);
+    for (i = 0; i < xl; i++) {
+        if (arrNo.indexOf(i) === -1) {
+            x[i].classList.add("select-hide");
+        }
+    }
+}
+document.addEventListener("click", closeAllSelect);
 </script>
 
 <!-- select input end -->
@@ -398,52 +404,52 @@ var x, i, j, l, ll, selElmnt, a, b, c;
 
 <script>
 function sortTable(n) {
-  var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-  table = document.getElementById("example");
-  switching = true;
-  dir = "asc"; 
-  while (switching) {
-    switching = false;
-    rows = table.rows;
-    for (i = 1; i < (rows.length - 1); i++) {
-      shouldSwitch = false;
-      x = rows[i].getElementsByTagName("TD")[n];
-      y = rows[i + 1].getElementsByTagName("TD")[n];
+    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+    table = document.getElementById("example");
+    switching = true;
+    dir = "asc";
+    while (switching) {
+        switching = false;
+        rows = table.rows;
+        for (i = 1; i < (rows.length - 1); i++) {
+            shouldSwitch = false;
+            x = rows[i].getElementsByTagName("TD")[n];
+            y = rows[i + 1].getElementsByTagName("TD")[n];
 
-        for (var j = 1; j < 8; j++) {
-            if(n != j){
-                $('#icon-table' + j).removeClass("rotate");
-                $('#icon-table' + j).removeClass("opacity");
+            for (var j = 1; j < 8; j++) {
+                if (n != j) {
+                    $('#icon-table' + j).removeClass("rotate");
+                    $('#icon-table' + j).removeClass("opacity");
+                }
+            }
+
+            if (dir == "asc") {
+                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                    shouldSwitch = true;
+                    $('#icon-table' + n).removeClass("rotate");
+                    $('#icon-table' + n).addClass("opacity");
+                    break;
+                }
+            } else if (dir == "desc") {
+                if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                    shouldSwitch = true;
+                    $('#icon-table' + n).addClass("rotate");
+                    $('#icon-table' + n).addClass("opacity");
+                    break;
+                }
             }
         }
-
-      if (dir == "asc") {
-        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-          shouldSwitch= true;
-          $('#icon-table' + n).removeClass("rotate");
-          $('#icon-table' + n).addClass("opacity");
-          break;
+        if (shouldSwitch) {
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+            switchcount++;
+        } else {
+            if (switchcount == 0 && dir == "asc") {
+                dir = "desc";
+                switching = true;
+            }
         }
-      } else if (dir == "desc") {
-        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-          shouldSwitch = true;
-          $('#icon-table' + n).addClass("rotate");
-          $('#icon-table' + n).addClass("opacity");
-          break;
-        }
-      }
     }
-    if (shouldSwitch) {
-      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-      switching = true;
-      switchcount ++;      
-    } else {
-      if (switchcount == 0 && dir == "asc") {
-        dir = "desc";
-        switching = true;
-      }
-    }
-  }
 }
 </script>
 
@@ -556,11 +562,11 @@ function toggleMainCheckbox(id) {
 
 
     checkboxes.forEach(function(checkbox) {
-        if ( checkbox.checked) {
+        if (checkbox.checked) {
             enAzBirSecili = true;
         }
     });
-   
+
     if (enAzBirSecili) {
         guncelleButton.style.display = 'inline-block';
         silButton.style.display = 'inline-block';
@@ -570,7 +576,7 @@ function toggleMainCheckbox(id) {
     }
 
 
-    
+
     var checkbox2 = document.getElementById('check-' + id);
 
     if (checkbox2.checked) {
@@ -579,7 +585,7 @@ function toggleMainCheckbox(id) {
         $('#tr-' + id).removeClass('git-ac-color');
     }
 
-  
+
 
 
 }
@@ -729,10 +735,10 @@ topluSilButton.addEventListener('click', function() {
         var blok_adi = row.querySelector('td[data-title="Blok Adi"]').textContent;
         var daire_sayisi = row.querySelector('td[data-title="Kapi Numarasi"]').textContent;
         var durum = row.querySelector('td[data-title="Durum"]').textContent;
-        alert(blok_adi + " " + daire_sayisi + " " + durum);
+
         // Sunucuya silme isteği gönder
         $.ajax({
-            url: 'Controller/demo4.php',
+            url: 'Controller/batchupdate.php',
             type: 'POST',
             data: {
                 userID: userID,
@@ -741,9 +747,23 @@ topluSilButton.addEventListener('click', function() {
                 durum: durum
             },
             success: function(response) {
-                alert(response);
                 if (response == 1) {
                     row.remove();
+                    if (document.querySelector('#example tbody tr[data-userid="' + userID +'"]') === null) {
+                        $.ajax({
+                            url: 'Controller/delete_user.php',
+                            type: 'POST',
+                            data: {
+                                userID: userID
+                            },
+                            success: function(deleteResponse) {
+                                location.reload();
+                            },
+                            error: function(deleteError) {
+                                console.error('Silme hatası:', deleteError);
+                            }
+                        });
+                    }
                 }
             },
             error: function(error) {
@@ -754,9 +774,10 @@ topluSilButton.addEventListener('click', function() {
     guncelleButton.style.display = 'none';
     silButton.style.display = 'none';
 });
+
 //bakılacak
 //var saveButton = document.getElementById('saveButton');
-function saveUser(){
+function saveUser() {
     var userName = $('input[name="userName"]').val();
     var tc = $('input[name="tc"]').val();
     var phoneNumber = $('input[name="phoneNumber"]').val();
@@ -1010,7 +1031,7 @@ function filtrele() {
         // Eğer filtre metni herhangi bir hücrede bulunuyorsa, satırı göster; aksi takdirde gizle
         if (display) {
             tr[i].style.display = "";
-          tr[i].querySelector('.check-style input[type="checkbox"]').classList.add('check1');
+            tr[i].querySelector('.check-style input[type="checkbox"]').classList.add('check1');
 
 
         } else {

@@ -14,6 +14,7 @@ try {
     $sql2 = "UPDATE tbl_daireler
     SET kiraciID = null, katMalikiID = null
     WHERE kiraciID = :kiraciID OR katMalikiID = :katMalikiID";
+    
     $stmt = $conn->prepare($sql2);
     $stmt->bindParam(':kiraciID',$userID);
     $stmt->bindParam(':katMalikiID', $userID);
