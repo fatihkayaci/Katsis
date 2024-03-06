@@ -88,13 +88,16 @@ try {
         <tbody>
 
             <?php
-                foreach ($result as $row) {
-                ?>
+            $i = 0;
+            foreach ($result as $row) {
+                $i++;
+            ?>
             <tr data-userid="<?php echo $row["userID"]; ?>" id="tr-<?php echo $row["userID"]; ?>" class="git-ac">
                 <td data-title="Seç" class="check-style">
-                    <input id="check-<?php echo $row["userID"]; ?>" class="check1" type="checkbox"
+                    <!-- Checkbox id'sine $i değerini ekliyoruz -->
+                    <input id="check-<?php echo $row["userID"] . '-' . $i; ?>" class="check1" type="checkbox"
                         onclick="toggleMainCheckbox(<?php echo $row['userID']; ?>)" />
-                    <label for="check-<?php echo $row["userID"]; ?>" class="check">
+                    <label for="check-<?php echo $row["userID"] . '-' . $i; ?>" class="check">
                         <svg width="18px" height="18px" viewBox="0 0 18 18">
                             <path
                                 d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z">
@@ -110,8 +113,9 @@ try {
                 <td data-title="Durum"><?php echo $row["durum"]; ?></td>
             </tr>
             <?php
-                }
-                ?>
+            }
+            ?>
+
 
         </tbody>
     </table>
@@ -515,7 +519,6 @@ function newDaire() {
 
 function toggleAll(masterCheckbox) {
 
-
     var checkboxes = document.getElementsByClassName('check1');
     for (var i = 0; i < checkboxes.length; i++) {
         checkboxes[i].checked = masterCheckbox.checked;
@@ -533,21 +536,6 @@ function toggleAll(masterCheckbox) {
 
 
 
-}
-
-// Herhangi bir alt checkbox işaret kaldırıldığında, "Hepsini Seç" kutusunu kaldırır
-var checkboxes = document.getElementsByClassName('check1');
-for (var i = 0; i < checkboxes.length; i++) {
-    checkboxes[i].addEventListener('change', function() {
-        var allChecked = true;
-        for (var j = 0; j < checkboxes.length; j++) {
-            if (!checkboxes[j].checked) {
-                allChecked = false;
-                break;
-            }
-        }
-        document.getElementById('mainCheckbox').checked = allChecked;
-    });
 }
 
 
@@ -574,9 +562,7 @@ function toggleMainCheckbox(id) {
         guncelleButton.style.display = 'none';
         silButton.style.display = 'none';
     }
-
-
-
+    
     var checkbox2 = document.getElementById('check-' + id);
 
     if (checkbox2.checked) {
@@ -584,11 +570,23 @@ function toggleMainCheckbox(id) {
     } else {
         $('#tr-' + id).removeClass('git-ac-color');
     }
-
-
-
-
 }
+
+// Herhangi bir alt checkbox işaret kaldırıldığında, "Hepsini Seç" kutusunu kaldırır
+var checkboxes = document.getElementsByClassName('check1');
+for (var i = 0; i < checkboxes.length; i++) {
+    checkboxes[i].addEventListener('change', function() {
+        var allChecked = true;
+        for (var j = 0; j < checkboxes.length; j++) {
+            if (!checkboxes[j].checked) {
+                allChecked = false;
+                break;
+            }
+        }
+        document.getElementById('mainCheckbox').checked = allChecked;
+    });
+}
+
 
 $('.adduser').click(function() {
     $('#popup').show().css('display', 'flex').delay(100).queue(function(next) {
@@ -749,7 +747,8 @@ topluSilButton.addEventListener('click', function() {
             success: function(response) {
                 if (response == 1) {
                     row.remove();
-                    if (document.querySelector('#example tbody tr[data-userid="' + userID +'"]') === null) {
+                    if (document.querySelector('#example tbody tr[data-userid="' + userID +
+                            '"]') === null) {
                         $.ajax({
                             url: 'Controller/delete_user.php',
                             type: 'POST',
@@ -834,7 +833,6 @@ function saveUser() {
                 apartman_id: apartman_id
             },
             success: function(response) {
-                alert(response);
                 if (response == 1) {
                     $.ajax({
                         url: 'Controller/demo.php',
@@ -844,7 +842,6 @@ function saveUser() {
                             durumArray: JSON.stringify(durumArray)
                         },
                         success: function(secondResponse) {
-                            alert(secondResponse);
                             if (secondResponse == 1) {
                                 location.reload();
                             }
