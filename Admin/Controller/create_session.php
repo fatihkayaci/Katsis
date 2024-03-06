@@ -9,10 +9,13 @@ $d = $_POST['d'];
 
 if($d ="daire"){
     // Oturum verilerini ayarla
-$_SESSION['daireSayfa'] = $trId;
+    $_SESSION['daireSayfa'] = $trId;
 
 // İsteğe yanıt olarak bir mesaj gönder
     echo true;
+}else if($d ="user"){
+    $_SESSION['userPage'] = $trId;
+    echo $_SESSION['userPage'];
 }
 
 ?>

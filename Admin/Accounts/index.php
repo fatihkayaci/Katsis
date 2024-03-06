@@ -96,7 +96,7 @@ try {
                 <td data-title="Seç" class="check-style">
                     <!-- Checkbox id'sine $i değerini ekliyoruz -->
                     <input id="check-<?php echo $row["userID"] . '-' . $i; ?>" class="check1" type="checkbox"
-                        onclick="toggleMainCheckbox(<?php echo $row['userID']; ?>)" />
+                        onclick="toggleCheckbox(<?php echo $row['userID']; ?>)" />
                     <label for="check-<?php echo $row["userID"] . '-' . $i; ?>" class="check">
                         <svg width="18px" height="18px" viewBox="0 0 18 18">
                             <path
@@ -106,11 +106,11 @@ try {
                         </svg>
                     </label>
                 </td>
-                <td data-title="Ad Soyad" contenteditable="false"><?php echo $row["userName"]; ?></td>
-                <td data-title="Telefon Numarası" contenteditable="false"><?php echo $row["phoneNumber"]; ?></td>
-                <td data-title="Blok Adi"><?php echo $row["blok_adi"]; ?></td>
-                <td data-title="Kapi Numarasi"><?php echo $row["daire_sayisi"]; ?></td>
-                <td data-title="Durum"><?php echo $row["durum"]; ?></td>
+                <td data-title="Ad Soyad" class="table_td" contenteditable="false"><?php echo $row["userName"]; ?></td>
+                <td data-title="Telefon Numarası" class="table_td" contenteditable="false"><?php echo $row["phoneNumber"]; ?></td>
+                <td data-title="Blok Adi" class="table_td"><?php echo $row["blok_adi"]; ?></td>
+                <td data-title="Kapi Numarasi" class="table_td"><?php echo $row["daire_sayisi"]; ?></td>
+                <td data-title="Durum" class="table_td"><?php echo $row["durum"]; ?></td>
             </tr>
             <?php
             }
@@ -538,39 +538,34 @@ function toggleAll(masterCheckbox) {
 
 }
 
+function toggleCheckbox(id) {
+        var checkboxes = document.querySelectorAll('.check1'); // Tüm checkboxları al
+        var guncelleButton = document.getElementById('guncelleButton');
+        var silButton = document.getElementById('silButton');
+        var enAzBirSecili = false;
 
+        checkboxes.forEach(function (checkbox) {
+            if (checkbox.checked) {
+                enAzBirSecili = true;
+            }
+        });
 
-
-function toggleMainCheckbox(id) {
-
-    var checkboxes = document.querySelectorAll('input[type="checkbox"]');
-    var guncelleButton = document.getElementById('guncelleButton');
-    var silButton = document.getElementById('silButton');
-    var enAzBirSecili = false;
-
-
-    checkboxes.forEach(function(checkbox) {
-        if (checkbox.checked) {
-            enAzBirSecili = true;
+        if (enAzBirSecili) {
+            guncelleButton.style.display = 'inline-block';
+            silButton.style.display = 'inline-block';
+        } else {
+            guncelleButton.style.display = 'none';
+            silButton.style.display = 'none';
         }
-    });
 
-    if (enAzBirSecili) {
-        guncelleButton.style.display = 'inline-block';
-        silButton.style.display = 'inline-block';
-    } else {
-        guncelleButton.style.display = 'none';
-        silButton.style.display = 'none';
-    }
-    
-    var checkbox2 = document.getElementById('check-' + id);
+        var checkbox2 = document.getElementById('check-' + id);
 
-    if (checkbox2.checked) {
-        $('#tr-' + id).addClass('git-ac-color');
-    } else {
-        $('#tr-' + id).removeClass('git-ac-color');
+        if (checkbox2.checked) {
+            $('#tr-' + id).addClass('git-ac-color');
+        } else {
+            $('#tr-' + id).removeClass('git-ac-color');
+        }
     }
-}
 
 // Herhangi bir alt checkbox işaret kaldırıldığında, "Hepsini Seç" kutusunu kaldırır
 var checkboxes = document.getElementsByClassName('check1');
@@ -1039,4 +1034,30 @@ function filtrele() {
         }
     }
 }
+var tableTdElements = document.querySelectorAll('.table_td');
+
+tableTdElements.forEach(function(element) {
+    element.addEventListener('click', function() {
+        var trId = element.parentElement.getAttribute('data-userid');
+        var d = "user";
+        $.ajax({
+            url: 'Controller/create_session.php',
+            type: 'POST',
+            data: {
+                id: trId,
+                d: d,
+            },
+            success: function(response) {
+                alert(response);
+                if (response) {
+                    window.location.href = "index.php?parametre=custom";
+                }
+            },
+            error: function(xhr, status, error) {
+                var errorMessage = xhr.status + ': ' + xhr.statusText;
+                alert('Hata alındı: ' + errorMessage);
+            }
+        });
+    });
+});
 </script>

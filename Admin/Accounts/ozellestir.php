@@ -12,10 +12,7 @@
 
     <?php
 try {
-    $userID = null;
-    if(isset($_GET['userID'])) {
-        $userID = $_GET['userID'];
-    }
+    echo $_SESSION['userPage'];
     
     //$sql = "SELECT * FROM tbl_users WHERE apartman_id = " .$_SESSION["apartID"]."AND userID=".$userID ;
     $sql = "SELECT * FROM tbl_users WHERE apartman_id = " . $_SESSION["apartID"] . " AND userID=" . $userID;
