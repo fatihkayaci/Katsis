@@ -210,31 +210,31 @@ try {
                     </label>
                 </td>
 
-                <td data-title="Blok Adı"><?php echo $blokIdMapping[$row["blok_adi"]];  ?></td>
+                <td data-title="Blok Adı" class="table_td"><?php echo $blokIdMapping[$row["blok_adi"]];  ?></td>
 
-                <td data-title="Kapı No"><?php echo $row["daire_sayisi"]; ?></td>
+                <td data-title="Kapı No" class="table_td"><?php echo $row["daire_sayisi"]; ?></td>
 
                 <?php
                    if($row["kiraciID"]==null) {
-                  echo ' <td data-title="0"><button type="button" class="table-a tca1" onclick="openPopup('.$row["daire_id"].',0)">Kiracı Ekle + </button></td>';
+                  echo ' <td data-title="0"  ><button type="button" class="table-a tca1" onclick="openPopup('.$row["daire_id"].',0)">Kiracı Ekle + </button></td>';
 
                    }else{
-                    echo ' <td data-title="0">'.$listt[$row["kiraciID"]].' </td>  '; 
+                    echo ' <td data-title="0"  class="table_td">'.$listt[$row["kiraciID"]].' </td>  '; 
                    }
                    
-                   echo ' <td data-title="Bakiye">00,0 ₺</td> ';
+                   echo ' <td data-title="Bakiye"  class="table_td">00,0 ₺</td> ';
 
                    if($row["katMalikiID"]==null) {
-                    echo '<td data-title="1"><button type="button" class="table-a tca2" onclick="openPopup('.$row["daire_id"].',1)">Kat Maliki Ekle + </button></td>
+                    echo '<td data-title="1"  ><button type="button" class="table-a tca2" onclick="openPopup('.$row["daire_id"].',1)">Kat Maliki Ekle + </button></td>
                     ';
   
                     }else{
-                     echo ' <td data-title="1">'.$listt[$row["katMalikiID"]].' </td>  '; 
+                     echo ' <td data-title="1"  class="table_td">'.$listt[$row["katMalikiID"]].' </td>  '; 
                     }
 
                 ?>
 
-                <td data-title="Bakiye">00,0 ₺</td>
+                <td data-title="Bakiye" class="table_td">00,0 ₺</td>
 
                 <td data-title="Seçenekler">
                     <li class="nav-item dropdown pe-1 d-flex settings">
@@ -289,12 +289,12 @@ try {
         <div class="input-group1">
 
             <div class="custom-select">
-              <select>
-                <option selected value="1">10</option>
-                <option value="2">20</option>
-                <option value="3">50</option>
-                <option value="4">100</option>
-              </select>
+                <select>
+                    <option selected value="1">10</option>
+                    <option value="2">20</option>
+                    <option value="3">50</option>
+                    <option value="4">100</option>
+                </select>
             </div>
 
             <p class="adet-txt">Adet Veri Gösteriliyor</p>
@@ -304,17 +304,17 @@ try {
         <div class="input-group1">
 
             <ul class="pagination">
-            	<a href="#" class="pagination-arrow arrow-left">
+                <a href="#" class="pagination-arrow arrow-left">
                     <i class="fa-solid fa-angle-left"></i>
-            	</a>
-            	<a href="#" class="pagination-number">1</a>
-            	<a href="#" class="pagination-number">2</a>
-            	<a href="#" class="pagination-number current-number">3</a>
-            	<a href="#" class="pagination-number">4</a>
-            	<a href="#" class="pagination-number">5</a>
-            	<a href="#" class="pagination-arrow arrow-right">
+                </a>
+                <a href="#" class="pagination-number">1</a>
+                <a href="#" class="pagination-number">2</a>
+                <a href="#" class="pagination-number current-number">3</a>
+                <a href="#" class="pagination-number">4</a>
+                <a href="#" class="pagination-number">5</a>
+                <a href="#" class="pagination-arrow arrow-right">
                     <i class="fa-solid fa-angle-right"></i>
-            	</a>
+                </a>
             </ul>
 
         </div>
@@ -504,10 +504,12 @@ try {
                 <input class="input" type="text" id="dairePay1" onkeypress="onlyNumberKey(event)" required="" />
                 <label for="dairePay1">Arsa Payı :</label>
             </div>
-                       
+
         </div>
 
-        <p class="form-note"><span style="color: #ff0000;"> * </span> <strong> Not: </strong> Lütfen sadece güncellemek istediğiniz alanlara veri giriniz. Diğer alanları doldurmanız zorunlu değildir. Sadece veri girişi yapılan alanlar güncellenecektir.</p> 
+        <p class="form-note"><span style="color: #ff0000;"> * </span> <strong> Not: </strong> Lütfen sadece güncellemek
+            istediğiniz alanlara veri giriniz. Diğer alanları doldurmanız zorunlu değildir. Sadece veri girişi yapılan
+            alanlar güncellenecektir.</p>
 
         <hr class="horizontal dark w-100">
 
@@ -531,70 +533,71 @@ try {
 
 <script>
 var x, i, j, l, ll, selElmnt, a, b, c;
-    x = document.getElementsByClassName("custom-select");
-    l = x.length;
-    for (i = 0; i < l; i++) {
-        selElmnt = x[i].getElementsByTagName("select")[0];
-        ll = selElmnt.length;
-        a = document.createElement("DIV");
-        a.setAttribute("class", "select-selected");
-        a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
-        x[i].appendChild(a);
-        b = document.createElement("DIV");
-        b.setAttribute("class", "select-items select-hide");
-        for (j = 0; j < ll; j++) {
-            c = document.createElement("DIV");
-            c.innerHTML = selElmnt.options[j].innerHTML;
-            c.addEventListener("click", function (e) {
-                var y, i, k, s, h, sl, yl;
-                s = this.parentNode.parentNode.getElementsByTagName("select")[0];
-                sl = s.length;
-                h = this.parentNode.previousSibling;
-                for (i = 0; i < sl; i++) {
-                    if (s.options[i].innerHTML == this.innerHTML) {
-                        s.selectedIndex = i;
-                        h.innerHTML = this.innerHTML;
-                        y = this.parentNode.getElementsByClassName("same-as-selected");
-                        yl = y.length;
-                        for (k = 0; k < yl; k++) {
-                            y[k].removeAttribute("class");
-                        }
-                        this.setAttribute("class", "same-as-selected");
-                        break;
+x = document.getElementsByClassName("custom-select");
+l = x.length;
+for (i = 0; i < l; i++) {
+    selElmnt = x[i].getElementsByTagName("select")[0];
+    ll = selElmnt.length;
+    a = document.createElement("DIV");
+    a.setAttribute("class", "select-selected");
+    a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
+    x[i].appendChild(a);
+    b = document.createElement("DIV");
+    b.setAttribute("class", "select-items select-hide");
+    for (j = 0; j < ll; j++) {
+        c = document.createElement("DIV");
+        c.innerHTML = selElmnt.options[j].innerHTML;
+        c.addEventListener("click", function(e) {
+            var y, i, k, s, h, sl, yl;
+            s = this.parentNode.parentNode.getElementsByTagName("select")[0];
+            sl = s.length;
+            h = this.parentNode.previousSibling;
+            for (i = 0; i < sl; i++) {
+                if (s.options[i].innerHTML == this.innerHTML) {
+                    s.selectedIndex = i;
+                    h.innerHTML = this.innerHTML;
+                    y = this.parentNode.getElementsByClassName("same-as-selected");
+                    yl = y.length;
+                    for (k = 0; k < yl; k++) {
+                        y[k].removeAttribute("class");
                     }
+                    this.setAttribute("class", "same-as-selected");
+                    break;
                 }
-                h.click();
-            });
-            b.appendChild(c);
-        }
-        x[i].appendChild(b);
-        a.addEventListener("click", function (e) {
-            e.stopPropagation();
-            closeAllSelect(this);
-            this.nextSibling.classList.toggle("select-hide");
-            this.classList.toggle("select-arrow-active");
+            }
+            h.click();
         });
+        b.appendChild(c);
     }
-    function closeAllSelect(elmnt) {
-        var x, y, i, xl, yl, arrNo = [];
-        x = document.getElementsByClassName("select-items");
-        y = document.getElementsByClassName("select-selected");
-        xl = x.length;
-        yl = y.length;
-        for (i = 0; i < yl; i++) {
-            if (elmnt == y[i]) {
-                arrNo.push(i)
-            } else {
-                y[i].classList.remove("select-arrow-active");
-            }
-        }
-        for (i = 0; i < xl; i++) {
-            if (arrNo.indexOf(i) === -1) {
-                x[i].classList.add("select-hide");
-            }
+    x[i].appendChild(b);
+    a.addEventListener("click", function(e) {
+        e.stopPropagation();
+        closeAllSelect(this);
+        this.nextSibling.classList.toggle("select-hide");
+        this.classList.toggle("select-arrow-active");
+    });
+}
+
+function closeAllSelect(elmnt) {
+    var x, y, i, xl, yl, arrNo = [];
+    x = document.getElementsByClassName("select-items");
+    y = document.getElementsByClassName("select-selected");
+    xl = x.length;
+    yl = y.length;
+    for (i = 0; i < yl; i++) {
+        if (elmnt == y[i]) {
+            arrNo.push(i)
+        } else {
+            y[i].classList.remove("select-arrow-active");
         }
     }
-    document.addEventListener("click", closeAllSelect);
+    for (i = 0; i < xl; i++) {
+        if (arrNo.indexOf(i) === -1) {
+            x[i].classList.add("select-hide");
+        }
+    }
+}
+document.addEventListener("click", closeAllSelect);
 </script>
 
 <!-- select input end -->
@@ -929,7 +932,7 @@ function saveBlok() {
             },
             error: function(error) {
                 alert("hata: Müşteri temsilciniz ile iletişime geçiniz.");
-               }
+            }
 
         });
     }
@@ -1458,4 +1461,45 @@ function onlyNumberKey(evt) {
         evt.preventDefault();
     }
 }
+
+
+// tablo üzerine tıklandığında ilgili dairenin ayrıntı sayfasına yönlendiriyor.
+
+var tableTdElements = document.querySelectorAll('.table_td');
+
+
+tableTdElements.forEach(function(element) {
+    element.addEventListener('click', function() {
+
+
+        var trId = element.parentElement.getAttribute('id');
+        var d="daire";
+        $.ajax({
+            url: 'Controller/create_session.php',
+            type: 'POST',
+            data: {
+
+                id: trId,
+                d:d,
+
+            },
+            success: function(response) {
+
+               
+                    if(response){
+                        window.location.href = "index.php?parametre=detail";
+                    }
+                    
+                
+
+            },
+            error: function(xhr, status, error) {
+                var errorMessage = xhr.status + ': ' + xhr.statusText;
+                alert('Hata alındı: ' + errorMessage);
+            }
+        });
+
+
+    });
+});
 </script>
