@@ -69,7 +69,9 @@ tfoot input {
   transition: 0.3s;
   overflow: auto;
 }
-
+.table_td {
+  cursor: pointer; /* İmleci el işareti olarak ayarla */
+}
 #popupTopluEkle{
   display: none;
   position: fixed;

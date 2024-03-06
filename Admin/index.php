@@ -62,7 +62,13 @@ else if($indexx == 'Sections'){
     echo "<script>
             localStorage.setItem('selectedLink', 'Sections');
          </script>";
-}   
+} else if($indexx == 'detail'){
+    include ("Sections/detail.php");
+    echo "<script>pagename('DAİRE AYRINTILARI');</script>";
+    echo "<script>
+            localStorage.setItem('selectedLink', 'profile');
+         </script>";
+}  
 else if($indexx == 'dashboard'){
     include ("Dashboard/index.php");
     echo "<script>pagename('ANA SAYFA');</script>";
@@ -71,12 +77,6 @@ else if($indexx == 'dashboard'){
          </script>";
 }
 else if($indexx == 'profile'){
-    include ("profile/profile.php");
-    echo "<script>pagename('PROFİL');</script>";
-    echo "<script>
-            localStorage.setItem('selectedLink', 'profile');
-         </script>";
-}else if($indexx == 'detail'){
     include ("profile/profile.php");
     echo "<script>pagename('PROFİL');</script>";
     echo "<script>
