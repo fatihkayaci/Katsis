@@ -12,10 +12,10 @@
 
     <?php
 try {
-    $userID = $_SESSION['userPage'];
+   
     
     //$sql = "SELECT * FROM tbl_users WHERE apartman_id = " .$_SESSION["apartID"]."AND userID=".$userID ;
-    $sql = "SELECT * FROM tbl_users WHERE apartman_id = " . $_SESSION["apartID"] . " AND userID=" . $userID;
+    $sql = "SELECT * FROM tbl_users WHERE apartman_id = " . $_SESSION["apartID"] . " AND userID=" . $_SESSION['userPage'];
 
     $stmt = $conn->prepare($sql);
     $stmt->execute();
