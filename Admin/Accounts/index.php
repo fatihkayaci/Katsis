@@ -106,11 +106,11 @@ try {
                         </svg>
                     </label>
                 </td>
-                <td data-title="Ad Soyad" class="table_td" contenteditable="false"><?php echo $row["userName"]; ?></td>
-                <td data-title="Telefon Numarası" class="table_td" contenteditable="false"><?php echo $row["phoneNumber"]; ?></td>
-                <td data-title="Blok Adi" class="table_td"><?php echo $row["blok_adi"]; ?></td>
-                <td data-title="Kapi Numarasi" class="table_td"><?php echo $row["daire_sayisi"]; ?></td>
-                <td data-title="Durum" class="table_td"><?php echo $row["durum"]; ?></td>
+                <td data-title="Ad Soyad" class="table_tt table_td" contenteditable="false"><?php echo $row["userName"]; ?></td>
+                <td data-title="Telefon Numarası" class="table_tt table_td" contenteditable="false"><?php echo $row["phoneNumber"]; ?></td>
+                <td data-title="Blok Adi" class="table_tt table_td"><?php echo $row["blok_adi"]; ?></td>
+                <td data-title="Kapi Numarasi" class="table_tt table_td"><?php echo $row["daire_sayisi"]; ?></td>
+                <td data-title="Durum" class="table_tt table_td"><?php echo $row["durum"]; ?></td>
             </tr>
             <?php
             }
@@ -937,14 +937,17 @@ deleteButtons.forEach(function(button) {
     });
 });
 
+var checkEdit =true;
 // Checkbox durumuna göre düzenleme fonksiyonlarını etkinleştirme veya devre dışı bırakma
 document.getElementById("editToggle").addEventListener("change", function() {
     if (this.checked) {
         openEdit();
         disableDemoFunction();
+        checkEdit=false;
     } else {
         closeEdit();
         enableDemoFunction();
+        checkEdit =true;
     }
 });
 
@@ -963,10 +966,12 @@ function closeEdit() {
 }
 
 function disableDemoFunction() {
-    var rows = document.querySelectorAll('.git-ac');
-    rows.forEach(function(row) {
-        row.removeEventListener('click', handleClick);
-    });
+    
+
+    var tableTds = document.getElementsByClassName("table_tt");
+    for (var i = 0; i < tableTds.length; i++) {
+        tableTds[i].classList.remove("table_td");
+    }
 }
 
 function enableDemoFunction() {
@@ -974,6 +979,12 @@ function enableDemoFunction() {
     rows.forEach(function(row) {
         row.addEventListener('click', handleClick);
     });*/
+
+  var tableTds = document.getElementsByClassName("table_tt");
+    for (var i = 0; i < tableTds.length; i++) {
+        tableTds[i].classList.add("table_td");
+    }
+    
 }
 /*
 function handleClick(event) {
@@ -1050,8 +1061,8 @@ tableTdElements.forEach(function(element) {
                 d: d,
             },
             success: function(response) {
-                alert("d"+response);
-                if (response) {
+              
+                if (response && checkEdit) {
                     window.location.href = "index.php?parametre=custom";
                 }
             },
