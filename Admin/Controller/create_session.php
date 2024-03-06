@@ -7,15 +7,15 @@ $d = $_POST['d'];
 
 
 
-if($d ="daire"){
+if($d =="daire"){
     // Oturum verilerini ayarla
     $_SESSION['daireSayfa'] = $trId;
 
 // İsteğe yanıt olarak bir mesaj gönder
     echo true;
-}else if($d ="user"){
+}else if($d =="user"){
     $_SESSION['userPage'] = $trId;
-    echo $_SESSION['userPage'];
+    echo true;
 }
 
 ?>

@@ -970,12 +970,12 @@ function disableDemoFunction() {
 }
 
 function enableDemoFunction() {
-    var rows = document.querySelectorAll('.git-ac');
+  /*  var rows = document.querySelectorAll('.git-ac');
     rows.forEach(function(row) {
         row.addEventListener('click', handleClick);
-    });
+    });*/
 }
-
+/*
 function handleClick(event) {
     var isCheckboxClicked = event.target.tagName === 'INPUT' && event.target.getAttribute('type') === 'checkbox';
 
@@ -986,7 +986,7 @@ function handleClick(event) {
 
     var userID = this.getAttribute('data-userid');
     window.location.href = 'index.php?parametre=custom&userID=' + encodeURIComponent(userID);
-}
+}  */
 
 enableDemoFunction();
 
@@ -1038,8 +1038,10 @@ var tableTdElements = document.querySelectorAll('.table_td');
 
 tableTdElements.forEach(function(element) {
     element.addEventListener('click', function() {
+       
         var trId = element.parentElement.getAttribute('data-userid');
         var d = "user";
+       
         $.ajax({
             url: 'Controller/create_session.php',
             type: 'POST',
@@ -1048,7 +1050,7 @@ tableTdElements.forEach(function(element) {
                 d: d,
             },
             success: function(response) {
-                alert(response);
+                alert("d"+response);
                 if (response) {
                     window.location.href = "index.php?parametre=custom";
                 }
