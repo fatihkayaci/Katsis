@@ -605,8 +605,6 @@ document.addEventListener("click", closeAllSelect);
 
 
 <script>
-sortTable(1)
-
 function sortTable(n) {
     var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
     table = document.getElementById("table");
