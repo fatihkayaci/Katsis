@@ -1567,7 +1567,6 @@ input:checked + .slider:before {
   position: relative;
   width: 70px;
   margin-right: 10px;
-  z-index: 100000000000000000 !important;
 }
 
 .custom-select select {
@@ -1674,4 +1673,38 @@ input:checked + .slider:before {
 .pagination .pagination-arrow i {
   font-size: 24px;
   padding: 4px;
+}
+
+.main-durum {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 130px;
+  height: 30px;
+  transition: all 0.3s;
+  -webkit-transition: all 0.5s;
+  text-decoration: none;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 15px;
+  font-family: 'poppins-medium';
+  font-weight: 500;
+}
+
+.kiraci {
+  border: 1px solid #20c997;
+  background-color: #20c997;
+  color: #fff;
+}
+
+.kat-maliki {
+  border: 1px solid #17c1e8;
+  background-color: #17c1e8;
+  color: #fff;
+}
+
+.belirtilmemis {
+  border: 1px solid #67748e;
+  background-color: #67748e;
+  color: #fff;
 }
