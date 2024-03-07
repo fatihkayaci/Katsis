@@ -1346,19 +1346,20 @@ input:checked + .slider:before {
   transition: 0.3s;
 }
 
-.header-ico .toggle-icon,
-.header-ico1 .toggle-icon1 {
+.header-ico .toggle-icon {
   color: #000; /* veya herhangi bir varsayılan renk */
+  transition: 0.3s;
 }
 
-.header-ico.active .toggle-icon,
-.header-ico1.active .toggle-icon1 {
+.header-ico.active .toggle-icon {
   color: #277CE0 !important;
 }
 
 .header-ico:hover i,
-.header-ico1:hover i,
-.header-ico:hover .toggle-icon {
+.header-ico1:hover .name-title1,
+.header-ico1:hover .toggle-icon,
+.header-ico:hover .toggle-icon,
+.header-ico:hover .name-title {
   color: #277CE0 !important;
 }
 /* ====================================== */
@@ -1706,5 +1707,115 @@ input:checked + .slider:before {
 .belirtilmemis {
   border: 1px solid #67748e;
   background-color: #67748e;
+  color: #fff;
+}
+
+
+.user-profile-main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-right: 10px;
+}
+
+.user-profile-main .user-avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.user-profile-main .user-avatar p {
+  width: 40px;
+  height: 40px;
+  -webkit-border-radius: 100px;
+  -moz-border-radius: 100px;
+  border-radius: 100px;
+  background-color: #277CE0;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  font-family: 'poppins-medium';
+  margin: 0;
+}
+
+.header-name {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+}
+
+.name-title {
+  color: #344767;
+  font-weight: 400;
+  font-size: 0.6rem;
+  transition: 0.3s;
+}
+
+.name-title1 {
+  color: #344767;
+  font-weight: 400;
+  font-size: 0.6rem;
+  transition: 0.3s;
+}
+
+.denemee {
+  margin-left: 5px;
+}
+
+.fa-sort-down1 {
+  margin-bottom: 10px;
+}
+
+.fa-sort-down1.rotate1 {
+  transform: rotate(-180deg) translateY(-5px);
+  color: #277CE0;
+}
+
+.fa-sort-down2 {
+  margin-bottom: 10px;
+}
+
+.header-ico1:hover .fa-sort-down2 {
+  color: #277CE0;
+}
+
+.fa-sort-down2.rotate1 {
+  transform: rotate(-180deg) translateY(-5px);
+  color: #277CE0;
+}
+
+.name-title.active,
+.name-title1.active  {
+  color: #277CE0;
+}
+
+.vertical-hr {
+  margin-left: 5px;
+  margin-right: 5px;
+  width: 1px;
+  background: linear-gradient(0deg, #2e319200 0%, #bebebe7a 40%, #bebebe7a 60%, #1bffff00 100%);
+}
+
+.resize {
+  color: #000;
+  font-weight: 600;
+  font-size: 0.875rem;
+  transition: 0.3s;
+}
+
+.header-ico1.active #btn-rotate,
+.header-ico1.active #btn-rotate1,
+.header-ico1.active .name-title1,
+.header-ico1.active .toggle-icon {
+  color: #277CE0;
+}
+
+.header-ico1 .toggle-icon1 {
   color: #fff;
 }
