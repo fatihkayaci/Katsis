@@ -78,8 +78,8 @@
                             <tr data-userid="" class="git-ac">
                                 <td data-title="Blok Adı" name="blok"><?php echo $blokAdi; ?></td>
                                 <td data-title="Daire Sayısı" name="daire"><?php echo $daireSayisi; ?></td>
-                                <td data-title="Kiracı Adı"><input type="text" name="kiraciUserName"  value="<?php echo $kiraciBilgisi['userName']; ?>" /></td>
-                                <td data-title="Kat Maliki Adı"><input type="text" name="katMalikiUserName" value="<?php echo $katMalikiBilgisi['userName']; ?>" /></td>
+                                <td data-title="Kiracı Adı"><input type="text" class="input-select" name="kiraciUserName"  value="<?php echo $kiraciBilgisi['userName']; ?>" /></td>
+                                <td data-title="Kat Maliki Adı"><input type="text" class="input-select" name="katMalikiUserName" value="<?php echo $katMalikiBilgisi['userName']; ?>" /></td>
                             </tr>
                             
                     <?php
@@ -89,7 +89,7 @@
                             <tr data-userid="" class="git-ac">
                                 <td data-title="Blok Adı" name="blok"><?php echo $blokAdi; ?></td>
                                 <td data-title="Daire Sayısı" name="daire"><?php echo $daireSayisi; ?></td>
-                                <td data-title="Kiracı Adı"><input class="input-select" type="text" name="kiraciUserName" value="<?php echo ($kiraciBilgisi ? $kiraciBilgisi['userName'] : ''); ?>" /></td>
+                                <td data-title="Kiracı Adı"><input class="input-select" type="text" class="input-select" name="kiraciUserName" value="<?php echo ($kiraciBilgisi ? $kiraciBilgisi['userName'] : ''); ?>" /></td>
                                 <td data-title="Kat Maliki Adı"><input class="input-select" type="text" name="katMalikiUserName" value="<?php echo ($katMalikiBilgisi ? $katMalikiBilgisi['userName'] : ''); ?>" /></td>
                             </tr>
                     <?php

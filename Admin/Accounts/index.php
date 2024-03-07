@@ -83,9 +83,8 @@ try {
                 </th>
                 <th onclick="sortTable(1)">Ad Soyad <i id="icon-table1" class="fa-solid fa-sort-down"></i></th>
                 <th onclick="sortTable(2)">Telefon Numarası <i id="icon-table2" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(3)">Blok Adı <i id="icon-table3" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(4)">Kapı Numarası <i id="icon-table4" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(5)">Durum <i id="icon-table5" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(3)">Blok / Daire <i id="icon-table3" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(4)">Durum <i id="icon-table5" class="fa-solid fa-sort-down"></i></th>
             </tr>
         </thead>
         <tbody>
@@ -99,7 +98,7 @@ try {
                 <td data-title="Seç" class="check-style">
                     <!-- Checkbox id'sine $i değerini ekliyoruz -->
                     <input id="check-<?php echo $row["userID"] . '-' . $i; ?>" class="check1" type="checkbox"
-                        onclick="toggleCheckbox(<?php echo $row['userID']; ?>)" />
+                        onclick="toggleCheckbox(<?php echo $row['userID']; ?>, <?php echo $i; ?>)" />
                     <label for="check-<?php echo $row["userID"] . '-' . $i; ?>" class="check">
                         <svg width="18px" height="18px" viewBox="0 0 18 18">
                             <path
@@ -110,12 +109,34 @@ try {
                     </label>
                 </td>
                 <td data-title="Ad Soyad" class="table_tt table_td" contenteditable="false">
+                    
                     <?php echo $row["userName"]; ?></td>
+
                 <td data-title="Telefon Numarası" class="table_tt table_td" contenteditable="false">
+
                     <?php echo $row["phoneNumber"]; ?></td>
-                <td data-title="Blok Adi" class="table_tt table_td"><?php echo $row["blok_adi"]; ?></td>
-                <td data-title="Kapi Numarasi" class="table_tt table_td"><?php echo $row["daire_sayisi"]; ?></td>
-                <td data-title="Durum" class="table_tt table_td"><?php echo $row["durum"]; ?></td>
+
+                    <td data-title="Blok Adi" class="table_tt table_td">
+                        <?php 
+                            if (!empty($row["blok_adi"]) && !empty($row["daire_sayisi"])) {
+                                echo $row["blok_adi"] . " / " . $row["daire_sayisi"];
+                            }
+                        ?>
+                    </td>
+
+                <td data-title="Durum" class="table_tt table_td">
+                    <div class="main-durum <?php
+                                    if ($row["durum"] == "Kiracı") {
+                                        echo "kiraci";
+                                    } elseif ($row["durum"] == "Kat Maliki") {
+                                        echo "kat-maliki";
+                                    } else {
+                                        echo "belirtilmemis";
+                                    }
+                                ?>">
+                        <?php echo $row["durum"]; ?>
+                    </div>
+                </td>
             </tr>
             <?php
             }
@@ -543,7 +564,7 @@ function toggleAll(masterCheckbox) {
 
 }
 
-function toggleCheckbox(id) {
+function toggleCheckbox(id,i) {
     var checkboxes = document.querySelectorAll('.check1'); // Tüm checkboxları al
     var guncelleButton = document.getElementById('guncelleButton');
     var silButton = document.getElementById('silButton');
@@ -563,7 +584,7 @@ function toggleCheckbox(id) {
         silButton.style.display = 'none';
     }
 
-    var checkbox2 = document.getElementById('check-' + id);
+    var checkbox2 = document.getElementById('check-' + id + '-' + i);
 
     if (checkbox2.checked) {
         $('#tr-' + id).addClass('git-ac-color');
