@@ -15,14 +15,17 @@ try {
             $optionsBlok .= '<option name="optionsBlok" value="' . $row['blok_adi']." Blok - Daire ".$row['daire_sayisi'] . '">' .$row['blok_adi']." Blok - Daire ". $row['daire_sayisi'] . '</option>';
         }
     }
-    $sql2 = "SELECT u.*, b.blok_adi AS blok_adi, d.daire_sayisi
+    $sql2 = "SELECT u.userID, u.userName, u.phoneNumber, b.blok_adi AS blok_adi, d.daire_sayisi,
+    CASE
+        WHEN d.katMalikiID = u.userID THEN 'Kat Maliki'
+        WHEN d.kiraciID = u.userID THEN 'Kiracı'
+        ELSE 'Belirtilmemiş'
+    END AS durum
     FROM tbl_users u
-    LEFT JOIN tbl_daireler d ON u.userID = d.kiraciID OR u.userID = d.katMalikiID
+    LEFT JOIN tbl_daireler d ON u.userID = d.katMalikiID OR u.userID = d.kiraciID
     LEFT JOIN tbl_blok b ON d.blok_adi = b.blok_id
     WHERE rol=3 AND u.apartman_id = " .  $_SESSION["apartID"] . "
     ORDER BY u.userID ASC";
-
-
     
     $stmt = $conn->prepare($sql2);
     $stmt->execute();
@@ -106,8 +109,10 @@ try {
                         </svg>
                     </label>
                 </td>
-                <td data-title="Ad Soyad" class="table_tt table_td" contenteditable="false"><?php echo $row["userName"]; ?></td>
-                <td data-title="Telefon Numarası" class="table_tt table_td" contenteditable="false"><?php echo $row["phoneNumber"]; ?></td>
+                <td data-title="Ad Soyad" class="table_tt table_td" contenteditable="false">
+                    <?php echo $row["userName"]; ?></td>
+                <td data-title="Telefon Numarası" class="table_tt table_td" contenteditable="false">
+                    <?php echo $row["phoneNumber"]; ?></td>
                 <td data-title="Blok Adi" class="table_tt table_td"><?php echo $row["blok_adi"]; ?></td>
                 <td data-title="Kapi Numarasi" class="table_tt table_td"><?php echo $row["daire_sayisi"]; ?></td>
                 <td data-title="Durum" class="table_tt table_td"><?php echo $row["durum"]; ?></td>
@@ -539,33 +544,33 @@ function toggleAll(masterCheckbox) {
 }
 
 function toggleCheckbox(id) {
-        var checkboxes = document.querySelectorAll('.check1'); // Tüm checkboxları al
-        var guncelleButton = document.getElementById('guncelleButton');
-        var silButton = document.getElementById('silButton');
-        var enAzBirSecili = false;
+    var checkboxes = document.querySelectorAll('.check1'); // Tüm checkboxları al
+    var guncelleButton = document.getElementById('guncelleButton');
+    var silButton = document.getElementById('silButton');
+    var enAzBirSecili = false;
 
-        checkboxes.forEach(function (checkbox) {
-            if (checkbox.checked) {
-                enAzBirSecili = true;
-            }
-        });
-
-        if (enAzBirSecili) {
-            guncelleButton.style.display = 'inline-block';
-            silButton.style.display = 'inline-block';
-        } else {
-            guncelleButton.style.display = 'none';
-            silButton.style.display = 'none';
+    checkboxes.forEach(function(checkbox) {
+        if (checkbox.checked) {
+            enAzBirSecili = true;
         }
+    });
 
-        var checkbox2 = document.getElementById('check-' + id);
-
-        if (checkbox2.checked) {
-            $('#tr-' + id).addClass('git-ac-color');
-        } else {
-            $('#tr-' + id).removeClass('git-ac-color');
-        }
+    if (enAzBirSecili) {
+        guncelleButton.style.display = 'inline-block';
+        silButton.style.display = 'inline-block';
+    } else {
+        guncelleButton.style.display = 'none';
+        silButton.style.display = 'none';
     }
+
+    var checkbox2 = document.getElementById('check-' + id);
+
+    if (checkbox2.checked) {
+        $('#tr-' + id).addClass('git-ac-color');
+    } else {
+        $('#tr-' + id).removeClass('git-ac-color');
+    }
+}
 
 // Herhangi bir alt checkbox işaret kaldırıldığında, "Hepsini Seç" kutusunu kaldırır
 var checkboxes = document.getElementsByClassName('check1');
@@ -937,17 +942,17 @@ deleteButtons.forEach(function(button) {
     });
 });
 
-var checkEdit =true;
+var checkEdit = true;
 // Checkbox durumuna göre düzenleme fonksiyonlarını etkinleştirme veya devre dışı bırakma
 document.getElementById("editToggle").addEventListener("change", function() {
     if (this.checked) {
         openEdit();
         disableDemoFunction();
-        checkEdit=false;
+        checkEdit = false;
     } else {
         closeEdit();
         enableDemoFunction();
-        checkEdit =true;
+        checkEdit = true;
     }
 });
 
@@ -966,7 +971,7 @@ function closeEdit() {
 }
 
 function disableDemoFunction() {
-    
+
 
     var tableTds = document.getElementsByClassName("table_tt");
     for (var i = 0; i < tableTds.length; i++) {
@@ -975,16 +980,16 @@ function disableDemoFunction() {
 }
 
 function enableDemoFunction() {
-  /*  var rows = document.querySelectorAll('.git-ac');
-    rows.forEach(function(row) {
-        row.addEventListener('click', handleClick);
-    });*/
+    /*  var rows = document.querySelectorAll('.git-ac');
+      rows.forEach(function(row) {
+          row.addEventListener('click', handleClick);
+      });*/
 
-  var tableTds = document.getElementsByClassName("table_tt");
+    var tableTds = document.getElementsByClassName("table_tt");
     for (var i = 0; i < tableTds.length; i++) {
         tableTds[i].classList.add("table_td");
     }
-    
+
 }
 /*
 function handleClick(event) {
@@ -1049,10 +1054,10 @@ var tableTdElements = document.querySelectorAll('.table_td');
 
 tableTdElements.forEach(function(element) {
     element.addEventListener('click', function() {
-       
+
         var trId = element.parentElement.getAttribute('data-userid');
         var d = "user";
-       
+
         $.ajax({
             url: 'Controller/create_session.php',
             type: 'POST',
@@ -1061,7 +1066,7 @@ tableTdElements.forEach(function(element) {
                 d: d,
             },
             success: function(response) {
-              
+
                 if (response && checkEdit) {
                     window.location.href = "index.php?parametre=custom";
                 }
