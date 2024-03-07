@@ -94,7 +94,7 @@ try {
             foreach ($result as $row) {
                 $i++;
             ?>
-            <tr data-userid="<?php echo $row["userID"]; ?>" id="tr-<?php echo $row["userID"]; ?>" class="git-ac">
+            <tr data-userid="<?php echo $row["userID"]; ?>" id="tr-<?php echo $row["userID"]. '-' . $i; ?>" class="git-ac">
                 <td data-title="Seç" class="check-style">
                     <!-- Checkbox id'sine $i değerini ekliyoruz -->
                     <input id="check-<?php echo $row["userID"] . '-' . $i; ?>" class="check1" type="checkbox"
@@ -587,9 +587,9 @@ function toggleCheckbox(id,i) {
     var checkbox2 = document.getElementById('check-' + id + '-' + i);
 
     if (checkbox2.checked) {
-        $('#tr-' + id).addClass('git-ac-color');
+        $('#tr-' + id+'-'+i).addClass('git-ac-color');
     } else {
-        $('#tr-' + id).removeClass('git-ac-color');
+        $('#tr-' + id+'-'+i).removeClass('git-ac-color');
     }
 }
 
