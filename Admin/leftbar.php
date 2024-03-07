@@ -107,7 +107,6 @@ $sql = " SELECT * FROM tbl_apartman where apartman_id = $idapartman ";
             
             <ul class="navbar-nav  justify-content-end">
               
-
                 <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
                   <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
                     <div class="sidenav-toggler-inner">
@@ -120,7 +119,20 @@ $sql = " SELECT * FROM tbl_apartman where apartman_id = $idapartman ";
 
                 <li class="nav-item dropdown px-1 d-flex align-items-center">
                   <a href="javascript:;" class="nav-link text-body header-ico1 p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fa fa-bell toggle-icon1 cursor-pointer i-color"></i>
+
+                    <div class="user-profile-main">
+                      <div class="user-avatar">
+                        <p><i class="fa fa-bell toggle-icon1 cursor-pointer"></i></p>
+        	          	</div>
+                    </div>
+
+                    <div class="header-name">
+                      <span class="name-title1"> <strong> 3 </strong> Adet</span>
+                      <span class="d-sm-inline toggle-icon d-none resize">Bildirimler</span>
+                    </div>
+
+                    <i class="fa-solid fa-sort-down fa-sort-down2" id="btn-rotate1"></i>
+
                   </a>
                   <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4x" aria-labelledby="dropdownMenuButton">
                     <li class="mb-2">
@@ -191,10 +203,40 @@ $sql = " SELECT * FROM tbl_apartman where apartman_id = $idapartman ";
                     </li>
                   </ul>
                 </li>
+
+                <div class="vertical-hr"></div>
+
+                <?php
+                    $names = explode(" ", $_SESSION["userName"]);
+                    $initials = "";
+                    $count = 0;
+                    foreach ($names as $name) {
+                        $initials .= strtoupper(substr($name, 0, 1));
+                        $count++;
+                        if ($count == 2) {
+                            break;
+                        }
+                    }
+                ?>
+
                 <li class="nav-item dropdown pe-2 d-flex align-items-center">
                   <a href="" class="nav-link nav-link header-ico font-weight-bold mb-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fa-solid fa-user toggle-icon me-2 me-sm-1"></i>
-                    <span class="d-sm-inline toggle-icon d-none"><?php  echo $_SESSION["userName"]; ?></span>
+                    
+                    <div class="user-profile-main">
+                      <div class="user-avatar">
+        	          		<p><?php echo $initials; ?></p>
+        	          	</div>
+                    </div>
+
+                    <div class="header-name">
+                      <span class="name-title">Kullanıcı</span>
+                      <span class="d-sm-inline toggle-icon d-none">
+                          <?php  echo $_SESSION["userName"]; ?>
+                      </span>
+                    </div>
+
+                    <i class="fa-solid fa-sort-down fa-sort-down1" id="btn-rotate"></i>
+
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end px-2" aria-labelledby="dropdownMenuButton">
                     <li class="mb-1">
@@ -300,15 +342,21 @@ $sql = " SELECT * FROM tbl_apartman where apartman_id = $idapartman ";
     var toggleIcon = headerIco.querySelector('.toggle-icon');
     var headerIco1 = document.querySelector('.header-ico1');
     var toggleIcon1 = headerIco.querySelector('.toggle-icon1');
+    var btnRotate = document.querySelector('#btn-rotate');
+    var userAvatarP = document.querySelector('.name-title');
+    var btnRotate1 = document.querySelector('#btn-rotate1');
 
     headerIco.addEventListener('click', function (event) {
       event.stopPropagation(); // Header içinde tıklamalarda sadece bu fonksiyon çalışsın
       headerIco.classList.toggle('active');
+      btnRotate.classList.toggle('rotate1');
+      userAvatarP.classList.toggle('active');
     });
 
     headerIco1.addEventListener('click', function (event) {
       event.stopPropagation(); // Header içinde tıklamalarda sadece bu fonksiyon çalışsın
       headerIco1.classList.toggle('active');
+      btnRotate1.classList.toggle('rotate1');
     });
 
     // Document düzeyinde tıklamaları dinle
@@ -318,6 +366,9 @@ $sql = " SELECT * FROM tbl_apartman where apartman_id = $idapartman ";
       if (!isClickInsideHeader) {
         headerIco.classList.remove('active');
         headerIco1.classList.remove('active');
+        btnRotate.classList.remove('rotate1');
+        userAvatarP.classList.remove('active');
+        btnRotate1.classList.remove('rotate1');
       }
     });
   });
