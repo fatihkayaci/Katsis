@@ -66,7 +66,7 @@ else if($indexx == 'Sections'){
     include ("Sections/detail.php");
     echo "<script>pagename('DAİRE AYRINTILARI');</script>";
     echo "<script>
-            localStorage.setItem('selectedLink', 'profile');
+            localStorage.setItem('selectedLink', 'Sections');
          </script>";
 }  
 else if($indexx == 'dashboard'){

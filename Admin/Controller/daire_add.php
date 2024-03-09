@@ -10,6 +10,7 @@ $daireNet = $_POST['daireNet'];
 $dairePay = $_POST['dairePay'];
 $id = $_POST['id'];
 
+
 try {
     // SQL sorgusu hazırlama
     $sql = "INSERT INTO tbl_daireler (apartman_id, blok_adi,daire_sayisi,kat, dGrubu,brut,net,pay) VALUES (:apartman_id, :blok_adi, :daire_sayisi,:kat, :dGrubu, :brut, :net, :pay)";
