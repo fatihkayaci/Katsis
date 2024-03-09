@@ -75,8 +75,13 @@ try {
         	    <form id="" method="post" action="">
 
         	    	<div class="row">
-        	    		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         	    			<h6 class="mb-2">Daire Bilgileri</h6>
+        	    		</div>
+
+        	    		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        	    			<h6 class="mt-2 mb-2">Daire Bilgileri</h6>
         	    		</div>
 
                         <hr class="horizontal dark mt-3">
