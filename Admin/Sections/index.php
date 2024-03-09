@@ -350,18 +350,145 @@ try {
         </div>
     </div>
 
-    <table id="example" class="users-table">
+
+
+
+
+
+    <!-- Popup blok eklemek için-->
+    <div id="popupBlokEkle" class="form-popup">
+
+        <form id="userFormBlok" class="login-form">
+
+            <h2 class="form-signin-heading">Bloklar</h2>
+
+            <div class="row">
+
+                <div class="col-blok w-70">
+                    <input class="input min-w mb-0" type="text" id="blokInput" maxLength="5" required="" />
+                    <label for="blokInput">Blok Ekle :</label>
+                </div>
+
+                <div class="col-blok w-30">
+                    <button type="button" class="btn-custom-daire ekle-btn blok-btn" id="saveButton"
+                        onclick="saveBlok()">Ekle</button>
+                </div>
+            </div>
+
+            <hr class="horizontal mt-0 dark w-100">
+
+            <table class="users-table table-blok">
+                <tr class="users-table-info">
+                    <th>Blok Adı </th>
+                    <th>Daire Sayısı </th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                <tr id="mainTr">
+                    <?php  
+                 $blokIdMapping = [];
+                foreach ($blokList as $s ){
+                     $blokIdMapping[$s['blok_id']] = $s['blok_adi'];
+                        echo '
+                        <tr class="git-ac" id="blk-'.$s["blok_id"].'">
+                            <td>'.$s["blok_adi"].'</td>
+                            <td>'.$s["daire_sayisi"].'</td>
+                            <td>  
+                                <span class="blok-ico color-red" onclick="deleteBlok('.$s["blok_id"].')"><i class="fa-solid fa-trash"></i></span>
+                            </td> 
+                            <td>
+                                <span class="blok-ico" onclick="editBlok('.$s["blok_id"].')"><i class="fa-solid fa-pen"></i></span> 
+                            </td>
+                        </tr>
+                        ';
+
+                  }  ?>
+
+                </tr>
+
+            </table>
+
+            <hr class="horizontal dark w-100">
+
+            <div class="row row-btn">
+                <button type="button" class="btn-custom-close w-100 me-0" onclick="closePopupBlok()">Kapat</button>
+            </div>
+
+        </form>
+
+    </div>
+
+
+
+
+
+
+
+    <hr class="horizontal dark mb-1 w-100">
+
+    <table id="table" class="users-table">
         <thead>
             <tr class="users-table-info">
-
+                <th class="check-style">
+                    
+                </th>
+                <th onclick="sortTable(1)">Blok Adı <i id="icon-table1" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(2)">Kapı No <i id="icon-table2" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(3)">Kiracı <i id="icon-table3" class="fa-solid fa-sort-down"></i></th>
+                <th class="ayar-i" onclick="sortTable(4)"><i id="icon-table4" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(5)">Kat Maliki <i id="icon-table5" class="fa-solid fa-sort-down"></i></th>
+                <th class="ayar-i" onclick="sortTable(6)"><i id="icon-table6" class="fa-solid fa-sort-down"></i></th>
+                <th class="ayar-i"></th>
             </tr>
         </thead>
+
+
         <tbody>
-            <tr class="git-ac">
-                <td>Veri Bulunmamaktadır</td>
+            <tr>
+                <td>Veri Bulunamamaktadır</td>
             </tr>
         </tbody>
     </table>
+
+    <hr class="horizontal dark mb-0 w-100">
+
+    <div class="input-group-div">
+
+        <div class="input-group1">
+
+            <div class="custom-select">
+                <select>
+                    <option selected value="1">10</option>
+                    <option value="2">20</option>
+                    <option value="3">50</option>
+                    <option value="4">100</option>
+                </select>
+            </div>
+
+            <p class="adet-txt">Adet Veri Gösteriliyor</p>
+
+        </div>
+
+        <div class="input-group1">
+
+            <ul class="pagination">
+                <a href="#" class="pagination-arrow arrow-left">
+                    <i class="fa-solid fa-angle-left"></i>
+                </a>
+                <a href="#" class="pagination-number">1</a>
+                <a href="#" class="pagination-number">2</a>
+                <a href="#" class="pagination-number current-number">3</a>
+                <a href="#" class="pagination-number">4</a>
+                <a href="#" class="pagination-number">5</a>
+                <a href="#" class="pagination-arrow arrow-right">
+                    <i class="fa-solid fa-angle-right"></i>
+                </a>
+            </ul>
+
+        </div>
+
+    </div>
+
 </div>
 
 <?php
