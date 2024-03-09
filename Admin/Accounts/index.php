@@ -94,7 +94,8 @@ try {
             foreach ($result as $row) {
                 $i++;
             ?>
-            <tr data-userid="<?php echo $row["userID"]; ?>" id="tr-<?php echo $row["userID"]. '-' . $i; ?>" class="git-ac">
+            <tr data-userid="<?php echo $row["userID"]; ?>" id="tr-<?php echo $row["userID"]. '-' . $i; ?>"
+                class="git-ac">
                 <td data-title="Seç" class="check-style">
                     <!-- Checkbox id'sine $i değerini ekliyoruz -->
                     <input id="check-<?php echo $row["userID"] . '-' . $i; ?>" class="check1" type="checkbox"
@@ -109,20 +110,20 @@ try {
                     </label>
                 </td>
                 <td data-title="Ad Soyad" class="table_tt table_td" contenteditable="false">
-                    
+
                     <?php echo $row["userName"]; ?></td>
 
                 <td data-title="Telefon Numarası" class="table_tt table_td" contenteditable="false">
 
                     <?php echo $row["phoneNumber"]; ?></td>
 
-                    <td data-title="Blok Adi" class="table_tt table_td">
-                        <?php 
+                <td data-title="Blok Adi" class="table_tt table_td">
+                    <?php 
                             if (!empty($row["blok_adi"]) && !empty($row["daire_sayisi"])) {
                                 echo $row["blok_adi"] . " / " . $row["daire_sayisi"];
                             }
                         ?>
-                    </td>
+                </td>
 
                 <td data-title="Durum" class="table_tt table_td">
                     <div class="main-durum <?php
@@ -564,7 +565,7 @@ function toggleAll(masterCheckbox) {
 
 }
 
-function toggleCheckbox(id,i) {
+function toggleCheckbox(id, i) {
     var checkboxes = document.querySelectorAll('.check1'); // Tüm checkboxları al
     var guncelleButton = document.getElementById('guncelleButton');
     var silButton = document.getElementById('silButton');
@@ -587,9 +588,9 @@ function toggleCheckbox(id,i) {
     var checkbox2 = document.getElementById('check-' + id + '-' + i);
 
     if (checkbox2.checked) {
-        $('#tr-' + id+'-'+i).addClass('git-ac-color');
+        $('#tr-' + id + '-' + i).addClass('git-ac-color');
     } else {
-        $('#tr-' + id+'-'+i).removeClass('git-ac-color');
+        $('#tr-' + id + '-' + i).removeClass('git-ac-color');
     }
 }
 
@@ -751,9 +752,20 @@ topluSilButton.addEventListener('click', function() {
     checkboxes.forEach(function(checkbox) {
         var row = checkbox.closest('tr');
         var userID = row.getAttribute('data-userid');
-        var blok_adi = row.querySelector('td[data-title="Blok Adi"]').textContent;
-        var daire_sayisi = row.querySelector('td[data-title="Kapi Numarasi"]').textContent;
         var durum = row.querySelector('td[data-title="Durum"]').textContent;
+
+        var blok_ve_daire = row.querySelector('td[data-title="Blok Adi"]').textContent;
+        // Blok adı ve daire sayısını ayırmak için "/" işaretine göre ayırın
+        var blok_ve_daire_parts = blok_ve_daire.split("/");
+        if (blok_ve_daire_parts.length === 2) {
+            var blok_adi = blok_ve_daire_parts[0].trim();
+            var daire_sayisi = blok_ve_daire_parts[1].trim();
+            //alert(userID + ", " + durum + ", " + blok_adi + ", " + daire_sayisi);
+        } else {
+            var blok_adi = null;
+            var daire_sayisi = null;
+            console.error("Blok Adi hücresi beklenen formatta değil.");
+        }
 
         // Sunucuya silme isteği gönder
         $.ajax({

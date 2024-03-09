@@ -1,3 +1,4 @@
+
 <?php
 include("../../DB/dbconfig.php");
 
@@ -8,7 +9,7 @@ try {
     $daire_sayisi = $_POST['daire_sayisi'];
     $durum = $_POST['durum'];
     $columnName = ($durum == "kiracı") ? "kiraciID" : "katMalikiID";
-    //echo $blok_adi . " " . $daire_sayisi . " " . $durum." ".$userID;
+    //echo $blok_adi . "-" . $daire_sayisi . "-" . $durum."-".$userID;
     
     // Güncelleme SQL sorgusu
     $sql = "UPDATE tbl_daireler AS d
