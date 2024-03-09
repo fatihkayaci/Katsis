@@ -863,7 +863,7 @@ table tbody tr:last-child td:last-child {
 /* kullanıcı duzenle css */
 
 .emp-profile{
-  padding: 2%;
+  padding: 0.4rem;
   margin-top: 1%;
   margin-bottom: 1%;
   border-radius: 0.5rem;
@@ -877,7 +877,6 @@ table tbody tr:last-child td:last-child {
   -webkit-border-radius: 18px;
   -moz-border-radius: 18px;
   border: 0;
-  border: 1px solid #0d0c2218;
   box-shadow: 10px 10px 10px 5px #b6b6b618;
 }
 
@@ -1796,8 +1795,8 @@ input:checked + .slider:before {
 }
 
 .vertical-hr {
-  margin-left: 5px;
-  margin-right: 5px;
+  margin-left: 10px;
+  margin-right: 20px;
   width: 1px;
   background: linear-gradient(0deg, #2e319200 0%, #bebebe7a 40%, #bebebe7a 60%, #1bffff00 100%);
 }

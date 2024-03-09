@@ -102,7 +102,7 @@ $sql = " SELECT * FROM tbl_apartman where apartman_id = $idapartman ";
           <h6 id="pageName" class="font-weight-bolder mb-0"></h6>
         </nav>
         
-        <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
+        <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
             
             <ul class="navbar-nav  justify-content-end">
@@ -116,6 +116,8 @@ $sql = " SELECT * FROM tbl_apartman where apartman_id = $idapartman ";
                     </div>
                   </a>
                 </li>
+
+                <div class="vertical-hr"></div>
 
                 <li class="nav-item dropdown px-1 d-flex align-items-center">
                   <a href="javascript:;" class="nav-link text-body header-ico1 p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">

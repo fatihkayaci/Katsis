@@ -324,7 +324,47 @@ try {
 </div>
 <?php
     } else {
-        echo "0 results";
+?>
+
+<div class="cener-table">
+
+    <div class="input-group-div">
+
+        <div class="input-group1">
+            <button class="btn-custom-outline bcoc1" onclick="openPopupBlok()">Bloklar</button>
+            <button class="btn-custom-outline bcoc2" onclick="openPopupDaire()">Daire Ekle</button>
+
+        </div>
+
+        <div class="input-group1">
+            <button class="topluGuncelle btn-custom-outline bcoc3" id="guncelleButton" style="display: none;"
+                onclick="openTopluPopup()">Toplu Ekle/Güncelle</button>
+            <button class="topluSil btn-custom-outline bcoc4" id="silButton"
+                onclick="daireSil(<?php echo $idapartman; ?>)" style="display: none;">Sil</button>
+
+
+            <div class="search-box">
+                <i class="fas fa-search search-icon" aria-hidden="true"></i>
+                <input type="text" id="searchValue" class="search-input" placeholder="Arama..." onkeyup="filtrele()">
+            </div>
+        </div>
+    </div>
+
+    <table id="example" class="users-table">
+        <thead>
+            <tr class="users-table-info">
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="git-ac">
+                <td>Veri Bulunmamaktadır</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<?php
     }
 } catch (PDOException $e) {
     echo "Bağlantı hatası: " . $e->getMessage();
