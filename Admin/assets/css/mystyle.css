@@ -864,20 +864,18 @@ table tbody tr:last-child td:last-child {
 
 .emp-profile{
   padding: 0.4rem;
-  margin-top: 1%;
-  margin-bottom: 1%;
   border-radius: 0.5rem;
 }
 
 .contact-form {
   border-radius: 18px;
   background: #fff;
-  padding: 45px 20px 20px;
+  padding: 20px 20px 20px;
   margin-bottom: 30px;
   -webkit-border-radius: 18px;
   -moz-border-radius: 18px;
   border: 0;
-  box-shadow: 10px 10px 10px 5px #b6b6b618;
+  border: 1px solid #b6b6b638;
 }
 
 .user-profile {
@@ -1817,4 +1815,206 @@ input:checked + .slider:before {
 
 .header-ico1 .toggle-icon1 {
   color: #fff;
+}
+
+/* ================================== */
+
+/* profile page area */
+
+.tabbable-panel {
+  font-family: 'poppins-regular';
+}
+
+.tabbable-line > .nav-tabs {
+  border: none;
+  height: 42px;
+  margin: 20px 0px 20px 0px;
+  padding: 0.25rem;
+  background-color: #eceff199;
+  border-radius: 0.5rem;
+  max-width: 350px;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+.tabbable-line > .nav-tabs > li {
+  width: 100%;
+  text-align: center;
+}
+.tabbable-line > .nav-tabs > li > a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'poppins-regular';
+  padding: 0.25rem 0.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border: 1px solid transparent;
+  color: #263238;
+  border-radius: .375rem;
+}
+.tabbable-line > .nav-tabs > li > a > i {
+  color: #000;
+}
+
+.tabbable-line > .nav-tabs > li.open > a, .tabbable-line > .nav-tabs > li:hover > a {
+ 
+}
+.tabbable-line > .nav-tabs > li.open > a > i, .tabbable-line > .nav-tabs > li:hover > a > i {
+  color: #a6a6a6;
+}
+.tabbable-line > .nav-tabs > li.open .dropdown-menu, .tabbable-line > .nav-tabs > li:hover .dropdown-menu {
+  margin-top: 0px;
+}
+.tabbable-line > .nav-tabs > li.active a{
+  font-family: 'poppins-medium';
+  width: 100%;
+  background-color: #fff;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / .1), 0 1px 2px -1px rgb(0 0 0 / .1);;
+  color: #000;
+  position: relative;
+}
+
+.tabbable-line > .nav-tabs > li.active > a > i {
+  color: #277CE0;
+}
+.tabbable-line > .tab-content {
+  background-color: #fff;
+  border: 0;
+}
+.portlet .tabbable-line > .tab-content {
+  padding-bottom: 0;
+}
+
+.new-padding {
+  padding: 0px 20px 0px 20px;
+}
+
+/* ========================================== */
+
+/* to do list */
+
+.todo-div ul {
+  margin: 0;
+  margin-top: 20px;
+  padding: 0;
+  padding-bottom: 30px;
+}
+
+/* Style the list items */
+.todo-div ul li {
+  cursor: pointer;
+  position: relative;
+  padding: 12px 8px 12px 40px;
+  list-style-type: none;
+  font-size: 18px;
+  transition: 0.2s;
+  border-radius: 4px;
+  
+  /* make the list items unselectable */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Darker background-color on hover */
+.todo-div ul li:hover {
+  background: #eceff199;
+}
+
+/* When clicked on, add a background color and strike out text */
+.todo-div ul li.checked {
+  color: #000;
+  text-decoration: line-through;
+}
+
+/* Add a "checked" mark when clicked on */
+.todo-div ul li.checked::before {
+  content: '';
+  position: absolute;
+  border-color: #000;
+  border-style: solid;
+  border-width: 0 2px 2px 0;
+  top: 16px;
+  left: 16px;
+  transform: rotate(45deg);
+  height: 15px;
+  width: 7px;
+}
+
+/* Style the close button */
+.close {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  padding: 3px 16px 0px 16px;
+  color: #000;
+  text-shadow: none;
+  font-size: 30px;
+}
+
+.close:hover {
+  color: #d63031;
+}
+
+
+
+
+/* Style the "Add" button */
+.addBtn {
+  padding: 10px;
+  width: 25%;
+  background: #d9d9d9;
+  color: #555;
+  float: left;
+  text-align: center;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+  border-radius: 0;
+}
+
+.addBtn:hover {
+  background-color: #bbb;
+}
+
+.nowrap {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.todo-input {
+  width: 85%;
+  min-width: 120px;
+  height: 42px;
+  background-color: transparent;
+  color: #0d0c22;
+  border: 1px solid #b6b6b6;
+  border-radius: 4px;
+  padding: 5px 10px;
+  transition: 0.5s;
+  outline: none;
+  font-size: 13px;
+  font-family: 'poppins-regular';
+}
+
+.todo-input:focus {
+  border-color: #277CE0;
+  box-shadow: 0 0 10px 4px #0000001a; 
+}
+
+.todo-btn {
+  margin: 0;
+  width: 10%;
+  height: 42px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
