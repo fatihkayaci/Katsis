@@ -842,7 +842,7 @@ function openPopup(daire_id, tur) {
     var blokName = tdElements[1].innerText; // A
     var No = tdElements[2].innerText; // 1
 
-    var head = " " + blokName + " Blok - No: " + No;
+    var head = " " + blokName + " Blok / No: " + No;
     if (tur == 0) {
         head += " (Kiracı)";
         $('#label_tarih').html("Taşınma Tarihi :");
