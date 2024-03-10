@@ -1,5 +1,6 @@
-
+ <input type="hidden" id="hiddenDaireID2" value=<?php echo  $_SESSION["apartID"]?> />
     <?php
+   
 try {
    
     //$sql = "SELECT * FROM tbl_users WHERE apartman_id = " .$_SESSION["apartID"]."AND userID=".$userID ;
@@ -66,7 +67,14 @@ AND tbl_daireler.daire_id = " . $_SESSION['daireSayfa'];
                             <p class="bilgi-p">Kat Maliki</p>
         	    		</div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                            <p class="bilgi-p"  ><?php echo isset($row["kat_maliki_adi"]) && ($row["kat_maliki_adi"] !== null && $row["kat_maliki_adi"] !== 0) ? $row["kat_maliki_adi"] : '<button type="button" class="table-a tca2" onclick="openPopup('.$row["daire_id"].',1)">Kat Maliki Ekle + </button>'; ?>
+                            <p class="bilgi-p"  ><?php 
+    if(isset($row["kat_maliki_adi"]) && ($row["kat_maliki_adi"] !== null && $row["kat_maliki_adi"] !== 0)) {
+        echo '<p class="userss" onclick=userGo('.$row["kat_maliki_id"].')>' . $row["kat_maliki_adi"] . '</p>';
+    } else {
+        echo '<button type="button" class="table-a tca2" onclick="openPopup('.$row["daire_id"].',1)">Kat Maliki Ekle + </button>';
+    }
+?>
+
  </p>
         	    		</div>
 
@@ -76,7 +84,13 @@ AND tbl_daireler.daire_id = " . $_SESSION['daireSayfa'];
                             <p class="bilgi-p">Kiracı</p>
         	    		</div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                            <p class="bilgi-p" ><?php echo isset($row["kiraci_adi"]) && ($row["kiraci_adi"] !== null && $row["kiraci_adi"] !== 0) ? $row["kiraci_adi"] : '<button type="button" class="table-a tca1" onclick="openPopup('.$row["daire_id"].',0)">Kiracı Ekle + </button>'; ?>
+                            <p class="bilgi-p" ><?php 
+    if(isset($row["kiraci_adi"]) && ($row["kiraci_adi"] !== null && $row["kiraci_adi"] !== 0)) {
+        echo '<p class="userss" onclick=userGo('.$row["kiraci_id"].')>' . $row["kiraci_adi"] . '</p>';
+    } else {
+        echo '<button type="button" class="table-a tca1" onclick="openPopup('.$row["daire_id"].',0)">Kiracı Ekle + </button>';
+    }
+?>
 </p>
         	    		</div>
 
@@ -365,7 +379,8 @@ function save() {
     var turr = document.getElementById("turDaire").value;
     var kTarih = document.getElementById("dateInput").value;
     var daireID = document.getElementById("hiddenDaireID").value;
-    if (selectedUserID === undefined || userr === null || userr === "") {
+    var apartId = document.getElementById('hiddenDaireID2').value;
+    if (userr === null || userr === "") {
         $('#userInput').css('border-color', 'red');
     } else {
         $.ajax({
@@ -377,6 +392,9 @@ data: {
     kTarih: kTarih,
     daireID: daireID,
     turr: turr,
+    userr:userr,
+    apartId:apartId,
+
 
 },
 success: function(response) {
@@ -393,6 +411,41 @@ error: function(error) {
     }
 
 }
+
+
+
+
+function userGo(id){
+
+    
+    var d="user";
+        $.ajax({
+            url: 'Controller/create_session.php',
+            type: 'POST',
+            data: {
+
+                id: id,
+                d:d,
+
+            },
+            success: function(response) {
+
+               
+                    if(response){
+                        window.location.href = "index.php?parametre=custom";
+                    }
+                    
+                
+
+            },
+            error: function(xhr, status, error) {
+                var errorMessage = xhr.status + ': ' + xhr.statusText;
+                alert('Hata alındı: ' + errorMessage);
+            }
+        });
+}
+    
+
 
 
 

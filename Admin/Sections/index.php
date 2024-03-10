@@ -988,8 +988,8 @@ function save() {
     var turr = document.getElementById("turDaire").value;
     var kTarih = document.getElementById("dateInput").value;
     var daireID = document.getElementById("hiddenDaireID").value;
-
-    if (selectedUserID === undefined || userr === null || userr === "") {
+    var apartId = document.getElementById('hiddenDaireID2').value;
+    if ( userr === null || userr === "") {
         $('#userInput').css('border-color', 'red');
     } else {
         $.ajax({
@@ -1001,9 +1001,12 @@ function save() {
                 kTarih: kTarih,
                 daireID: daireID,
                 turr: turr,
+                userr:userr,
+                apartId:apartId,
 
             },
             success: function(response) {
+                alert(response);
                 closePopup();
                 var trElement = document.getElementById(daireID);
 
@@ -1021,9 +1024,10 @@ function save() {
 
 
             },
-            error: function(error) {
-                console.error(error);
-            }
+            error: function(xhr, status, error) {
+    var errorMessage = xhr.status + ': ' + xhr.statusText + '\n' + error.responseText;
+    alert(errorMessage);
+}
 
         });
     }
@@ -1289,6 +1293,7 @@ $('#daireBlok').focus(function() {
 </script>
 
 <script type="text/javascript">
+
 const inputField = document.querySelector('.search-selectx');
 const dropdown = document.querySelector('.value-listx');
 const dropdownArray = [...document.querySelectorAll('.li-select')];
@@ -1296,6 +1301,7 @@ console.log(typeof dropdownArray)
 dropdown.classList.add('open');
 inputField.focus();
 let valueArray = [];
+var newUser = false;
 dropdownArray.forEach(item => {
     valueArray.push(item.textContent);
 });
@@ -1313,8 +1319,10 @@ inputField.addEventListener('input', () => {
             if (!(inputValue.substring(0, inputValue.length) === valueArray[j].substring(0, inputValue.length)
                     .toLowerCase())) {
                 dropdownArray[j].classList.add('closed'); /* yeni ibaresi gelicek */
+                newUser = true;
             } else {
                 dropdownArray[j].classList.remove('closed');
+                newUser = false;
             }
         }
     } else {

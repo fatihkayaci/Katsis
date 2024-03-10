@@ -5,16 +5,8 @@ durum boş ise email kontrolü yapmıyor.
 */
 session_start();
 include("../../DB/dbconfig.php");
-$i=0;
-function randomPassword($length = 8) {
-    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    $userPass = '';
+require_once 'class.func.php';
 
-    for ($i = 0; $i < $length; $i++) {
-        $userPass .= $characters[rand(0, strlen($characters) - 1)];
-    }
-    return $userPass;
-}
 
 try {
     // POST verilerini al
