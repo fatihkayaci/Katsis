@@ -868,6 +868,49 @@ topluSilButton.addEventListener('click', function() {
     silButton.style.display = 'none';
 });
 
+
+// Tüm tablo satırlarını seç
+const tableRows = document.querySelectorAll('tr.git-ac');
+
+// Verileri saklamak için boş bir dizi oluştur
+const rowData = [];
+
+// Her bir satırı dolaşarak verileri al
+tableRows.forEach(row => {
+    const blockName = row.querySelector('td:nth-child(4)').textContent.trim(); // Blok Adı
+    let block = '';
+    let flatCount = '';
+    let status = '';
+
+    // Blok adı uygun şekilde ayrıştırılabiliyorsa işlem yap
+    if (blockName.includes('/')) {
+        block = blockName.split('/')[0].trim();
+        flatCount = blockName.split('/')[1].trim();
+    }
+
+    // Durumu uygun şekilde alabiliyorsanız işlem yap
+    const statusElement = row.querySelector('td:nth-child(5) .main-durum');
+    if (statusElement) {
+        status = statusElement.textContent.trim();
+        if (status === "Kat Maliki") {
+            status = "katmaliki";
+        } else if (status === "Kiracı") {
+            status = "kiracı";
+        }
+    }
+
+    // Verileri obje olarak diziye ekle
+    rowData.push({
+        block: block,
+        flatCount: flatCount,
+        status: status
+    });
+
+});
+
+// Alınan verileri kontrol etmek için konsola yazdır
+console.log(rowData);
+
 //bakılacak
 //var saveButton = document.getElementById('saveButton');
 function saveUser() {
@@ -881,7 +924,9 @@ function saveUser() {
     var optionsBlok = $('select#optionsBlok').val();
     var blokArray = [];
     var durumArray = [];
-    console.log(userName + "," + tc + "," + phoneNumber + "," + userEmail + "," + plate + "," + gender);
+    var isConflict = false; // Çakışma durumunu kontrol etmek için bir bayrak
+
+    //console.log(userName + "," + tc + "," + phoneNumber + "," + userEmail + "," + plate + "," + gender);
 
     for (var i = 0; i < selectedDurumArray.length; i++) {
         var durumParcalari = selectedDurumArray[i].split(',');
@@ -891,7 +936,6 @@ function saveUser() {
         }
     }
 
-    console.log("durum Array = " + JSON.stringify(durumArray));
 
     for (var i = 0; i < selectedValuesArray.length; i++) {
         var element = selectedValuesArray[i];
@@ -910,8 +954,84 @@ function saveUser() {
         blokArray.push(blokElement);
     }
 
-    console.log("blok Array = " + JSON.stringify(blokArray));
+    for (var i = 0; i < rowData.length; i++) {
+        var row = rowData[i];
+        var block = row.block;
+        var flatCount = row.flatCount;
+        var status = row.status;
 
+        // blokArray içindeki blok elementlerini dolaş ve karşılaştır
+        for (var j = 0; j < blokArray.length; j++) {
+            var blokElement = blokArray[j];
+            var letterPart = blokElement.letter;
+            var numberPart = blokElement.number;
+            // Blok adı ve daire numarası eşleşirse
+            if (block == letterPart && flatCount == numberPart) {
+                // DurumArray içindeki durumları dolaş ve karşılaştır
+                for (var k = 0; k < durumArray.length; k++) {
+                    var durum = durumArray[k];
+
+                    // Eğer durum eşleşiyorsa 
+                    if (status == durum) {
+                        // Çakışma durumu olduğunda bayrağı ayarla ve döngüyü kır
+                        isConflict = true;
+                        break;
+                    }
+                }
+            }
+        }
+        // Çakışma durumu varsa uyarı ver
+        if (isConflict) {
+            //alert("Çakışma durumu bulundu: Blok ismi: " + block + ", Daire sayısı: " + flatCount + ", Durum: " + status);
+            if (confirm("Çakışma durumu bulundu: Blok ismi: " + block + ", Daire sayısı: " + flatCount + ", Durum: " +
+            status + " bu dairede oturan kullanıcıyı silmek ister misin?")) {
+                if (kisitlamalar(userName /* tc, phoneNumber, userEmail, plate*/ )) {
+                    $.ajax({
+                        url: 'Controller/save_user.php',
+                        type: 'POST',
+                        data: {
+                            userName: userName,
+                            tc: tc,
+                            phoneNumber: phoneNumber,
+                            durumArray: JSON.stringify(durumArray),
+                            userEmail: userEmail,
+                            plate: plate,
+                            gender: gender,
+                            apartman_id: apartman_id
+                        },
+                        success: function(response) {
+                            if (response == 1) {
+                                $.ajax({
+                                    url: 'Controller/demo.php',
+                                    type: 'POST',
+                                    data: {
+                                        blokArray: JSON.stringify(
+                                            blokArray), // Diziyi JSON dizesine dönüştür
+                                        durumArray: JSON.stringify(durumArray)
+                                    },
+                                    success: function(secondResponse) {
+                                        if (secondResponse == 1) {
+                                            location.reload();
+                                        }
+                                    },
+                                    error: function(secondError) {
+                                        console.error(secondError);
+                                    }
+                                });
+                            }
+                        },
+                        error: function(error) {
+                            console.error(error);
+                        }
+                    });
+                } else {
+                    return;
+                }
+            } else {
+                return;
+            }
+        }
+    }
     if (kisitlamalar(userName /* tc, phoneNumber, userEmail, plate*/ )) {
         $.ajax({
             url: 'Controller/save_user.php',
