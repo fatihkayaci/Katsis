@@ -125,7 +125,7 @@ require 'phpmailer/src/SMTP.php';
 
   $mail = new PHPMailer();
   $mail->IsSMTP(); 
-  $mail->SMTPDebug  = 2;                     
+  $mail->SMTPDebug  = 0;                     
   $mail->SMTPAuth   = true;                  
   $mail->SMTPSecure = "tls";                 
   $mail->Host       = "smtp.gmail.com";      
