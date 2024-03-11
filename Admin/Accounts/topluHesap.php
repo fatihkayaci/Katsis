@@ -22,10 +22,13 @@
 
     try {
 
-        $sql = "SELECT *
-                FROM tbl_daireler
-                WHERE apartman_id=$idapartman";
-                
+          
+      
+        $sql = "SELECT d.*, b.blok_adi
+        FROM tbl_daireler d
+        LEFT JOIN tbl_blok b ON d.blok_adi = b.blok_id
+        WHERE d.apartman_id = " .  $_SESSION["apartID"];
+
         /* $sql = "SELECT blok_adi, daire_sayisi, kiraciID, katMalikiID
                 FROM tbl_daireler
                 WHERE apartman_id=" . $_SESSION["apartID"];
@@ -191,7 +194,7 @@ function sortTable(n) {
             }
         }
     };
-
+    console.log(initialData);
     // Save buttona basıldığında verileri karşılaştırma ve sunucuya gönderme
     
     saveButton.addEventListener('click', function() {
@@ -200,9 +203,9 @@ function sortTable(n) {
         var blok = document.getElementsByName('blok');
         var daire = document.getElementsByName('daire');
         var apartman_id = $('input[name="apartman_id"]').val();
-
+        //console.log(kiraciUserNameInputs+", "+katMalikiUserNameInputs+", "+blok+", "+daire);
         var newEntries = [];
-
+        
         // Yeni eklenen verileri bulma
         for (var i = 0; i < kiraciUserNameInputs.length; i++) {
             if (kiraciUserNameInputs[i].value.trim() !== "") {
@@ -240,7 +243,7 @@ function sortTable(n) {
         
         console.log("ToSend:", toSend);
         $.ajax({
-            url: 'Controller/demo2.php',
+            url: 'Controller/bulkAddingUser.php',
             type: 'POST',
             data: {
                 toSend: JSON.stringify(toSend),

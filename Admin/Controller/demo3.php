@@ -17,11 +17,13 @@ try {
         $userID = array_shift($addedUserIds);
         
         // Güncelleme SQL sorgusu
-        $sql = "UPDATE tbl_daireler 
+        $sql = "UPDATE tbl_daireler AS d 
+        INNER JOIN tbl_blok AS b ON d.blok_adi = b.blok_id
                 SET $columnName = :userID
-                WHERE blok_adi = :blok 
-                AND daire_sayisi = :daire 
-                AND apartman_id = :apartID";
+                WHERE b.blok_adi = :blok 
+                AND d.daire_sayisi = :daire 
+                AND d.apartman_id = :apartID";
+
 
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':userID', $userID, PDO::PARAM_INT);
