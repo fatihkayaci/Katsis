@@ -100,8 +100,10 @@ if(isset($_POST['btn-submit']))
         ?>
 
         <label class="label-block-level" for="txtemail">E-Posta</label>
-        <input type="email" class="input-block-level" placeholder="E-posta Hesabınız" id="txtemail" name="txtemail" required />
-        
+        <div class="inputBox">
+          <input type="email" class="input-block-level" placeholder="E-posta Hesabınız" id="txtemail" name="txtemail" required />
+        </div>
+
         <button class="btn-custom" type="submit" name="btn-submit">Parolamı Sıfırla</button>
         
         <p class="hesap">

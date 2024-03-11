@@ -85,6 +85,8 @@ if(isset($_POST['btn-signup']))
     <!-- Your custom styles -->
     
     <link href="assets/css/style.css" rel="stylesheet" media="screen">
+    
+    <script src="https://kit.fontawesome.com/be694eddd8.js" crossorigin="anonymous"></script>
      <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -113,17 +115,27 @@ if(isset($_POST['btn-signup']))
             ?>
 
             <label class="label-block-level" for="txtuname">Ad Soyad</label>
-            <input type="text" class="input-block-level" placeholder="Ad ve Soyad" id="txtuname" name="txtuname" required />
+            <div class="inputBox">
+              <input type="text" class="input-block-level" placeholder="Ad ve Soyad" id="txtuname" name="txtuname" required />
+            </div>
 
             <label class="label-block-level" for="txtemail">E-Posta</label>
-            <input type="email" class="input-block-level" placeholder="E-Posta Adresi" id="txtemail" name="txtemail" required />
+            <div class="inputBox">
+              <input type="email" class="input-block-level" placeholder="E-Posta Adresi" id="txtemail" name="txtemail" required />
+            </div>
 
             <label class="label-block-level" for="txtpass">Parola</label>
-            <input type="password" class="input-block-level" placeholder="Parola" id="txtpass" name="txtpass" required />
+            <div class="inputBox">
+              <input type="password" class="input-block-level" placeholder="Parola" id="txtpass" name="txtpass" required />
+              <i id="eyeicon" class="fa-regular fa-eye-slash"></i>
+            </div>
 
             <label class="label-block-level" for="confirm_password">Parola Tekrarı</label>
-            <input type="password" class="input-block-level" placeholder="Parola Tekrarı" id="confirm_password" name="confirm_password" required />
-          
+            <div class="inputBox">
+              <input type="password" class="input-block-level" placeholder="Parola Tekrarı" id="confirm_password" name="confirm_password" required />
+              <i id="eyeicon1" class="fa-regular fa-eye-slash"></i>
+            </div>
+
             <button class="btn-custom" type="submit" id="" name="btn-signup">Hesap Oluştur</button>
             
             <p class="hesap">
@@ -141,6 +153,41 @@ if(isset($_POST['btn-signup']))
       </div>
       
     </div> <!-- /container -->
+
+    <script>
+    let eyeicon = document.getElementById("eyeicon");
+    let password = document.getElementById("txtpass");
+
+    eyeicon.addEventListener("click", () => {
+        if (password.type == "password") {
+            password.type = "text";
+            eyeicon.classList.remove("fa-eye-slash");
+            eyeicon.classList.add("fa-eye");
+        } else {
+            password.type = "password";
+            eyeicon.classList.remove("fa-eye");
+            eyeicon.classList.add("fa-eye-slash");
+        }
+    });
+    </script>
+
+    <script>
+        let eyeicon1 = document.getElementById("eyeicon1");
+        let password1 = document.getElementById("confirm_password");
+
+        eyeicon1.addEventListener("click", () => {
+            if (password1.type == "password") {
+                password1.type = "text";
+                eyeicon1.classList.remove("fa-eye-slash");
+                eyeicon1.classList.add("fa-eye");
+            } else {
+                password1.type = "password";
+                eyeicon1.classList.remove("fa-eye");
+                eyeicon1.classList.add("fa-eye-slash");
+            }
+        });
+    </script>
+
 
     <script src="vendors/jquery-1.9.1.min.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
