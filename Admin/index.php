@@ -82,6 +82,13 @@ else if($indexx == 'profile'){
     echo "<script>
             localStorage.setItem('selectedLink', 'profile');
          </script>";
+}else{
+    include ("Dashboard/index.php");
+    echo "<script>pagename('ANA SAYFA');</script>";
+    echo "<script>
+            localStorage.setItem('selectedLink', 'dashboard');
+         </script>";
+
 }
 
 
