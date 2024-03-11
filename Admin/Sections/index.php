@@ -94,7 +94,7 @@ try {
 
         <form id="userFormBlok" class="login-form">
 
-            <h2 class="form-signin-heading">Bloklar</h2>
+            <h2 class="form-signin-heading">Bloklarrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr</h2>
 
             <div class="row">
 
