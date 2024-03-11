@@ -94,7 +94,7 @@ try {
 
         <form id="userFormBlok" class="login-form">
 
-            <h2 class="form-signin-heading">Bloklarrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr</h2>
+            <h2 class="form-signin-heading">Bloklar</h2>
 
             <div class="row">
 
@@ -989,6 +989,7 @@ function save() {
     if ( userr === null || userr === "") {
         $('#userInput').css('border-color', 'red');
     } else {
+        alert(selectedUserID);
         $.ajax({
 
             url: 'Controller/user_assignment.php',

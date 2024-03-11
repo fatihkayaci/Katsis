@@ -1,7 +1,7 @@
 <?php 
 include("../../DB/dbconfig.php");
 require_once 'class.func.php';
-$userID1 = $_POST['userID1'];
+$userID1 = isset($_POST['userID1']) ? $_POST['userID1'] : null;
 $kTarih = $_POST['kTarih'];
 $daireID = $_POST['daireID'];
 $turr = $_POST['turr'];
@@ -18,7 +18,7 @@ $temp="kiraciID";
 
 
 
-if (!isset($userID1) && $userr !== "") {
+if ($userID1==null && $userr !== "") {
  
 
 try{
