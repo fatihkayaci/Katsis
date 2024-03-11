@@ -433,6 +433,7 @@ function userGo(id){
                
                     if(response){
                         window.location.href = "index.php?parametre=custom";
+                        localStorage.setItem('selectedLink', 'Accounts');
                     }
                     
                 
