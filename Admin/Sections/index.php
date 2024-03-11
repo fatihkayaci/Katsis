@@ -125,7 +125,7 @@ try {
                      $blokIdMapping[$s['blok_id']] = $s['blok_adi'];
                         echo '
                         <tr class="git-ac" id="blk-'.$s["blok_id"].'">
-                            <td>'.$s["blok_adi"].'</td>
+                            <td class="blokAdi">'.$s["blok_adi"].'</td>
                             <td>'.$s["daire_sayisi"].'</td>
                             <td>  
                                 <span class="blok-ico color-red" onclick="deleteBlok('.$s["blok_id"].')"><i class="fa-solid fa-trash"></i></span>
@@ -388,7 +388,7 @@ try {
                      $blokIdMapping[$s['blok_id']] = $s['blok_adi'];
                         echo '
                         <tr class="git-ac" id="blk-'.$s["blok_id"].'">
-                            <td>'.$s["blok_adi"].'</td>
+                            <td class="blokAdi">'.$s["blok_adi"].'</td>
                             <td>'.$s["daire_sayisi"].'</td>
                             <td>  
                                 <span class="blok-ico color-red" onclick="deleteBlok('.$s["blok_id"].')"><i class="fa-solid fa-trash"></i></span>
@@ -427,7 +427,7 @@ try {
         <thead>
             <tr class="users-table-info">
                 <th class="check-style">
-                    
+
                 </th>
                 <th onclick="sortTable(1)">Blok Adı <i id="icon-table1" class="fa-solid fa-sort-down"></i></th>
                 <th onclick="sortTable(2)">Kapı No <i id="icon-table2" class="fa-solid fa-sort-down"></i></th>
@@ -986,7 +986,7 @@ function save() {
     var kTarih = document.getElementById("dateInput").value;
     var daireID = document.getElementById("hiddenDaireID").value;
     var apartId = document.getElementById('hiddenDaireID2').value;
-    if ( userr === null || userr === "") {
+    if (userr === null || userr === "") {
         $('#userInput').css('border-color', 'red');
     } else {
         alert(selectedUserID);
@@ -999,8 +999,8 @@ function save() {
                 kTarih: kTarih,
                 daireID: daireID,
                 turr: turr,
-                userr:userr,
-                apartId:apartId,
+                userr: userr,
+                apartId: apartId,
 
             },
             success: function(response) {
@@ -1023,9 +1023,9 @@ function save() {
 
             },
             error: function(xhr, status, error) {
-    var errorMessage = xhr.status + ': ' + xhr.statusText + '\n' + error.responseText;
-    alert(errorMessage);
-}
+                var errorMessage = xhr.status + ': ' + xhr.statusText + '\n' + error.responseText;
+                alert(errorMessage);
+            }
 
         });
     }
@@ -1040,70 +1040,66 @@ function saveBlok() {
     if (blokInput == null || blokInput === "") {
         $('#blokInput').css('border-color', 'red');
     } else {
-        $.ajax({
-
-            url: 'Controller/blok_add.php',
-            type: 'POST',
-            dataType: 'json',
-            data: {
-                blokValue: blokInput,
-                id: t,
-            },
-            success: function(response) {
-
-                if (response.status == 1) {
-
-
-                    var mainTr = document.getElementById("mainTr");
-                    var td1 = document.createElement("td");
-                    var td2 = document.createElement("td");
-                    var td3 = document.createElement("td");
-                    var td4 = document.createElement("td");
-
-                    // Burada her bir td elementinin içeriğini doldurabilirsiniz, örneğin:
-                    td1.textContent = blokInput;
-
-                    td2.textContent = "0";
-                    // td3'e bir buton ekleyelim
-
-                    td3.innerHTML = "<span class='blok-ico color-red' onclick=\"deleteBlok('" + response
-                        .blok_id +
-                        "')\" ><i class='fa-solid fa-trash'></i></span>";
-
-
-                    // td4'e bir buton ekleyelim
-
-
-                    td4.innerHTML = "<span  class='blok-ico' onclick=\"editBlok('" + response.blok_id +
-                        "')\" ><i class='fa-solid fa-pen'></i></span>";
-
-
-                    // Yeni td elemanlarını tr içine ekleyin
-                    var newTr = document.createElement("tr");
-                    newTr.setAttribute("id", "blk-" + response.blok_id);
-                    newTr.setAttribute("class", "git-ac");
-                    newTr.appendChild(td1);
-                    newTr.appendChild(td2);
-                    newTr.appendChild(td3);
-                    newTr.appendChild(td4);
-
-                    // Tabloya yeni tr'yi en sona ekle
-                    mainTr.parentNode.appendChild(newTr);
-                    document.getElementById('blokInput').value = "";
-
-
-
-
-                }
-
-            },
-            error: function(error) {
-                alert("hata: Müşteri temsilciniz ile iletişime geçiniz.");
+        var tableCells = document.querySelectorAll('.blokAdi');
+        var p = true;
+        // Her bir hücreyi dolaşarak içeriklerini alert kutusuyla göster
+        for (var i = 0; i < tableCells.length; i++) {
+            if (tableCells[i].innerHTML.toLowerCase() === blokInput.toLowerCase()) {
+                p = false;
+                break;
             }
+        }
 
-        });
+        if (p) {
+            $.ajax({
+                url: 'Controller/blok_add.php',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    blokValue: blokInput,
+                    id: t,
+                },
+                success: function(response) {
+                    if (response.status == 1) {
+                        var mainTr = document.getElementById("mainTr");
+                        var td1 = document.createElement("td");
+                        var td2 = document.createElement("td");
+                        var td3 = document.createElement("td");
+                        var td4 = document.createElement("td");
+
+                        // Burada her bir td elementinin içeriğini doldurabilirsiniz, örneğin:
+                        td1.textContent = blokInput;
+                        td2.textContent = "0";
+                        // td3'e bir buton ekleyelim
+                        td3.innerHTML = "<span class='blok-ico color-red' onclick=\"deleteBlok('" + response.blok_id + "')\" ><i class='fa-solid fa-trash'></i></span>";
+
+                        // td4'e bir buton ekleyelim
+                        td4.innerHTML = "<span  class='blok-ico' onclick=\"editBlok('" + response.blok_id + "')\" ><i class='fa-solid fa-pen'></i></span>";
+
+                        // Yeni td elemanlarını tr içine ekleyin
+                        var newTr = document.createElement("tr");
+                        newTr.setAttribute("id", "blk-" + response.blok_id);
+                        newTr.setAttribute("class", "git-ac");
+                        newTr.appendChild(td1);
+                        newTr.appendChild(td2);
+                        newTr.appendChild(td3);
+                        newTr.appendChild(td4);
+
+                        // Tabloya yeni tr'yi en sona ekle
+                        mainTr.parentNode.appendChild(newTr);
+                        document.getElementById('blokInput').value = "";
+                    }
+                },
+                error: function(error) {
+                    alert("hata: Müşteri temsilciniz ile iletişime geçiniz.");
+                }
+            });
+        } else {
+            alert("Zaten Bu İsimde Blok Mevcut");
+        }
     }
 }
+
 
 function deleteBlok(id) {
     if (confirm("Bloğu silmek istediğinizden emin misiniz?")) {
@@ -1291,7 +1287,6 @@ $('#daireBlok').focus(function() {
 </script>
 
 <script type="text/javascript">
-
 const inputField = document.querySelector('.search-selectx');
 const dropdown = document.querySelector('.value-listx');
 const dropdownArray = [...document.querySelectorAll('.li-select')];
@@ -1644,24 +1639,24 @@ tableTdElements.forEach(function(element) {
 
 
         var trId = element.parentElement.getAttribute('id');
-        var d="daire";
+        var d = "daire";
         $.ajax({
             url: 'Controller/create_session.php',
             type: 'POST',
             data: {
 
                 id: trId,
-                d:d,
+                d: d,
 
             },
             success: function(response) {
 
-               
-                    if(response){
-                        window.location.href = "index.php?parametre=detail";
-                    }
-                    
-                
+
+                if (response) {
+                    window.location.href = "index.php?parametre=detail";
+                }
+
+
 
             },
             error: function(xhr, status, error) {
