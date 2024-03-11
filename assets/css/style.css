@@ -154,7 +154,7 @@ body {
 }
 
 .input-block-level {
-    width: 80%;
+    width: 100%;
     max-width: 420px;
     height: 52px;
     background-color: #fff;
@@ -165,7 +165,6 @@ body {
     transition: 0.5s;
     outline: none;
     font-size: 16px;
-    margin-bottom: 28px;
 }
 
 .input-block-level:focus {
@@ -374,11 +373,7 @@ body {
 
 /* checkbox area end */
 
-@media screen and (max-width: 930px) {
-    .remember-div, .g-recaptcha, .alert, .input-block-level, .label-block-level, .btn-custom, .input-block-level1, .btn, .olusturbtn, .olusturbtn1 {
-        width: 100%;
-    }
-}
+
 
 .login-box1 {
   width: 40%;
@@ -448,5 +443,28 @@ body {
 @media (max-width: 1000px) {
   .img-box {
     display: none;;
+  }
+}
+
+
+.inputBox {
+  width: 80%;
+  max-width: 420px;
+  height: 52px;
+  position: relative;
+  margin-bottom: 28px;
+}
+
+.inputBox i {
+  font-size: 20px;
+  cursor: pointer;
+  position: absolute;
+  right: 15px;
+  top: 16px;
+}
+
+@media screen and (max-width: 930px) {
+  .inputBox, .remember-div, .g-recaptcha, .alert, .input-block-level, .label-block-level, .btn-custom, .input-block-level1, .btn, .olusturbtn, .olusturbtn1 {
+      width: 100%;
   }
 }

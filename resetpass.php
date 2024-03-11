@@ -62,6 +62,8 @@ if(isset($_GET['id']) && isset($_GET['code']))
 
     <link href="assets/css/style.css" rel="stylesheet" media="screen">
 
+    <script src="https://kit.fontawesome.com/be694eddd8.js" crossorigin="anonymous"></script>
+
 </head>
 <body id="login" class="loginbody">
 
@@ -87,10 +89,16 @@ if(isset($_GET['id']) && isset($_GET['code']))
         ?>
 
         <label class="label-block-level" for="yeniparola">Yeni Parola</label>
-        <input type="password" class="input-block-level" placeholder="" id="yeniparola" name="pass" required />
+        <div class="inputBox">
+          <input type="password" class="input-block-level" placeholder="" id="yeniparola" name="pass" required />
+          <i id="eyeicon" class="fa-regular fa-eye-slash"></i>
+        </div>
 
         <label class="label-block-level" for="yeniparola1">Yeni Parola Tekrar</label>
-        <input type="password" class="input-block-level" placeholder="" id="yeniparola1" name="confirm-pass" required />
+        <div class="inputBox">
+          <input type="password" class="input-block-level" placeholder="" id="yeniparola1" name="confirm-pass" required />
+          <i id="eyeicon1" class="fa-regular fa-eye-slash"></i>
+        </div>
 
         <button class="btn-custom" type="submit" name="btn-reset-pass">Parolamı Sıfırla</button>
 
@@ -109,6 +117,41 @@ if(isset($_GET['id']) && isset($_GET['code']))
     </div>  
 
     </div> <!-- /container -->
+
+    <script>
+    let eyeicon = document.getElementById("eyeicon");
+    let password = document.getElementById("yeniparola");
+
+    eyeicon.addEventListener("click", () => {
+        if (password.type == "password") {
+            password.type = "text";
+            eyeicon.classList.remove("fa-eye-slash");
+            eyeicon.classList.add("fa-eye");
+        } else {
+            password.type = "password";
+            eyeicon.classList.remove("fa-eye");
+            eyeicon.classList.add("fa-eye-slash");
+        }
+    });
+    </script>
+
+    <script>
+        let eyeicon1 = document.getElementById("eyeicon1");
+        let password1 = document.getElementById("yeniparola1");
+
+        eyeicon1.addEventListener("click", () => {
+            if (password1.type == "password") {
+                password1.type = "text";
+                eyeicon1.classList.remove("fa-eye-slash");
+                eyeicon1.classList.add("fa-eye");
+            } else {
+                password1.type = "password";
+                eyeicon1.classList.remove("fa-eye");
+                eyeicon1.classList.add("fa-eye-slash");
+            }
+        });
+    </script>
+
     <script src="bootstrap/js/jquery-1.9.1.min.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
   </body>

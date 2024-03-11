@@ -75,6 +75,8 @@ if(isset($_POST['btn-login']))
     
     <link href="assets/css/style.css" rel="stylesheet" media="screen">
 
+    <script src="https://kit.fontawesome.com/be694eddd8.js" crossorigin="anonymous"></script>
+
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -128,11 +130,17 @@ if(isset($_POST['btn-login']))
       }
       ?>
         <label class="label-block-level" for="txtemail">E-Posta</label>
+        <div class="inputBox">
         <input type="email" class="input-block-level" id="txtemail" placeholder="E-posta adresi" name="txtemail" required />
+        </div>
 
+        
         <label class="label-block-level" for="txtupass">Parola</label>
-        <input type="password" class="input-block-level" placeholder="Şifre" id="txtupass" name="txtupass" required />
-
+        <div class="inputBox">
+          <input type="password" class="input-block-level" placeholder="Şifre" id="txtupass" name="txtupass" required />
+          <i id="eyeicon" class="fa-regular fa-eye-slash"></i>
+        </div>
+        
         <div class="remember-div">
 
           <div class="checkbox-wrapper-4">
@@ -173,6 +181,24 @@ if(isset($_POST['btn-login']))
 
   </div> <!-- /container -->
   
+  <script>
+    let eyeicon = document.getElementById("eyeicon");
+    let password = document.getElementById("txtupass");
+
+    eyeicon.addEventListener("click", () => {
+        if (password.type == "password") {
+            password.type = "text";
+            eyeicon.classList.remove("fa-eye-slash");
+            eyeicon.classList.add("fa-eye");
+        } else {
+            password.type = "password";
+            eyeicon.classList.remove("fa-eye");
+            eyeicon.classList.add("fa-eye-slash");
+        }
+    });
+  </script>
+
+
   <script src="bootstrap/js/jquery-1.9.1.min.js"></script>
   <script src="bootstrap/js/bootstrap.min.js"></script>
 
