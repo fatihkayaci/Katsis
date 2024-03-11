@@ -56,74 +56,7 @@ try {
 
     // Sonuç kümesinin satır sayısını kontrol etme
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-?>
 
-   <!-- Popup blok eklemek için-->
-   <div id="popupBlokEkle" class="form-popup">
-
-<form id="userFormBlok" class="login-form">
-
-    <h2 class="form-signin-heading">Bloklar</h2>
-
-    <div class="row">
-
-        <div class="col-blok w-70">
-            <input class="input min-w mb-0" type="text" id="blokInput" maxLength="5" required="" />
-            <label for="blokInput">Blok Ekle :</label>
-        </div>
-
-        <div class="col-blok w-30">
-            <button type="button" class="btn-custom-daire ekle-btn blok-btn" id="saveButton"
-                onclick="saveBlok()">Ekle</button>
-        </div>
-    </div>
-
-    <hr class="horizontal mt-0 dark w-100">
-
-    <table class="users-table table-blok">
-        <tr class="users-table-info">
-            <th>Blok Adı </th>
-            <th>Daire Sayısı </th>
-            <th></th>
-            <th></th>
-        </tr>
-        <tr id="mainTr">
-            <?php  
-         $blokIdMapping = [];
-        foreach ($blokList as $s ){
-             $blokIdMapping[$s['blok_id']] = $s['blok_adi'];
-                echo '
-                <tr class="git-ac" id="blk-'.$s["blok_id"].'">
-                    <td class="blokAdi">'.$s["blok_adi"].'</td>
-                    <td>'.$s["daire_sayisi"].'</td>
-                    <td>  
-                        <span class="blok-ico color-red" onclick="deleteBlok('.$s["blok_id"].')"><i class="fa-solid fa-trash"></i></span>
-                    </td> 
-                    <td>
-                        <span class="blok-ico" onclick="editBlok('.$s["blok_id"].')"><i class="fa-solid fa-pen"></i></span> 
-                    </td>
-                </tr>
-                ';
-
-          }  ?>
-
-        </tr>
-
-    </table>
-
-    <hr class="horizontal dark w-100">
-
-    <div class="row row-btn">
-        <button type="button" class="btn-custom-close w-100 me-0" onclick="closePopupBlok()">Kapat</button>
-    </div>
-
-</form>
-
-</div>
-
-
-
-<?php
     if ($result) {
     ?>
 
@@ -156,7 +89,69 @@ try {
 
 
 
- 
+    <!-- Popup blok eklemek için-->
+    <div id="popupBlokEkle" class="form-popup">
+
+        <form id="userFormBlok" class="login-form">
+
+            <h2 class="form-signin-heading">Bloklar</h2>
+
+            <div class="row">
+
+                <div class="col-blok w-70">
+                    <input class="input min-w mb-0" type="text" id="blokInput" maxLength="5" required="" />
+                    <label for="blokInput">Blok Ekle :</label>
+                </div>
+
+                <div class="col-blok w-30">
+                    <button type="button" class="btn-custom-daire ekle-btn blok-btn" id="saveButton"
+                        onclick="saveBlok()">Ekle</button>
+                </div>
+            </div>
+
+            <hr class="horizontal mt-0 dark w-100">
+
+            <table class="users-table table-blok">
+                <tr class="users-table-info">
+                    <th>Blok Adı </th>
+                    <th>Daire Sayısı </th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                <tr id="mainTr">
+                    <?php  
+                 $blokIdMapping = [];
+                foreach ($blokList as $s ){
+                     $blokIdMapping[$s['blok_id']] = $s['blok_adi'];
+                        echo '
+                        <tr class="git-ac" id="blk-'.$s["blok_id"].'">
+                            <td class="blokAdi">'.$s["blok_adi"].'</td>
+                            <td>'.$s["daire_sayisi"].'</td>
+                            <td>  
+                                <span class="blok-ico color-red" onclick="deleteBlok('.$s["blok_id"].')"><i class="fa-solid fa-trash"></i></span>
+                            </td> 
+                            <td>
+                                <span class="blok-ico" onclick="editBlok('.$s["blok_id"].')"><i class="fa-solid fa-pen"></i></span> 
+                            </td>
+                        </tr>
+                        ';
+
+                  }  ?>
+
+                </tr>
+
+            </table>
+
+            <hr class="horizontal dark w-100">
+
+            <div class="row row-btn">
+                <button type="button" class="btn-custom-close w-100 me-0" onclick="closePopupBlok()">Kapat</button>
+            </div>
+
+        </form>
+
+    </div>
+
 
 
 
@@ -356,6 +351,69 @@ try {
 
 
 
+
+    <!-- Popup blok eklemek için-->
+    <div id="popupBlokEkle" class="form-popup">
+
+        <form id="userFormBlok" class="login-form">
+
+            <h2 class="form-signin-heading">Bloklar</h2>
+
+            <div class="row">
+
+                <div class="col-blok w-70">
+                    <input class="input min-w mb-0" type="text" id="blokInput" maxLength="5" required="" />
+                    <label for="blokInput">Blok Ekle :</label>
+                </div>
+
+                <div class="col-blok w-30">
+                    <button type="button" class="btn-custom-daire ekle-btn blok-btn" id="saveButton"
+                        onclick="saveBlok()">Ekle</button>
+                </div>
+            </div>
+
+            <hr class="horizontal mt-0 dark w-100">
+
+            <table class="users-table table-blok">
+                <tr class="users-table-info">
+                    <th>Blok Adı </th>
+                    <th>Daire Sayısı </th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                <tr id="mainTr">
+                    <?php  
+                 $blokIdMapping = [];
+                foreach ($blokList as $s ){
+                     $blokIdMapping[$s['blok_id']] = $s['blok_adi'];
+                        echo '
+                        <tr class="git-ac" id="blk-'.$s["blok_id"].'">
+                            <td class="blokAdi">'.$s["blok_adi"].'</td>
+                            <td>'.$s["daire_sayisi"].'</td>
+                            <td>  
+                                <span class="blok-ico color-red" onclick="deleteBlok('.$s["blok_id"].')"><i class="fa-solid fa-trash"></i></span>
+                            </td> 
+                            <td>
+                                <span class="blok-ico" onclick="editBlok('.$s["blok_id"].')"><i class="fa-solid fa-pen"></i></span> 
+                            </td>
+                        </tr>
+                        ';
+
+                  }  ?>
+
+                </tr>
+
+            </table>
+
+            <hr class="horizontal dark w-100">
+
+            <div class="row row-btn">
+                <button type="button" class="btn-custom-close w-100 me-0" onclick="closePopupBlok()">Kapat</button>
+            </div>
+
+        </form>
+
+    </div>
 
 
 
@@ -1313,7 +1371,7 @@ function toggleAll(masterCheckbox) {
 
         $('.git-ac').addClass('git-ac-color');
     } else if (!masterCheckbox.checked) {
-        $('#guncelleButton').css('display', 'none');silButton
+        $('#guncelleButton').css('display', 'none');
         $('#silButton').css('display', 'none');
         $('.git-ac').removeClass('git-ac-color');
     }
