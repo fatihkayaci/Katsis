@@ -44,18 +44,24 @@ try {
             <button class="adduser btn-custom-outline bcoc1">Kullanıcı Ekle</button>
             <button class="toplu btn-custom-outline bcoc2">Toplu İşlemler</button>
 
-            <label class="switch">
-                <input type="checkbox" id="editToggle">
-                <span class="slider round"></span>
-            </label>
+            
+            <div class="check-box">
+                <p class="check-p">Düzenleme :</p>
 
+                <div class="custom-checkbox">
+                  <input type="checkbox" name="status" id="editToggle">
+                  <label for="editToggle">
+                    <div class="status-switch" data-unchecked="kapalı" data-checked="açık"></div>
+                  </label>
+                </div>
+            </div>
         </div>
 
         <div class="input-group1">
+
             <button class="topluGuncelle btn-custom-outline bcoc3" id="guncelleButton"
                 style="display: none;">Güncelle</button>
             <button class="topluSil btn-custom-outline bcoc4" id="silButton" style="display: none;">Sil</button>
-
 
             <div class="search-box">
                 <i class="fas fa-search search-icon" aria-hidden="true"></i>
