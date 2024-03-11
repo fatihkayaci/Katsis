@@ -1380,18 +1380,17 @@ function toggleAll(masterCheckbox) {
 
 function toggleMainCheckbox(id) {
 
-    var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    var checkboxes = document.querySelectorAll('.check1'); // Tüm checkboxları al
     var guncelleButton = document.getElementById('guncelleButton');
     var silButton = document.getElementById('silButton');
     var enAzBirSecili = false;
-
 
     checkboxes.forEach(function(checkbox) {
         if (checkbox.checked) {
             enAzBirSecili = true;
         }
     });
-
+   
     if (enAzBirSecili) {
         guncelleButton.style.display = 'inline-block';
         silButton.style.display = 'inline-block';
@@ -1399,7 +1398,6 @@ function toggleMainCheckbox(id) {
         guncelleButton.style.display = 'none';
         silButton.style.display = 'none';
     }
-
 
 
 

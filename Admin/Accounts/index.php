@@ -643,7 +643,7 @@ function toggleCheckbox(id, i) {
             enAzBirSecili = true;
         }
     });
-
+  
     if (enAzBirSecili) {
         guncelleButton.style.display = 'inline-block';
         silButton.style.display = 'inline-block';
