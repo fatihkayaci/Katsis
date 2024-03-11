@@ -45,10 +45,10 @@
                 <table id="table" class="users-table">
                     <thead>
                         <tr class="users-table-info">
-                            <th onclick="sortTable(1)">Blok Adı <i id="icon-table1" class="fa-solid fa-sort-down"></i></th>
-                            <th onclick="sortTable(2)">Daire Sayısı <i id="icon-table2" class="fa-solid fa-sort-down"></i></th>
-                            <th onclick="sortTable(3)">Kiracı Adı <i id="icon-table3" class="fa-solid fa-sort-down"></i></th>
-                            <th onclick="sortTable(4)">Kat Maliki Adı <i id="icon-table4" class="fa-solid fa-sort-down"></i></th>
+                            <th onclick="sortTable(0)">Blok Adı <i id="icon-table1" class="fa-solid fa-sort-down"></i></th>
+                            <th onclick="sortTable(1)">Daire Sayısı <i id="icon-table2" class="fa-solid fa-sort-down"></i></th>
+                            <th onclick="sortTable(2)">Kiracı Adı <i id="icon-table3" class="fa-solid fa-sort-down"></i></th>
+                            <th onclick="sortTable(3)">Kat Maliki Adı <i id="icon-table4" class="fa-solid fa-sort-down"></i></th>
                         </tr>
                     </thead>
                     <tbody>
