@@ -981,101 +981,76 @@ function saveUser() {
             }
         }
         // Çakışma durumu varsa uyarı ver
-        if (isConflict) {
-            //alert("Çakışma durumu bulundu: Blok ismi: " + block + ", Daire sayısı: " + flatCount + ", Durum: " + status);
-            if (confirm("Çakışma durumu bulundu: Blok ismi: " + block + ", Daire sayısı: " + flatCount + ", Durum: " +
-            status + " bu dairede oturan kullanıcıyı silmek ister misin?")) {
-                if (kisitlamalar(userName /* tc, phoneNumber, userEmail, plate*/ )) {
-                    $.ajax({
-                        url: 'Controller/save_user.php',
-                        type: 'POST',
-                        data: {
-                            userName: userName,
-                            tc: tc,
-                            phoneNumber: phoneNumber,
-                            durumArray: JSON.stringify(durumArray),
-                            userEmail: userEmail,
-                            plate: plate,
-                            gender: gender,
-                            apartman_id: apartman_id
-                        },
-                        success: function(response) {
-                            if (response == 1) {
-                                $.ajax({
-                                    url: 'Controller/demo.php',
-                                    type: 'POST',
-                                    data: {
-                                        blokArray: JSON.stringify(
-                                            blokArray), // Diziyi JSON dizesine dönüştür
-                                        durumArray: JSON.stringify(durumArray)
-                                    },
-                                    success: function(secondResponse) {
-                                        if (secondResponse == 1) {
-                                            location.reload();
-                                        }
-                                    },
-                                    error: function(secondError) {
-                                        console.error(secondError);
-                                    }
-                                });
-                            }
-                        },
-                        error: function(error) {
-                            console.error(error);
-                        }
-                    });
-                } else {
-                    return;
-                }
+
+    }
+    console.log(isConflict);
+    if (isConflict) {
+        //alert("Çakışma durumu bulundu: Blok ismi: " + block + ", Daire sayısı: " + flatCount + ", Durum: " + status);
+        if (confirm("Çakışma durumu bulundu: Blok ismi: " + block + ", Daire sayısı: " + flatCount + ", Durum: " +
+                status + " bu dairede oturan kullanıcıyı silmek ister misin?")) {
+            if (kisitlamalar(userName /* tc, phoneNumber, userEmail, plate*/ )) {
+                saveUserData(userName, tc, phoneNumber, durumArray, userEmail, plate, gender, apartman_id, blokArray);
             } else {
                 return;
             }
+        } else {
+            return;
+        }
+    } else {
+        if (kisitlamalar(userName /* tc, phoneNumber, userEmail, plate*/ )) {
+            saveUserData(userName, tc, phoneNumber, durumArray, userEmail, plate, gender, apartman_id, blokArray);
+        } else {
+            return;
         }
     }
-    if (kisitlamalar(userName /* tc, phoneNumber, userEmail, plate*/ )) {
-        $.ajax({
-            url: 'Controller/save_user.php',
-            type: 'POST',
-            data: {
-                userName: userName,
-                tc: tc,
-                phoneNumber: phoneNumber,
-                durumArray: JSON.stringify(durumArray),
-                userEmail: userEmail,
-                plate: plate,
-                gender: gender,
-                apartman_id: apartman_id
-            },
-            success: function(response) {
-                if (response == 1) {
-                    $.ajax({
-                        url: 'Controller/demo.php',
-                        type: 'POST',
-                        data: {
-                            blokArray: JSON.stringify(blokArray), // Diziyi JSON dizesine dönüştür
-                            durumArray: JSON.stringify(durumArray)
-                        },
-                        success: function(secondResponse) {
-                            if (secondResponse == 1) {
-                                location.reload();
-                            }
-                        },
-                        error: function(secondError) {
-                            console.error(secondError);
-                        }
-                    });
-                }
-            },
-            error: function(error) {
-                console.error(error);
-            }
-        });
-    } else {
-        return;
-    }
+
 };
 
+function saveUserData(userName, tc, phoneNumber, durumArray, userEmail, plate, gender, apartman_id, blokArray) {
+    $.ajax({
+        url: 'Controller/save_user.php',
+        type: 'POST',
+        data: {
+            userName: userName,
+            tc: tc,
+            phoneNumber: phoneNumber,
+            durumArray: JSON.stringify(durumArray),
+            userEmail: userEmail,
+            plate: plate,
+            gender: gender,
+            apartman_id: apartman_id
+        },
+        success: function(response) {
+            if (response == 1) {
+                // İkinci AJAX isteği
+                sendData(blokArray, durumArray);
+            }
+        },
+        error: function(error) {
+            console.error(error);
+        }
+    });
+}
 
+function sendData(blokArray, durumArray) {
+    $.ajax({
+        url: 'Controller/demo.php',
+        type: 'POST',
+        data: {
+            blokArray: JSON.stringify(blokArray),
+            durumArray: JSON.stringify(durumArray)
+        },
+        success: function(secondResponse) {
+            if (secondResponse == 1) {
+                location.reload();
+            }
+        },
+        error: function(secondError) {
+            console.error(secondError);
+        }
+    });
+}
+/* SaveUser fonksiyonu ile ilgili fonksiyonlar. */
 var updateButtons = document.querySelectorAll('.updateButton');
 
 updateButtons.forEach(function(button) {
