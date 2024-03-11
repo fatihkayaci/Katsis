@@ -54,7 +54,7 @@ else if($indexx == 'TopluHesap'){
 }
 else if($indexx == 'custom'){
     include ("Accounts/ozellestir.php");
-    echo "<script>pagename('KULLANICI DÜZENLE');</script>";
+    echo "<script>pagename('KULLANICI AYRINTILARI');</script>";
 }
 else if($indexx == 'Sections'){
     include ("Sections/index.php");

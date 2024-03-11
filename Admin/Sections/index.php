@@ -12,9 +12,6 @@ $idapartman =$_SESSION["apartID"];
 
 <?php
 $sql = "SELECT * FROM tbl_users WHERE apartman_id = " . $idapartman. " AND rol = 3";
-
-
-
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 
