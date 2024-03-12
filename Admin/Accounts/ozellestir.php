@@ -15,8 +15,18 @@ try {
    
     
     //$sql = "SELECT * FROM tbl_users WHERE apartman_id = " .$_SESSION["apartID"]."AND userID=".$userID ;
-    $sql = "SELECT * FROM tbl_users WHERE apartman_id = " . $_SESSION["apartID"] . " AND userID=" . $_SESSION['userPage'];
-
+    $sql2 = "SELECT * FROM tbl_users WHERE apartman_id = " . $_SESSION["apartID"] . " AND userID=" . $_SESSION['userPage'];
+    $sql = "SELECT u.userID, u.userName,u.userEmail,u.gender, u.userPass, u.plate, u.tc, u.phoneNumber, b.blok_adi AS blok_adi, d.daire_sayisi,
+    CASE
+        WHEN d.katMalikiID = u.userID THEN 'Kat Maliki'
+        WHEN d.kiraciID = u.userID THEN 'Kiracı'
+        ELSE 'Belirtilmemiş'
+    END AS durum
+    FROM tbl_users u
+    LEFT JOIN tbl_daireler d ON u.userID = d.katMalikiID OR u.userID = d.kiraciID
+    LEFT JOIN tbl_blok b ON d.blok_adi = b.blok_id
+    WHERE rol=3 AND u.apartman_id = " .  $_SESSION["apartID"]. " AND u.userID=" . $_SESSION['userPage'] . "
+    ORDER BY u.userID ASC";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     
@@ -95,7 +105,11 @@ try {
         	    			<p class="bilgi-p">Daire :</p>
         	    		</div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                            <p class="bilgi-p">Daire Yazılacak</p>
+                            <p class="bilgi-p"> <?php 
+                            if (!empty($row["blok_adi"]) && !empty($row["daire_sayisi"])) {
+                                echo $row["blok_adi"] . " / " . $row["daire_sayisi"];
+                            }
+                        ?></p>
         	    		</div>
 
                         <hr class="horizontal dark mt-0">
@@ -131,7 +145,7 @@ try {
                             <p class="bilgi-p">Parola :</p>
         	    		</div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                            <p class="bilgi-p">Parola yazılacak</p>
+                            <p class="bilgi-p"><?php echo base64_decode( $row["userPass"]); ?></p>
         	    		</div>
 
                         <hr class="horizontal dark mt-0">
@@ -140,7 +154,7 @@ try {
                             <p class="bilgi-p">Araç Plakası :</p>
         	    		</div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                            <p class="bilgi-p">Araç Plakası yazılacak</p>
+                            <p class="bilgi-p"><?php echo $row["plate"]; ?></p>
         	    		</div>
                     </div>
         	    	
