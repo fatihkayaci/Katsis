@@ -22555,10 +22555,6 @@ html {
 }
 
 @media (max-width: 767.98px) {
-  .navbar-collapse {
-    position: relative;
-  }
-
   .navbar-collapse .navbar-nav {
     width: 100%;
   }
@@ -22761,6 +22757,7 @@ html {
 }
 
 @media (min-width: 576px) {
+
   .navbar-vertical.navbar-expand-sm {
     display: block;
     position: fixed;
@@ -23371,6 +23368,7 @@ html {
 
   .g-sidenav-show:not(.rtl) .sidenav {
     transform: translateX(-17.125rem);
+    box-shadow: 0 8px 26px -4px rgba(20, 20, 20, 0.15), 0 8px 9px -5px rgba(20, 20, 20, 0.06);
   }
 
   .g-sidenav-show .sidenav.fixed-start~.main-content {
@@ -23523,6 +23521,8 @@ html {
 .navbar-vertical .navbar-brand .navbar-brand-img,
 .navbar-vertical .navbar-brand span {
   transition: all 0.2s ease-in-out;
+  font-size: 20px;
+  vertical-align: middle;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -5,7 +5,7 @@ $idapartman =$_SESSION["apartID"];
 <body class="g-sidenav-show bg-gray-100">
   <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start " id="sidenav-main">
     <div class="sidenav-header">
-      <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
+      <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-xl-none" id="iconSidenav"></i>
       <a class="navbar-brand m-0" href="index?parametre=dashboard">
         <img src="assets/img/ico.png" class="navbar-brand-img h-100" alt="main_logo">
         <span class="ms-1 font-weight-bold">KATSİS</span>
@@ -70,24 +70,25 @@ $idapartman =$_SESSION["apartID"];
       </ul>
       <hr class="horizontal dark">
 
-<?php
-$sql = " SELECT * FROM tbl_apartman where apartman_id = $idapartman ";
-    $stmt = $conn->prepare($sql);
-    $stmt->execute();
+      <div class="collapse navbar-collapse w-auto " id="sidenav-collapse-main">
+        <ul class="navbar-nav leftbar">
 
-    // Sonuç kümesinin satır sayısını kontrol etme
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-?>
-      <div class="apart-col">
+          <?php
+          $sql = " SELECT * FROM tbl_apartman where apartman_id = $idapartman ";
+              $stmt = $conn->prepare($sql);
+              $stmt->execute();
 
-        <hr class="horizontal mt-0 mb-2 dark w-100">
-        
-        <div class="apart-ad">
-          <div class="apart-ico">
-          <i class="fa-solid fa-earth-americas"></i>
-          </div>
-          <p class="apart-text"><?php echo $result['apartman_name']; ?></p>
-        </div>
+              // Sonuç kümesinin satır sayısını kontrol etme
+              $result = $stmt->fetch(PDO::FETCH_ASSOC);
+          ?>
+
+          <li class="nav-link">
+            <div class="nav-ico">
+              <img src="assets/img/ico.png" class="navbar-brand-img h-100" alt="main_logo">
+            </div>
+            <p class="apart-text"><?php echo $result['apartman_name']; ?></p>
+          </li>
+        </ul>
       </div>
 
     </div>
@@ -109,11 +110,7 @@ $sql = " SELECT * FROM tbl_apartman where apartman_id = $idapartman ";
               
                 <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
                   <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
-                    <div class="sidenav-toggler-inner">
-                      <i class="sidenav-toggler-line"></i>
-                      <i class="sidenav-toggler-line"></i>
-                      <i class="sidenav-toggler-line"></i>
-                    </div>
+                    <i class="fa-solid fa-bars"></i>
                   </a>
                 </li>
 
@@ -129,11 +126,11 @@ $sql = " SELECT * FROM tbl_apartman where apartman_id = $idapartman ";
                     </div>
 
                     <div class="header-name">
-                      <span class="name-title1"> <strong> 3 </strong> Adet</span>
+                      <span class="name-title1 d-none-responsive"> <strong> 3 </strong> Adet</span>
                       <span class="d-sm-inline toggle-icon d-none resize">Bildirimler</span>
                     </div>
 
-                    <i class="fa-solid fa-sort-down fa-sort-down2" id="btn-rotate1"></i>
+                    <i class="fa-solid fa-sort-down fa-sort-down2 d-none-responsive" id="btn-rotate1"></i>
 
                   </a>
                   <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4x" aria-labelledby="dropdownMenuButton">
@@ -231,13 +228,13 @@ $sql = " SELECT * FROM tbl_apartman where apartman_id = $idapartman ";
                     </div>
 
                     <div class="header-name">
-                      <span class="name-title">Kullanıcı</span>
+                      <span class="name-title d-none-responsive">Kullanıcı</span>
                       <span class="d-sm-inline toggle-icon d-none">
                           <?php  echo $_SESSION["userName"]; ?>
                       </span>
                     </div>
 
-                    <i class="fa-solid fa-sort-down fa-sort-down1" id="btn-rotate"></i>
+                    <i class="fa-solid fa-sort-down fa-sort-down1 d-none-responsive" id="btn-rotate"></i>
 
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end px-2" aria-labelledby="dropdownMenuButton">
@@ -291,6 +288,43 @@ $sql = " SELECT * FROM tbl_apartman where apartman_id = $idapartman ";
   <script src="assets/js/core/bootstrap.min.js"></script>
   <script src="assets/js/plugins/chartjs.min.js"></script>
   
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const iconNavbarSidenav = document.getElementById("iconNavbarSidenav");
+      const iconSidenav = document.getElementById("iconSidenav");
+      const sidenav = document.querySelector(".sidenav");
+
+      // Sidenavı açmak/kapatmak için ikonlara tıklama olay dinleyicileri ekle
+      iconNavbarSidenav.addEventListener("click", toggleSidenav);
+      iconSidenav.addEventListener("click", closeSidenav);
+
+      // Sidenav dışındaki bir yere tıklandığında sidenav'ı kapat
+      document.addEventListener("click", function(event) {
+        if (!sidenav.contains(event.target) && !iconNavbarSidenav.contains(event.target)) {
+          closeSidenav();
+        }
+      });
+    
+      function toggleSidenav() {
+        sidenav.classList.toggle("g-sidenav-show");
+        if (document.documentElement.dir === "rtl") {
+          sidenav.classList.toggle("rtl");
+        }
+      
+        if (sidenav.classList.contains("g-sidenav-show")) {
+          document.body.classList.add("g-sidenav-pinned");
+        } else {
+          document.body.classList.remove("g-sidenav-pinned");
+        }
+      }
+    
+      function closeSidenav() {
+        sidenav.classList.remove("g-sidenav-show");
+        document.body.classList.remove("g-sidenav-pinned");
+      }
+    });
+  </script>
+
   <script>
   // Tüm nav linklerini seçin
   const navLinks = document.querySelectorAll('.nav-item');

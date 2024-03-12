@@ -206,10 +206,16 @@ try {
             <button class="adduser btn-custom-outline bcoc1">Kullanıcı Ekle</button>
             <button class="toplu btn-custom-outline bcoc2">Toplu İşlemler</button>
 
-            <label class="switch">
-                <input type="checkbox" id="editToggle">
-                <span class="slider round"></span>
-            </label>
+            <div class="check-box">
+                <p class="check-p">Düzenleme :</p>
+
+                <div class="custom-checkbox">
+                  <input type="checkbox" name="status" id="editToggle">
+                  <label for="editToggle">
+                    <div class="status-switch" data-unchecked="kapalı" data-checked="açık"></div>
+                  </label>
+                </div>
+            </div>
 
         </div>
 
@@ -1144,12 +1150,29 @@ document.getElementById("editToggle").addEventListener("change", function() {
         openEdit();
         disableDemoFunction();
         checkEdit = false;
+        // Checkbox işaretlendiğinde 2. ve 3. sütunlara "color-new" class'ını ekle
+        var trElements = document.querySelectorAll('.git-ac');
+        trElements.forEach(function(trElement) {
+            var tdElements = trElement.querySelectorAll('td:nth-child(2), td:nth-child(3)');
+            tdElements.forEach(function(tdElement) {
+                tdElement.classList.add('color-new');
+            });
+        });
     } else {
         closeEdit();
         enableDemoFunction();
         checkEdit = true;
+        // Checkbox işaretlenmediğinde 2. ve 3. sütunlardan "color-new" class'ını kaldır
+        var trElements = document.querySelectorAll('.git-ac');
+        trElements.forEach(function(trElement) {
+            var tdElements = trElement.querySelectorAll('td:nth-child(2), td:nth-child(3)');
+            tdElements.forEach(function(tdElement) {
+                tdElement.classList.remove('color-new');
+            });
+        });
     }
 });
+
 
 function openEdit() {
     var editableCells = document.querySelectorAll('td[contenteditable="false"]');

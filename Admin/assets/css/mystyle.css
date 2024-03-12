@@ -1484,35 +1484,6 @@ min-width: 0;
 
 /* apartman adı */
 
-.apart-col {
-  width: 100%;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  color: #344767;
-  display: flex;
-  flex-direction: column;
-  justify-content: baseline;
-  align-items: baseline;
-}
-
-.apart-ad {
-  width: 100%;
-  color: #686A6C;
-  padding: 0.5rem 1rem;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 5px;
-}
-
-.apart-ico {
-  font-size: 25px;
-  margin: 0px 10px 0 0px;
-}
-
 .apart-text {
   font-size: 16px;
   font-weight: 600;
@@ -2048,4 +2019,43 @@ min-width: 0;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.fa-bars {
+  font-size: 30px;
+  margin: 0px 10px;
+  color: #277CE0;
+  transition: 0.3s;
+}
+
+#iconNavbarSidenav:hover  .fa-bars {
+  color: #68afff;
+}
+
+#iconNavbarSidenav:active .fa-bars {
+  color: #fff;
+}
+
+@media (max-width: 575.98px) {
+  .d-none-responsive {
+    display: none !important;
+  }
+  .navbar .nav-link {
+    padding: 0rem 0rem;
+  }
+  .user-profile-main {
+    margin: 0px;
+  }
+
+  .vertical-hr {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+}
+
+.color-new {
+  color: #0d0c22;
+  outline: none;
+  font-weight: 600;
+  font-family: 'poppins-regular';
 }

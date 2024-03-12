@@ -273,7 +273,35 @@ try {
 </div>
 </div>
 
-<script>
+    <script>
+
+/* tab lari aktif etme kisimi */
+    $(document).ready(function(){
+        resetTabs();
+    
+        $('ul.nav.nav-tabs li a').click(function(){
+            $('ul.nav.nav-tabs li.active').removeClass('active');
+            $('.tab-content .tab-pane.active').removeClass('active');
+
+            $(this).parent('li').addClass('active');
+            var target = $(this).attr('href');
+            $(target).addClass('active');
+        });
+    
+        $(window).on('load', function(){
+            resetTabs();
+        });
+    });
+
+    function resetTabs() {
+        $('ul.nav.nav-tabs li.active').removeClass('active');
+        $('.tab-content .tab-pane.active').removeClass('active');
+        $('ul.nav.nav-tabs li:first').addClass('active');
+        $('#tab_default_1').addClass('active');
+    }
+
+/* to do list kodlari */
+
     $(function(){
       var hash = window.location.hash;
       hash && $('ul.nav a[href="' + hash + '"]').tab('show');
@@ -346,7 +374,6 @@ try {
     }
 </script>
 
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
   
     <?php
     }
@@ -472,25 +499,5 @@ try {
                         });
                     });
             }
-        });
-        </script>
-
-        <script type="text/javascript">
-        $.fn.extend({
-            alterCheck: function(tablo) {
-                if ($("" + tablo + " input[type='checkbox']:first").is(":checked")) {
-                    return this.each(function() {
-                        this.checked = true;
-                    });
-                } else {
-                    return this.each(function() {
-                        this.checked = false;
-                    });
-                }
-            }
-        });
-
-        $("#example input[type='checkbox']:first").click(function() {
-            $("#example input[type='checkbox']").alterCheck('#example');
         });
         </script>
