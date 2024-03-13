@@ -769,6 +769,7 @@ document.addEventListener("click", closeAllSelect);
 
 
 <script>
+
 function sortTable(n) {
     var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
     table = document.getElementById("table");
@@ -892,6 +893,9 @@ function openTopluPopup() {
 }
 
 function openPopupDaire() {
+
+
+
     $('body').css('overflow', 'hidden');
 
     $('#popupDaireEkle').show().css('display', 'flex').delay(100).queue(function(next) {
@@ -915,7 +919,7 @@ function openPopupBlok() {
 $('#blokInput').focus(function() {
     $(this).css('border-color', '#3BB4D7');
 });
-
+var degisim = false;
 function closePopupBlok() {
     $('#blokInput').css('border-color', '#000000');
 
@@ -927,6 +931,10 @@ function closePopupBlok() {
         });
         next();
     });
+    if(degisim){
+        location.reload();
+    }
+   
 }
 
 function closePopupDaire() {
@@ -939,6 +947,7 @@ function closePopupDaire() {
         });
         next();
     });
+    
 }
 
 function closePopupToplu() {
@@ -1088,6 +1097,7 @@ function saveBlok() {
                         // Tabloya yeni tr'yi en sona ekle
                         mainTr.parentNode.appendChild(newTr);
                         document.getElementById('blokInput').value = "";
+                        degisim =true;
                     }
                 },
                 error: function(error) {
@@ -1117,6 +1127,7 @@ function deleteBlok(id) {
                 if (response.sts == 1) {
                     var trr = document.getElementById('blk-' + id);
                     trr.remove();
+                    degisim =true;
                 }
                 alert(response.msg);
 
@@ -1173,11 +1184,11 @@ function editBlok(id) {
                 temp1: temp1,
             },
             success: function(response) {
-
+                degisim =true;
 
             },
             error: function(error) {
-
+                degisim =true;
             }
 
         });
