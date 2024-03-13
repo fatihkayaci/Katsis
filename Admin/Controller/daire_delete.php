@@ -31,7 +31,7 @@ try {
     $stmt->bindParam(':id', $id, PDO::PARAM_INT);
     $stmt->execute();
     
-    if ($stmt->rowCount() > 0) {
+    if ($stmt->rowCount() >= 0) {
     
     $sql3 = "UPDATE tbl_blok SET daire_sayisi = 0 WHERE apartman_idd = $id";
     $stmt3 = $conn->prepare($sql3);
