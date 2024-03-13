@@ -998,7 +998,7 @@ function save() {
     if (userr === null || userr === "") {
         $('#userInput').css('border-color', 'red');
     } else {
-        alert(selectedUserID);
+      
         $.ajax({
 
             url: 'Controller/user_assignment.php',
@@ -1013,7 +1013,7 @@ function save() {
 
             },
             success: function(response) {
-                alert(response);
+                
                 closePopup();
                 var trElement = document.getElementById(daireID);
 
@@ -1265,7 +1265,7 @@ function SaveDaire() {
 
             },
             error: function(error) {
-                alert("f");
+                
             }
         });
 
