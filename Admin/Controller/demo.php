@@ -15,7 +15,7 @@ try {
         $sadeceBlok = $blokElement['letter'];
         $sadeceDaire = $blokElement['number'];
         foreach($durumArray as $durum ){
-            if ($durum == "kiracı") {
+            if ($durum == "kiraci") {
                 $sql  = "UPDATE tbl_daireler d
                          INNER JOIN tbl_blok b ON d.blok_adi = b.blok_id
                          SET d.kiraciID = (SELECT userID FROM tbl_users WHERE userID = :lastID)
@@ -27,7 +27,7 @@ try {
                         $stmt->bindParam(':sadeceDaire', $sadeceDaire, PDO::PARAM_STR);
                         $stmt->execute();
                          break;
-            } else if ($durum == "katmaliki") {
+            } else if ($durum == "katMaliki") {
                 $sql  = "UPDATE tbl_daireler d
                          INNER JOIN tbl_blok b ON d.blok_adi = b.blok_id
                          SET d.katmalikiID = (SELECT userID FROM tbl_users WHERE userID = :lastID)
