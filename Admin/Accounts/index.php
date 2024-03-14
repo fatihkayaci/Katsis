@@ -995,6 +995,7 @@ function saveUser() {
 
         blokArray.push(blokElement);
     }
+    if (kisitlamalar(userName)) {
     $.ajax({
         url: 'Controller/save_user.php',
         type: 'POST',
@@ -1032,7 +1033,7 @@ function saveUser() {
             console.error(error);
         }
     });
-
+}
 };
 /*
 function saveUserData(userName, tc, phoneNumber, durumArray, userEmail, plate, gender, apartman_id, blokArray) {

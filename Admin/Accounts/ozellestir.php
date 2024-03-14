@@ -15,8 +15,7 @@ try {
    
     
     //$sql = "SELECT * FROM tbl_users WHERE apartman_id = " .$_SESSION["apartID"]."AND userID=".$userID ;
-    $sql2 = "SELECT * FROM tbl_users WHERE apartman_id = " . $_SESSION["apartID"] . " AND userID=" . $_SESSION['userPage'];
-    $sql = "SELECT u.userID, u.userName, u.user_no, u.userEmail,u.gender, u.userPass, u.plate, u.tc, u.phoneNumber, b.blok_adi AS blok_adi, d.daire_sayisi,
+    $sql = "SELECT u.userID, u.userName, u.user_no, u.userEmail,u.gender, u.userPass, u.plate, u.tc, u.phoneNumber,d.daire_id, b.blok_adi AS blok_adi, d.daire_sayisi,
     CASE
         WHEN d.katMalikiID = u.userID THEN 'Kat Maliki'
         WHEN d.kiraciID = u.userID THEN 'Kiracı'
@@ -105,13 +104,26 @@ try {
         	    			<p class="bilgi-p">Daire :</p>
         	    		</div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                            <p class="bilgi-p"> <?php 
+                            <p class="bilgi-p" onclick=userGo(<?= !empty($row["daire_id"]) ? $row["daire_id"] : "null" ?>)> <?php 
                             if (!empty($row["blok_adi"]) && !empty($row["daire_sayisi"])) {
                                 echo $row["blok_adi"] . " / " . $row["daire_sayisi"];
                             } else{
                                 echo "-";
                             }
-                        ?></p>
+                        ?>
+                        <div class="main-durum <?php
+                                    if ($row["durum"] == "Kiracı") {
+                                        echo "kiraci";
+                                    } elseif ($row["durum"] == "Kat Maliki") {
+                                        echo "kat-maliki";
+                                    } else {
+                                        echo "belirtilmemis";
+                                    }
+                                ?>">
+                        <?php echo $row["durum"]; ?>
+                    </div>
+                    
+                    </p>
         	    		</div>
 
                         <hr class="horizontal dark mt-0">
@@ -353,4 +365,40 @@ try {
         $("#example input[type='checkbox']:first").click(function() {
             $("#example input[type='checkbox']").alterCheck('#example');
         });
+
+
+
+
+
+        function userGo(id){
+
+    
+var d="daire";
+    $.ajax({
+        url: 'Controller/create_session.php',
+        type: 'POST',
+        data: {
+
+            id: id,
+            d:d,
+
+        },
+        success: function(response) {
+
+           
+                if(response){
+                    window.location.href = "index.php?parametre=detail";
+                    localStorage.setItem('selectedLink', 'Accounts');
+                }
+                
+            
+
+        },
+        error: function(xhr, status, error) {
+            var errorMessage = xhr.status + ': ' + xhr.statusText;
+            alert('Hata alındı: ' + errorMessage);
+        }
+    });
+}
+
         </script>

@@ -1003,6 +1003,7 @@ function save() {
 
             url: 'Controller/user_assignment.php',
             type: 'POST',
+            dataType: 'json',
             data: {
                 userID1: selectedUserID,
                 kTarih: kTarih,
@@ -1022,13 +1023,15 @@ function save() {
 
                 if (turr == 0) {
                     tdElements[3].innerText = "";
-                    tdElements[3].innerText = response;
+                    tdElements[3].innerText = response.userName;
                 } else if (turr == 1) {
                     tdElements[5].innerText = "";
-                    tdElements[5].innerText = response;
+                    tdElements[5].innerText = response.userName;
                 }
 
-
+                if(response.refres){
+                    location.reload();
+                }
 
             },
             error: function(xhr, status, error) {

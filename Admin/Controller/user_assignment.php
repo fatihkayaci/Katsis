@@ -63,11 +63,17 @@ $stmt2->execute();
 
   
       
-        echo $userData['userName'];
+    $response = array(
+        'userName' => $userData['userName'],
+        'refres' => true,
+    );
 
 
 }catch (PDOException $e) {
-    echo $e;
+    $response = array(
+        'userName' => $e,
+        'refres' => false,
+    );
 }
 
 
@@ -95,14 +101,22 @@ $stmt2->execute();
 
   
       
-        echo $userData['userName'];
+    $response = array(
+        'userName' => $userData['userName']
+        
+    );
 
 
 }catch (PDOException $e) {
-    echo $e;
+
+    $response = array(
+        'userName' => $e
+    );
 }
 }
 
+header('Content-Type: application/json');
+echo json_encode($response);
 
 
 
