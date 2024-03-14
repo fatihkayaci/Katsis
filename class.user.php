@@ -32,11 +32,19 @@ class USER
  {
     if($upass == $confirmPassword){
       try
-      {       
+      { 
+        
+        $query = "SELECT COALESCE(MAX(userID), 0) AS max_userID FROM tbl_users";
+        $statement =  $this->conn->query($query);
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+        $maxUserID = $result['max_userID'];
+        $maxUserID = $maxUserID + 25384500;
+
        $password = base64_encode($upass);
-       $stmt = $this->conn->prepare("INSERT INTO tbl_users(userName,userEmail,userPass,tokenCode) 
-                                                    VALUES(:user_name, :user_mail, :user_pass, :active_code)");
+       $stmt = $this->conn->prepare("INSERT INTO tbl_users(userName,user_no, userEmail,userPass,tokenCode) 
+                                                    VALUES(:user_name, :user_no, :user_mail, :user_pass, :active_code)");
        $stmt->bindparam(":user_name",$uname);
+       $stmt->bindparam(":user_no",$maxUserID);
        $stmt->bindparam(":user_mail",$email);
        $stmt->bindparam(":user_pass",$password);
        $stmt->bindparam(":active_code",$code);
@@ -52,19 +60,22 @@ class USER
     }
  }
  
- public function login($email,$upass)
+ public function login($identifier, $upass)
  {
   try
   {
-   $stmt = $this->conn->prepare("SELECT * FROM tbl_users WHERE userEmail=:email_id");
-   $stmt->execute(array(":email_id"=>$email));
-   $userRow=$stmt->fetch(PDO::FETCH_ASSOC);
-
-   if($stmt->rowCount() == 1)
+   // Check if $identifier is numeric, if so assume it's userNo, else consider it as email
+   $field = is_numeric($identifier) ? "user_no" : "userEmail";
+   
+   $stmt = $this->conn->prepare("SELECT * FROM tbl_users WHERE $field=:identifier");
+   $stmt->execute(array(":identifier" => $identifier));
+   $userRow = $stmt->fetch(PDO::FETCH_ASSOC);
+ 
+   if ($stmt->rowCount() == 1)
    {
-    if($userRow['userStatus']=="Y")
+    if ($userRow['userStatus'] == "Y")
     {
-     if($userRow['userPass']==base64_encode($upass))
+     if ($userRow['userPass'] == base64_encode($upass))
      {
       $_SESSION['userSession'] = $userRow['userID'];
       $_SESSION['rol'] = $userRow['rol'];

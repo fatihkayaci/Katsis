@@ -16,7 +16,7 @@ try {
     
     //$sql = "SELECT * FROM tbl_users WHERE apartman_id = " .$_SESSION["apartID"]."AND userID=".$userID ;
     $sql2 = "SELECT * FROM tbl_users WHERE apartman_id = " . $_SESSION["apartID"] . " AND userID=" . $_SESSION['userPage'];
-    $sql = "SELECT u.userID, u.userName,u.userEmail,u.gender, u.userPass, u.plate, u.tc, u.phoneNumber, b.blok_adi AS blok_adi, d.daire_sayisi,
+    $sql = "SELECT u.userID, u.userName, u.user_no, u.userEmail,u.gender, u.userPass, u.plate, u.tc, u.phoneNumber, b.blok_adi AS blok_adi, d.daire_sayisi,
     CASE
         WHEN d.katMalikiID = u.userID THEN 'Kat Maliki'
         WHEN d.kiraciID = u.userID THEN 'Kiracı'
@@ -60,27 +60,27 @@ try {
         	        	<div class="user-avatar">
         	        		<p><?php echo $initials; ?></p>
         	        	</div>
-                        <h5 class="user-name"><?php echo $row["userName"]; ?></h5>
+                        <h5 class="user-name"><?= !empty($row["userName"]) ? $row["userName"] : "-" ?></h5>
         	        </div>
                     <hr class="horizontal dark mt-0">
         			<div class="ps-3 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                         <label for="tc">T.C. Kimlik No</label>
-                        <p id="tc"><?php echo $row["tc"]; ?></p>
+                        <p id="tc"><?= !empty($row["tc"]) ? $row["tc"] : "-" ?></p>
         			</div>
                     <hr class="horizontal dark mt-0">
                     <div class="ps-3 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                         <label for="phoneNumber">Telefon Numarası</label>
-                        <p id="phoneNumber"><?php echo $row["phoneNumber"]; ?></p>
+                        <p id="phoneNumber"><?= !empty($row["phoneNumber"]) ? $row["phoneNumber"] : "-" ?></p>
         			</div>
                     <hr class="horizontal dark mt-0">
                     <div class="ps-3 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                         <label for="userEmail">E-Posta</label>
-                        <p id="userEmail"><?php echo $row["userEmail"]; ?></p>
+                        <p id="userEmail"><?= !empty($row["userEmail"]) ? $row["userEmail"] : "-" ?></p>
         			</div>
                     <hr class="horizontal dark mt-0">
                     <div class="ps-3 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                         <label for="gender">Cinsiyet</label>
-                        <p id="gender"><?php echo $row["gender"]; ?></p>
+                        <p id="gender"><?= !empty($row["gender"]) ? $row["gender"] : "-" ?></p>
         			</div>
 
         		</div>
@@ -108,6 +108,8 @@ try {
                             <p class="bilgi-p"> <?php 
                             if (!empty($row["blok_adi"]) && !empty($row["daire_sayisi"])) {
                                 echo $row["blok_adi"] . " / " . $row["daire_sayisi"];
+                            } else{
+                                echo "-";
                             }
                         ?></p>
         	    		</div>
@@ -118,7 +120,7 @@ try {
                             <p class="bilgi-p">Kullanıcı No :</p>
         	    		</div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                            <p class="bilgi-p">Kullanıcı No Yazılacak</p>
+                            <p class="bilgi-p"><?= !empty($row["user_no"]) ? $row["user_no"] : "-" ?></p>
         	    		</div>
 
                         <hr class="horizontal dark mt-0">
@@ -154,7 +156,7 @@ try {
                             <p class="bilgi-p">Araç Plakası :</p>
         	    		</div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                            <p class="bilgi-p"><?php echo $row["plate"]; ?></p>
+                            <p class="bilgi-p"><?= !empty($row["plate"]) ? $row["plate"] : "-" ?></p>
         	    		</div>
                     </div>
         	    	

@@ -12,18 +12,22 @@ $user_login = new USER();
 if (!isset($_SESSION["mail"]) || empty($_SESSION["mail"])) {
     $user_login->redirect('../index');
 } 
-$sql = "SELECT * FROM tbl_users WHERE userEmail = :userEmail";
+
+$identifier = $_SESSION["mail"];
+$field = is_numeric($identifier) ? "user_no" : "userEmail";
+
+$sql = "SELECT * FROM tbl_users WHERE $field = :identifier";
 
 $stmt = $conn->prepare($sql);
 
-$stmt->bindParam(":userEmail", $_SESSION["mail"]);
+$stmt->bindParam(":identifier", $identifier);
 $stmt->execute();
 
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-    $idApartman= $row['apartman_id'];
+    $idApartman = $row['apartman_id'];
     $userName = $row['userName'];
     $userID = $row['userID'];
-}
+} 
 
 $_SESSION["pageName"]="Dashboard";
 $_SESSION["userName"] =$userName;

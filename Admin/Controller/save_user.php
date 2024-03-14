@@ -24,13 +24,15 @@ try {
         if (empty($userEmail) || trim($userEmail) === "") {
                 $userPass = randomPassword();
                 $hashedPassword = base64_encode($userPass);
+                $userNO = generateUniqueUserID( $conn);
                 $t = "Y"; 
 
-                $sql = "INSERT INTO tbl_users (userName, tc, phoneNumber, durum, userEmail, userPass, plate, gender, apartman_id, rol, popup, userStatus) VALUES 
-                (:userName, :tc, :phoneNumber, :durum, :userEmail, :userPass, :plate, :gender, :apartman_id, :rol, :popup, :userStatus)";
+                $sql = "INSERT INTO tbl_users (userName, user_no, tc, phoneNumber, durum, userEmail, userPass, plate, gender, apartman_id, rol, popup, userStatus) VALUES 
+                (:userName, :user_no, :tc, :phoneNumber, :durum, :userEmail, :userPass, :plate, :gender, :apartman_id, :rol, :popup, :userStatus)";
 
                 $stmt = $conn->prepare($sql);
                 $stmt->bindParam(':userName', $userName);
+                $stmt->bindParam(':user_no', $userNO);
                 $stmt->bindParam(':tc', $tc);
                 $stmt->bindParam(':phoneNumber', $phoneNumber);
                 $stmt->bindValue(':durum', null, PDO::PARAM_NULL);
@@ -56,13 +58,15 @@ try {
             } else{
                 $userPass = randomPassword();
                 $hashedPassword = base64_encode($userPass);
+                $userNO = generateUniqueUserID( $conn);
                 $t = "Y";
         
-                $sql = "INSERT INTO tbl_users (userName, tc, phoneNumber, durum, userEmail, userPass, plate, gender, apartman_id, rol, popup, userStatus) VALUES 
-                (:userName, :tc, :phoneNumber, :durum, :userEmail, :userPass, :plate, :gender, :apartman_id, :rol, :popup, :userStatus)";
+                $sql = "INSERT INTO tbl_users (userName,user_no, tc, phoneNumber, durum, userEmail, userPass, plate, gender, apartman_id, rol, popup, userStatus) VALUES 
+                (:userName,:user_no, :tc, :phoneNumber, :durum, :userEmail, :userPass, :plate, :gender, :apartman_id, :rol, :popup, :userStatus)";
         
                 $stmt = $conn->prepare($sql);
                 $stmt->bindParam(':userName', $userName);
+                $stmt->bindParam(':user_no', $userNO);
                 $stmt->bindParam(':tc', $tc);
                 $stmt->bindParam(':phoneNumber', $phoneNumber);
                 $stmt->bindValue(':durum', null, PDO::PARAM_NULL); // DurumArray boş olduğunda null atar
@@ -88,12 +92,13 @@ try {
                 $userPass = randomPassword();
                 $hashedPassword = base64_encode($userPass);
                 $t = "Y";
-
-                $sql = "INSERT INTO tbl_users (userName, tc, phoneNumber, durum, userEmail, userPass, plate, gender, apartman_id, rol, popup, userStatus) VALUES 
-                (:userName, :tc, :phoneNumber, :durum, :userEmail, :userPass, :plate, :gender, :apartman_id, :rol, :popup, :userStatus)";
+                $userNO = generateUniqueUserID( $conn);
+                $sql = "INSERT INTO tbl_users (userName,user_no, tc, phoneNumber, durum, userEmail, userPass, plate, gender, apartman_id, rol, popup, userStatus) VALUES 
+                (:userName,:user_no, :tc, :phoneNumber, :durum, :userEmail, :userPass, :plate, :gender, :apartman_id, :rol, :popup, :userStatus)";
 
                 $stmt = $conn->prepare($sql);
                 $stmt->bindParam(':userName', $userName);
+                $stmt->bindParam(':user_no', $userNO);
                 $stmt->bindParam(':tc', $tc);
                 $stmt->bindParam(':phoneNumber', $phoneNumber);
                 $stmt->bindParam(':durum', $durum);
@@ -122,13 +127,14 @@ try {
                     // E-posta adresi benzersiz, kaydetmeye devam et
                     $userPass = randomPassword();
                     $hashedPassword = base64_encode($userPass);
-
+                    $userNO = generateUniqueUserID( $conn);
                     $t = "Y";
-                    $sql = "INSERT INTO tbl_users (userName, tc, phoneNumber, durum, userEmail, userPass, plate, gender, apartman_id, rol, popup, userStatus) VALUES 
-                    (:userName, :tc, :phoneNumber, :durum, :userEmail, :userPass, :plate, :gender, :apartman_id, :rol, :popup, :userStatus)";
+                    $sql = "INSERT INTO tbl_users (userName, user_no, tc, phoneNumber, durum, userEmail, userPass, plate, gender, apartman_id, rol, popup, userStatus) VALUES 
+                    (:userName, :user_no, :tc, :phoneNumber, :durum, :userEmail, :userPass, :plate, :gender, :apartman_id, :rol, :popup, :userStatus)";
 
                     $stmt = $conn->prepare($sql);
                     $stmt->bindParam(':userName', $userName);
+                     $stmt->bindParam(':user_no', $userNO);
                     $stmt->bindParam(':tc', $tc);
                     $stmt->bindParam(':phoneNumber', $phoneNumber);
                     $stmt->bindParam(':durum', $durum);

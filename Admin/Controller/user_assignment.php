@@ -22,14 +22,16 @@ if ($userID1==null && $userr !== "") {
  
 
 try{
+    $userNO = generateUniqueUserID( $conn);
     $userPass = randomPassword();
     $hashedPassword = base64_encode($userPass);
     $t = "Y";
-    $sqll = "INSERT INTO tbl_users (userName,  userPass,   apartman_id, rol, popup, userStatus) VALUES 
-    (:userName,  :userPass,  :apartman_id, :rol, :popup, :userStatus)";
+    $sqll = "INSERT INTO tbl_users (userName, user_no, userPass,   apartman_id, rol, popup, userStatus) VALUES 
+    (:userName,  :user_no,  :userPass,  :apartman_id, :rol, :popup, :userStatus)";
 
     $stmt = $conn->prepare($sqll);
     $stmt->bindParam(':userName', $userr);
+    $stmt->bindParam(':user_no',$userNO);
      $stmt->bindParam(':userPass', $hashedPassword);
     $stmt->bindParam(':userStatus', $t);
     $stmt->bindParam(':apartman_id', $apartId);
