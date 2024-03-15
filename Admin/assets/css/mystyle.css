@@ -2054,6 +2054,8 @@ min-width: 0;
 }
 
 .color-new {
+  border: 1px solid #e6e6e6;
+  border-radius: 4px;
   color: #0d0c22;
   outline: none;
   font-weight: 600;
