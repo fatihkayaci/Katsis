@@ -51,6 +51,10 @@
     width: 50%;
 }
 
+.daire-area td p {
+    padding-left: 15px;
+}
+
 tbody {
     text-align: center;
 }
@@ -95,7 +99,7 @@ tbody {
 }
 
 .form-group {
-    width: 50%;
+    width: 80%;
     min-width: 100px;
     margin-top: 5px;
     margin-bottom: 30px;

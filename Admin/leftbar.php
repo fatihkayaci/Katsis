@@ -16,9 +16,6 @@ $idapartman =$_SESSION["apartID"];
 
     <div class="collapse navbar-collapse w-auto " id="sidenav-collapse-main">
       <ul class="navbar-nav leftbar">
-        <li class="mt-3">
-          <h6 class="ps-4 ms-2 text-xs font-weight-bolder opacity-6">Ana Başlıklar</h6>
-        </li>
 
         <a class="nav-item" href="index?parametre=dashboard">
           <li class="nav-link mb-1">
@@ -28,6 +25,13 @@ $idapartman =$_SESSION["apartID"];
             <span class="nav-link-text ms-1 py-1">Ana Sayfa</span>
           </li>
         </a>
+
+        <hr class="horizontal dark mt-0 mb-0">
+
+        <li class="mt-3">
+          <h6 class="ps-4 ms-2 text-xs font-weight-bolder opacity-6">Kullanıcı Sayfaları</h6>
+        </li>
+
         <a class="nav-item" href="index?parametre=Accounts">
           <li class="nav-link my-1">
             <div class="nav-ico">
@@ -36,6 +40,13 @@ $idapartman =$_SESSION["apartID"];
             <span class="nav-link-text ms-1 py-1">Kullanıcılar</span>
           </li>
         </a>
+
+        <hr class="horizontal dark mt-0 mb-0">
+
+        <li class="mt-3">
+          <h6 class="ps-4 ms-2 text-xs font-weight-bolder opacity-6">Apartman Sayfaları</h6>
+        </li>
+
         <a class="nav-item" href="index?parametre=Sections">
           <li class="nav-link my-1">
             <div class="nav-ico">

@@ -212,11 +212,11 @@ function tableCreate(rowCount) {
     var headerRow = table.insertRow(0);
     var blockHeader = headerRow.insertCell(0);
     blockHeader.innerHTML = '<p>Blok</p>';
-    blockHeader.setAttribute("align", "center");
+    blockHeader.setAttribute("align", "left");
 
     var apartmentHeader = headerRow.insertCell(1);
     apartmentHeader.innerHTML = '<p>Daire Sayısı</p>';
-    apartmentHeader.setAttribute("align", "center");
+    apartmentHeader.setAttribute("align", "left");
 
     // Satırları oluşturma
     for (var i = 1; i <= rowCount; i++) {
