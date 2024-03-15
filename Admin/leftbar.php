@@ -8,7 +8,7 @@ $idapartman =$_SESSION["apartID"];
       <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-xl-none" id="iconSidenav"></i>
       <a class="navbar-brand m-0" href="index?parametre=dashboard">
         <img src="assets/img/ico.png" class="navbar-brand-img h-100" alt="main_logo">
-        <span class="ms-1 font-weight-bold">KATSİS</span>
+        <span class="ms-3 font-weight-bold">KATSİS</span>
       </a>
     </div>
 
@@ -17,69 +17,85 @@ $idapartman =$_SESSION["apartID"];
     <div class="collapse navbar-collapse w-auto " id="sidenav-collapse-main">
       <ul class="navbar-nav leftbar">
 
-        <a class="nav-item" href="index?parametre=dashboard">
-          <li class="nav-link mb-1">
+        <a class="nav-item mt-1" href="index?parametre=dashboard">
+          <li class="nav-link">
             <div class="nav-ico">
               <i class="fa-solid fa-house"></i>
             </div>
-            <span class="nav-link-text ms-1 py-1">Ana Sayfa</span>
+            <span class="nav-link-text">Ana Sayfa</span>
           </li>
         </a>
 
-        <hr class="horizontal dark mt-0 mb-0">
-
-        <li class="mt-3">
-          <h6 class="ps-4 ms-2 text-xs font-weight-bolder opacity-6">Kullanıcı Sayfaları</h6>
-        </li>
-
-        <a class="nav-item" href="index?parametre=Accounts">
-          <li class="nav-link my-1">
+        <button class="dropdown-btn nav-item">
+          <li class="nav-link">
             <div class="nav-ico">
               <i class="fa-solid fa-users"></i>
             </div>
-            <span class="nav-link-text ms-1 py-1">Kullanıcılar</span>
+            <span class="nav-link-text">Kullanıcılar</span>
+            <i class="fa-solid fa-angle-right ms-5"></i>
           </li>
-        </a>
+        </button>
+        <div class="dropdown-container">
+          <a class="nav-item" href="index?parametre=Accounts">
+            <li class="nav-link">
+              <div class="nav-ico"></div>
+              <span class="nav-link-text color-fff">
+                <i class="fa-solid fa-users me-2"></i>
+                Kullanıcılar
+              </span>
+            </li>
+          </a>
+          <a class="nav-item" href="#">
+            <li class="nav-link">
+              <div class="nav-ico"></div>
+              <span class="nav-link-text color-fff">
+              <i class="fa-solid fa-box-archive me-2"></i>
+                Arşiv
+              </span>
+            </li>
+          </a>
+          <a class="nav-item" href="#">
+            <li class="nav-link">
+              <div class="nav-ico"></div>
+              <span class="nav-link-text color-fff">
+              <i class="fa-solid fa-user-xmark me-2"></i>
+                Silinenler
+              </span>
+            </li>
+          </a>
+        </div>
 
-        <hr class="horizontal dark mt-0 mb-0">
-
-        <li class="mt-3">
-          <h6 class="ps-4 ms-2 text-xs font-weight-bolder opacity-6">Apartman Sayfaları</h6>
-        </li>
-
-        <a class="nav-item" href="index?parametre=Sections">
-          <li class="nav-link my-1">
+        <a class="nav-item mt-1" href="index?parametre=Sections">
+          <li class="nav-link">
             <div class="nav-ico">
               <i class="fa-solid fa-building"></i>
             </div>
-            <span class="nav-link-text ms-1 py-1">Bölümler</span>
+            <span class="nav-link-text">Bölümler</span>
           </li>
         </a>
         
-        <hr class="horizontal dark m-0">
-        
-        <li class="mt-3">
-          <h6 class="ps-4 ms-2 text-xs font-weight-bolder opacity-6">Hesap Ayarları</h6>
-        </li>
 
-        <a class="nav-item" href="index?parametre=profile">
+        <a class="nav-item mt-1" href="index?parametre=profile">
           <li class="nav-link">
             <div class="nav-ico">
               <i class="fa-solid fa-user"></i>
             </div>
-            <span class="nav-link-text ms-1">Profilim</span>
+            <span class="nav-link-text">Profilim</span>
           </li>
         </a>
-        <a class="nav-item" href="../logout">
+
+        <a class="nav-item mt-1" href="../logout">
           <li class="nav-link">
             <div class="nav-ico">
             <i class="fa-solid fa-right-from-bracket"></i>
             </div>
-            <span class="nav-link-text ms-1">Çıkış Yap</span>
+            <span class="nav-link-text">Çıkış Yap</span>
           </li>
         </a>
+
       </ul>
-      <hr class="horizontal dark">
+
+      <hr class="horizontal dark mb-0">
 
       <div class="collapse navbar-collapse w-auto " id="sidenav-collapse-main">
         <ul class="navbar-nav leftbar">
@@ -94,8 +110,8 @@ $idapartman =$_SESSION["apartID"];
           ?>
 
           <li class="nav-link">
-            <div class="nav-ico">
-              <img src="assets/img/ico.png" class="navbar-brand-img h-100" alt="main_logo">
+            <div class="nav-ico1 ms-3">
+              <img src="assets/img/ico.png" class="navbar-brand-img me-3 h-100" alt="main_logo">
             </div>
             <p class="apart-text"><?php echo $result['apartman_name']; ?></p>
           </li>
@@ -125,23 +141,17 @@ $idapartman =$_SESSION["apartID"];
                   </a>
                 </li>
 
-                <div class="vertical-hr"></div>
-
                 <li class="nav-item dropdown px-1 d-flex align-items-center">
                   <a href="javascript:;" class="nav-link text-body header-ico1 p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
 
                     <div class="user-profile-main">
-                      <div class="user-avatar">
-                        <p><i class="fa fa-bell toggle-icon1 cursor-pointer"></i></p>
+                      <div class="user-avatar1">
+                        <p class="bell">
+                          <i class="fa-regular fa-bell toggle-icon1 cursor-pointer"></i>
+                          <div class="bell-dot"></div>
+                        </p>
         	          	</div>
                     </div>
-
-                    <div class="header-name">
-                      <span class="name-title1 d-none-responsive"> <strong> 3 </strong> Adet</span>
-                      <span class="d-sm-inline toggle-icon d-none resize">Bildirimler</span>
-                    </div>
-
-                    <i class="fa-solid fa-sort-down fa-sort-down2 d-none-responsive" id="btn-rotate1"></i>
 
                   </a>
                   <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4x" aria-labelledby="dropdownMenuButton">
@@ -214,7 +224,7 @@ $idapartman =$_SESSION["apartID"];
                   </ul>
                 </li>
 
-                <div class="vertical-hr"></div>
+                <!-- <div class="vertical-hr"></div> -->
 
                 <?php
                     $names = explode(" ", $_SESSION["userName"]);
@@ -239,7 +249,6 @@ $idapartman =$_SESSION["apartID"];
                     </div>
 
                     <div class="header-name">
-                      <span class="name-title d-none-responsive">Kullanıcı</span>
                       <span class="d-sm-inline toggle-icon d-none">
                           <?php  echo $_SESSION["userName"]; ?>
                       </span>
@@ -299,6 +308,24 @@ $idapartman =$_SESSION["apartID"];
   <script src="assets/js/core/bootstrap.min.js"></script>
   <script src="assets/js/plugins/chartjs.min.js"></script>
   
+  <!-- Leftbar Dropdown -->
+  <script>
+  var dropdown = document.getElementsByClassName("dropdown-btn");
+  var i;
+
+  for (i = 0; i < dropdown.length; i++) {
+    dropdown[i].addEventListener("click", function() {
+      this.classList.toggle("active");
+      var dropdownContent = this.nextElementSibling;
+      if (dropdownContent.style.display === "block") {
+        dropdownContent.style.display = "none";
+      } else {
+        dropdownContent.style.display = "block";
+      }
+    });
+  }
+  </script>
+
   <script>
     document.addEventListener("DOMContentLoaded", function() {
       const iconNavbarSidenav = document.getElementById("iconNavbarSidenav");
@@ -391,7 +418,6 @@ $idapartman =$_SESSION["apartID"];
     var toggleIcon1 = headerIco.querySelector('.toggle-icon1');
     var btnRotate = document.querySelector('#btn-rotate');
     var userAvatarP = document.querySelector('.name-title');
-    var btnRotate1 = document.querySelector('#btn-rotate1');
 
     headerIco.addEventListener('click', function (event) {
       event.stopPropagation(); // Header içinde tıklamalarda sadece bu fonksiyon çalışsın
@@ -403,7 +429,6 @@ $idapartman =$_SESSION["apartID"];
     headerIco1.addEventListener('click', function (event) {
       event.stopPropagation(); // Header içinde tıklamalarda sadece bu fonksiyon çalışsın
       headerIco1.classList.toggle('active');
-      btnRotate1.classList.toggle('rotate1');
     });
 
     // Document düzeyinde tıklamaları dinle
@@ -415,7 +440,6 @@ $idapartman =$_SESSION["apartID"];
         headerIco1.classList.remove('active');
         btnRotate.classList.remove('rotate1');
         userAvatarP.classList.remove('active');
-        btnRotate1.classList.remove('rotate1');
       }
     });
   });
