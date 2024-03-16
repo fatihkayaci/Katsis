@@ -315,7 +315,7 @@ $idapartman =$_SESSION["apartID"];
 
   for (i = 0; i < dropdown.length; i++) {
     dropdown[i].addEventListener("click", function() {
-      this.classList.toggle("active");
+      this.classList.toggle("activex");
       var dropdownContent = this.nextElementSibling;
       if (dropdownContent.style.display === "block") {
         dropdownContent.style.display = "none";

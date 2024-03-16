@@ -22715,7 +22715,7 @@ html {
   font-size: 14px;
 }
 
-.leftbar .nav-item.active .nav-link .fa-angle-right {
+.leftbar .nav-item.activex .nav-link .fa-angle-right {
   transform: rotate(90deg);
 }
 

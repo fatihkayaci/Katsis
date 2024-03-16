@@ -2107,7 +2107,7 @@ min-width: 0;
   background: none;
 }
 
-.dropdown-btn.active {
+.dropdown-btn.activex {
   border-radius: 8px 8px 0 0;
   transition: 0.3s;
 }
