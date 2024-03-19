@@ -120,9 +120,8 @@ function kaydet() {
                 BloknameArray: BloknameArray
             },
             success: function(response) {
-                alert(response);
                 $('.form-popup').hide();
-                
+                location.reload();
             },
             error: function(xhr, status, error) {
                 var errorMessage = xhr.status + ': ' + xhr.statusText + '\n' + error;

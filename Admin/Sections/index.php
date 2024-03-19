@@ -1298,9 +1298,8 @@ $('#daireBlok').focus(function() {
     $('#daireBlok').css('border-color', '#277ce0');
     $('#daireBlokLabel').css('color', '#277ce0');
 });
-</script>
 
-<script type="text/javascript">
+
 const inputField = document.querySelector('.search-selectx');
 const dropdown = document.querySelector('.value-listx');
 const dropdownArray = [...document.querySelectorAll('.li-select')];
