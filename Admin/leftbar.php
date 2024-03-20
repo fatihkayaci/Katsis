@@ -17,7 +17,7 @@ $idapartman =$_SESSION["apartID"];
     <div class="collapse navbar-collapse w-auto " id="sidenav-collapse-main">
       <ul class="navbar-nav leftbar">
 
-        <a class="nav-item mt-1" href="index?parametre=dashboard">
+        <a class="nav-item modul mt-1" href="index?parametre=dashboard">
           <li class="nav-link">
             <div class="nav-ico">
               <i class="fa-solid fa-house"></i>
@@ -26,7 +26,7 @@ $idapartman =$_SESSION["apartID"];
           </li>
         </a>
 
-        <button class="dropdown-btn nav-item">
+        <button class="dropdown-btn  nav-item">
           <li class="nav-link">
             <div class="nav-ico">
               <i class="fa-solid fa-users"></i>
@@ -36,7 +36,7 @@ $idapartman =$_SESSION["apartID"];
           </li>
         </button>
         <div class="dropdown-container">
-          <a class="nav-item" href="index?parametre=Accounts">
+          <a class="nav-item modul"  href="index?parametre=Accounts">
             <li class="nav-link">
               <div class="nav-ico"></div>
               <span class="nav-link-text color-fff">
@@ -45,7 +45,7 @@ $idapartman =$_SESSION["apartID"];
               </span>
             </li>
           </a>
-          <a class="nav-item" href="#">
+          <a class="nav-item modul" href="#">
             <li class="nav-link">
               <div class="nav-ico"></div>
               <span class="nav-link-text color-fff">
@@ -54,7 +54,7 @@ $idapartman =$_SESSION["apartID"];
               </span>
             </li>
           </a>
-          <a class="nav-item" href="#">
+          <a class="nav-item modul" href="#">
             <li class="nav-link">
               <div class="nav-ico"></div>
               <span class="nav-link-text color-fff">
@@ -65,7 +65,7 @@ $idapartman =$_SESSION["apartID"];
           </a>
         </div>
 
-        <a class="nav-item mt-1" href="index?parametre=Sections">
+        <a class="nav-item mt-1 modul" href="index?parametre=Sections">
           <li class="nav-link">
             <div class="nav-ico">
               <i class="fa-solid fa-building"></i>
@@ -75,7 +75,7 @@ $idapartman =$_SESSION["apartID"];
         </a>
         
 
-        <a class="nav-item mt-1" href="index?parametre=profile">
+        <a class="nav-item mt-1 modul" href="index?parametre=profile">
           <li class="nav-link">
             <div class="nav-ico">
               <i class="fa-solid fa-user"></i>
@@ -308,11 +308,11 @@ $idapartman =$_SESSION["apartID"];
   
   <!-- Leftbar Dropdown -->
   <script>
-  var dropdown = document.getElementsByClassName("dropdown-btn");
+  var dropdown1 = document.getElementsByClassName("dropdown-btn");
   var i;
 
-  for (i = 0; i < dropdown.length; i++) {
-    dropdown[i].addEventListener("click", function() {
+  for (i = 0; i < dropdown1.length; i++) {
+    dropdown1[i].addEventListener("click", function() {
       this.classList.toggle("activex");
       var dropdownContent = this.nextElementSibling;
       if (dropdownContent.style.display === "block") {
@@ -363,7 +363,7 @@ $idapartman =$_SESSION["apartID"];
 
   <script>
   // Tüm nav linklerini seçin
-  const navLinks = document.querySelectorAll('.nav-item');
+  const navLinks = document.querySelectorAll('.modul');
 
   // Her bir nav linki için bir olay dinleyici ekleyin
   navLinks.forEach(link => {
@@ -376,6 +376,7 @@ $idapartman =$_SESSION["apartID"];
       this.classList.add('active');
 
       const selectedParam = this.getAttribute('href').split('=')[1];
+      alert(selectedParam);
       localStorage.setItem('selectedLink', selectedParam);
     });
   });
@@ -384,13 +385,14 @@ $idapartman =$_SESSION["apartID"];
   window.addEventListener('load', function() {
     const selectedParam = localStorage.getItem('selectedLink');
     if (selectedParam) {
-      const selectedLink = document.querySelector(`.nav-item[href*="${selectedParam}"]`);
+      const selectedLink = document.querySelector(`.modul[href*="${selectedParam}"]`);
+
       if (selectedLink) {
         selectedLink.classList.add('active');
       }
     } else {
       // localStorage'da seçili bağlantı yoksa, varsayılan olarak dashboard'u seç
-      const defaultLink = document.querySelector('.nav-item[href*="dashboard"]');
+      const defaultLink = document.querySelector('.modul[href*="dashboard"]');
       if (defaultLink) {
         defaultLink.classList.add('active');
         localStorage.setItem('selectedLink', 'dashboard');
@@ -415,13 +417,11 @@ $idapartman =$_SESSION["apartID"];
     var headerIco1 = document.querySelector('.header-ico1');
     var toggleIcon1 = headerIco.querySelector('.toggle-icon1');
     var btnRotate = document.querySelector('#btn-rotate');
-    var userAvatarP = document.querySelector('.name-title');
 
     headerIco.addEventListener('click', function (event) {
       event.stopPropagation(); // Header içinde tıklamalarda sadece bu fonksiyon çalışsın
       headerIco.classList.toggle('active');
       btnRotate.classList.toggle('rotate1');
-      userAvatarP.classList.toggle('active');
     });
 
     headerIco1.addEventListener('click', function (event) {
@@ -437,195 +437,14 @@ $idapartman =$_SESSION["apartID"];
         headerIco.classList.remove('active');
         headerIco1.classList.remove('active');
         btnRotate.classList.remove('rotate1');
-        userAvatarP.classList.remove('active');
       }
     });
   });
 
 
 
-    var ctx = document.getElementById("chart-bars").getContext("2d");
-
-    new Chart(ctx, {
-      type: "bar",
-      data: {
-        labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-        datasets: [{
-          label: "Sales",
-          tension: 0.4,
-          borderWidth: 0,
-          borderRadius: 4,
-          borderSkipped: false,
-          backgroundColor: "#fff",
-          data: [450, 200, 100, 220, 500, 100, 400, 230, 500],
-          maxBarThickness: 6
-        }, ],
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            display: false,
-          }
-        },
-        interaction: {
-          intersect: false,
-          mode: 'index',
-        },
-        scales: {
-          y: {
-            grid: {
-              drawBorder: false,
-              display: false,
-              drawOnChartArea: false,
-              drawTicks: false,
-            },
-            ticks: {
-              suggestedMin: 0,
-              suggestedMax: 500,
-              beginAtZero: true,
-              padding: 15,
-              font: {
-                size: 14,
-                family: "Open Sans",
-                style: 'normal',
-                lineHeight: 2
-              },
-              color: "#fff"
-            },
-          },
-          x: {
-            grid: {
-              drawBorder: false,
-              display: false,
-              drawOnChartArea: false,
-              drawTicks: false
-            },
-            ticks: {
-              display: false
-            },
-          },
-        },
-      },
-    });
-
-
-    var ctx2 = document.getElementById("chart-line").getContext("2d");
-
-    var gradientStroke1 = ctx2.createLinearGradient(0, 230, 0, 50);
-
-    gradientStroke1.addColorStop(1, 'rgba(203,12,159,0.2)');
-    gradientStroke1.addColorStop(0.2, 'rgba(72,72,176,0.0)');
-    gradientStroke1.addColorStop(0, 'rgba(203,12,159,0)'); //purple colors
-
-    var gradientStroke2 = ctx2.createLinearGradient(0, 230, 0, 50);
-
-    gradientStroke2.addColorStop(1, 'rgba(20,23,39,0.2)');
-    gradientStroke2.addColorStop(0.2, 'rgba(72,72,176,0.0)');
-    gradientStroke2.addColorStop(0, 'rgba(20,23,39,0)'); //purple colors
-
-    new Chart(ctx2, {
-      type: "line",
-      data: {
-        labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-        datasets: [{
-            label: "Mobile apps",
-            tension: 0.4,
-            borderWidth: 0,
-            pointRadius: 0,
-            borderColor: "#cb0c9f",
-            borderWidth: 3,
-            backgroundColor: gradientStroke1,
-            fill: true,
-            data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
-            maxBarThickness: 6
-
-          },
-          {
-            label: "Websites",
-            tension: 0.4,
-            borderWidth: 0,
-            pointRadius: 0,
-            borderColor: "#3A416F",
-            borderWidth: 3,
-            backgroundColor: gradientStroke2,
-            fill: true,
-            data: [30, 90, 40, 140, 290, 290, 340, 230, 400],
-            maxBarThickness: 6
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            display: false,
-          }
-        },
-        interaction: {
-          intersect: false,
-          mode: 'index',
-        },
-        scales: {
-          y: {
-            grid: {
-              drawBorder: false,
-              display: true,
-              drawOnChartArea: true,
-              drawTicks: false,
-              borderDash: [5, 5]
-            },
-            ticks: {
-              display: true,
-              padding: 10,
-              color: '#b2b9bf',
-              font: {
-                size: 11,
-                family: "Open Sans",
-                style: 'normal',
-                lineHeight: 2
-              },
-            }
-          },
-          x: {
-            grid: {
-              drawBorder: false,
-              display: false,
-              drawOnChartArea: false,
-              drawTicks: false,
-              borderDash: [5, 5]
-            },
-            ticks: {
-              display: true,
-              color: '#b2b9bf',
-              padding: 20,
-              font: {
-                size: 11,
-                family: "Open Sans",
-                style: 'normal',
-                lineHeight: 2
-              },
-            }
-          },
-        },
-      },
-    });
   </script>
-  <script>
-    var win = navigator.platform.indexOf('Win') > -1;
-    if (win && document.querySelector('#sidenav-scrollbar')) {
-      var options = {
-        damping: '0.5'
-      }
-      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
-    }
-  </script>
-  <!-- Github buttons -->
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-  <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="assets/js/soft-ui-dashboard.min.js?v=1.0.7"></script>
+
 </body>
 
 </html>
