@@ -376,7 +376,6 @@ $idapartman =$_SESSION["apartID"];
       this.classList.add('active');
 
       const selectedParam = this.getAttribute('href').split('=')[1];
-      alert(selectedParam);
       localStorage.setItem('selectedLink', selectedParam);
     });
   });
