@@ -45,7 +45,7 @@ $idapartman =$_SESSION["apartID"];
               </span>
             </li>
           </a>
-          <a class="nav-item modul" href="#">
+          <a class="nav-item modul" href="index?parametre=Arsiv">
             <li class="nav-link">
               <div class="nav-ico"></div>
               <span class="nav-link-text color-fff">
