@@ -338,7 +338,7 @@ $sql = "SELECT d.blok_adi, d.daire_sayisi, b.blok_adi
             </div>
 
             <div class="col-md-6 col">
-                <select class="input" id="gender" required="">
+                <select class="input select-ayar" id="gender" required="">
                     <option style="display: none;" value="" selected disabled></option>
                     <option value="Erkek">Erkek</option>
                     <option value="Kadın">Kadın</option>
@@ -425,10 +425,6 @@ $sql = "SELECT d.blok_adi, d.daire_sayisi, b.blok_adi
 
     </form>
 </div>
-
-<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <!-- =============================== -->
 <!-- select input start -->
@@ -622,11 +618,17 @@ function newDaire() {
     newDurum.className = 'durum';
     newDurum.innerHTML = selectedDurum;
 
+    if (selectedDurum == "katMaliki") {
+        newDurum.innerHTML = "Kat Maliki";
+    } else if (selectedDurum == "kiraci") {
+        newDurum.innerHTML = "Kiracı";
+    }
+
     //durum için div oluşturuldu.
     var sil = document.createElement('button');
-    sil.className = 'sil';
+    sil.className = 'sil blok-ico color-red';
     sil.id = "demo" + sayac;
-    sil.innerHTML = 'Delete';
+    sil.innerHTML = '<i class="fa-solid fa-trash"></i>';
     sil.addEventListener('click', function() {
         newContainer.remove(); // newContainer'ı sil
         var index = parseInt(this.id.replace('demo', ''), 10);

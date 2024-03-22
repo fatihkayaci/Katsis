@@ -560,7 +560,7 @@ try {
                 <label for="daireKat">Kat :</label>
             </div>
             <div class="col-md-6 col">
-                <select class="input" id="daireBlok" required="">
+                <select class="input select-ayar" id="daireBlok" required="">
                     <option style="display: none;" value="" disabled selected></option>
                     <?php
 
@@ -574,7 +574,7 @@ try {
             </div>
 
             <div class="col-md-6 col">
-                <select class="input" id="daireGrup" required="">
+                <select class="input select-ayar" id="daireGrup" required="">
                     <option style="display: none;" value="" disabled selected></option>
                     <?php
 

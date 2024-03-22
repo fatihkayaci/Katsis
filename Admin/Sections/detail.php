@@ -249,8 +249,9 @@ AND tbl_daireler.daire_id = " . $_SESSION['daireSayfa'];
 ?>
 
     <body>
+
       
-        <script type="text/javascript">
+<script type="text/javascript">
 const inputField = document.querySelector('.search-selectx');
 const dropdown = document.querySelector('.value-listx');
 const dropdownArray = [...document.querySelectorAll('.li-select')];

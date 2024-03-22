@@ -338,7 +338,7 @@ $sql = "SELECT d.blok_adi, d.daire_sayisi, b.blok_adi
             </div>
 
             <div class="col-md-6 col">
-                <select class="input" id="gender" required="">
+                <select class="input select-ayar" id="gender" required="">
                     <option style="display: none;" value="" selected disabled></option>
                     <option value="Erkek">Erkek</option>
                     <option value="Kadın">Kadın</option>
@@ -626,7 +626,7 @@ function newDaire() {
     var sil = document.createElement('button');
     sil.className = 'sil';
     sil.id = "demo" + sayac;
-    sil.innerHTML = 'Delete';
+    sil.innerHTML = 'yusuf';
     sil.addEventListener('click', function() {
         newContainer.remove(); // newContainer'ı sil
         var index = parseInt(this.id.replace('demo', ''), 10);
