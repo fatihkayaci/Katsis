@@ -41,7 +41,7 @@ AND tbl_daireler.daire_id = " . $_SESSION['daireSayfa'];
 
 
 
-    <div class="col-xl-5 col-lg-8 col-md-12 col-sm-12 col-12">
+    <div class="col-xl-7 col-lg-8 col-md-12 col-sm-12 col-12">
         <div class="h-100">	
             <div class="contact-form">                
 
@@ -147,7 +147,7 @@ AND tbl_daireler.daire_id = " . $_SESSION['daireSayfa'];
         </div> 
     </div>
 
-    <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
+    <div class="col-xl-5 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="h-100">
         	<div class="contact-form">
         		<div class="account-settings">

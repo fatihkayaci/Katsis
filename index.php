@@ -129,7 +129,7 @@ if(isset($_POST['btn-login']))
       <?php
       }
       ?>
-        <label class="label-block-level" for="txtemail">E-Posta</label>
+        <label class="label-block-level" for="txtemail">E-Posta veya Kullanıcı Numarası</label>
         <div class="inputBox">
         <input type="text" class="input-block-level" id="txtemail" placeholder="E-posta adresi" name="txtemail" required />
         </div>
