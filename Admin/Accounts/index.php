@@ -3,10 +3,11 @@
     $optionsDurum = '';
 try {
     //burada yeni eklendi css eklenmesi lazım.
-$sql = "SELECT d.blok_adi, d.daire_sayisi, b.blok_adi
+    $sql = "SELECT d.blok_adi, d.daire_sayisi, b.blok_adi
         FROM tbl_daireler d
         INNER JOIN tbl_blok b ON d.blok_adi = b.blok_id
-        WHERE d.katMalikiID IS NULL AND d.apartman_id = " . $_SESSION["apartID"];
+        WHERE d.apartman_id = " . $_SESSION["apartID"];
+
     $result = $conn->query($sql);
 
     if ($result->rowCount() > 0) {
@@ -17,7 +18,7 @@ $sql = "SELECT d.blok_adi, d.daire_sayisi, b.blok_adi
     $sql2 = "SELECT u.userID, u.userName, u.phoneNumber, b.blok_adi AS blok_adi, d.daire_sayisi,
     CASE
         WHEN d.katMalikiID = u.userID THEN 'Kat Maliki'
-        WHEN d.kiraciID = u.userID THEN 'Kiracı'
+        WHEN d.kiraciID = u.userID THEN 'kiraci'
         ELSE 'Belirtilmemiş'
     END AS durum
     FROM tbl_users u
@@ -57,10 +58,10 @@ $sql = "SELECT d.blok_adi, d.daire_sayisi, b.blok_adi
         </div>
 
         <div class="input-group1">
-
             <button class="topluGuncelle btn-custom-outline bcoc3" id="guncelleButton"
                 style="display: none;">Güncelle</button>
             <button class="topluSil btn-custom-outline bcoc4" id="silButton" style="display: none;">Sil</button>
+
 
             <div class="search-box">
                 <i class="fas fa-search search-icon" aria-hidden="true"></i>
@@ -132,7 +133,7 @@ $sql = "SELECT d.blok_adi, d.daire_sayisi, b.blok_adi
 
                 <td data-title="Durum" class="table_tt table_td">
                     <div class="main-durum <?php
-                                    if ($row["durum"] == "Kiracı") {
+                                    if ($row["durum"] == "Kiraci") {
                                         echo "kiraci";
                                     } elseif ($row["durum"] == "Kat Maliki") {
                                         echo "kat-maliki";
@@ -217,6 +218,7 @@ $sql = "SELECT d.blok_adi, d.daire_sayisi, b.blok_adi
             </div>
 
         </div>
+
 
         <div class="input-group1">
             <button class="topluGuncelle btn-custom-outline bcoc3" id="guncelleButton"
@@ -355,7 +357,7 @@ $sql = "SELECT d.blok_adi, d.daire_sayisi, b.blok_adi
 
         <div class="row">
             <div class="col-md-12 col-btn">
-                <button type="button" class="daireAta btn-custom-daire">Daire Ata</button>
+                <button type="button" class="daireEkle btn-custom-daire">Daire Ata</button>
             </div>
         </div>
         <div class="indexAdd">
@@ -411,8 +413,8 @@ $sql = "SELECT d.blok_adi, d.daire_sayisi, b.blok_adi
             </div>
             <div class="col-btn">
                 <select class="input" id="durum">
-                    <option value="katMaliki">kat Maliki</option>
-                    <option value="kiraci">kiracı</option>
+                    <option value="katmaliki">kat Maliki</option>
+                    <option value="kiraci">kiraci</option>
                 </select>
                 <label for="durum">Durum :</label>
             </div>
@@ -555,41 +557,7 @@ function sortTable(n) {
     }
 }
 </script>
-<script>
-$(document).ready(function() {
-    $('#durum').change(function() {
-        var durumValue = $(this).val();
-        $.ajax({
-            url: 'Controller/stateChange.php',
-            type: 'POST',
-            data: {
-                durum: durumValue
-            },
-            dataType: 'json',
-            success: function(response) {
-                // Başarılı bir şekilde veri alındığında yapılacak işlemler
-                console.log('Sunucu yanıtı:', response);
 
-                // optionsBlok içeriğini güncelle
-                $('#optionsBlok').empty(); // Önce içeriği temizle
-                $.each(response, function(index, item) {
-                    // Daire sayısı ile birlikte seçenekleri oluştur
-                    var optionText = item.blok_adi + ' Blok - Daire ' + item
-                        .daire_sayisi;
-                    $('#optionsBlok').append($('<option>', {
-                        value: item.blok_adi,
-                        text: optionText
-                    }));
-                });
-            },
-            error: function(error) {
-                // Veri alınırken bir hata oluştuğunda yapılacak işlemler
-                console.error('Sunucu hatası:', error);
-            }
-        });
-    });
-});
-</script>
 <script type="text/javascript">
 var selectedValuesArray = [];
 var selectedDurumArray = [];
@@ -642,14 +610,12 @@ function newDaire() {
 
     // Oluşturulan ana div'i belirli bir alana ekleyin (indexAdd)
     var indexAddElement = document.querySelector('.indexAdd');
-    indexAddElement.innerHTML = ''; 
     indexAddElement.appendChild(newContainer);
-
     closeDaire();
 
     sayac++;
+    
 }
-
 
 function toggleAll(masterCheckbox) {
 
@@ -659,15 +625,11 @@ function toggleAll(masterCheckbox) {
     }
     if (masterCheckbox.checked) {
         $('#silButton').css('display', 'inline-block');
-
         $('.git-ac').addClass('git-ac-color');
     } else if (!masterCheckbox.checked) {
         $('#silButton').css('display', 'none');
         $('.git-ac').removeClass('git-ac-color');
     }
-
-
-
 }
 
 function toggleCheckbox(id, i) {
@@ -683,10 +645,8 @@ function toggleCheckbox(id, i) {
     });
 
     if (enAzBirSecili) {
-        guncelleButton.style.display = 'inline-block';
         silButton.style.display = 'inline-block';
     } else {
-        guncelleButton.style.display = 'none';
         silButton.style.display = 'none';
     }
 
@@ -757,7 +717,7 @@ function closeToplu() {
     });
 }
 
-$('.daireAta').click(function() {
+$('.daireEkle').click(function() {
     $('#dairePopup').show().css('display', 'flex').delay(100).queue(function(next) {
         $('body').css('overflow', 'hidden');
         $('#dairePopup').css('opacity', '1');
@@ -819,27 +779,25 @@ topluGuncelleButtons.forEach(function(button) {
             var userID = row.getAttribute('data-userid');
             var userName = row.querySelector('td:nth-child(2)').textContent;
             var phoneNumber = row.querySelector('td:nth-child(3)').textContent;
-
-            var checkbox = row.querySelector('input[type="checkbox"]');
-                if (kisitlamalar(userName)) {
-                    $.ajax({
-                        url: 'Controller/update_user.php',
-                        type: 'POST',
-                        data: {
-                            userID: userID,
-                            userName: userName,
-                            phoneNumber: phoneNumber
-                        },
-                        success: function(response) {
-                            if (response == 1) {
-                                location.reload();
-                            }
-                        },
-                        error: function(error) {
-                            console.error('Gönderim hatası:', error);
+            if (kisitlamalar(userName)) {
+                $.ajax({
+                    url: 'Controller/update_user.php',
+                    type: 'POST',
+                    data: {
+                        userID: userID,
+                        userName: userName,
+                        phoneNumber: phoneNumber
+                    },
+                    success: function(response) {
+                        if (response == 1) {
+                            location.reload();
                         }
-                    });
-                }
+                    },
+                    error: function(error) {
+                        console.error('Gönderim hatası:', error);
+                    }
+                });
+            }
         });
     });
 });
@@ -936,8 +894,8 @@ tableRows.forEach(row => {
         status = statusElement.textContent.trim();
         if (status === "Kat Maliki") {
             status = "katmaliki";
-        } else if (status === "Kiracı") {
-            status = "kiracı";
+        } else if (status === "kiraci") {
+            status = "kiraci";
         }
     }
 
@@ -968,7 +926,7 @@ function saveUser() {
     var durumArray = [];
     var isConflict = false; // Çakışma durumunu kontrol etmek için bir bayrak
 
-    //alert(userName + "," + tc + "," + phoneNumber + "," + userEmail + "," + plate + "," + gender);
+    //console.log(userName + "," + tc + "," + phoneNumber + "," + userEmail + "," + plate + "," + gender);
 
     for (var i = 0; i < selectedDurumArray.length; i++) {
         var durumParcalari = selectedDurumArray[i].split(',');
@@ -995,7 +953,61 @@ function saveUser() {
 
         blokArray.push(blokElement);
     }
-    if (kisitlamalar(userName)) {
+
+    for (var i = 0; i < rowData.length; i++) {
+        var row = rowData[i];
+        var block = row.block;
+        var flatCount = row.flatCount;
+        var status = row.status;
+
+        // blokArray içindeki blok elementlerini dolaş ve karşılaştır
+        for (var j = 0; j < blokArray.length; j++) {
+            var blokElement = blokArray[j];
+            var letterPart = blokElement.letter;
+            var numberPart = blokElement.number;
+            // Blok adı ve daire numarası eşleşirse
+            if (block == letterPart && flatCount == numberPart) {
+                // DurumArray içindeki durumları dolaş ve karşılaştır
+                for (var k = 0; k < durumArray.length; k++) {
+                    var durum = durumArray[k];
+
+                    // Eğer durum eşleşiyorsa 
+                    if (status == durum) {
+                        // Çakışma durumu olduğunda bayrağı ayarla ve döngüyü kır
+                        isConflict = true;
+                        break;
+                    }
+                }
+            }
+        }
+        // Çakışma durumu varsa uyarı ver
+
+    }
+    console.log(isConflict);
+    if (isConflict) {
+        //alert("Çakışma durumu bulundu: Blok ismi: " + block + ", Daire sayısı: " + flatCount + ", Durum: " + status);
+        if (confirm("Çakışma durumu bulundu: Blok ismi: " + block + ", Daire sayısı: " + flatCount + ", Durum: " +
+                status + " bu dairede oturan kullanıcıyı silmek ister misin?")) {
+            if (kisitlamalar(userName /* tc, phoneNumber, userEmail, plate*/ )) {
+                saveUserData(userName, tc, phoneNumber, durumArray, userEmail, plate, gender, apartman_id, blokArray);
+            } else {
+                return;
+            }
+        } else {
+            return;
+        }
+    } else {
+        if (kisitlamalar(userName /* tc, phoneNumber, userEmail, plate*/ )) {
+            saveUserData(userName, tc, phoneNumber, durumArray, userEmail, plate, gender, apartman_id, blokArray);
+        } else {
+            return;
+        }
+    }
+
+};
+
+function saveUserData(userName, tc, phoneNumber, durumArray, userEmail, plate, gender, apartman_id, blokArray) {
+
     $.ajax({
         url: 'Controller/save_user.php',
         type: 'POST',
@@ -1011,22 +1023,8 @@ function saveUser() {
         },
         success: function(response) {
             if (response == 1) {
-                $.ajax({
-                    url: 'Controller/demo.php',
-                    type: 'POST',
-                    data: {
-                        blokArray: JSON.stringify(blokArray),
-                        durumArray: JSON.stringify(durumArray)
-                    },
-                    success: function(secondResponse) {
-                        if (secondResponse == 1) {
-                            location.reload();
-                        }
-                    },
-                    error: function(secondError) {
-                        console.error(secondError);
-                    }
-                });
+                // İkinci AJAX isteği
+                sendData(blokArray, durumArray);
             }
         },
         error: function(error) {
@@ -1034,15 +1032,26 @@ function saveUser() {
         }
     });
 }
-};
-/*
-function saveUserData(userName, tc, phoneNumber, durumArray, userEmail, plate, gender, apartman_id, blokArray) {
-
-}
 
 function sendData(blokArray, durumArray) {
-
-}*/
+    $.ajax({
+        url: 'Controller/demo.php',
+        type: 'POST',
+        data: {
+            blokArray: JSON.stringify(blokArray),
+            durumArray: JSON.stringify(durumArray)
+        },
+        success: function(secondResponse) {
+            //alert(secondResponse);
+            if (secondResponse == 1) {
+                location.reload();
+            }
+        },
+        error: function(secondError) {
+            console.error(secondError);
+        }
+    });
+}
 /* SaveUser fonksiyonu ile ilgili fonksiyonlar. */
 var updateButtons = document.querySelectorAll('.updateButton');
 
