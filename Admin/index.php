@@ -52,6 +52,10 @@ if($indexx == 'Accounts'){
             localStorage.setItem('selectedLink', 'Accounts');
          </script>";
 }
+else if($indexx == 'Arsiv'){
+    include ("Accounts/arsiv.php");
+    echo "<script>pagename('Kullanıcılar / Aşiv');</script>";
+}
 else if($indexx == 'TopluHesap'){
     include ("Accounts/topluHesap.php");
     echo "<script>pagename('TOPLU HESAP EKLEME');</script>";

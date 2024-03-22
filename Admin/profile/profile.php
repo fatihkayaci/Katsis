@@ -193,7 +193,7 @@ try {
 
                 						<div class="tab-pane" id="tab_default_3">  
 
-        	                                <form id="" method="post" action="">
+        	                                <form  method="post" action="">
 
         	                                	<div class="row mt-4">
         	                                		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
@@ -228,7 +228,7 @@ try {
 
         	                                <hr class="horizontal dark mt-0">
 
-        	                                <form id="" method="post" action="">
+        	                                <form  method="post" action="">
 
         	                                	<div class="row">
                                             		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
@@ -250,7 +250,7 @@ try {
         	                                	<div class="row">
         	                                	    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         	                                	        <div class="text-right">
-        	                                	            <button type="button" id="submit" name="submit" class="btn-black-outline">Parola Değiştir</button>
+        	                                	            <button type="button" id="submit1" name="submit" class="btn-black-outline">Parola Değiştir</button>
         	                                	        </div>
         	                                	    </div>
         	                                	</div>
@@ -384,9 +384,6 @@ try {
 ?>
 
     <body>
-        <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-
-        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <script type="text/javascript">
         //kısıtlama ile ilgili fonksiyonlar başlangıç...
         function validateFullName(fullName) {
@@ -478,26 +475,4 @@ try {
         });
         var deleteButtons = document.querySelectorAll('.deleteButton');
 
-        new DataTable('#example', {
-            initComplete: function() {
-                this.api()
-                    .columns()
-                    .every(function() {
-                        let column = this;
-                        let title = column.footer().textContent;
-
-                        // Create input element
-                        let input = document.createElement('input');
-                        input.placeholder = title;
-                        column.footer().replaceChildren(input);
-
-                        // Event listener for user input
-                        input.addEventListener('keyup', () => {
-                            if (column.search() !== this.value) {
-                                column.search(input.value).draw();
-                            }
-                        });
-                    });
-            }
-        });
         </script>

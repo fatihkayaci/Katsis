@@ -68,7 +68,7 @@ function kaydet() {
 
 
             if (vall.innerHTML == null || vall.innerHTML == "" || vall.innerHTML == " ") {
-                tem = 1;
+                tem = 1;numberalert
 
             } else {
                 tem = 0;
@@ -120,9 +120,8 @@ function kaydet() {
                 BloknameArray: BloknameArray
             },
             success: function(response) {
-                alert(response);
                 $('.form-popup').hide();
-                
+                location.reload();
             },
             error: function(xhr, status, error) {
                 var errorMessage = xhr.status + ': ' + xhr.statusText + '\n' + error;
@@ -133,27 +132,7 @@ function kaydet() {
     } else {
         alert("hatalı bilgiler. Kontrol ediniz.")
     }
-
-
-
-
-
-
-
-
 }
-</script>
-
-
-
-
-
-
-
-
-
-
-<script>
 
       $('.form-popup').show().css('display', 'flex').delay(100).queue(function(next) {
           $('.form-popup').css('opacity', '1');
@@ -249,11 +228,13 @@ function tableCreate(rowCount) {
         var descreption = row.insertCell(2);
         var descreptionElement = document.createElement('p');
         inputElement.type = 'text';
-        descreptionElement.className = 'form-controlxy' + 'form-group form-control1';
+        descreptionElement.className = 'form-controlxy' + 'form-group form-control1 popupErr';
         descreptionElement.name = 'descreption';
         descreptionElement.id = 'row2' + i;
         descreption.appendChild(descreptionElement);
         descreption.setAttribute("align", "center");
+        descreption.setAttribute("class", "popupErr");
+        descreption.style.display = 'none';
     }
 
     tableContainer.appendChild(table);
@@ -289,17 +270,20 @@ function rowListin(enteredNumber) {
                 var girilenSayi2 = this.value;
 
                 if (girilenSayi2 > 1000) {
-
+                    $('.popupErr').css('display', 'inline-block');
                     descreptionElement2.innerHTML =
                         "Daire sayısı 1000'den fazla ise bizimle iletişime geçiniz.";
 
                 } else if (girilenSayi2 == "") {
+                    $('.popupErr').css('display', 'none');
                     descreptionElement2.innerHTML = "";
 
                 } else if (girilenSayi2 <= 0) {
+                    $('.popupErr').css('display', 'inline-block');
                     descreptionElement2.innerHTML = "Daire sayısı 1'den küçük olamaz.";
 
                 } else if (girilenSayi2 != null || girilenSayi2 != "" || girilenSayi2 != " ") {
+                    $('.popupErr').css('display', 'none');
                     descreptionElement2.innerHTML = "";
 
                 }
