@@ -145,6 +145,7 @@ try {
                     </div>
                 </td>
             </tr>
+            
             <?php
             }
             ?>
@@ -553,6 +554,31 @@ function sortTable(n) {
     }
 }
 </script>
+<script type="text/javascript">
+/* yusuf bura */
+var rows = document.querySelectorAll('#example tbody tr');
+var userIdArray = [];
+
+rows.forEach(function(row) {
+    var userID = row.getAttribute('data-userid');
+    var userName = row.querySelector('.table_tt.table_td').textContent; 
+    if (userIdArray.includes(userID)) {
+        // Tekrarlanan bir kullanıcı kimliği bulunduğunda tüm satırı gizle
+        document.querySelectorAll('[data-userid="' + userID + '"]').forEach(function(item) {
+            item.style.display = 'none';
+        });
+        var newRow = document.createElement('tr');
+        var newCell = document.createElement('td');
+        newCell.colSpan = "5"; // Satırın tüm sütunlarını kaplasın
+        newCell.textContent = userName; // Tekrarlanan ID'nin adını içeren hücreye blokAdi değerini ekle
+        newRow.appendChild(newCell); // Yeni hücreyi yeni satıra ekle
+        row.parentNode.insertBefore(newRow, row); // Yeni satırı mevcut satırın önüne ekle
+    } else {
+        userIdArray.push(userID);
+    }
+});
+
+</script>
 
 <script type="text/javascript">
 var selectedValuesArray = [];
@@ -616,7 +642,7 @@ function newDaire() {
     closeDaire();
 
     sayac++;
-    
+
 }
 
 function toggleAll(masterCheckbox) {
