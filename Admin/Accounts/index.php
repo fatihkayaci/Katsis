@@ -119,7 +119,7 @@ try {
 
                     <?php echo $row["userName"]; ?></td>
 
-                <td data-title="Telefon Numarası" class="table_tt table_td" contenteditable="false">
+                <td data-title="Telefon Numarası" class="table_tt table_td phoneNumberTable" contenteditable="false">
 
                     <?php echo $row["phoneNumber"]; ?></td>
 
@@ -133,7 +133,7 @@ try {
 
                 <td data-title="Durum" class="table_tt table_td">
                     <div class="main-durum <?php
-                                    if ($row["durum"] == "Kiraci") {
+                                    if ($row["durum"] == "kiraci") {
                                         echo "kiraci";
                                     } elseif ($row["durum"] == "Kat Maliki") {
                                         echo "kat-maliki";
@@ -554,31 +554,87 @@ function sortTable(n) {
     }
 }
 </script>
+
+<!-- ============================== -->
+<!-- table dropdown area start -->
+<!-- fatih burası -->
+
 <script type="text/javascript">
-/* yusuf bura */
 var rows = document.querySelectorAll('#example tbody tr');
 var userIdArray = [];
 
 rows.forEach(function(row) {
     var userID = row.getAttribute('data-userid');
     var userName = row.querySelector('.table_tt.table_td').textContent; 
+    var phoneNumber = row.querySelector('.phoneNumberTable').textContent;
     if (userIdArray.includes(userID)) {
         // Tekrarlanan bir kullanıcı kimliği bulunduğunda tüm satırı gizle
         document.querySelectorAll('[data-userid="' + userID + '"]').forEach(function(item) {
             item.style.display = 'none';
         });
         var newRow = document.createElement('tr');
-        var newCell = document.createElement('td');
-        newCell.colSpan = "5"; // Satırın tüm sütunlarını kaplasın
-        newCell.textContent = userName; // Tekrarlanan ID'nin adını içeren hücreye blokAdi değerini ekle
-        newRow.appendChild(newCell); // Yeni hücreyi yeni satıra ekle
+        var newCell3 = document.createElement('td');
+        var newCell1 = document.createElement('td');
+        var newCell2 = document.createElement('td');
+        var newCell4 = document.createElement('td');
+            
+        var newTextCell = document.createElement('td'); // Yeni metin hücresi oluştur
+        newTextCell.textContent = "Birden Fazla Daire"; // Metin içeriğini ayarla
+            
+        newRow.classList.add('git-ac');
+        newCell3.colSpan = "1"; // Üçüncü hücre 1 sütunu kaplasın
+        newCell1.colSpan = "1"; // İlk hücre 1 sütunu kaplasın
+        newCell2.colSpan = "1"; // İkinci hücre 2 sütunu kaplasın
+        newCell4.colSpan = "1"; // Dördüncü hücre 1 sütunu kaplasın
+            
+        newCell1.textContent = userName; // İlk hücreye userName değerini ekle
+        newCell2.textContent = phoneNumber;
+        newCell3.innerHTML = "<i class='fa-solid fa-turn-up tumu-btn'></i>";
+
+        newRow.appendChild(newCell3);
+        newRow.appendChild(newCell1); // Yeni hücreleri yeni satıra ekle
+        newRow.appendChild(newCell2);
+        newRow.appendChild(newTextCell);
+        newRow.appendChild(newCell4);
+            
         row.parentNode.insertBefore(newRow, row); // Yeni satırı mevcut satırın önüne ekle
+        
+        newCell3.querySelector('.tumu-btn').addEventListener('click', function() {
+            // Tıklanan düğmeye ait kullanıcıya ait satırları göster/gizle
+            var rows = document.querySelectorAll('[data-userid="' + userID + '"]');
+            rows.forEach(function(item) {
+                if (item.style.display === 'none') {
+                    item.style.display = 'table-row'; // Eğer gizli ise görünür yap
+                } else {
+                    item.style.display = 'none'; // Eğer görünür ise gizle
+                }
+            });
+        
+            // Aynı kullanıcı kimliğine sahip diğer satırların görünürlüğünü kontrol et
+            rows.forEach(function(row) {
+                if (row !== row.parentNode.lastElementChild) {
+                    var nextRow = row.nextElementSibling;
+                    while (nextRow && nextRow.dataset.userid === userID) {
+                        if (nextRow.style.display === 'none') {
+                            nextRow.style.display = 'table-row';
+                        } else {
+                            nextRow.style.display = 'none';
+                        }
+                        nextRow = nextRow.nextElementSibling;
+                    }
+                }
+            });
+        });
+
     } else {
         userIdArray.push(userID);
     }
 });
 
 </script>
+
+<!-- table dropdown area end -->
+<!-- ============================== -->
 
 <script type="text/javascript">
 var selectedValuesArray = [];

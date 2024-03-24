@@ -2147,3 +2147,30 @@ min-width: 0;
   outline: none;
   background: none;
 }
+
+/* dropdown table area */
+
+.tumu-btn {
+  margin: auto;
+  transition: 0.2s;
+  animation: upDown 1s infinite;
+  padding: 0px 5px;
+  color: #bebebe;
+  cursor: pointer;
+}
+
+.tumu-btn:hover {
+  color: #277CE0;
+}
+
+@keyframes upDown {
+  0% {
+    transform: rotate(90deg) translateX(0px);
+  }
+  50% { 
+    transform: rotate(90deg) translateX(5px);
+  }
+  100% {
+    transform: rotate(90deg) translateX(0px);
+  }
+}
