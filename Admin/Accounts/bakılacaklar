@@ -464,4 +464,22 @@ try {
         $("#example input[type='checkbox']:first").click(function() {
             $("#example input[type='checkbox']").alterCheck('#example');
         });
-        </script>
+ /*
+            rows.forEach(function(row) {
+                if (row !== row.parentNode.lastElementChild) {
+                    var nextRow = row.nextElementSibling;
+                    while (nextRow && nextRow.dataset.userid === userID) {
+                        if (nextRow.style.display === 'none') {
+                            nextRow.style.display = 'table-row';
+                        } else {
+                            nextRow.style.display = 'none';
+                        }
+                        nextRow = nextRow.nextElementSibling;
+                    }
+                }
+            });
+             */
+</script>
+
+
+
