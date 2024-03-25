@@ -17,6 +17,12 @@
   color: #141727 !important;
 }
 
+.error {
+  border: 1px solid red;
+}
+.error-label {
+  color: red;
+}
 
 .containerx {
   width: 100%;

@@ -44,7 +44,7 @@ try {
     $updateStmt->bindParam(':plate', $plate);
     $updateStmt->bindParam(':gender', $gender);
     $updateStmt->execute();
-    echo "atttt";
+    
     echo 1;
 } catch (PDOException $e) {
     echo $e;

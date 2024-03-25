@@ -69,7 +69,7 @@ AND tbl_daireler.daire_id = " . $_SESSION['daireSayfa'];
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
                             <p class="bilgi-p"  ><?php 
     if(isset($row["kat_maliki_adi"]) && ($row["kat_maliki_adi"] !== null && $row["kat_maliki_adi"] !== 0)) {
-        echo '<p class="userss" onclick=userGo('.$row["kat_maliki_id"].')>' . $row["kat_maliki_adi"] . '</p>';
+        echo '<p class="userss" onclick=userGo('.$row["kat_maliki_id"].','.$row["daire_id"].')>' . $row["kat_maliki_adi"] . '</p>';
     } else {
         echo '<button type="button" class="table-a tca2" onclick="openPopup('.$row["daire_id"].',1)">Kat Maliki Ekle + </button>';
     }
@@ -86,7 +86,7 @@ AND tbl_daireler.daire_id = " . $_SESSION['daireSayfa'];
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
                             <p class="bilgi-p" ><?php 
     if(isset($row["kiraci_adi"]) && ($row["kiraci_adi"] !== null && $row["kiraci_adi"] !== 0)) {
-        echo '<p class="userss" onclick=userGo('.$row["kiraci_id"].')>' . $row["kiraci_adi"] . '</p>';
+        echo '<p class="userss" onclick=userGo('.$row["kiraci_id"].','.$row["daire_id"].')>' . $row["kiraci_adi"] . '</p>';
     } else {
         echo '<button type="button" class="table-a tca1" onclick="openPopup('.$row["daire_id"].',0)">Kiracı Ekle + </button>';
     }
@@ -416,7 +416,7 @@ error: function(error) {
 
 
 
-function userGo(id){
+function userGo(id,dId){
 
     
     var d="user";
@@ -427,10 +427,10 @@ function userGo(id){
 
                 id: id,
                 d:d,
+                dId:dId,
 
             },
             success: function(response) {
-
                
                     if(response){
                         window.location.href = "index.php?parametre=custom";
