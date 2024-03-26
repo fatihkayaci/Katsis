@@ -2,7 +2,7 @@
 include("../../DB/dbconfig.php");
 try {
     $userID = $_POST['userID'];
-    
+    //echo $userID;
     // SQL sorgusunu hazırla
     $sql = "DELETE FROM tbl_users WHERE userID = :userID";
 
@@ -21,6 +21,6 @@ try {
     $stmt->execute();
     echo 1;
 } catch (PDOException $e) {
-    echo 0;
+    echo $e;
 }
 ?>
