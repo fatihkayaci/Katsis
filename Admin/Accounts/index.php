@@ -865,7 +865,6 @@ topluGuncelleButtons.forEach(function(button) {
                     phoneNumber: phoneNumber
                 },
                 success: function(response) {
-                    
                     if (response == 1) {
                         location.reload();
                     }
@@ -917,7 +916,7 @@ topluSilButton.addEventListener('click', function() {
             success: function(response) {
                 if (response == 1) {
                     row.remove();
-                    if (document.querySelector('[id^="tr-' + userID + '"]')) {
+                    if (document.querySelector('[id^="tr-' + userID + '"]') == null) {
                         $.ajax({
                             url: 'Controller/delete_user.php',
                             type: 'POST',
@@ -925,6 +924,7 @@ topluSilButton.addEventListener('click', function() {
                                 userID: userID
                             },
                             success: function(deleteResponse) {
+                                alert(deleteResponse);
                                 location.reload();
                             },
                             error: function(deleteError) {

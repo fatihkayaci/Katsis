@@ -21,6 +21,6 @@ try {
     $stmt->execute();
     echo 1;
 } catch (PDOException $e) {
-    echo 0;
+    echo $e;
 }
 ?>

@@ -17,7 +17,6 @@ try {
     $updateStmt->bindParam(':userName', $userName);
     $updateStmt->bindParam(':phoneNumber', $phoneNumber);
     $updateStmt->execute();
-    echo "atttt";
     echo 1;
 } catch (PDOException $e) {
     echo $e;
