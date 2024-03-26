@@ -4,8 +4,13 @@ session_start();
 // Post isteğinden trId'yi al
 $trId = $_POST['id'];
 $d = $_POST['d'];
+$dId = $_POST['dId'];
 
-
+if($dId==""){
+    $_SESSION['dId'] = "";
+}else{
+    $_SESSION['dId'] = $dId;
+}
 
 if($d =="daire"){
     // Oturum verilerini ayarla

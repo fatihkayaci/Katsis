@@ -15,7 +15,7 @@ try {
             $optionsBlok .= '<option name="optionsBlok" value="' . $row['blok_adi']." Blok - Daire ".$row['daire_sayisi'] . '">' .$row['blok_adi']." Blok - Daire ". $row['daire_sayisi'] . '</option>';
         }
     }
-    $sql2 = "SELECT u.userID, u.userName, u.phoneNumber, b.blok_adi AS blok_adi, d.daire_sayisi,
+    $sql2 = "SELECT u.userID, u.userName, u.phoneNumber,d.daire_id, b.blok_adi AS blok_adi, d.daire_sayisi,
     CASE
         WHEN d.katMalikiID = u.userID THEN 'Kat Maliki'
         WHEN d.kiraciID = u.userID THEN 'kiraci'
@@ -100,7 +100,7 @@ try {
             foreach ($result as $row) {
                 $i++;
             ?>
-            <tr data-userid="<?php echo $row["userID"]; ?>" id="tr-<?php echo $row["userID"]. '-' . $i; ?>"
+            <tr data-userid="<?php echo $row["userID"]; ?>" data-d="<?php echo $row["daire_id"]; ?>" id="tr-<?php echo $row["userID"]. '-' . $i; ?>"
                 class="git-ac">
                 <td data-title="Seç" class="check-style">
                     <!-- Checkbox id'sine $i değerini ekliyoruz -->
@@ -677,7 +677,7 @@ function newDaire() {
     sil.addEventListener('click', function() {
         newContainer.remove(); // newContainer'ı sil
         var index = parseInt(this.id.replace('demo', ''), 10);
-        selectedValuesArray.splice(index, 1); // selectedValuesArray'den ilgili elemanı sil
+        selectedValuesArray.splice(index, 1); // selectedValuesArray'den ilgili elemanı sildaire_id
         selectedDurumArray.splice(index, 1); // selectedDurumArray'den ilgili elemanı sil
         sayac--;
     });
@@ -1305,13 +1305,16 @@ tableTdElements.forEach(function(element) {
     element.addEventListener('click', function() {
 
         var trId = element.parentElement.getAttribute('data-userid');
+        var dId = element.parentElement.getAttribute('data-d');
         var d = "user";
-
+      
+        
         $.ajax({
             url: 'Controller/create_session.php',
             type: 'POST',
             data: {
                 id: trId,
+                dId:dId,
                 d: d,
             },
             success: function(response) {
