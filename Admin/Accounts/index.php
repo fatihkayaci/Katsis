@@ -145,7 +145,7 @@ try {
                     </div>
                 </td>
             </tr>
-            
+
             <?php
             }
             ?>
@@ -566,12 +566,13 @@ var emptyRowCreated = {}; // Boş satır oluşturulduğunu kontrol etmek için b
 
 rows.forEach(function(row) {
     var userID = row.getAttribute('data-userid');
-    var userName = row.querySelector('.table_tt.table_td').textContent; 
+    var userName = row.querySelector('.table_tt.table_td').textContent;
     var phoneNumber = row.querySelector('.phoneNumberTable').textContent;
     if (userIdArray[userID]) {
         // Tekrarlanan bir kullanıcı kimliği bulunduğunda tüm satırı gizle
-        document.querySelectorAll('[data-userid="' + userID + '"]').forEach(function(item) {
+        document.querySelectorAll('[id^="tr-' + userID + '"]').forEach(function(item) {
             item.style.display = 'none';
+            item.classList.add('none');
         });
 
         if (!emptyRowCreated[userID]) {
@@ -580,18 +581,21 @@ rows.forEach(function(row) {
             var newCell1 = document.createElement('td');
             var newCell2 = document.createElement('td');
             var newCell4 = document.createElement('td');
-                
+
             var newTextCell = document.createElement('td'); // Yeni metin hücresi oluştur
             newTextCell.textContent = "Birden Fazla Daire"; // Metin içeriğini ayarla
-                
+
             newRow.classList.add('git-ac');
+            newRow.setAttribute('data-userid', userID);
             newCell3.colSpan = "1"; // Üçüncü hücre 1 sütunu kaplasın
             newCell1.colSpan = "1"; // İlk hücre 1 sütunu kaplasın
             newCell2.colSpan = "1"; // İkinci hücre 2 sütunu kaplasın
             newCell4.colSpan = "1"; // Dördüncü hücre 1 sütunu kaplasın
-                
+
             newCell1.textContent = userName; // İlk hücreye userName değerini ekle
             newCell2.textContent = phoneNumber;
+            newCell1.setAttribute('contenteditable', 'false');
+            newCell2.setAttribute('contenteditable', 'false');
             newCell3.innerHTML = "<i class='fa-solid fa-turn-up tumu-btn'></i>";
 
             newRow.appendChild(newCell3);
@@ -602,12 +606,13 @@ rows.forEach(function(row) {
 
             // Yeni satırı ekleyeceğimiz referans satırı bul
             var referenceRow = document.querySelector('[data-userid="' + userID + '"]');
-                
-            referenceRow.parentNode.insertBefore(newRow, referenceRow); // Yeni satırı referans satırının üstüne ekle
+
+            referenceRow.parentNode.insertBefore(newRow,
+                referenceRow); // Yeni satırı referans satırının üstüne ekle
             emptyRowCreated[userID] = true; // Boş satır oluşturulduğunu işaretle
             newCell3.querySelector('.tumu-btn').addEventListener('click', function() {
                 // Tıklanan düğmeye ait kullanıcıya ait satırları göster/gizle
-                var rows = document.querySelectorAll('[data-userid="' + userID + '"]');
+                var rows = document.querySelectorAll('[id^="tr-' + userID + '"]');
                 rows.forEach(function(item) {
                     if (item.style.display === 'none') {
                         item.style.display = 'table-row'; // Eğer gizli ise görünür yap
@@ -621,8 +626,6 @@ rows.forEach(function(row) {
         userIdArray[userID] = true;
     }
 });
-
-
 </script>
 
 <!-- table dropdown area end -->
@@ -837,10 +840,7 @@ function kisitlamalar(userName) {
         alert('Full Name 100den fazla karakter olamaz.');
         return;
     }
-    if (!validateFullName(userName)) {
-        alert('Lütfen yalnızca harf karakterleri içeren geçerli bir tam ad girin.');
-        return;
-    }
+    
     return true;
 }
 
@@ -850,30 +850,30 @@ var topluGuncelleButtons = document.querySelectorAll('.topluGuncelle');
 
 topluGuncelleButtons.forEach(function(button) {
     button.addEventListener('click', function() {
-        var rows = document.querySelectorAll('#example tbody tr'); // Tüm satırları bul
+        var rows = document.querySelectorAll('#example tbody tr.git-ac:not(.none)');
         rows.forEach(function(row) {
             var userID = row.getAttribute('data-userid');
-            var userName = row.querySelector('td:nth-child(2)').textContent;
-            var phoneNumber = row.querySelector('td:nth-child(3)').textContent;
-            if (kisitlamalar(userName)) {
-                $.ajax({
-                    url: 'Controller/update_user.php',
-                    type: 'POST',
-                    data: {
-                        userID: userID,
-                        userName: userName,
-                        phoneNumber: phoneNumber
-                    },
-                    success: function(response) {
-                        if (response == 1) {
-                            location.reload();
-                        }
-                    },
-                    error: function(error) {
-                        console.error('Gönderim hatası:', error);
+            var userName = row.querySelector('td:nth-child(2)').textContent.trim();
+            var phoneNumber = row.querySelector('td:nth-child(3)').textContent.trim();
+            console.log(userName);
+            $.ajax({
+                url: 'Controller/update_user.php',
+                type: 'POST',
+                data: {
+                    userID: userID,
+                    userName: userName,
+                    phoneNumber: phoneNumber
+                },
+                success: function(response) {
+                    
+                    if (response == 1) {
+                        location.reload();
                     }
-                });
-            }
+                },
+                error: function(error) {
+                    console.error('Gönderim hatası:', error);
+                }
+            });
         });
     });
 });
@@ -917,8 +917,7 @@ topluSilButton.addEventListener('click', function() {
             success: function(response) {
                 if (response == 1) {
                     row.remove();
-                    if (document.querySelector('#example tbody tr[data-userid="' + userID +
-                            '"]') === null) {
+                    if (document.querySelector('[id^="tr-' + userID + '"]')) {
                         $.ajax({
                             url: 'Controller/delete_user.php',
                             type: 'POST',
@@ -1128,48 +1127,6 @@ function sendData(blokArray, durumArray) {
         }
     });
 }
-/* SaveUser fonksiyonu ile ilgili fonksiyonlar. */
-var updateButtons = document.querySelectorAll('.updateButton');
-
-updateButtons.forEach(function(button) {
-    button.addEventListener('click', function() {
-        var row = this.closest('tr'); // Güncellenen satırı bul
-        var userID = row.getAttribute('data-userid');
-        var userName = row.querySelector('td:nth-child(2)').textContent;
-        var phoneNumber = row.querySelector('td:nth-child(3)').textContent;
-        var userEmail = row.querySelector('td:nth-child(5)').textContent;
-        var plate = row.querySelector('td:nth-child(6)').textContent;
-        var gender = row.querySelector('td:nth-child(7) select').value;
-        alert(userName + "," + phoneNumber + "," + userEmail + "," + userID + "," + plate +
-            "," + gender);
-        if (kisitlamalar(userName /*, tc, phoneNumber, userEmail, plate*/ )) {
-            $.ajax({
-                url: 'Controller/update_user.php',
-                type: 'POST',
-                data: {
-                    userID: userID,
-                    userName: userName,
-                    phoneNumber: phoneNumber,
-                    userEmail: userEmail,
-                    plate: plate,
-                    gender: gender
-                },
-                success: function(response) {
-                    alert(response);
-                    if (response == 1) {
-                        alert("güncellendi");
-                        //location.reload();
-                    }
-                },
-                error: function(error) {
-                    console.error('Gönderim hatası:', error);
-                }
-            });
-        } else {
-            return;
-        }
-    });
-});
 var deleteButtons = document.querySelectorAll('.deleteButton');
 
 deleteButtons.forEach(function(button) {
@@ -1240,14 +1197,20 @@ document.getElementById("editToggle").addEventListener("change", function() {
         });
     }
 });
-
+var initiallyVisibleRows= "";
+document.addEventListener("DOMContentLoaded", function() {
+    initiallyVisibleRows = document.querySelectorAll('.git-ac:not([style*="display: none"])');
+});
 
 function openEdit() {
-    var editableCells = document.querySelectorAll('td[contenteditable="false"]');
-    editableCells.forEach(function(cell) {
-        cell.setAttribute('contenteditable', 'true');
+    initiallyVisibleRows.forEach(function(row) {
+        var editableCells = row.querySelectorAll('td[contenteditable="false"]');
+        editableCells.forEach(function(cell) {
+            cell.setAttribute('contenteditable', 'true');
+        });
     });
 }
+
 
 function closeEdit() {
     var editableCells = document.querySelectorAll('td[contenteditable="true"]');
