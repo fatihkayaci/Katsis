@@ -10,7 +10,12 @@
 
 <body>
 
+    <input type="hidden" id="apartmanId" value=<?php echo $_SESSION["apartID"]?> />
+    <input type="hidden" id="userId" value=<?php echo $_SESSION['userPage']?> />
+    <input type="hidden" id="daireId" value=<?php echo $_SESSION['dId']?> />
+
     <?php
+
 try {
     $sql = "SELECT u.userID, u.userName, u.user_no, u.userEmail, u.gender, u.userPass, u.plate, u.tc, u.phoneNumber, d.daire_id, b.blok_adi AS blok_adi, d.daire_sayisi,
     CASE
@@ -64,10 +69,10 @@ foreach ($result2 as $row2) {
                 </div>
 
                 <div class="col-md-12 col">
-    <input class="input" type="text" id="borcTutar" placeholder="0,00" step="0.01" onclick="selectInput(this)"
-        onkeypress="return onlyNumberKey(event)"  />
-    <label id="borcLabel" for="borcTutar">Borç Tutarı *:</label>
-</div>
+                    <input class="input" type="text" id="borcTutar" placeholder="0,00" step="0.01"
+                        onclick="selectInput(this)" onkeypress="return onlyNumberKey(event)" />
+                    <label id="borcLabel" for="borcTutar">Borç Tutarı *:</label>
+                </div>
 
                 <div class="col-md-12 col-btn">
                     <input class="input" type="date" value="<?php echo date('Y-m-d'); ?>" id="dateInput" required="" />
@@ -323,49 +328,94 @@ foreach ($kategori_listesi as $kategori_id => $kategori_adi) {
 
 
     function borcAdd() {
+        var apartmanId = document.getElementById('apartmanId').value;
+        var userId = document.getElementById('userId').value;
+        var daireId = document.getElementById('daireId').value;
+        var gelir_turu = 1;
         var aciklamaValue = document.getElementById('aciklama').value;
         var borcTutarValue = document.getElementById('borcTutar').value;
         var dateInputValue = document.getElementById('dateInput').value;
         var dateInput2Value = document.getElementById('dateInput2').value;
         var kategoriValue = document.getElementById('kategori').value;
-        var a1=true,a2=true,a3=true,a4=true,a5=true,a6=true;
+        var a1 = true,
+            a2 = true,
+            a3 = true,
+            a4 = true,
+            a5 = true,
+            a6 = true;
 
 
         if (aciklamaValue.trim() === '') {
             $('#aciklama').css('border-color', 'red');
             $('#aciklamaLabel').css('color', 'red');
-            a1=false;
+            a1 = false;
         }
 
-        if (borcTutarValue.trim() === '' || borcTutarValue <=0) {
+        if (borcTutarValue.trim() === '' || borcTutarValue <= 0) {
             $('#borcTutar').css('border-color', 'red');
             $('#borcLabel').css('color', 'red');
-            a2=false;
+            a2 = false;
         }
 
         if (dateInputValue.trim() === '') {
             $('#dateInput').css('border-color', 'red');
             $('#label_tarih').css('color', 'red');
-            a3=false;
+            a3 = false;
         }
 
         if (dateInput2Value.trim() === '') {
             $('#dateInput2').css('border-color', 'red');
             $('#label_tarih2').css('color', 'red');
-            a4=false;
+            a4 = false;
         }
 
 
         if (kategoriValue.trim() === '') {
             $('#kategori').css('border-color', 'red');
             $('#kategoriLabel').css('color', 'red');
-            a5=false;
+            a5 = false;
         }
 
-        if(!a5 ||!a4 ||!a1 ||!a3 ||!a2 ){
-            alert("boş");
+        if (!a5 || !a4 || !a1 || !a3 || !a2) {
+            alert("İlgili Alanlar Boş Olamaz");
 
-        }else{alert("boş deil");}
+        } else {
+
+            $.ajax({
+                url: 'Controller/maliye_kayit.php',
+                type: 'POST',
+                data: {
+                    daireId: daireId,
+                    userId: userId,
+                    apartmanId: apartmanId,
+                    gelir_turu: gelir_turu,
+                    aciklamaValue: aciklamaValue,
+                    borcTutarValue: borcTutarValue,
+                    dateInputValue: dateInputValue,
+                    dateInput2Value: dateInput2Value,
+                    kategoriValue: kategoriValue,
+
+                },
+                success: function(response) {
+                    if (response) {
+                        document.getElementById('aciklama').value = "";
+                        document.getElementById('borcTutar').value = "";
+                        document.getElementById('kategori').value = "";
+                        popupCloseControl('popupBorcEkle', 'borcEkleForm');
+                    }
+
+
+                },
+                error: function(xhr, status, error) {
+                    var errorMessage = xhr.status + ': ' + xhr.statusText;
+                    alert('Hata alındı: ' + errorMessage);
+                }
+            });
+
+
+
+
+        }
 
 
 
@@ -513,18 +563,19 @@ foreach ($kategori_listesi as $kategori_id => $kategori_adi) {
         var charCode = (evt.which) ? evt.which : evt.keyCode;
 
         // Allows only digits, comma, and backspace keys
-        if (charCode > 31 && (charCode != 44 ) && (charCode < 48 || charCode > 57))
+        if (charCode > 31 && (charCode != 44) && (charCode < 48 || charCode > 57))
             return false;
 
         // Ensures only one decimal point
-        if (charCode == 44 ) {
+        if (charCode == 44) {
             if (evt.target.value.indexOf(',') !== -1 || evt.target.value.indexOf('.') !== -1)
                 return false;
         }
 
         // Limits to two decimal places after comma or dot
         if (evt.target.value.indexOf(',') !== -1 || evt.target.value.indexOf('.') !== -1) {
-            var dotIndex = evt.target.value.indexOf(',') !== -1 ? evt.target.value.indexOf(',') : evt.target.value.indexOf('.');
+            var dotIndex = evt.target.value.indexOf(',') !== -1 ? evt.target.value.indexOf(',') : evt.target.value
+                .indexOf('.');
             var afterDotLength = evt.target.value.length - dotIndex;
             if (afterDotLength > 2)
                 return false;
@@ -535,10 +586,10 @@ foreach ($kategori_listesi as $kategori_id => $kategori_adi) {
 
     function selectInput(input) {
         input.select();
-        
+
     }
 
- 
+
 
 
     // Tarihlerin kontrolü
