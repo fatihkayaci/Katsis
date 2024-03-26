@@ -924,7 +924,6 @@ topluSilButton.addEventListener('click', function() {
                                 userID: userID
                             },
                             success: function(deleteResponse) {
-                                alert(deleteResponse);
                                 location.reload();
                             },
                             error: function(deleteError) {
