@@ -58,44 +58,40 @@ foreach ($result2 as $row2) {
 
 
             <div class="row">
+
                 <div class="col-md-6 col-btn">
                     <input class="input" type="text" id="aciklama" required="" />
                     <label id="aciklamaLabel" for="aciklama">Açıklama *: </label>
                 </div>
 
-                <div class="col-md-12 col">
-    <input class="input" type="text" id="borcTutar" placeholder="0,00" step="0.01" onclick="selectInput(this)"
-        onkeypress="return onlyNumberKey(event)"  />
-    <label id="borcLabel" for="borcTutar">Borç Tutarı *:</label>
-</div>
+                <div class="col-md-6 col-btn">
+                    <input class="input" type="text" id="borcTutar" placeholder="0,00" step="0.01" onclick="selectInput(this)"
+                        onkeypress="return onlyNumberKey(event)"  />
+                    <label id="borcLabel" for="borcTutar">Borç Tutarı *:</label>
+                </div>
 
-                <div class="col-md-12 col-btn">
+                <div class="col-md-6 col">
                     <input class="input" type="date" value="<?php echo date('Y-m-d'); ?>" id="dateInput" required="" />
                     <label id="label_tarih" for="dateInput">Borç Tanımlama Tarihi :</label>
                 </div>
-                <div class="col-md-12 col-btn">
+
+                <div class="col-md-6 col">
                     <input class="input" type="date" value="<?php echo date('Y-m-d', strtotime('+7 days')); ?>"
                         id="dateInput2" required="" />
                     <label id="label_tarih2" for="dateInput2">Son Ödeme Tarihi :</label>
                 </div>
 
-                <div class="col-md-12 col">
-                    <select class="input select-ayar" id="kategori" required="">
+                <div class="col-md-6 col-btn">
+                    <select class="input" id="kategori" required="">
                         <option style="display: none;" value="" disabled selected></option>
-                        <?php
-
-foreach ($kategori_listesi as $kategori_id => $kategori_adi) {
-    echo "<option value='" . $kategori_id . "'>" . $kategori_adi . "</option>";
-}
-
-                
-                  ?>
+                <?php
+                foreach ($kategori_listesi as $kategori_id => $kategori_adi) {
+                    echo "<option value='" . $kategori_id . "'>" . $kategori_adi . "</option>";
+                }
+                ?>
                     </select>
                     <label id="kategoriLabel" for="kategori">Kategoriler *</label>
                 </div>
-
-
-
 
             </div>
 
@@ -111,12 +107,69 @@ foreach ($kategori_listesi as $kategori_id => $kategori_adi) {
 
     </div>
 
+    <!-- =========================================== -->
+
+    <!-- Tahsilat Ekleme Popup-->
+    <div id="popupTahsilatEkle" class="form-popup">
+
+        <form id="tahsilatEkleForm" class="login-form">
+
+            <h2 class="form-signin-heading">Borç Ekle</h2>
 
 
+            <div class="row">
+
+                <div class="col-md-6 col-btn">
+                    <input class="input" type="text" id="aciklama" required="" />
+                    <label id="aciklamaLabel" for="aciklama">Açıklama *: </label>
+                </div>
+
+                <div class="col-md-6 col-btn">
+                    <input class="input" type="text" id="tahsilatTutar"/>
+                    <label id="tahsilatLabel" for="tahsilatTutar">Tahsilat Tutarı *:</label>
+                </div>
+
+                <div class="col-md-6 col">
+                    <input class="input" type="date" value="<?php echo date('Y-m-d'); ?>" id="dateInput" required="" />
+                    <label id="label_tarih" for="dateInput">Borç Tanımlama Tarihi :</label>
+                </div>
+
+                <div class="col-md-6 col">
+                    <input class="input" type="date" value="<?php echo date('Y-m-d', strtotime('+7 days')); ?>"
+                        id="dateInput2" required="" />
+                    <label id="label_tarih2" for="dateInput2">Son Ödeme Tarihi :</label>
+                </div>
+
+                <div class="col-md-6 col-btn">
+                    <select class="input" id="kategori" required="">
+                        <option style="display: none;" value="" disabled selected></option>
+                <?php
+                foreach ($kategori_listesi as $kategori_id => $kategori_adi) {
+                    echo "<option value='" . $kategori_id . "'>" . $kategori_adi . "</option>";
+                }
+                ?>
+                    </select>
+                    <label id="kategoriLabel" for="kategori">Kategoriler *</label>
+                </div>
+
+            </div>
+
+            <hr class="horizontal dark w-100">
+
+            <div class="row row-btn">
+                <button type="button" class="btn-custom-close"
+                    onclick="popupCloseControl('popupTahsilatEkle','tahsilatEkleForm')">Kapat</button>
+                <button type="button" class="btn-custom" id="saveButton">Kaydet</button>
+            </div>
+
+        </form>
+
+    </div>
+    <!-- =========================================== -->
 
     <div class="emp-profile row">
 
-        <div class="col-xl-3 col-lg-4 col-md-12 col-sm-12 col-12">
+        <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
             <div class="h-100">
                 <div class="contact-form">
                     <div class="account-settings">
@@ -165,7 +218,7 @@ foreach ($kategori_listesi as $kategori_id => $kategori_adi) {
             </div>
         </div>
 
-        <div class="col-xl-5 col-lg-8 col-md-12 col-sm-12 col-12">
+        <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12 col-12">
             <div class="h-100">
                 <div class="contact-form">
 
@@ -179,17 +232,9 @@ foreach ($kategori_listesi as $kategori_id => $kategori_adi) {
                             <hr class="horizontal dark mt-3">
 
                             <div class="bilgi-p col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                                <p class="bilgi-p">Daire :</p>
+                                <p class="bilgi-p">Durumu :</p>
                             </div>
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                                <p class="bilgi-p"
-                                    onclick=userGo(<?= !empty($row["daire_id"]) ? $row["daire_id"] : "null" ?>)> <?php 
-                            if (!empty($row["blok_adi"]) && !empty($row["daire_sayisi"])) {
-                                echo $row["blok_adi"] . " / " . $row["daire_sayisi"];
-                            } else{
-                                echo "-";
-                            }
-                        ?>
                                 <div class="main-durum <?php
                                     if ($row["durum"] == "Kiracı") {
                                         echo "kiraci";
@@ -201,7 +246,24 @@ foreach ($kategori_listesi as $kategori_id => $kategori_adi) {
                                 ?>">
                                     <?php echo $row["durum"]; ?>
                                 </div>
+                            </div>
 
+                            <hr class="horizontal dark mt-0">
+
+                            <div class="bilgi-p col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                                <p class="bilgi-p">Daire :</p>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                                <p class="daire-link"
+                                    onclick=userGo(<?= !empty($row["daire_id"]) ? $row["daire_id"] : "null" ?>)> 
+                                    <?php 
+                                        if (!empty($row["blok_adi"]) && !empty($row["daire_sayisi"])) {
+                                            echo $row["blok_adi"] . " / " . $row["daire_sayisi"];
+                                        } else{
+                                            echo "-";
+                                        }
+                                    ?>
+                                    <i class="fa-solid fa-link"></i>
                                 </p>
                             </div>
 
@@ -257,17 +319,20 @@ foreach ($kategori_listesi as $kategori_id => $kategori_adi) {
             </div>
         </div>
 
-        <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
             <div class="h-100">
-                <div class="contact-form">
+                <div class="contact-form overflow-borc">
                     <div class="account-settings">
 
-                        <div class="btn-box-users">
-                            <button class="btn-box-outline">Düzenle</button>
-                            <div>
-                                <button class="btn-box-outline"
+                        <div class="input-group-div fixed-borc">
+                            <div class="input-group1">
+                                <button class="btn-custom-outline bcoc1"
                                     onclick=" popupOpenControl('popupBorcEkle','borcEkleForm')">Borç</button>
-                                <button class="btn-box-outline">Tahsilat</button>
+                                <button class="btn-custom-outline bcoc1"
+                                    onclick=" popupOpenControl('popupTahsilatEkle','tahsilatEkleForm')">Tahsilat</button>
+                            </div>
+                            <div class="input-group1">
+                                <button class="btn-custom-outline bcoc3">Düzenle</button>
                             </div>
                         </div>
 

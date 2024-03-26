@@ -602,19 +602,25 @@ rows.forEach(function(row) {
 
             // Yeni satırı ekleyeceğimiz referans satırı bul
             var referenceRow = document.querySelector('[data-userid="' + userID + '"]');
-                
             referenceRow.parentNode.insertBefore(newRow, referenceRow); // Yeni satırı referans satırının üstüne ekle
             emptyRowCreated[userID] = true; // Boş satır oluşturulduğunu işaretle
+
             newCell3.querySelector('.tumu-btn').addEventListener('click', function() {
                 // Tıklanan düğmeye ait kullanıcıya ait satırları göster/gizle
                 var rows = document.querySelectorAll('[data-userid="' + userID + '"]');
                 rows.forEach(function(item) {
                     if (item.style.display === 'none') {
                         item.style.display = 'table-row'; // Eğer gizli ise görünür yap
+                        item.classList.add('open-tr');
+                        this.classList.add('active-tumu');
+                        newCell3.parentNode.classList.add('git-ac-active');
                     } else {
                         item.style.display = 'none'; // Eğer görünür ise gizle
+                        this.classList.remove('active-tumu');
+                        item.classList.remove('open-tr');
+                        newCell3.parentNode.classList.remove('git-ac-active');
                     }
-                });
+                }, this);
             });
         }
     } else {

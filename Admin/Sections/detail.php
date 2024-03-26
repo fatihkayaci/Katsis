@@ -67,15 +67,15 @@ AND tbl_daireler.daire_id = " . $_SESSION['daireSayfa'];
                             <p class="bilgi-p">Kat Maliki</p>
         	    		</div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                            <p class="bilgi-p"  ><?php 
-    if(isset($row["kat_maliki_adi"]) && ($row["kat_maliki_adi"] !== null && $row["kat_maliki_adi"] !== 0)) {
-        echo '<p class="userss" onclick=userGo('.$row["kat_maliki_id"].','.$row["daire_id"].')>' . $row["kat_maliki_adi"] . '</p>';
-    } else {
-        echo '<button type="button" class="table-a tca2" onclick="openPopup('.$row["daire_id"].',1)">Kat Maliki Ekle + </button>';
-    }
-?>
 
- </p>
+                            <?php 
+                                if(isset($row["kat_maliki_adi"]) && ($row["kat_maliki_adi"] !== null && $row["kat_maliki_adi"] !== 0)) {
+                                    echo '<p class="userss daire-link" onclick=userGo('.$row["kat_maliki_id"].','.$row["daire_id"].')>' . $row["kat_maliki_adi"] . '<i class="fa-solid fa-link"></i></p>';
+                                } else {
+                                    echo '<button type="button" class="table-a tca2" onclick="openPopup('.$row["daire_id"].',1)">Kat Maliki Ekle + </button>';
+                                }
+                            ?>
+
         	    		</div>
 
                         <hr class="horizontal dark mt-0">
@@ -84,14 +84,13 @@ AND tbl_daireler.daire_id = " . $_SESSION['daireSayfa'];
                             <p class="bilgi-p">Kiracı</p>
         	    		</div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                            <p class="bilgi-p" ><?php 
-    if(isset($row["kiraci_adi"]) && ($row["kiraci_adi"] !== null && $row["kiraci_adi"] !== 0)) {
-        echo '<p class="userss" onclick=userGo('.$row["kiraci_id"].','.$row["daire_id"].')>' . $row["kiraci_adi"] . '</p>';
-    } else {
-        echo '<button type="button" class="table-a tca1" onclick="openPopup('.$row["daire_id"].',0)">Kiracı Ekle + </button>';
-    }
-?>
-</p>
+                            <?php 
+                                if(isset($row["kiraci_adi"]) && ($row["kiraci_adi"] !== null && $row["kiraci_adi"] !== 0)) {
+                                    echo '<p class="userss daire-link" onclick=userGo('.$row["kiraci_id"].','.$row["daire_id"].')>' . $row["kiraci_adi"] . '<i class="fa-solid fa-link"></i></p>';
+                                } else {
+                                    echo '<button type="button" class="table-a tca1" onclick="openPopup('.$row["daire_id"].',0)">Kiracı Ekle + </button>';
+                                }
+                            ?>
         	    		</div>
 
                         <hr class="horizontal dark mt-0">
@@ -149,14 +148,17 @@ AND tbl_daireler.daire_id = " . $_SESSION['daireSayfa'];
 
     <div class="col-xl-5 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="h-100">
-        	<div class="contact-form">
-        		<div class="account-settings">
+            <div class="contact-form overflow-borc-bolum">
+                <div class="account-settings">
 
-                    <div class="btn-box-users">
-                        <button class="btn-box-outline">Düzenle</button>
-                        <div>
-                        <button class="btn-box-outline">Borç</button>
-                        <button class="btn-box-outline">Tahsilat</button>
+                    <div class="input-group-div fixed-borc">
+                        <div class="input-group1">
+                            <button class="btn-custom-outline bcoc1"
+                                onclick=" popupOpenControl('popupBorcEkle','borcEkleForm')">Borç</button>
+                            <button class="btn-custom-outline bcoc1">Tahsilat</button>
+                        </div>
+                        <div class="input-group1">
+                            <button class="btn-custom-outline bcoc3">Düzenle</button>
                         </div>
                     </div>
 
@@ -180,10 +182,10 @@ AND tbl_daireler.daire_id = " . $_SESSION['daireSayfa'];
                             <p class="borc">borç yazar burda be</p>
                             <p class="para">30 TL</p>
                         </a>
-                    </div>                        
+                    </div>
 
-        		</div>
-        	</div>
+                </div>
+            </div>
         </div>
     </div>
     
