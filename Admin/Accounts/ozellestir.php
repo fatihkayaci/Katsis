@@ -17,6 +17,7 @@
     <?php
 
 try {
+
     $sql = "SELECT u.userID, u.userName, u.user_no, u.userEmail, u.gender, u.userPass, u.plate, u.tc, u.phoneNumber, d.daire_id, b.blok_adi AS blok_adi, d.daire_sayisi,
     CASE
         WHEN d.katMalikiID = u.userID THEN 'Kat Maliki'
@@ -47,9 +48,21 @@ foreach ($result2 as $row2) {
 }
 
 
+$sql4 = "SELECT * FROM tbl_maliye WHERE daire_id=".$_SESSION['dId']." AND user_id =".$_SESSION['userPage']." AND apartman_id=".$_SESSION["apartID"];
+$stmt4 = $conn->prepare($sql4);
+    $stmt4->execute();
+    $result4 = $stmt4->fetchAll(PDO::FETCH_ASSOC);
+
+
+
+
+
+
+
     if ($result) {
         foreach ($result as $row) {
     ?>
+
 
 
     <!-- POPUPLARIN OLUŞTURULDUĞU BÖLÜM-->
@@ -69,7 +82,7 @@ foreach ($result2 as $row2) {
                     <label id="aciklamaLabel" for="aciklama">Açıklama *: </label>
                 </div>
 
-                <div class="col-md-12 col">
+                <div class="col-md-12 col-btn">
                     <input class="input" type="text" id="borcTutar" placeholder="0,00" step="0.01"
                         onclick="selectInput(this)" onkeypress="return onlyNumberKey(event)" />
                     <label id="borcLabel" for="borcTutar">Borç Tutarı *:</label>
@@ -89,7 +102,7 @@ foreach ($result2 as $row2) {
                 <div class="col-md-6 col-btn">
                     <select class="input" id="kategori" required="">
                         <option style="display: none;" value="" disabled selected></option>
-                <?php
+                        <?php
                 foreach ($kategori_listesi as $kategori_id => $kategori_adi) {
                     echo "<option value='" . $kategori_id . "'>" . $kategori_adi . "</option>";
                 }
@@ -130,7 +143,7 @@ foreach ($result2 as $row2) {
                 </div>
 
                 <div class="col-md-6 col-btn">
-                    <input class="input" type="text" id="tahsilatTutar"/>
+                    <input class="input" type="text" id="tahsilatTutar" />
                     <label id="tahsilatLabel" for="tahsilatTutar">Tahsilat Tutarı *:</label>
                 </div>
 
@@ -148,7 +161,7 @@ foreach ($result2 as $row2) {
                 <div class="col-md-6 col-btn">
                     <select class="input" id="kategori" required="">
                         <option style="display: none;" value="" disabled selected></option>
-                <?php
+                        <?php
                 foreach ($kategori_listesi as $kategori_id => $kategori_adi) {
                     echo "<option value='" . $kategori_id . "'>" . $kategori_adi . "</option>";
                 }
@@ -259,17 +272,24 @@ foreach ($result2 as $row2) {
                                 <p class="bilgi-p">Daire :</p>
                             </div>
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+
+                                <?php 
+                                        if (!empty($row["blok_adi"]) && !empty($row["daire_sayisi"])) {  ?>
+
                                 <p class="daire-link"
-                                    onclick=userGo(<?= !empty($row["daire_id"]) ? $row["daire_id"] : "null" ?>)> 
-                                    <?php 
-                                        if (!empty($row["blok_adi"]) && !empty($row["daire_sayisi"])) {
+                                    onclick=userGo(<?= !empty($row["daire_id"]) ? $row["daire_id"] : "null" ?>)>
+                                    <?php
                                             echo $row["blok_adi"] . " / " . $row["daire_sayisi"];
+                                            ?>
+                                </p>
+                                <?php
+
                                         } else{
                                             echo "-";
                                         }
                                     ?>
-                                    <i class="fa-solid fa-link"></i>
-                                </p>
+                                <i class="fa-solid fa-link"></i>
+
                             </div>
 
                             <hr class="horizontal dark mt-0">
@@ -342,26 +362,53 @@ foreach ($result2 as $row2) {
                         </div>
 
                         <div class="borc-box">
+                            <?php 
+                           $top =0;
+                            if ($result4) {
+                                foreach ($result4 as $row4) {
+                                    $top = $top + floatval($row4['borc_miktar']);
+                                    $odeme_tarihi = $row4['odeme_tar'];
+                                
+                                    // Türkçe ay isimleri dizisi
+                                    $turkce_aylar = array(
+                                        '01' => 'Ocak',
+                                        '02' => 'Şubat',
+                                        '03' => 'Mart',
+                                        '04' => 'Nisan',
+                                        '05' => 'Mayıs',
+                                        '06' => 'Haziran',
+                                        '07' => 'Temmuz',
+                                        '08' => 'Ağustos',
+                                        '09' => 'Eylül',
+                                        '10' => 'Ekim',
+                                        '11' => 'Kasım',
+                                        '12' => 'Aralık'
+                                    );
+                                
+                                    // Tarihi parçalara ayırma
+                                    $tarih_parcalari = explode('-', $odeme_tarihi);
+                                    $gun = $tarih_parcalari[2];
+                                    $ay = $turkce_aylar[$tarih_parcalari[1]];
+                                    $yil = $tarih_parcalari[0];
+                                
+                                    // Yeni format
+                                    $yeni_format = $gun . ' ' . $ay . ' ' . $yil;
+                            ?>
+                           
                             <a href="">
-                                <p class="borc">borç yazar burda be</p>
-                                <p class="para">30 TL</p>
+                                <p class="borc"><?php echo  $yeni_format;   ?></p>
+                                <p class="para"><?php echo $row4['aciklama'];   ?></p>
+                                <p class="para"><?php echo $row4['borc_miktar'];   ?></p>
                             </a>
 
+                            <?php } ?>
                             <a href="">
-                                <p class="borc">borç yazar burda be</p>
-                                <p class="para">30 TL</p>
-                            </a>
-
-                            <a href="">
-                                <p class="borc">borç yazar burda be</p>
-                                <p class="para">30 TL</p>
-                            </a>
-
-                            <a href="">
-                                <p class="borc">borç yazar burda be</p>
-                                <p class="para">30 TL</p>
+                                <p class="borc">BAKİYE : </p>
+                                <p class="borc"><?php echo floatval( $top);   ?></p>
+                                
                             </a>
                         </div>
+
 
                     </div>
                 </div>
@@ -373,6 +420,7 @@ foreach ($result2 as $row2) {
     <?php
     }
     }
+}
 } catch (PDOException $e) {
     echo "Bağlantı hatası: " . $e->getMessage();
 }
@@ -462,6 +510,7 @@ foreach ($result2 as $row2) {
 
                 },
                 success: function(response) {
+                    alert(response);
                     if (response) {
                         document.getElementById('aciklama').value = "";
                         document.getElementById('borcTutar').value = "";
