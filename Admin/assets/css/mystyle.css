@@ -2189,6 +2189,7 @@ min-width: 0;
 .contact-form .daire-link {
   cursor: pointer;
   transition: 0.3s;
+  text-wrap: nowrap;
 }
 
 .contact-form .daire-link:hover {
@@ -2200,4 +2201,13 @@ min-width: 0;
   cursor: pointer;
   color: #277CE0;
   margin-left: 5px;
+}
+
+.toplu-th th,
+.toplu-td td {
+  text-align: center;
+}
+
+.cursor-none {
+  cursor: auto;
 }

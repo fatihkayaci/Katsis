@@ -44,15 +44,11 @@
             ?>
                 <table id="table" class="users-table">
                     <thead>
-                        <tr class="users-table-info toplu-th">
-                            <th onclick="sortTable(0)">Blok / Daire <i id="icon-table1" class="fa-solid fa-sort-down"></i></th>
-                            <th onclick="sortTable(1)">Tip <i id="icon-table2" class="fa-solid fa-sort-down"></i></th>
-                            <th onclick="sortTable(2)">Adı Soyadı <i id="icon-table3" class="fa-solid fa-sort-down"></i></th>
-                            <th onclick="sortTable(3)">T.C. No <i id="icon-table4" class="fa-solid fa-sort-down"></i></th>
-                            <th onclick="sortTable(4)">Telefon <i id="icon-table5" class="fa-solid fa-sort-down"></i></th>
-                            <th onclick="sortTable(5)">E-Posta <i id="icon-table6" class="fa-solid fa-sort-down"></i></th>
-                            <th onclick="sortTable(6)">Açılış Bakiyesi <i id="icon-table7" class="fa-solid fa-sort-down"></i></th>
-                            <th onclick="sortTable(7)">Vadesi <i id="icon-table8" class="fa-solid fa-sort-down"></i></th>
+                        <tr class="users-table-info">
+                            <th onclick="sortTable(0)">Blok Adı <i id="icon-table1" class="fa-solid fa-sort-down"></i></th>
+                            <th onclick="sortTable(1)">Daire Sayısı <i id="icon-table2" class="fa-solid fa-sort-down"></i></th>
+                            <th onclick="sortTable(2)">Kiracı Adı <i id="icon-table3" class="fa-solid fa-sort-down"></i></th>
+                            <th onclick="sortTable(3)">Kat Maliki Adı <i id="icon-table4" class="fa-solid fa-sort-down"></i></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -82,29 +78,23 @@
                 // Kiracı ve Kat Maliki bilgileri var mı kontrolü
                 if ($kiraciBilgisi && $katMalikiBilgisi) {
                     ?>
-                            <tr data-userid="" class="git-ac toplu-td">
-
-                                <td data-title="Blok Adı" name="blok">
-                                    <?php 
-                                        if (!empty($row["blok_adi"]) && !empty($row["daire_sayisi"])) {
-                                            echo $row["blok_adi"] . " / " . $row["daire_sayisi"];
-                                        }
-                                    ?>    
-                                </td>
-                                <td data-title="Kat Maliki" name="katmaliki">Kat Maliki <br><br> Kiracı</td>
-                                <td data-title="Ad Soyad" name="adsoyad"><input type="text" class="input-select"/> <br><br> <input type="text" class="input-select"/></td>
-                                <td data-title="T.C. Kat Maliki" name="tcKatMaliki"><input type="text" class="input-select"/> <br><br> <input type="text" class="input-select"/></td>
-                                <td data-title="Telefon" name="telefon"><input type="text" class="input-select"/> <br><br> <input type="text" class="input-select"/></td>
-                                <td data-title="E-Posta" name="eposta"><input type="text" class="input-select"/> <br><br> <input type="text" class="input-select"/></td>
-                                <td data-title="Açılış Bakiyesi" name="acilisBakiyesi"><input type="text" class="input-select me-2"/><input type="text" class="input-select"/> <br><br> <input type="text" class="input-select me-2"/><input type="text" class="input-select"/></td>
-                                <td data-title="Vadesi" name="vadesi"><input type="text" class="input-select"/> <br><br> <input type="text" class="input-select"/></td>
+                            <tr data-userid="" class="git-ac">
+                                <td data-title="Blok Adı" name="blok"><?php echo $blokAdi; ?></td>
+                                <td data-title="Daire Sayısı" name="daire"><?php echo $daireSayisi; ?></td>
+                                <td data-title="Kiracı Adı"><input type="text" class="input-select" name="kiraciUserName"  value="<?php echo $kiraciBilgisi['userName']; ?>" /></td>
+                                <td data-title="Kat Maliki Adı"><input type="text" class="input-select" name="katMalikiUserName" value="<?php echo $katMalikiBilgisi['userName']; ?>" /></td>
                             </tr>
                             
                     <?php
                 } else {
                     // Kullanıcı bilgileri bulunamadıysa, hata mesajı veya başka bir işlem
                     ?>
-                            
+                            <tr data-userid="" class="git-ac">
+                                <td data-title="Blok Adı" name="blok"><?php echo $blokAdi; ?></td>
+                                <td data-title="Daire Sayısı" name="daire"><?php echo $daireSayisi; ?></td>
+                                <td data-title="Kiracı Adı"><input class="input-select" type="text" class="input-select" name="kiraciUserName" value="<?php echo ($kiraciBilgisi ? $kiraciBilgisi['userName'] : ''); ?>" /></td>
+                                <td data-title="Kat Maliki Adı"><input class="input-select" type="text" name="katMalikiUserName" value="<?php echo ($katMalikiBilgisi ? $katMalikiBilgisi['userName'] : ''); ?>" /></td>
+                            </tr>
                     <?php
                 }
             }

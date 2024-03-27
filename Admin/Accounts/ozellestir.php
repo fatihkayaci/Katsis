@@ -240,7 +240,7 @@ foreach ($result2 as $row2) {
                                 <p class="bilgi-p">Durumu :</p>
                             </div>
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                                <div class="main-durum <?php
+                                <div class="cursor-none main-durum <?php
                                     if ($row["durum"] == "Kiracı") {
                                         echo "kiraci";
                                     } elseif ($row["durum"] == "Kat Maliki") {
