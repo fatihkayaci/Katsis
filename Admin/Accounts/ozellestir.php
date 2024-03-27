@@ -300,6 +300,7 @@ $stmt4 = $conn->prepare($sql4);
                                     <?php
                                             echo $row["blok_adi"] . " / " . $row["daire_sayisi"];
                                             ?>
+                                            <i class="fa-solid fa-link"></i>
                                 </p>
                                 <?php
 
@@ -307,7 +308,6 @@ $stmt4 = $conn->prepare($sql4);
                                             echo "-";
                                         }
                                     ?>
-                                <i class="fa-solid fa-link"></i>
 
                             </div>
 
