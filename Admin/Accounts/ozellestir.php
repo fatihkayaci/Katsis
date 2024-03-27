@@ -48,7 +48,26 @@ foreach ($result2 as $row2) {
 }
 
 
-$sql4 = "SELECT * FROM tbl_maliye WHERE daire_id=".$_SESSION['dId']." AND user_id =".$_SESSION['userPage']." AND apartman_id=".$_SESSION["apartID"];
+$sql4 = "SELECT aciklama, odeme_tar, borc_miktar, 
+                (SELECT SUM(borc_miktar) FROM tbl_maliye 
+                 WHERE user_id = ".$_SESSION['userPage']." AND apartman_id = ".$_SESSION["apartID"];
+           if (!$_SESSION['dId'] == "") {
+            $sql4 .= " AND daire_id = " . $_SESSION['dId']; 
+        }       
+                 
+                 
+         $sql4 .=") AS toplam_borc 
+         FROM tbl_maliye 
+         WHERE user_id = ".$_SESSION['userPage']." AND apartman_id = ".$_SESSION["apartID"];
+
+
+
+if (!$_SESSION['dId'] == "") {
+    $sql4 .= " AND daire_id = " . $_SESSION['dId']; 
+} 
+
+
+
 $stmt4 = $conn->prepare($sql4);
     $stmt4->execute();
     $result4 = $stmt4->fetchAll(PDO::FETCH_ASSOC);
@@ -363,10 +382,10 @@ $stmt4 = $conn->prepare($sql4);
 
                         <div class="borc-box">
                             <?php 
-                           $top =0;
+                         
                             if ($result4) {
                                 foreach ($result4 as $row4) {
-                                    $top = $top + floatval($row4['borc_miktar']);
+                                  
                                     $odeme_tarihi = $row4['odeme_tar'];
                                 
                                     // Türkçe ay isimleri dizisi
@@ -404,7 +423,7 @@ $stmt4 = $conn->prepare($sql4);
                             <?php } ?>
                             <a href="">
                                 <p class="borc">BAKİYE : </p>
-                                <p class="borc"><?php echo floatval( $top);   ?></p>
+                                <p class="borc"><?php echo  $row4['toplam_borc'];    ?></p>
                                 
                             </a>
                         </div>
@@ -516,6 +535,7 @@ $stmt4 = $conn->prepare($sql4);
                         document.getElementById('borcTutar').value = "";
                         document.getElementById('kategori').value = "";
                         popupCloseControl('popupBorcEkle', 'borcEkleForm');
+                        location.reload();
                     }
 
 
