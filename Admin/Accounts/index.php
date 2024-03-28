@@ -864,7 +864,6 @@ try {
                 var userID = row.getAttribute('data-userid');
                 var userName = row.querySelector('td:nth-child(2)').textContent.trim();
                 var phoneNumber = row.querySelector('td:nth-child(3)').textContent.trim();
-                var arsive = 0;
                 console.log(userName);
                 $.ajax({
                     url: 'Controller/update_user.php',
@@ -872,8 +871,7 @@ try {
                     data: {
                         userID: userID,
                         userName: userName,
-                        phoneNumber: phoneNumber,
-                        arsive: arsive
+                        phoneNumber: phoneNumber
                     },
                     success: function (response) {
                         if (response == 1) {
@@ -1085,7 +1083,6 @@ try {
             }
         } else {
             if (kisitlamalar(userName /* tc, phoneNumber, userEmail, plate*/)) {
-                arsive = 0;
                 saveUserData(userName, tc, phoneNumber, durumArray, userEmail, plate, gender, apartman_id, blokArray, arsive);
             } else {
                 return;
@@ -1147,6 +1144,7 @@ try {
                 arsive: arsive
             },
             success: function (arsiveResponse) {
+                alert(arsiveResponse);
                 if (arsiveResponse == 1) {
                     location.reload();
                 }

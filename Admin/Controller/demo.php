@@ -9,7 +9,6 @@ try {
     $durumArray = json_decode($_POST['durumArray']);
     $blokArray = json_decode($_POST['blokArray'], true);
     $updatedStatuses = array();
-    $updatedBlocks = array();
     //echo json_encode(array("durumArray" => $durumArray, "blokArray" => $blokArray));
     foreach ($blokArray as $blokElement) {
         $sadeceBlok = $blokElement['letter'];
@@ -50,7 +49,8 @@ try {
             if ($durum == "kiraci") {
                 $sql = "UPDATE tbl_daireler d
                          INNER JOIN tbl_blok b ON d.blok_adi = b.blok_id
-                         SET d.kiraciID = (SELECT userID FROM tbl_users WHERE userID = :lastID)
+                         SET d.kiraciID = (SELECT userID FROM tbl_users WHERE userID = :lastID),
+                             d.kiraciGiris = NOW() /* Güncelleme yapıldığı tarih */
                          WHERE b.blok_adi = :sadeceBlok AND d.daire_sayisi = :sadeceDaire AND d.apartman_id = " . $_SESSION["apartID"];
                 // PDO sorgusunu hazırla ve çalıştır
                 $stmt = $conn->prepare($sql);
@@ -63,7 +63,8 @@ try {
             } else if ($durum == "katmaliki") {
                 $sql = "UPDATE tbl_daireler d
                          INNER JOIN tbl_blok b ON d.blok_adi = b.blok_id
-                         SET d.katmalikiID = (SELECT userID FROM tbl_users WHERE userID = :lastID)
+                         SET d.katmalikiID = (SELECT userID FROM tbl_users WHERE userID = :lastID),
+                             d.katMGiris = NOW() /* Güncelleme yapıldığı tarih */
                          WHERE b.blok_adi = :sadeceBlok AND d.daire_sayisi = :sadeceDaire AND d.apartman_id = " . $_SESSION["apartID"];
                 // PDO sorgusunu hazırla ve çalıştır
                 $stmt = $conn->prepare($sql);
@@ -76,6 +77,7 @@ try {
             }
             break;
         }
+        
     }
     $_SESSION['updatedStatuses'] = $updatedStatuses;
     $_SESSION['updatedBlocks'] = $updatedBlocks;

@@ -17,7 +17,8 @@
     <?php
 
 try {
-    $sql = "SELECT u.userID, u.userName, u.user_no, u.userEmail, u.gender, u.userPass, u.plate, u.tc, u.phoneNumber, d.daire_id, b.blok_adi AS blok_adi, d.daire_sayisi,
+    $sql = "SELECT u.userID, u.userName, u.user_no, u.userEmail, u.gender, u.userPass, u.plate, u.tc, u.phoneNumber, 
+    d.daire_id, b.blok_adi AS blok_adi, u.oldBlock, u.oldNumber, u.oldState, u.arsive, d.kiraciGiris, d.katMGiris, d.daire_sayisi,
     CASE
         WHEN d.katMalikiID = u.userID THEN 'Kat Maliki'
         WHEN d.kiraciID = u.userID THEN 'Kiracı'
@@ -241,6 +242,15 @@ foreach ($result2 as $row2) {
                             </div>
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
                                 <div class="cursor-none main-durum <?php
+                                if($row["arsive"] == 1) {
+                                    if ($row["oldState"] == "kiraci") {
+                                        echo "kiraci";
+                                    } elseif ($row["oldState"] == "katMaliki") {
+                                        echo "kat Maliki";
+                                    } else {
+                                        echo "belirtilmemis";
+                                    }
+                                }else if($row["arsive"] == 0) {
                                     if ($row["durum"] == "Kiracı") {
                                         echo "kiraci";
                                     } elseif ($row["durum"] == "Kat Maliki") {
@@ -248,8 +258,15 @@ foreach ($result2 as $row2) {
                                     } else {
                                         echo "belirtilmemis";
                                     }
+                                }
                                 ?>">
-                                    <?php echo $row["durum"]; ?>
+                                    <?php   
+                                    if($row["arsive"] == 1) {
+                                        echo "Eski ".$row["oldState"];
+                                    }else if($row["arsive"] == 0) {
+                                        echo $row["durum"];
+                                    }
+                                     ?>
                                 </div>
                             </div>
 
@@ -262,11 +279,19 @@ foreach ($result2 as $row2) {
                                 <p class="daire-link"
                                     onclick=userGo(<?= !empty($row["daire_id"]) ? $row["daire_id"] : "null" ?>)> 
                                     <?php 
+                                    if($row["arsive"] == 1){
+                                        if (!empty($row["oldBlock"]) && !empty($row["oldNumber"])) {
+                                            echo "Eski " .$row["oldBlock"] . " / " . $row["oldNumber"];
+                                        } else{
+                                            echo "-";
+                                        }
+                                    }else if($row["arsive"] == 0) {
                                         if (!empty($row["blok_adi"]) && !empty($row["daire_sayisi"])) {
                                             echo $row["blok_adi"] . " / " . $row["daire_sayisi"];
                                         } else{
                                             echo "-";
                                         }
+                                    }
                                     ?>
                                     <i class="fa-solid fa-link"></i>
                                 </p>
@@ -287,7 +312,13 @@ foreach ($result2 as $row2) {
                                 <p class="bilgi-p">Giriş Tarihi :</p>
                             </div>
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                                <p class="bilgi-p">Giriş Tarihi Yazılacak</p>
+                                <p class="bilgi-p"><?php 
+                                if($row["durum"]=="Kiracı"){
+                                    echo $row["kiraciGiris"];
+                                } else if($row["durum"]== "Kat Maliki"){
+                                    echo $row["katMGiris"];
+                                }
+                                ?></p>
                             </div>
 
                             <hr class="horizontal dark mt-0">
