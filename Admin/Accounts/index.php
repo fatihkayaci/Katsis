@@ -1144,7 +1144,6 @@ try {
                 arsive: arsive
             },
             success: function (arsiveResponse) {
-                alert(arsiveResponse);
                 if (arsiveResponse == 1) {
                     location.reload();
                 }
