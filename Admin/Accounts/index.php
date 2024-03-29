@@ -1074,7 +1074,6 @@ try {
                 if (kisitlamalar(userName /* tc, phoneNumber, userEmail, plate*/)) {
                     arsive = 1;
                     saveUserData(userName, tc, phoneNumber, durumArray, userEmail, plate, gender, apartman_id, blokArray, arsive);
-
                 } else {
                     return;
                 }
@@ -1106,6 +1105,7 @@ try {
                 apartman_id: apartman_id
             },
             success: function (response) {
+            alert("response1 = "+response);
                 if (response == 1) {
                     // İkinci AJAX isteği
                     sendData(blokArray, durumArray, arsive);
@@ -1126,6 +1126,7 @@ try {
                 durumArray: JSON.stringify(durumArray)
             },
             success: function (secondResponse) {
+                alert("secondresponse = "+secondResponse);
                 if (secondResponse == 1) {
                     arsiveUser(arsive);
                 }
@@ -1144,6 +1145,7 @@ try {
                 arsive: arsive
             },
             success: function (arsiveResponse) {
+                alert("arsiveResponse = "+arsiveResponse);
                 if (arsiveResponse == 1) {
                     location.reload();
                 }

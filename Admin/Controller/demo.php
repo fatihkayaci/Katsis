@@ -9,6 +9,7 @@ try {
     $durumArray = json_decode($_POST['durumArray']);
     $blokArray = json_decode($_POST['blokArray'], true);
     $updatedStatuses = array();
+    $resultsArray = array(); 
     //echo json_encode(array("durumArray" => $durumArray, "blokArray" => $blokArray));
     foreach ($blokArray as $blokElement) {
         $sadeceBlok = $blokElement['letter'];
@@ -37,13 +38,12 @@ try {
         // Elde edilen kiracı ve kat maliki ID'lerini kullanarak istediğiniz işlemi gerçekleştirebilirsiniz
         // Örneğin, bu ID'leri JSON formatında döndürebilirsiniz
 
-        $result = array(
+        $resultsArray[] = array(
+            'blokElement' => $blokElement,
             'kiraciID' => $kiraciID,
             'katMalikiID' => $katMalikiID
         );
-        $_SESSION['result'] = $result;
         $updatedBlocks[] = $blokElement;
-
         // Her bir durum için işlem yapalım
         foreach ($durumArray as $durum) {
             if ($durum == "kiraci") {
@@ -81,6 +81,7 @@ try {
     }
     $_SESSION['updatedStatuses'] = $updatedStatuses;
     $_SESSION['updatedBlocks'] = $updatedBlocks;
+    $_SESSION['resultsArray'] = $resultsArray;
     echo 1;
 } catch (PDOException $e) {
     echo $e->getMessage(); // Hata mesajını ekrana yazdır
