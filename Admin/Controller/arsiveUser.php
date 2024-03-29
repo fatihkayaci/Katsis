@@ -60,7 +60,6 @@ try {
         $updateUserStateStmt->execute();
     }
     
-    print_r($resultsArray);
     echo 1;
 } catch (PDOException $e) {
     echo $e->getMessage(); // Hata mesajını ekrana yazdır
