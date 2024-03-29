@@ -380,6 +380,10 @@ overflow: auto;
   border: 1px solid #1c5aa1;
 }
 
+.daireEkle {
+  margin-bottom: 0;
+}
+
 .ekle-btn {
   width: 92px;
   max-width: 92px;
@@ -1034,7 +1038,7 @@ text-transform: none;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-between;
+  text-decoration: none;
   align-items: center;
   height: 52px;
   background-color: #fff;
@@ -1047,24 +1051,39 @@ text-transform: none;
   transition: 0.3s;
 }
 
-.borc-box a:hover {
-  background-color: #277CE0;
-  box-shadow: 2px 2px 5px 1px #bebebe;
-  border-radius: 8px;
-  border: 1px solid #277CE0;
+.borc-box a p {
+  margin: 0;
+  flex: 1;
+}
+
+.aciklama {
+  text-align: center;
+}
+
+.tarih {
+  text-align: left;
 }
 
 .borc {
-  margin: 0;
+  text-align: right;
 }
 
-.para {
-  margin: 0;
+.tl-img {
+  height: 12px;
+  object-fit: scale-down;
+  margin: auto;
+  margin-left: 5px;
+  vertical-align: baseline;
+}
+
+.borc-box a:hover {
+  background-color: #ebebeb;
+  box-shadow: inset 5px 5px 5px 1px #dfdfdf54;
+  border-radius: 8px;
 }
 
 .borc-box a:hover > .borc,
 .borc-box a:hover > .para {
-  color: #fff;
 }
 
 .search-box {
@@ -2110,7 +2129,7 @@ min-width: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
   padding: 10px;
   border-radius: 5px;
   border: 1px solid #e4e4e4;

@@ -473,16 +473,16 @@ $toplamBorc=$result4[0]['toplam_borc'];
                             ?>
                            
                             <a href="">
-                                <p class="borc"><?php echo  $yeni_format;   ?></p>
-                                <p class="para"><?php echo $row4['aciklama'];   ?><p class="para"><?php echo $row4['kategori_adi'];   ?></p>
-                                <p class="para"><?php echo $row4['borc_miktar'];   ?></p>
+                                <p class="tarih"><?php echo  $yeni_format;   ?></p>
+                                <p class="aciklama"><?php echo $row4['aciklama']; ?>
+                                <p class="aciklama"><?php echo $row4['kategori_adi']; ?></p>
+                                <p class="borc"><?php echo $row4['borc_miktar']; ?> <img class="tl-img" src="../Admin\assets\img\tl.png" alt=""></p>
                             </a>
 
                             <?php } ?>
                             <a href="">
-                                <p class="borc">BAKİYE : </p>
-                                <p class="borc"><?php echo  $row4['toplam_borc'];    ?></p>
-                                
+                                <p class="tarih">BAKİYE : </p>
+                                <p class="borc"><?php echo  $row4['toplam_borc']; ?> <img class="tl-img" src="../Admin\assets\img\tl.png" alt=""></p>
                             </a>
                         </div>
 

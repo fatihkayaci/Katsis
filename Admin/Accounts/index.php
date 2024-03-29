@@ -352,18 +352,18 @@ try {
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-6 col">
-                <input class="input" type="text" name="apartman_id" value=<?php echo $_SESSION["apartID"]; ?> hidden>
-            </div>
-        </div>
+        <input class="input" type="text" name="apartman_id" value=<?php echo $_SESSION["apartID"]; ?> hidden>
 
         <div class="row">
             <div class="col-md-12 col-btn">
                 <button type="button" class="daireEkle btn-custom-daire">Daire Ata</button>
             </div>
         </div>
-        <div class="indexAdd">
+        <div class="row">
+            <div class="col-md-12 col-btn mb-0">
+                <div class="indexAdd">
+                </div>
+            </div>
         </div>
 
         <hr class="horizontal dark mt-0 w-100">
