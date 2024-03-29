@@ -48,29 +48,58 @@ foreach ($result2 as $row2) {
 }
 
 
-$sql4 = "SELECT aciklama, odeme_tar, borc_miktar, 
-                (SELECT SUM(borc_miktar) FROM tbl_maliye 
-                 WHERE user_id = ".$_SESSION['userPage']." AND apartman_id = ".$_SESSION["apartID"];
-           if (!$_SESSION['dId'] == "") {
-            $sql4 .= " AND daire_id = " . $_SESSION['dId']; 
-        }       
-                 
-                 
-         $sql4 .=") AS toplam_borc 
-         FROM tbl_maliye 
-         WHERE user_id = ".$_SESSION['userPage']." AND apartman_id = ".$_SESSION["apartID"];
 
+//////////////////////////////////
+$sql4 = "SELECT m.aciklama, m.odeme_tar, m.borc_miktar, 
+(SELECT SUM(borc_miktar) FROM tbl_maliye 
+ WHERE user_id = :user_id AND apartman_id = :apartman_id";
 
+if (!empty($_SESSION['dId'])) {
+$sql4 .= " AND daire_id = :daire_id";
+}
 
-if (!$_SESSION['dId'] == "") {
-    $sql4 .= " AND daire_id = " . $_SESSION['dId']; 
-} 
+$sql4 .= ") AS toplam_borc, k.kategori_adi
+FROM tbl_maliye m
+INNER JOIN tbl_kategori k ON m.kategori_id = k.kategori_id
+WHERE m.user_id = :user_id AND m.apartman_id = :apartman_id";
 
+if (!empty($_SESSION['dId'])) {
+$sql4 .= " AND m.daire_id = :daire_id";
+}
 
-
+// Sorguyu hazırla
 $stmt4 = $conn->prepare($sql4);
-    $stmt4->execute();
-    $result4 = $stmt4->fetchAll(PDO::FETCH_ASSOC);
+
+// Değişkenleri bağla
+$stmt4->bindParam(':user_id', $_SESSION['userPage'], PDO::PARAM_INT);
+$stmt4->bindParam(':apartman_id', $_SESSION["apartID"], PDO::PARAM_INT);
+
+if (!empty($_SESSION['dId'])) {
+$stmt4->bindParam(':daire_id', $_SESSION['dId'], PDO::PARAM_INT);
+}
+
+// Sorguyu çalıştır
+$stmt4->execute();
+
+// Sonuçları al
+$result4 = $stmt4->fetchAll(PDO::FETCH_ASSOC);
+$toplamBorc=$result4[0]['toplam_borc'];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/////////////////////////////////
 
 
 
@@ -396,8 +425,13 @@ $stmt4 = $conn->prepare($sql4);
                             <div class="input-group1">
                                 <button class="btn-custom-outline bcoc1"
                                     onclick=" popupOpenControl('popupBorcEkle','borcEkleForm')">Borç</button>
-                                <button class="btn-custom-outline bcoc1"
-                                    onclick=" popupOpenControl('popupTahsilatEkle','tahsilatEkleForm')">Tahsilat</button>
+
+                            <?php   if($toplamBorc >0){  ?>
+
+                                  
+                                <button class="btn-custom-outline bcoc1" onclick=" popupOpenControl('popupTahsilatEkle','tahsilatEkleForm')">Tahsilat</button>
+                                <?php  }  ?>
+
                             </div>
                             <div class="input-group1">
                                 <button class="btn-custom-outline bcoc3">Düzenle</button>
@@ -440,7 +474,7 @@ $stmt4 = $conn->prepare($sql4);
                            
                             <a href="">
                                 <p class="borc"><?php echo  $yeni_format;   ?></p>
-                                <p class="para"><?php echo $row4['aciklama'];   ?></p>
+                                <p class="para"><?php echo $row4['aciklama'];   ?><p class="para"><?php echo $row4['kategori_adi'];   ?></p>
                                 <p class="para"><?php echo $row4['borc_miktar'];   ?></p>
                             </a>
 
@@ -553,7 +587,6 @@ $stmt4 = $conn->prepare($sql4);
 
                 },
                 success: function(response) {
-                    alert(response);
                     if (response) {
                         document.getElementById('aciklama').value = "";
                         document.getElementById('borcTutar').value = "";
