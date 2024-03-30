@@ -18,10 +18,10 @@ try {
 
         $statuse = 'kiraci';
         // tbl_arsive tablosuna ekleme işlemi
-        $sqlKiraciEkle = "INSERT INTO tbl_arsive (userID, fullName, email, phoneNumber, TC, gender, plate, oldBlock, oldNumber, statuse)
-                          VALUES (:userID, :fullName, :email, :phoneNumber, :TC, :gender, :plate, :oldBlock, :oldNumber, :statuse)";
+        $sqlKiraciEkle = "INSERT INTO tbl_arsive (grupID,fullName, email, phoneNumber, TC, gender, plate, oldBlock, oldNumber, statuse)
+                          VALUES (:grupID, :fullName, :email, :phoneNumber, :TC, :gender, :plate, :oldBlock, :oldNumber, :statuse)";
         $stmtKiraciEkle = $conn->prepare($sqlKiraciEkle);
-        $stmtKiraciEkle->bindParam(':userID', $kiraci['kiraciID'], PDO::PARAM_INT);
+        $stmtKiraciEkle->bindParam(':grupID', $kiraci['kiraciID'], PDO::PARAM_INT);
         $stmtKiraciEkle->bindParam(':fullName', $kiraci['userName'], PDO::PARAM_STR);
         $stmtKiraciEkle->bindParam(':email', $kiraci['userEmail'], PDO::PARAM_STR);
         $stmtKiraciEkle->bindParam(':gender', $kiraci['gender'], PDO::PARAM_STR);
@@ -44,10 +44,10 @@ try {
 
         $statuse = 'katMaliki';
         // tbl_arsive tablosuna ekleme işlemi
-        $sqlKatMalikiEkle = "INSERT INTO tbl_arsive (userID, fullName, email, phoneNumber, TC, gender, plate, oldBlock, oldNumber, statuse)
-                      VALUES (:userID, :fullName, :email, :phoneNumber, :TC, :gender, :plate, :oldBlock, :oldNumber, :statuse)";
+        $sqlKatMalikiEkle = "INSERT INTO tbl_arsive (grupID, fullName, email, phoneNumber, TC, gender, plate, oldBlock, oldNumber, statuse)
+                      VALUES (:grupID, :fullName, :email, :phoneNumber, :TC, :gender, :plate, :oldBlock, :oldNumber, :statuse)";
         $stmtKatMalikiEkle = $conn->prepare($sqlKatMalikiEkle);
-        $stmtKatMalikiEkle->bindParam(':userID', $katMaliki['katMalikiID'], PDO::PARAM_INT);
+        $stmtKatMalikiEkle->bindParam(':grupID', $katMaliki['katMalikiID'], PDO::PARAM_INT);
         $stmtKatMalikiEkle->bindParam(':fullName', $katMaliki['userName'], PDO::PARAM_STR);
         $stmtKatMalikiEkle->bindParam(':email', $katMaliki['userEmail'], PDO::PARAM_STR);
         $stmtKatMalikiEkle->bindParam(':gender', $katMaliki['gender'], PDO::PARAM_STR);
@@ -58,6 +58,7 @@ try {
         $stmtKatMalikiEkle->bindParam(':oldNumber', $oldNumber, PDO::PARAM_STR);
         $stmtKatMalikiEkle->bindParam(':statuse', $statuse, PDO::PARAM_STR); // Örnek bir statü değeri
         $stmtKatMalikiEkle->execute();
+
     }
 
     // Başarılı bir şekilde eklendiğini kontrol etmek için bir mesaj döndür

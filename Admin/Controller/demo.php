@@ -71,8 +71,15 @@ try {
                 // Kiracı için olanları ayrı bir diziye ekleyin
                 $resultsArrayKiraci[] = array(
                     'blokElement' => $blokElement,
-                    'kiraciID' => $kiraciID
+                    'kiraciID' => $kiraciID,
+                    'userName' => isset($kiraciBilgileri['userName']) ? $kiraciBilgileri['userName'] : null,
+                    'userEmail' => isset($kiraciBilgileri['userEmail']) ? $kiraciBilgileri['userEmail'] : null,
+                    'gender' => isset($kiraciBilgileri['gender']) ? $kiraciBilgileri['gender'] : null,
+                    'phoneNumber' => isset($kiraciBilgileri['phoneNumber']) ? $kiraciBilgileri['phoneNumber'] : null,
+                    'plate' => isset($kiraciBilgileri['plate']) ? $kiraciBilgileri['plate'] : null,
+                    'tc' => isset($kiraciBilgileri['tc']) ? $kiraciBilgileri['tc'] : null
                 );
+                
             } else if ($durum == "katmaliki") {
                 $sql = "UPDATE tbl_daireler d
                          INNER JOIN tbl_blok b ON d.blok_adi = b.blok_id
@@ -91,7 +98,13 @@ try {
                 // Kat maliki için olanları ayrı bir diziye ekleyin
                 $resultsArrayKatMaliki[] = array(
                     'blokElement' => $blokElement,
-                    'katMalikiID' => $katMalikiID
+                    'katMalikiID' => $katMalikiID,
+                    'userName' => isset($katMalikiBilgileri['userName']) ? $katMalikiBilgileri['userName'] : null,
+                    'userEmail' => isset($katMalikiBilgileri['userEmail']) ? $katMalikiBilgileri['userEmail'] : null,
+                    'gender' => isset($katMalikiBilgileri['gender']) ? $katMalikiBilgileri['gender'] : null,
+                    'phoneNumber' => isset($katMalikiBilgileri['phoneNumber']) ? $katMalikiBilgileri['phoneNumber'] : null,
+                    'plate' => isset($katMalikiBilgileri['plate']) ? $katMalikiBilgileri['plate'] : null,
+                    'tc' => isset($katMalikiBilgileri['tc']) ? $katMalikiBilgileri['tc'] : null
                 );
             }
             break;
@@ -101,7 +114,6 @@ try {
     $_SESSION['updatedBlocks'] = $updatedBlocks;
     $_SESSION['resultsArrayKiraci'] = $resultsArrayKiraci; // Kiracılar için olanlar
     $_SESSION['resultsArrayKatMaliki'] = $resultsArrayKatMaliki; // Kat malikleri için olanlar
-    print_r($resultsArrayKatMaliki);
     echo 1;
 } catch (PDOException $e) {
     echo $e->getMessage(); // Hata mesajını ekrana yazdır

@@ -1073,7 +1073,6 @@ try {
                 status + " bu dairede oturan kullanıcıyı silmek ister misin?")) {
                 if (kisitlamalar(userName /* tc, phoneNumber, userEmail, plate*/)) {
                     saveUserData(userName, tc, phoneNumber, durumArray, userEmail, plate, gender, apartman_id, blokArray);
-                    arsiveUser();
                 } else {
                     return;
                 }
@@ -1105,7 +1104,6 @@ try {
                 apartman_id: apartman_id
             },
             success: function (response) {
-                alert(response);
                 if (response == 1) {
                     // İkinci AJAX isteği
                     sendData(blokArray, durumArray);
@@ -1128,7 +1126,7 @@ try {
             success: function (secondResponse) {
                 alert(secondResponse);
                 if (secondResponse == 1) {
-                    alert(secondResponse);
+                    arsiveUser();
                 }
             },
             error: function (secondError) {
@@ -1144,9 +1142,7 @@ try {
             data: {},
             success: function (arsiveResponse) {
                 alert(arsiveResponse);
-                if (arsiveResponse == 1) {
-                    location.reload();
-                }
+                location.reload();
             },
             error: function (secondError) {
                 console.error(secondError);
