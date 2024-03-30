@@ -1072,8 +1072,8 @@ try {
             if (confirm("Çakışma durumu bulundu: Blok ismi: " + block + ", Daire sayısı: " + flatCount + ", Durum: " +
                 status + " bu dairede oturan kullanıcıyı silmek ister misin?")) {
                 if (kisitlamalar(userName /* tc, phoneNumber, userEmail, plate*/)) {
-                    arsive = 1;
-                    saveUserData(userName, tc, phoneNumber, durumArray, userEmail, plate, gender, apartman_id, blokArray, arsive);
+                    saveUserData(userName, tc, phoneNumber, durumArray, userEmail, plate, gender, apartman_id, blokArray);
+                    arsiveUser();
                 } else {
                     return;
                 }
@@ -1082,7 +1082,7 @@ try {
             }
         } else {
             if (kisitlamalar(userName /* tc, phoneNumber, userEmail, plate*/)) {
-                saveUserData(userName, tc, phoneNumber, durumArray, userEmail, plate, gender, apartman_id, blokArray, arsive);
+                saveUserData(userName, tc, phoneNumber, durumArray, userEmail, plate, gender, apartman_id, blokArray);
             } else {
                 return;
             }
@@ -1090,7 +1090,7 @@ try {
 
     };
 
-    function saveUserData(userName, tc, phoneNumber, durumArray, userEmail, plate, gender, apartman_id, blokArray, arsive) {
+    function saveUserData(userName, tc, phoneNumber, durumArray, userEmail, plate, gender, apartman_id, blokArray) {
         $.ajax({
             url: 'Controller/save_user.php',
             type: 'POST',
@@ -1105,9 +1105,10 @@ try {
                 apartman_id: apartman_id
             },
             success: function (response) {
+                alert(response);
                 if (response == 1) {
                     // İkinci AJAX isteği
-                    sendData(blokArray, durumArray, arsive);
+                    sendData(blokArray, durumArray);
                 }
             },
             error: function (error) {
@@ -1116,7 +1117,7 @@ try {
         });
     }
 
-    function sendData(blokArray, durumArray, arsive) {
+    function sendData(blokArray, durumArray) {
         $.ajax({
             url: 'Controller/demo.php',
             type: 'POST',
@@ -1125,8 +1126,9 @@ try {
                 durumArray: JSON.stringify(durumArray)
             },
             success: function (secondResponse) {
+                alert(secondResponse);
                 if (secondResponse == 1) {
-                    arsiveUser(arsive);
+                    alert(secondResponse);
                 }
             },
             error: function (secondError) {
@@ -1135,14 +1137,13 @@ try {
         });
     }
 
-    function arsiveUser(arsive) {
+    function arsiveUser() {
         $.ajax({
             url: 'Controller/arsiveUser.php',
             type: 'POST',
-            data: {
-                arsive: arsive
-            },
+            data: {},
             success: function (arsiveResponse) {
+                alert(arsiveResponse);
                 if (arsiveResponse == 1) {
                     location.reload();
                 }
@@ -1152,46 +1153,7 @@ try {
             }
         });
     }
-    /*
-    var deleteButtons = document.querySelectorAll('.deleteButton');
     
-    deleteButtons.forEach(function(button) {
-        button.addEventListener('click', function() {
-            var row = this.closest('tr'); // Güncellenen satırı bul
-            var userName = row.querySelector('td:nth-child(1)').textContent;
-            var tc = row.querySelector('td:nth-child(2)').textContent;
-            var phoneNumber = row.querySelector('td:nth-child(3)').textContent;
-            var userEmail = row.querySelector('td:nth-child(4)').textContent;
-            var userPass = row.querySelector('td:nth-child(5)').textContent;
-            var plate = row.querySelector('td:nth-child(6)').textContent;
-            var gender = row.querySelector('td:nth-child(7)').textContent;
-            var userID = row.getAttribute('data-userid');
-            $.ajax({
-                url: 'Controller/delete_user.php',
-                type: 'POST',
-                data: {
-                    userID: userID,
-                    userName: userName,
-                    tc: tc,
-                    phoneNumber: phoneNumber,
-                    userEmail: userEmail,
-                    userPass: userPass,
-                    plate: plate,
-                    gender: gender
-                },
-                success: function(response) {
-                    if (response == 1) {
-                        //alert("güncellendi"+response);
-                        location.reload();
-                    }
-                },
-                error: function(error) {
-                    console.error(error);
-                }
-            });
-        });
-    });
-    */
     var checkEdit = true;
     // Checkbox durumuna göre düzenleme fonksiyonlarını etkinleştirme veya devre dışı bırakma
     document.getElementById("editToggle").addEventListener("change", function () {

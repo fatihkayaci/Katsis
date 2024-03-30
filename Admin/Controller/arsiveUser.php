@@ -1,67 +1,69 @@
 <?php
-include("../../DB/dbconfig.php");
+include ("../../DB/dbconfig.php");
+
+session_start();
 
 try {
-    session_start();
-    $updatedStatuses = $_SESSION['updatedStatuses'];
-    $updatedBlocks = $_SESSION['updatedBlocks'];
-    $arsive = $_POST['arsive'];
-    $resultsArray = $_SESSION['resultsArray'];
-    
-    foreach ($resultsArray as $result) {
-        // Her bir blok için verilere erişmek için
-        $kiraciID = $result['kiraciID'];
-        $katMalikiID = $result['katMalikiID'];
-        $blokElement = $result['blokElement'];
+    // "resultsArrayKiraci" ve "resultsArrayKatMaliki" session'larını al
+    $resultsArrayKiraci = $_SESSION['resultsArrayKiraci'];
+    $resultsArrayKatMaliki = $_SESSION['resultsArrayKatMaliki'];
 
-        // Blok bilgilerine erişmek için
-        $blokHarf = $blokElement['letter'];
-        $blokNumara = $blokElement['number'];
+    // Her bir kiracı için
+    foreach ($resultsArrayKiraci as $kiraci) {
+        $blokElement = $kiraci['blokElement'];
 
-        if (isset($kiraciID)) {
-            $userID = $kiraciID;
-        } else if (isset($katMalikiID)) {
-            $userID = $katMalikiID;
-        }
+        // Blok elementinden letter ve number değerlerini ayır
+        $oldBlock = $blokElement['letter'];
+        $oldNumber = $blokElement['number'];
 
-        if (in_array('kiraci', $updatedStatuses)) {
-            $oldState = 'kiraci';
-        } else {
-            $oldState = 'katMaliki';
-        }
-        
-        // tbl_users tablosundaki oldNumber ve oldBlock sütunlarını güncelle
-        foreach ($updatedBlocks as $block) {
-            $blockLetter = $block['letter'];
-            $blockNumber = $block['number'];
-
-            // tbl_users tablosundaki oldNumber ve oldBlock sütunlarını güncelle
-            $updateUserSQL = "UPDATE tbl_users 
-                              SET oldNumber = :blockNumber, oldBlock = :blockLetter 
-                              WHERE userID = :userID";
-
-            $updateUserStmt = $conn->prepare($updateUserSQL);
-            $updateUserStmt->bindParam(':blockNumber', $blockNumber, PDO::PARAM_STR);
-            $updateUserStmt->bindParam(':blockLetter', $blockLetter, PDO::PARAM_STR);
-            $updateUserStmt->bindParam(':userID', $userID, PDO::PARAM_INT);
-            $updateUserStmt->execute();
-        }
-
-        // Kullanıcıyı güncelleyen SQL sorgusunu hazırlayın
-        $currentTime = date("Y-m-d H:i:s"); // Şu anki zamanı al
-        $updateUserStateSQL = "UPDATE tbl_users 
-                               SET arsive = :arsive, arsiveTime = NOW(), oldState = :oldState 
-                               WHERE userID = :userID";
-                               
-        $updateUserStateStmt = $conn->prepare($updateUserStateSQL);
-        $updateUserStateStmt->bindParam(':arsive', $arsive, PDO::PARAM_INT);
-        $updateUserStateStmt->bindParam(':oldState', $oldState);
-        $updateUserStateStmt->bindParam(':userID', $userID, PDO::PARAM_INT);
-        $updateUserStateStmt->execute();
+        $statuse = 'kiraci';
+        // tbl_arsive tablosuna ekleme işlemi
+        $sqlKiraciEkle = "INSERT INTO tbl_arsive (userID, fullName, email, phoneNumber, TC, gender, plate, oldBlock, oldNumber, statuse)
+                          VALUES (:userID, :fullName, :email, :phoneNumber, :TC, :gender, :plate, :oldBlock, :oldNumber, :statuse)";
+        $stmtKiraciEkle = $conn->prepare($sqlKiraciEkle);
+        $stmtKiraciEkle->bindParam(':userID', $kiraci['kiraciID'], PDO::PARAM_INT);
+        $stmtKiraciEkle->bindParam(':fullName', $kiraci['userName'], PDO::PARAM_STR);
+        $stmtKiraciEkle->bindParam(':email', $kiraci['userEmail'], PDO::PARAM_STR);
+        $stmtKiraciEkle->bindParam(':gender', $kiraci['gender'], PDO::PARAM_STR);
+        $stmtKiraciEkle->bindParam(':phoneNumber', $kiraci['phoneNumber'], PDO::PARAM_STR);
+        $stmtKiraciEkle->bindParam(':plate', $kiraci['plate'], PDO::PARAM_STR);
+        $stmtKiraciEkle->bindParam(':TC', $kiraci['tc'], PDO::PARAM_STR);
+        $stmtKiraciEkle->bindParam(':oldBlock', $oldBlock, PDO::PARAM_STR);
+        $stmtKiraciEkle->bindParam(':oldNumber', $oldNumber, PDO::PARAM_STR);
+        $stmtKiraciEkle->bindParam(':statuse', $statuse, PDO::PARAM_STR);
+        $stmtKiraciEkle->execute();
     }
-    
-    echo 1;
+
+    // Her bir kat maliki için aynı işlemi tekrarlayın
+    foreach ($resultsArrayKatMaliki as $katMaliki) {
+        $blokElement = $katMaliki['blokElement'];
+
+        // Blok elementinden letter ve number değerlerini ayır
+        $oldBlock = $blokElement['letter'];
+        $oldNumber = $blokElement['number'];
+
+        $statuse = 'katMaliki';
+        // tbl_arsive tablosuna ekleme işlemi
+        $sqlKatMalikiEkle = "INSERT INTO tbl_arsive (userID, fullName, email, phoneNumber, TC, gender, plate, oldBlock, oldNumber, statuse)
+                      VALUES (:userID, :fullName, :email, :phoneNumber, :TC, :gender, :plate, :oldBlock, :oldNumber, :statuse)";
+        $stmtKatMalikiEkle = $conn->prepare($sqlKatMalikiEkle);
+        $stmtKatMalikiEkle->bindParam(':userID', $katMaliki['katMalikiID'], PDO::PARAM_INT);
+        $stmtKatMalikiEkle->bindParam(':fullName', $katMaliki['userName'], PDO::PARAM_STR);
+        $stmtKatMalikiEkle->bindParam(':email', $katMaliki['userEmail'], PDO::PARAM_STR);
+        $stmtKatMalikiEkle->bindParam(':gender', $katMaliki['gender'], PDO::PARAM_STR);
+        $stmtKatMalikiEkle->bindParam(':phoneNumber', $katMaliki['phoneNumber'], PDO::PARAM_STR);
+        $stmtKatMalikiEkle->bindParam(':plate', $katMaliki['plate'], PDO::PARAM_STR);
+        $stmtKatMalikiEkle->bindParam(':TC', $katMaliki['tc'], PDO::PARAM_STR);
+        $stmtKatMalikiEkle->bindParam(':oldBlock', $oldBlock, PDO::PARAM_STR);
+        $stmtKatMalikiEkle->bindParam(':oldNumber', $oldNumber, PDO::PARAM_STR);
+        $stmtKatMalikiEkle->bindParam(':statuse', $statuse, PDO::PARAM_STR); // Örnek bir statü değeri
+        $stmtKatMalikiEkle->execute();
+    }
+
+    // Başarılı bir şekilde eklendiğini kontrol etmek için bir mesaj döndür
+    echo "Kullanıcılar başarıyla arşive eklendi.";
 } catch (PDOException $e) {
-    echo $e->getMessage(); // Hata mesajını ekrana yazdır
+    // Hata durumunda hatayı ekrana yazdır
+    echo "Hata: " . $e->getMessage();
 }
 ?>

@@ -9,7 +9,9 @@ try {
     $durumArray = json_decode($_POST['durumArray']);
     $blokArray = json_decode($_POST['blokArray'], true);
     $updatedStatuses = array();
-    $resultsArray = array(); 
+    $resultsArrayKiraci = array(); // Kiracılar için olanlar
+    $resultsArrayKatMaliki = array(); // Kat malikleri için olanlar
+    $updatedBlocks = array(); 
     //echo json_encode(array("durumArray" => $durumArray, "blokArray" => $blokArray));
     foreach ($blokArray as $blokElement) {
         $sadeceBlok = $blokElement['letter'];
@@ -35,16 +37,21 @@ try {
         $stmtKatMaliki->execute();
         $katMalikiID = $stmtKatMaliki->fetchColumn(); // Kat Maliki ID'sini al
 
-        // Elde edilen kiracı ve kat maliki ID'lerini kullanarak istediğiniz işlemi gerçekleştirebilirsiniz
-        // Örneğin, bu ID'leri JSON formatında döndürebilirsiniz
+        // Elde edilen kiracı ve kat maliki ID'lerini kullanarak ilgili kullanıcı bilgilerini çekin
+        // Kiracı için
+        $sqlKiraciBilgileri = "SELECT * FROM tbl_users WHERE userID = :kiraciID";
+        $stmtKiraciBilgileri = $conn->prepare($sqlKiraciBilgileri);
+        $stmtKiraciBilgileri->bindParam(':kiraciID', $kiraciID, PDO::PARAM_INT);
+        $stmtKiraciBilgileri->execute();
+        $kiraciBilgileri = $stmtKiraciBilgileri->fetch(PDO::FETCH_ASSOC);
 
-        $resultsArray[] = array(
-            'blokElement' => $blokElement,
-            'kiraciID' => $kiraciID,
-            'katMalikiID' => $katMalikiID
-        );
-        $updatedBlocks[] = $blokElement;
-        // Her bir durum için işlem yapalım
+        // Kat Maliki için
+        $sqlKatMalikiBilgileri = "SELECT * FROM tbl_users WHERE userID = :katMalikiID";
+        $stmtKatMalikiBilgileri = $conn->prepare($sqlKatMalikiBilgileri);
+        $stmtKatMalikiBilgileri->bindParam(':katMalikiID', $katMalikiID, PDO::PARAM_INT);
+        $stmtKatMalikiBilgileri->execute();
+        $katMalikiBilgileri = $stmtKatMalikiBilgileri->fetch(PDO::FETCH_ASSOC);
+
         foreach ($durumArray as $durum) {
             if ($durum == "kiraci") {
                 $sql = "UPDATE tbl_daireler d
@@ -60,6 +67,12 @@ try {
                 $stmt->execute();
                 array_shift($durumArray);
                 $updatedStatuses[] = "kiraci";
+                
+                // Kiracı için olanları ayrı bir diziye ekleyin
+                $resultsArrayKiraci[] = array(
+                    'blokElement' => $blokElement,
+                    'kiraciID' => $kiraciID
+                );
             } else if ($durum == "katmaliki") {
                 $sql = "UPDATE tbl_daireler d
                          INNER JOIN tbl_blok b ON d.blok_adi = b.blok_id
@@ -74,14 +87,21 @@ try {
                 $stmt->execute();
                 array_shift($durumArray);
                 $updatedStatuses[] = "katmaliki";
+                
+                // Kat maliki için olanları ayrı bir diziye ekleyin
+                $resultsArrayKatMaliki[] = array(
+                    'blokElement' => $blokElement,
+                    'katMalikiID' => $katMalikiID
+                );
             }
             break;
         }
-        
     }
     $_SESSION['updatedStatuses'] = $updatedStatuses;
     $_SESSION['updatedBlocks'] = $updatedBlocks;
-    $_SESSION['resultsArray'] = $resultsArray;
+    $_SESSION['resultsArrayKiraci'] = $resultsArrayKiraci; // Kiracılar için olanlar
+    $_SESSION['resultsArrayKatMaliki'] = $resultsArrayKatMaliki; // Kat malikleri için olanlar
+    print_r($resultsArrayKatMaliki);
     echo 1;
 } catch (PDOException $e) {
     echo $e->getMessage(); // Hata mesajını ekrana yazdır

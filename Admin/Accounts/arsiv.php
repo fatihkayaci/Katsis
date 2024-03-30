@@ -2,17 +2,8 @@
 
 try {
 
-    $sql2 = "SELECT u.userID, u.userName, u.phoneNumber,d.daire_id, b.blok_adi AS blok_adi,u.oldBlock, u.oldNumber, u.oldState, d.daire_sayisi,
-    CASE
-        WHEN d.katMalikiID = u.userID THEN 'Kat Maliki'
-        WHEN d.kiraciID = u.userID THEN 'kiraci'
-        ELSE 'Belirtilmemiş'
-    END AS durum
-    FROM tbl_users u
-    LEFT JOIN tbl_daireler d ON u.userID = d.katMalikiID OR u.userID = d.kiraciID
-    LEFT JOIN tbl_blok b ON d.blok_adi = b.blok_id
-    WHERE arsive = 1 AND rol=3 AND u.apartman_id = " . $_SESSION["apartID"] . "
-    ORDER BY u.userID ASC";
+    $sql2 = "SELECT *
+    FROM tbl_arsive";
 
     $stmt = $conn->prepare($sql2);
     $stmt->execute();
