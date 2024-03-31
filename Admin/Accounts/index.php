@@ -994,6 +994,8 @@ try {
     // Alınan verileri kontrol etmek için konsola yazdır
     console.log(rowData);
 
+    var demo=0;
+
     //bakılacak
     //var saveButton = document.getElementById('saveButton');
     function saveUser() {
@@ -1072,6 +1074,7 @@ try {
             if (confirm("Çakışma durumu bulundu: Blok ismi: " + block + ", Daire sayısı: " + flatCount + ", Durum: " +
                 status + " bu dairede oturan kullanıcıyı silmek ister misin?")) {
                 if (kisitlamalar(userName /* tc, phoneNumber, userEmail, plate*/)) {
+                    demo = 1;
                     saveUserData(userName, tc, phoneNumber, durumArray, userEmail, plate, gender, apartman_id, blokArray);
                 } else {
                     return;
@@ -1105,7 +1108,6 @@ try {
             },
             success: function (response) {
                 if (response == 1) {
-                    // İkinci AJAX isteği
                     sendData(blokArray, durumArray);
                 }
             },
@@ -1124,9 +1126,11 @@ try {
                 durumArray: JSON.stringify(durumArray)
             },
             success: function (secondResponse) {
-                alert(secondResponse);
-                if (secondResponse == 1) {
+               
+                if (demo == 1){
                     arsiveUser();
+                }else{
+                    location.reload();
                 }
             },
             error: function (secondError) {
@@ -1136,6 +1140,7 @@ try {
     }
 
     function arsiveUser() {
+        demo = 0;
         $.ajax({
             url: 'Controller/arsiveUser.php',
             type: 'POST',

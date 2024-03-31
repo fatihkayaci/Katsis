@@ -18,7 +18,7 @@
 
     try {
         $sql = "SELECT u.userID, u.userName, u.user_no, u.userEmail, u.gender, u.userPass, u.plate, u.tc, u.phoneNumber, 
-    d.daire_id, b.blok_adi AS blok_adi, u.oldBlock, u.oldNumber, u.oldState, u.arsive, d.kiraciGiris, d.katMGiris, d.daire_sayisi,
+    d.daire_id, b.blok_adi AS blok_adi, d.kiraciGiris, d.katMGiris, d.daire_sayisi,
     CASE
         WHEN d.katMalikiID = u.userID THEN 'Kat Maliki'
         WHEN d.kiraciID = u.userID THEN 'Kiracı'
@@ -317,15 +317,7 @@ WHERE m.user_id = :user_id AND m.apartman_id = :apartman_id";
                                         </div>
                                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
                                             <div class="cursor-none main-durum <?php
-                                            if ($row["arsive"] == 1) {
-                                                if ($row["oldState"] == "kiraci") {
-                                                    echo "kiraci";
-                                                } elseif ($row["oldState"] == "katMaliki") {
-                                                    echo "kat Maliki";
-                                                } else {
-                                                    echo "belirtilmemis";
-                                                }
-                                            } else if ($row["arsive"] == 0) {
+                                          
                                                 if ($row["durum"] == "Kiracı") {
                                                     echo "kiraci";
                                                 } elseif ($row["durum"] == "Kat Maliki") {
@@ -333,14 +325,10 @@ WHERE m.user_id = :user_id AND m.apartman_id = :apartman_id";
                                                 } else {
                                                     echo "belirtilmemis";
                                                 }
-                                            }
                                             ?>">
                                                 <?php
-                                                if ($row["arsive"] == 1) {
-                                                    echo "Eski " . $row["oldState"];
-                                                } else if ($row["arsive"] == 0) {
+                            
                                                     echo $row["durum"];
-                                                }
                                                 ?>
                                             </div>
                                         </div>
