@@ -118,7 +118,7 @@ try {
                     <th></th>
                     <th></th>
                 </tr>
-                <tr id="mainTr">
+                <tr id="mainTr" style="display:none;">
                     <?php  
                  $blokIdMapping = [];
                 foreach ($blokList as $s ){

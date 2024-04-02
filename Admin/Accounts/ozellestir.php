@@ -48,11 +48,11 @@
         }
 
 
-
+        $turu=1;
         //////////////////////////////////
         $sql4 = "SELECT m.aciklama, m.odeme_tar, m.borc_miktar, 
 (SELECT SUM(borc_miktar) FROM tbl_maliye 
- WHERE user_id = :user_id AND apartman_id = :apartman_id";
+ WHERE user_id = :user_id AND apartman_id = :apartman_id AND maliye_turu = :maliyeturu";
 
         if (!empty($_SESSION['dId'])) {
             $sql4 .= " AND daire_id = :daire_id";
@@ -61,7 +61,7 @@
         $sql4 .= ") AS toplam_borc, k.kategori_adi
 FROM tbl_maliye m
 INNER JOIN tbl_kategori k ON m.kategori_id = k.kategori_id
-WHERE m.user_id = :user_id AND m.apartman_id = :apartman_id";
+WHERE m.user_id = :user_id AND m.apartman_id = :apartman_id AND maliye_turu = :maliyeturu";
 
         if (!empty($_SESSION['dId'])) {
             $sql4 .= " AND m.daire_id = :daire_id";
@@ -73,6 +73,8 @@ WHERE m.user_id = :user_id AND m.apartman_id = :apartman_id";
         // Değişkenleri bağla
         $stmt4->bindParam(':user_id', $_SESSION['userPage'], PDO::PARAM_INT);
         $stmt4->bindParam(':apartman_id', $_SESSION["apartID"], PDO::PARAM_INT);
+        $stmt4->bindParam(':maliyeturu', $turu, PDO::PARAM_INT);
+
 
         if (!empty($_SESSION['dId'])) {
             $stmt4->bindParam(':daire_id', $_SESSION['dId'], PDO::PARAM_INT);
@@ -88,7 +90,7 @@ WHERE m.user_id = :user_id AND m.apartman_id = :apartman_id";
         } else {
             $toplamBorc = 0;
         }
-
+        
 
 
 
@@ -183,14 +185,14 @@ WHERE m.user_id = :user_id AND m.apartman_id = :apartman_id";
 
                     <form id="tahsilatEkleForm" class="login-form">
 
-                        <h2 class="form-signin-heading">Borç Ekle</h2>
+                        <h2 class="form-signin-heading">Tahsilat Ekle</h2>
 
 
                         <div class="row">
 
                             <div class="col-md-6 col-btn">
-                                <input class="input" type="text" id="aciklama" required="" />
-                                <label id="aciklamaLabel" for="aciklama">Açıklama *: </label>
+                                <input class="input" type="text" id="aciklama_tahsilat" required="" />
+                                <label id="aciklamaLabel_tahsilat" for="aciklama_tahsilat">Açıklama *: </label>
                             </div>
 
                             <div class="col-md-6 col-btn">
@@ -199,27 +201,11 @@ WHERE m.user_id = :user_id AND m.apartman_id = :apartman_id";
                             </div>
 
                             <div class="col-md-6 col">
-                                <input class="input" type="date" value="<?php echo date('Y-m-d'); ?>" id="dateInput" required="" />
-                                <label id="label_tarih" for="dateInput">Borç Tanımlama Tarihi :</label>
+                                <input class="input" type="date" value="<?php echo date('Y-m-d'); ?>" id="dateInput3" required="" />
+                                <label id="label_tarih3" for="dateInput3">Tahsilat Tarihi :</label>
                             </div>
 
-                            <div class="col-md-6 col">
-                                <input class="input" type="date" value="<?php echo date('Y-m-d', strtotime('+7 days')); ?>"
-                                    id="dateInput2" required="" />
-                                <label id="label_tarih2" for="dateInput2">Son Ödeme Tarihi :</label>
-                            </div>
-
-                            <div class="col-md-6 col-btn">
-                                <select class="input" id="kategori" required="">
-                                    <option style="display: none;" value="" disabled selected></option>
-                                    <?php
-                                    foreach ($kategori_listesi as $kategori_id => $kategori_adi) {
-                                        echo "<option value='" . $kategori_id . "'>" . $kategori_adi . "</option>";
-                                    }
-                                    ?>
-                                </select>
-                                <label id="kategoriLabel" for="kategori">Kategoriler *</label>
-                            </div>
+                            
 
                         </div>
 
@@ -228,7 +214,7 @@ WHERE m.user_id = :user_id AND m.apartman_id = :apartman_id";
                         <div class="row row-btn">
                             <button type="button" class="btn-custom-close"
                                 onclick="popupCloseControl('popupTahsilatEkle','tahsilatEkleForm')">Kapat</button>
-                            <button type="button" class="btn-custom" id="saveButton">Kaydet</button>
+                            <button type="button" class="btn-custom" id="saveButton" onclick="tahsilatAdd()">Kaydet</button>
                         </div>
 
                     </form>
@@ -448,8 +434,15 @@ WHERE m.user_id = :user_id AND m.apartman_id = :apartman_id";
                                             <button class="btn-custom-outline bcoc3">Düzenle</button>
                                         </div>
                                     </div>
-
+                                    <input type="hidden" id="topborc" value=<?php echo $toplamBorc; ?> />
                                     <div class="borc-box">
+                                    <a href="">
+                                                <p class="tarih">BAKİYE : </p>
+                                                <p class="borc">
+                                                    <?php echo $toplamBorc; ?> <img class="tl-img"
+                                                        src="../Admin\assets\img\tl.png" alt="">
+                                                </p>
+                                            </a>
                                         <?php
 
                                         if ($result4) {
@@ -499,13 +492,7 @@ WHERE m.user_id = :user_id AND m.apartman_id = :apartman_id";
                                                 </a>
 
                                             <?php } ?>
-                                            <a href="">
-                                                <p class="tarih">BAKİYE : </p>
-                                                <p class="borc">
-                                                    <?php echo $row4['toplam_borc']; ?> <img class="tl-img"
-                                                        src="../Admin\assets\img\tl.png" alt="">
-                                                </p>
-                                            </a>
+                                          
                                         </div>
 
 
@@ -703,8 +690,118 @@ WHERE m.user_id = :user_id AND m.apartman_id = :apartman_id";
 
 
 
+
+
+        //////////////////////  TAHSİLAT İŞLEMLERİ /////////////////////
+function tahsilatAdd(){
+            
+            var apartmanId = document.getElementById('apartmanId').value;
+            var userId = document.getElementById('userId').value;
+            var daireId = document.getElementById('daireId').value;
+            var gelir_turu = 0;
+            var aciklamaValue1 = document.getElementById('aciklama_tahsilat').value;
+            var tahsilatTutarValue = document.getElementById('tahsilatTutar').value;
+            var dateInputValue11 = document.getElementById('dateInput3').value;
+            var b1 = true,
+                b2 = true,
+                b3 = true;
+                
+            if (aciklamaValue1.trim() === '') {
+                $('#aciklama_tahsilat').css('border-color', 'red');
+                $('#aciklamaLabel_tahsilat').css('color', 'red');
+             b1=false;
+            }
+
+            if (tahsilatTutarValue.trim() === '' || tahsilatTutarValue <= 0) {
+                $('#tahsilatTutar').css('border-color', 'red');
+                $('#tahsilatLabel').css('color', 'red');
+                b2=false;
+            }
+
+            if (dateInputValue11.trim() === '') {
+                $('#dateInput3').css('border-color', 'red');
+                $('#label_tarih3').css('color', 'red');
+                b3=false;
+            }
+            if ( !b1 || !b3 || !b2) {
+                alert("İlgili Alanlar Boş Olamaz");
+
+            } else {
+
+                $.ajax({
+                    url: 'Controller/maliye_tahsilat.php',
+                    type: 'POST',
+                    data: {
+                        daireId: daireId,
+                        userId: userId,
+                        apartmanId: apartmanId,
+                        gelir_turu: gelir_turu,
+                        aciklamaValue: aciklamaValue1,
+                       TahsilatTutarValue: tahsilatTutarValue,
+                        dateInputValue: dateInputValue11,
+
+                    },
+                    success: function (response) {
+                        alert(response);
+                        if (response) {
+                            document.getElementById('aciklama').value = "";
+                            document.getElementById('borcTutar').value = "";
+                            document.getElementById('kategori').value = "";
+                            popupCloseControl('popupBorcEkle', 'borcEkleForm');
+                            location.reload();
+                        }
+
+
+                    },
+                    error: function (xhr, status, error) {
+                        var errorMessage = xhr.status + ': ' + xhr.statusText;
+                        alert('Hata alındı: ' + errorMessage);
+                    }
+                });
+
+
+
+
+            }
+
+
+}
+        $('#aciklama_tahsilat').focus(function () {
+            $('#aciklama_tahsilat').css('border-color', '#277ce0');
+            $('#aciklamaLabel_tahsilat').css('color', '#277ce0');
+        });
+
+        // Borç Tutarı alanına odaklandığınızda
+        $('#tahsilatTutar').focus(function () {
+            $('#tahsilatTutar').css('border-color', '#277ce0');
+            $('#tahsilatLabel').css('color', '#277ce0');
+        });
+
+        // Tarih alanına odaklandığınızda
+        $('#dateInput3').focus(function () {
+            $('#dateInput3').css('border-color', '#277ce0');
+            $('#label_tarih3').css('color', '#277ce0');
+        });
         //////////////////////////////////////////////
 
+        $('#aciklama_tahsilat').blur(function () {
+
+$('#aciklama_tahsilat').css('border-color', '#0d0c22');
+$('#aciklamaLabel_tahsilat').css('color', '#0d0c22');
+
+});
+
+// Borç Tutarı alanından odak kaybedildiğinde
+$('#tahsilatTutar').blur(function () {
+$('#tahsilatTutar').css('border-color', '#0d0c22');
+$('#tahsilatLabel').css('color', '#0d0c22');
+});
+
+// Tarih alanından odak kaybedildiğinde
+$('#dateInput3').blur(function () {
+$('#dateInput3').css('border-color', '#0d0c22');
+$('#label_tarih3').css('color', '#0d0c22');
+});
 
 
         function userGo(id) {
@@ -804,7 +901,8 @@ WHERE m.user_id = :user_id AND m.apartman_id = :apartman_id";
 
 
 
-
+        var topborc = document.getElementById('topborc').value;
+            document.getElementById('tahsilatTutar').value=topborc;
         // Tarihlerin kontrolü
         var dateInput = document.getElementById('dateInput');
         var dateInput2 = document.getElementById('dateInput2');
