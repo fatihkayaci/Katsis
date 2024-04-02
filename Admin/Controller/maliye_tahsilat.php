@@ -28,7 +28,7 @@ try {
            
             echo($borcMiktar);
             echo($kalanTutar);
-            if($kalanTutar > $borcMiktar){
+            if($kalanTutar >= $borcMiktar){
                 $kalanTutar =  $kalanTutar-$borcMiktar ;
             }else{
                 $borcMiktar =  $borcMiktar -$kalanTutar;
