@@ -57,6 +57,7 @@
                 <tbody>
 
                     <?php
+                    $i = 1;
                     foreach ($result as $row) {
                         $blokAdi = $row["blok_adi"];
                         $daireSayisi = $row["daire_sayisi"];
@@ -76,11 +77,11 @@
                         $stmtKatMaliki->bindParam(':katMalikiID', $katMalikiID);
                         $stmtKatMaliki->execute();
                         $katMalikiBilgisi = $stmtKatMaliki->fetch(PDO::FETCH_ASSOC);
-
+                        
                         // Kiracı ve Kat Maliki bilgileri var mı kontrolü
                         if ($kiraciBilgisi && $katMalikiBilgisi) {
                             ?>
-                            <tr data-userid="" class="git-ac toplu-td">
+                            <tr data-userid="" class="git-ac toplu-td <?php echo $i?>">
                                 <td data-title="Blok Adı" name="blok">
                                     <?php
                                     if (!empty($row["blok_adi"]) && !empty($row["daire_sayisi"])) {
@@ -90,31 +91,31 @@
                                 </td>
                                 <td data-title="Kat Maliki" name="katmaliki">Kat Maliki <br><br> Kiracı</td>
                                 <td data-title="Ad Soyad" name="adsoyad">
-                                    <input type="text" class="input-select" <?php if (!empty($katMalikiBilgisi['userName'])): ?>
+                                    <input type="text" class="input-select katMaliki"  <?php if (!empty($katMalikiBilgisi['userName'])): ?>
                                             value="<?php echo $katMalikiBilgisi['userName']; ?>" readonly <?php endif; ?> />
                                     <br><br>
-                                    <input type="text" class="input-select" <?php if (!empty($kiraciBilgisi['userName'])): ?>
+                                    <input type="text" class="input-select kiracii" <?php if (!empty($kiraciBilgisi['userName'])): ?>
                                             value="<?php echo $kiraciBilgisi['userName']; ?>" readonly <?php endif; ?> />
                                 </td>
                                 <td data-title="T.C. Kat Maliki" name="tcKatMaliki">
-                                    <input type="text" class="input-select" <?php if (!empty($katMalikiBilgisi['tc'])): ?>
+                                    <input type="text" class="input-select katMaliki" <?php if (!empty($katMalikiBilgisi['tc'])): ?>
                                             value="<?php echo $katMalikiBilgisi['tc']; ?>" readonly <?php endif; ?> />
                                     <br><br>
-                                    <input type="text" class="input-select" <?php if (!empty($kiraciBilgisi['tc'])): ?>
+                                    <input type="text" class="input-select kiracii" <?php if (!empty($kiraciBilgisi['tc'])): ?>
                                             value="<?php echo $kiraciBilgisi['tc']; ?>" readonly <?php endif; ?> />
                                 </td>
                                 <td data-title="Telefon" name="telefon">
-                                    <input type="text" class="input-select" <?php if (!empty($katMalikiBilgisi['phoneNumber'])): ?>
+                                    <input type="text" class="input-select katMaliki" <?php if (!empty($katMalikiBilgisi['phoneNumber'])): ?>
                                             value="<?php echo $katMalikiBilgisi['phoneNumber']; ?>" readonly <?php endif; ?> />
                                     <br><br>
-                                    <input type="text" class="input-select" <?php if (!empty($kiraciBilgisi['phoneNumber'])): ?>
+                                    <input type="text" class="input-select kiracii" <?php if (!empty($kiraciBilgisi['phoneNumber'])): ?>
                                             value="<?php echo $kiraciBilgisi['phoneNumber']; ?>" readonly <?php endif; ?> />
                                 </td>
                                 <td data-title="E-Posta" name="eposta">
-                                    <input type="text" class="input-select" <?php if (!empty($katMalikiBilgisi['userEmail'])): ?>
+                                    <input type="text" class="input-select katMaliki" <?php if (!empty($katMalikiBilgisi['userEmail'])): ?>
                                             value="<?php echo $katMalikiBilgisi['userEmail']; ?>" readonly <?php endif; ?> />
                                     <br><br>
-                                    <input type="text" class="input-select" <?php if (!empty($kiraciBilgisi['userEmail'])): ?>
+                                    <input type="text" class="input-select kiracii" <?php if (!empty($kiraciBilgisi['userEmail'])): ?>
                                             value="<?php echo $kiraciBilgisi['userEmail']; ?>" readonly <?php endif; ?> />
                                 </td>
                             </tr>
@@ -132,36 +133,37 @@
                                 </td>
                                 <td data-title="Kat Maliki" name="katmaliki">Kat Maliki <br><br> Kiracı</td>
                                 <td data-title="Ad Soyad" name="adsoyad">
-                                    <input type="text" class="input-select" <?php if (!empty($katMalikiBilgisi['userName'])): ?>
+                                    <input type="text" class="input-select katMaliki" <?php if (!empty($katMalikiBilgisi['userName'])): ?>
                                             value="<?php echo $katMalikiBilgisi['userName']; ?>" readonly <?php endif; ?> />
                                     <br><br>
-                                    <input type="text" class="input-select" <?php if (!empty($kiraciBilgisi['userName'])): ?>
+                                    <input type="text" class="input-select kiracii" <?php if (!empty($kiraciBilgisi['userName'])): ?>
                                             value="<?php echo $kiraciBilgisi['userName']; ?>" readonly <?php endif; ?> />
                                 </td>
                                 <td data-title="T.C. Kat Maliki" name="tcKatMaliki">
-                                    <input type="text" class="input-select" <?php if (!empty($katMalikiBilgisi['tc'])): ?>
+                                    <input type="text" class="input-select katMaliki" <?php if (!empty($katMalikiBilgisi['tc'])): ?>
                                             value="<?php echo $katMalikiBilgisi['tc']; ?>" readonly <?php endif; ?> />
                                     <br><br>
-                                    <input type="text" class="input-select" <?php if (!empty($kiraciBilgisi['tc'])): ?>
+                                    <input type="text" class="input-select kiracii" <?php if (!empty($kiraciBilgisi['tc'])): ?>
                                             value="<?php echo $kiraciBilgisi['tc']; ?>" readonly <?php endif; ?> />
                                 </td>
                                 <td data-title="Telefon" name="telefon">
-                                    <input type="text" class="input-select" <?php if (!empty($katMalikiBilgisi['phoneNumber'])): ?>
+                                    <input type="text" class="input-select katMaliki" <?php if (!empty($katMalikiBilgisi['phoneNumber'])): ?>
                                             value="<?php echo $katMalikiBilgisi['phoneNumber']; ?>" readonly <?php endif; ?> />
                                     <br><br>
-                                    <input type="text" class="input-select" <?php if (!empty($kiraciBilgisi['phoneNumber'])): ?>
+                                    <input type="text" class="input-select kiracii" <?php if (!empty($kiraciBilgisi['phoneNumber'])): ?>
                                             value="<?php echo $kiraciBilgisi['phoneNumber']; ?>" readonly <?php endif; ?> />
                                 </td>
                                 <td data-title="E-Posta" name="eposta">
-                                    <input type="text" class="input-select" <?php if (!empty($katMalikiBilgisi['userEmail'])): ?>
+                                    <input type="text" class="input-select katMaliki" <?php if (!empty($katMalikiBilgisi['userEmail'])): ?>
                                             value="<?php echo $katMalikiBilgisi['userEmail']; ?>" readonly <?php endif; ?> />
                                     <br><br>
-                                    <input type="text" class="input-select" <?php if (!empty($kiraciBilgisi['userEmail'])): ?>
+                                    <input type="text" class="input-select kiracii" <?php if (!empty($kiraciBilgisi['userEmail'])): ?>
                                             value="<?php echo $kiraciBilgisi['userEmail']; ?>" readonly <?php endif; ?> />
                                 </td>
                             </tr>
                             <?php
                         }
+                        $i++;
                     }
 
                     echo '</tbody>
@@ -174,66 +176,139 @@
         echo "Bağlantı hatası: " . $e->getMessage();
     }
     ?>
-    <script>
-    $(document).ready(function () {
-    var katMalikleriData = []; // Kat malikleri için değişen verileri tutmak için boş bir dizi
-    var kiracilarData = []; // Kiracılar için değişen verileri tutmak için boş bir dizi
+   <script type="text/javascript">
+    // Sayfa yüklendiğinde mevcut input değerlerini bir diziye kaydetme
+    var initialData = [];
 
-    // Değişiklik algılandığında, değişen verileri ilgili diziye ekleyelim
-    $('tr').on('change', '.input-select, [name="blok"]', function () {
-        var tr = $(this).closest('tr');
-        var blokAdi = tr.find('[name="blok"]').text();
+window.onload = function() {
+    var rows = document.querySelectorAll('.git-ac.toplu-td');
 
-        var KatMalikiUserName = tr.find('[name="adsoyad"] input').first().val();
-        var KatMalikitc = tr.find('[name="tcKatMaliki"] input').first().val();
-        var KatMalikiPhone = tr.find('[name="telefon"] input').first().val();
-        var KatMalikiEmail = tr.find('[name="eposta"] input').first().val();
+    rows.forEach(function(row) {
+        var blokAdi = row.querySelector('[data-title="Blok Adı"]');
+        var katMalikiUserNameInput = row.querySelector('.katMaliki');
+        var kiraciUserNameInput = row.querySelector('.kiracii');
+        var katMalikiTCInput = row.querySelector('[name="tcKatMaliki"] .katMaliki');
+        var kiraciTCInput = row.querySelector('[name="tcKatMaliki"] .kiracii');
+        var katMalikiPhoneInput = row.querySelector('[name="telefon"] .katMaliki');
+        var kiraciPhoneInput = row.querySelector('[name="telefon"] .kiracii');
+        var katMalikiEmailInput = row.querySelector('[name="eposta"] .katMaliki');
+        var kiraciEmailInput = row.querySelector('[name="eposta"] .kiracii');
 
-        var kiraciUserName = tr.find('[name="adsoyad"] input').last().val();
-        var kiracitc = tr.find('[name="tcKatMaliki"] input').last().val();
-        var kiraciPhone = tr.find('[name="telefon"] input').last().val();
-        var kiraciEmail = tr.find('[name="eposta"] input').last().val();
+        var blokAdiText = blokAdi.innerText.trim();
+        var katMalikiUserName = katMalikiUserNameInput.value.trim();
+        var kiraciUserName = kiraciUserNameInput.value.trim();
+        var katMalikiTC = katMalikiTCInput.value.trim();
+        var kiraciTC = kiraciTCInput.value.trim();
+        var katMalikiPhone = katMalikiPhoneInput.value.trim();
+        var kiraciPhone = kiraciPhoneInput.value.trim();
+        var katMalikiEmail = katMalikiEmailInput.value.trim();
+        var kiraciEmail = kiraciEmailInput.value.trim();
 
-        if (KatMalikiUserName && KatMalikitc && KatMalikiPhone && KatMalikiEmail) {
-            katMalikleriData.push({
-                blokAdi: blokAdi,
-                KatMalikiUserName: KatMalikiUserName,
-                KatMalikitc: KatMalikitc,
-                KatMalikiPhone: KatMalikiPhone,
-                KatMalikiEmail: KatMalikiEmail
+        if (katMalikiUserName !== "") {
+            initialData.push({
+                userName: katMalikiUserName,
+                durum: "kat Maliki",
+                blok: blokAdiText,
+                tc: katMalikiTC,
+                telefon: katMalikiPhone,
+                eposta: katMalikiEmail
             });
         }
-        if (kiraciUserName && kiracitc && kiraciPhone && kiraciEmail) {
-            kiracilarData.push({
-                blokAdi: blokAdi,
-                kiraciUserName: kiraciUserName,
-                kiracitc: kiracitc,
-                kiraciPhone: kiraciPhone,
-                kiraciEmail: kiraciEmail
+
+        if (kiraciUserName !== "") {
+            initialData.push({
+                userName: kiraciUserName,
+                durum: "kiracı",
+                blok: blokAdiText,
+                tc: kiraciTC,
+                telefon: kiraciPhone,
+                eposta: kiraciEmail
             });
         }
-        alert(katMalikleriData);
+    });
+saveButton.addEventListener('click', function() {
+    var newEntries = [];
+
+    var rows = document.querySelectorAll('.git-ac.toplu-td');
+
+    rows.forEach(function(row) {
+        var blokAdi = row.querySelector('[data-title="Blok Adı"]');
+        var katMalikiUserNameInput = row.querySelector('.katMaliki');
+        var kiraciUserNameInput = row.querySelector('.kiracii');
+        var katMalikiTCInput = row.querySelector('[name="tcKatMaliki"] .katMaliki');
+        var kiraciTCInput = row.querySelector('[name="tcKatMaliki"] .kiracii');
+        var katMalikiPhoneInput = row.querySelector('[name="telefon"] .katMaliki');
+        var kiraciPhoneInput = row.querySelector('[name="telefon"] .kiracii');
+        var katMalikiEmailInput = row.querySelector('[name="eposta"] .katMaliki');
+        var kiraciEmailInput = row.querySelector('[name="eposta"] .kiracii');
+
+        var blokAdiText = blokAdi.innerText.trim();
+        var katMalikiUserName = katMalikiUserNameInput.value.trim();
+        var kiraciUserName = kiraciUserNameInput.value.trim();
+        var katMalikiTC = katMalikiTCInput.value.trim();
+        var kiraciTC = kiraciTCInput.value.trim();
+        var katMalikiPhone = katMalikiPhoneInput.value.trim();
+        var kiraciPhone = kiraciPhoneInput.value.trim();
+        var katMalikiEmail = katMalikiEmailInput.value.trim();
+        var kiraciEmail = kiraciEmailInput.value.trim();
+
+        // Yalnızca dolu olan inputlar için yeni girdileri kontrol et
+        if (katMalikiUserName !== "") {
+            var entry = {
+                userName: katMalikiUserName,
+                durum: "kat Maliki",
+                blok: blokAdiText,
+                tc: katMalikiTC,
+                telefon: katMalikiPhone,
+                eposta: katMalikiEmail
+            };
+            // Daha önce initialData'da bu kullanıcı yoksa yeni girdi olarak kabul et
+            if (!initialData.some(function(item) {
+                return item.userName === entry.userName && item.durum === entry.durum && item.blok === entry.blok;
+            })) {
+                newEntries.push(entry);
+            }
+        }
+
+        if (kiraciUserName !== "") {
+            var entry = {
+                userName: kiraciUserName,
+                durum: "kiracı",
+                blok: blokAdiText,
+                tc: kiraciTC,
+                telefon: kiraciPhone,
+                eposta: kiraciEmail
+            };
+            // Daha önce initialData'da bu kullanıcı yoksa yeni girdi olarak kabul et
+            if (!initialData.some(function(item) {
+                return item.userName === entry.userName && item.durum === entry.durum && item.blok === entry.blok;
+            })) {
+                newEntries.push(entry);
+            }
+        }
     });
 
-    // Kaydet düğmesine basıldığında
-    $('#saveButton').on('click', function () {
-        $.ajax({
-            url: 'Controller/process.php',
-            method: 'POST',
+    $.ajax({
+            url: 'Controller/bulkAddingUser.php',
+            type: 'POST',
             data: {
-                katMalikleriData: katMalikleriData,
-                kiracilarData: kiracilarData
+                newEntries: JSON.stringify(newEntries)
             },
             success: function (response) {
-                alert(response); // PHP'den gelen yanıtı göster
+                console.log(response);
+                if(response == 1){
+                    location.reload();
+                }
             },
-            error: function (xhr, status, error) {
-                console.error(error); // Hata durumunda konsola yazdır
+            error: function (error) {
+                console.error(error);
             }
         });
-    });
 });
-</script>
+};
+
+    </script>
+    
             <script>
                 function sortTable(n) {
                     var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
