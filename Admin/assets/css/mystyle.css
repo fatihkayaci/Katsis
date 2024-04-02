@@ -775,7 +775,6 @@ box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
   transition: none;
   white-space: nowrap;
   border-radius: 5px;
-  overflow: hidden;
   background-color: #fff;
   position: relative;
 }
@@ -1213,7 +1212,7 @@ min-width: 0;
   .login-form, .login-form-toplu, .login-form-daire, .login-form1, .row {
     min-width: 260px;
   }
-  .input, label, .col {
+  .input, .col-btn label,.col label , .col {
     width: 100%;
     min-width: 200px;
   }
