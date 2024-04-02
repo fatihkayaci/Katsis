@@ -1,37 +1,41 @@
 <?php
 include("../../DB/dbconfig.php");
+session_start();
+$newEntriesJSON = $_POST['newEntries'];
+$newEntries = json_decode($newEntriesJSON, true);
+$apartman_id = $_SESSION["apartID"];
+$userStatus="Y";
+foreach ($newEntries as $entry) {
+    $userName = $entry['userName'];
+    $durum = $entry['durum'];
+    $tc = $entry['tc'];
+    $telefon = $entry['telefon'];
+    $eposta = $entry['eposta'];
 
-try {
-    session_start();
-    $addedUserIds = array();
-    $toSend = json_decode($_POST['toSend'], true);
-    $apartman_id = $_POST['apartman_id'];
+    // SQL sorgusu
+    $sql = "INSERT INTO tbl_users (userName, tc, phoneNumber, durum, userEmail, userStatus, apartman_id, rol, popup) VALUES 
+            (:userName, :tc, :phoneNumber, :durum, :userEmail, :userStatus, :apartman_id, :rol, :popup)";
 
-    $t = "Y";
+    // Sorguyu hazırla
+    $stmt = $conn->prepare($sql);
+
+    // Parametreleri bağla
+    $stmt->bindParam(':userName', $userName);
+    $stmt->bindParam(':tc', $tc);
+    $stmt->bindParam(':phoneNumber', $phoneNumber);
+    $stmt->bindValue(':durum', null, PDO::PARAM_NULL);
+    $stmt->bindValue(':userEmail', null, PDO::PARAM_NULL);
+    $stmt->bindParam(':apartman_id', $apartman_id);
+    $stmt->bindParam(':userStatus', $userStatus);
     $rol = 3;
     $popup = 0;
+    $stmt->bindParam(':rol', $rol);
+    $stmt->bindParam(':popup', $popup);
 
-    foreach ($toSend as $data) {
-        $userName = $data['userName'];
-        $durum = $data['durum'];
-
-        $sql = "INSERT INTO tbl_users (userName, durum, apartman_id, rol, popup, userStatus) 
-                VALUES (:userName, :durum, :apartman_id, :rol, :popup, :userStatus)";
-
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':userName', $userName);
-        $stmt->bindParam(':durum', $durum);
-        $stmt->bindParam(':userStatus', $t);
-        $stmt->bindParam(':apartman_id', $apartman_id);
-        $stmt->bindParam(':rol', $rol);
-        $stmt->bindParam(':popup', $popup);
-        $stmt->execute();
-        $addedUserIds[] = $conn->lastInsertId();
-    }
-    $_SESSION['addedUserIds'] = $addedUserIds;
-    //echo json_encode($addedUserIds);
-    echo 1;
-} catch (PDOException $e) {
-    echo $e->getMessage(); // Hata mesajını ekrana yazdır
+    // Sorguyu çalıştır
+    $stmt->execute();
 }
+
+// Eğer her şey başarılıysa, 'success' mesajını döndür
+echo 'success';
 ?>

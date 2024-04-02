@@ -100,7 +100,15 @@ try {
                 </td>
 
                 <td data-title="Durum" class="table_tt table_td">
-                    <div class="main-durum">
+                    <div class="main-durum <?php
+                                if ($row["status"] == "kiraci") {
+                                    echo "kiraci";
+                                } elseif ($row["status"] == "Kat Maliki") {
+                                    echo "kat-maliki";
+                                } else {
+                                    echo "belirtilmemis";
+                                }
+                                ?>">
                         <?php echo $row["status"]; ?>
                     </div>
                 </td>
