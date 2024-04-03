@@ -41,22 +41,22 @@
 
         if ($result) {
             ?>
-            <table id="table" class="users-table">
-                <thead>
-                    <tr class="users-table-info toplu-th">
-                        <th onclick="sortTable(0)">Blok / Daire <i id="icon-table1" class="fa-solid fa-sort-down"></i></th>
-                        <th onclick="sortTable(1)">Tip <i id="icon-table2" class="fa-solid fa-sort-down"></i></th>
-                        <th onclick="sortTable(2)">Adı Soyadı <i id="icon-table3" class="fa-solid fa-sort-down"></i></th>
-                        <th onclick="sortTable(3)">T.C. No <i id="icon-table4" class="fa-solid fa-sort-down"></i></th>
-                        <th onclick="sortTable(4)">Telefon <i id="icon-table5" class="fa-solid fa-sort-down"></i></th>
-                        <th onclick="sortTable(5)">E-Posta <i id="icon-table6" class="fa-solid fa-sort-down"></i></th>
-                        <th onclick="sortTable(6)">Açılış Bakiyesi <i id="icon-table7" class="fa-solid fa-sort-down"></i></th>
-                        <th onclick="sortTable(7)">Vadesi <i id="icon-table8" class="fa-solid fa-sort-down"></i></th>
-                    </tr>
-                </thead>
-                <tbody>
+    <table id="table" class="users-table">
+        <thead>
+            <tr class="users-table-info toplu-th">
+                <th onclick="sortTable(0)">Blok / Daire <i id="icon-table1" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(1)">Tip <i id="icon-table2" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(2)">Adı Soyadı <i id="icon-table3" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(3)">T.C. No <i id="icon-table4" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(4)">Telefon <i id="icon-table5" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(5)">E-Posta <i id="icon-table6" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(6)">Açılış Bakiyesi <i id="icon-table7" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(7)">Vadesi <i id="icon-table8" class="fa-solid fa-sort-down"></i></th>
+            </tr>
+        </thead>
+        <tbody>
 
-                    <?php
+            <?php
                     $i = 1;
                     foreach ($result as $row) {
                         $blokAdi = $row["blok_adi"];
@@ -81,87 +81,93 @@
                         // Kiracı ve Kat Maliki bilgileri var mı kontrolü
                         if ($kiraciBilgisi && $katMalikiBilgisi) {
                             ?>
-                            <tr data-userid="" class="git-ac toplu-td <?php echo $i?>">
-                                <td data-title="Blok Adı" name="blok">
-                                    <?php
+            <tr data-userid="" class="git-ac toplu-td <?php echo $i?>">
+                <td data-title="Blok Adı" name="blok">
+                    <?php
                                     if (!empty($row["blok_adi"]) && !empty($row["daire_sayisi"])) {
                                         echo $row["blok_adi"] . " / " . $row["daire_sayisi"];
                                     }
                                     ?>
-                                </td>
-                                <td data-title="Kat Maliki" name="katmaliki">Kat Maliki <br><br> Kiracı</td>
-                                <td data-title="Ad Soyad" name="adsoyad">
-                                    <input type="text" class="input-select katMaliki"  <?php if (!empty($katMalikiBilgisi['userName'])): ?>
-                                            value="<?php echo $katMalikiBilgisi['userName']; ?>" readonly <?php endif; ?> />
-                                    <br><br>
-                                    <input type="text" class="input-select kiracii" <?php if (!empty($kiraciBilgisi['userName'])): ?>
-                                            value="<?php echo $kiraciBilgisi['userName']; ?>" readonly <?php endif; ?> />
-                                </td>
-                                <td data-title="T.C. Kat Maliki" name="tcKatMaliki">
-                                    <input type="text" class="input-select katMaliki" <?php if (!empty($katMalikiBilgisi['tc'])): ?>
-                                            value="<?php echo $katMalikiBilgisi['tc']; ?>" readonly <?php endif; ?> />
-                                    <br><br>
-                                    <input type="text" class="input-select kiracii" <?php if (!empty($kiraciBilgisi['tc'])): ?>
-                                            value="<?php echo $kiraciBilgisi['tc']; ?>" readonly <?php endif; ?> />
-                                </td>
-                                <td data-title="Telefon" name="telefon">
-                                    <input type="text" class="input-select katMaliki" <?php if (!empty($katMalikiBilgisi['phoneNumber'])): ?>
-                                            value="<?php echo $katMalikiBilgisi['phoneNumber']; ?>" readonly <?php endif; ?> />
-                                    <br><br>
-                                    <input type="text" class="input-select kiracii" <?php if (!empty($kiraciBilgisi['phoneNumber'])): ?>
-                                            value="<?php echo $kiraciBilgisi['phoneNumber']; ?>" readonly <?php endif; ?> />
-                                </td>
-                                <td data-title="E-Posta" name="eposta">
-                                    <input type="text" class="input-select katMaliki" <?php if (!empty($katMalikiBilgisi['userEmail'])): ?>
-                                            value="<?php echo $katMalikiBilgisi['userEmail']; ?>" readonly <?php endif; ?> />
-                                    <br><br>
-                                    <input type="text" class="input-select kiracii" <?php if (!empty($kiraciBilgisi['userEmail'])): ?>
-                                            value="<?php echo $kiraciBilgisi['userEmail']; ?>" readonly <?php endif; ?> />
-                                </td>
-                            </tr>
-                            <?php
+                </td>
+                <td data-title="Kat Maliki" name="katmaliki">Kat Maliki <br><br> Kiracı</td>
+                <td data-title="Ad Soyad" name="adsoyad">
+                    <input type="text" class="input-select katMaliki"
+                        <?php if (!empty($katMalikiBilgisi['userName'])): ?>
+                        value="<?php echo $katMalikiBilgisi['userName']; ?>" readonly <?php endif; ?> />
+                    <br><br>
+                    <input type="text" class="input-select kiracii" <?php if (!empty($kiraciBilgisi['userName'])): ?>
+                        value="<?php echo $kiraciBilgisi['userName']; ?>" readonly <?php endif; ?> />
+                </td>
+                <td data-title="T.C. Kat Maliki" name="tcKatMaliki">
+                    <input type="text" class="input-select katMaliki" <?php if (!empty($katMalikiBilgisi['tc'])): ?>
+                        value="<?php echo $katMalikiBilgisi['tc']; ?>" readonly <?php endif; ?> />
+                    <br><br>
+                    <input type="text" class="input-select kiracii" <?php if (!empty($kiraciBilgisi['tc'])): ?>
+                        value="<?php echo $kiraciBilgisi['tc']; ?>" readonly <?php endif; ?> />
+                </td>
+                <td data-title="Telefon" name="telefon">
+                    <input type="text" class="input-select katMaliki"
+                        <?php if (!empty($katMalikiBilgisi['phoneNumber'])): ?>
+                        value="<?php echo $katMalikiBilgisi['phoneNumber']; ?>" readonly <?php endif; ?> />
+                    <br><br>
+                    <input type="text" class="input-select kiracii" <?php if (!empty($kiraciBilgisi['phoneNumber'])): ?>
+                        value="<?php echo $kiraciBilgisi['phoneNumber']; ?>" readonly <?php endif; ?> />
+                </td>
+                <td data-title="E-Posta" name="eposta">
+                    <input type="text" class="input-select katMaliki"
+                        <?php if (!empty($katMalikiBilgisi['userEmail'])): ?>
+                        value="<?php echo $katMalikiBilgisi['userEmail']; ?>" readonly <?php endif; ?> />
+                    <br><br>
+                    <input type="text" class="input-select kiracii" <?php if (!empty($kiraciBilgisi['userEmail'])): ?>
+                        value="<?php echo $kiraciBilgisi['userEmail']; ?>" readonly <?php endif; ?> />
+                </td>
+            </tr>
+            <?php
                         } else {
                             // Kullanıcı bilgileri bulunamadıysa, hata mesajı veya başka bir işlem
                             ?>
-                            <tr data-userid="" class="git-ac toplu-td">
-                                <td data-title="Blok Adı" name="blok">
-                                    <?php
+            <tr data-userid="" class="git-ac toplu-td">
+                <td data-title="Blok Adı" name="blok">
+                    <?php
                                     if (!empty($row["blok_adi"]) && !empty($row["daire_sayisi"])) {
                                         echo $row["blok_adi"] . " / " . $row["daire_sayisi"];
                                     }
                                     ?>
-                                </td>
-                                <td data-title="Kat Maliki" name="katmaliki">Kat Maliki <br><br> Kiracı</td>
-                                <td data-title="Ad Soyad" name="adsoyad">
-                                    <input type="text" class="input-select katMaliki" <?php if (!empty($katMalikiBilgisi['userName'])): ?>
-                                            value="<?php echo $katMalikiBilgisi['userName']; ?>" readonly <?php endif; ?> />
-                                    <br><br>
-                                    <input type="text" class="input-select kiracii" <?php if (!empty($kiraciBilgisi['userName'])): ?>
-                                            value="<?php echo $kiraciBilgisi['userName']; ?>" readonly <?php endif; ?> />
-                                </td>
-                                <td data-title="T.C. Kat Maliki" name="tcKatMaliki">
-                                    <input type="text" class="input-select katMaliki" <?php if (!empty($katMalikiBilgisi['tc'])): ?>
-                                            value="<?php echo $katMalikiBilgisi['tc']; ?>" readonly <?php endif; ?> />
-                                    <br><br>
-                                    <input type="text" class="input-select kiracii" <?php if (!empty($kiraciBilgisi['tc'])): ?>
-                                            value="<?php echo $kiraciBilgisi['tc']; ?>" readonly <?php endif; ?> />
-                                </td>
-                                <td data-title="Telefon" name="telefon">
-                                    <input type="text" class="input-select katMaliki" <?php if (!empty($katMalikiBilgisi['phoneNumber'])): ?>
-                                            value="<?php echo $katMalikiBilgisi['phoneNumber']; ?>" readonly <?php endif; ?> />
-                                    <br><br>
-                                    <input type="text" class="input-select kiracii" <?php if (!empty($kiraciBilgisi['phoneNumber'])): ?>
-                                            value="<?php echo $kiraciBilgisi['phoneNumber']; ?>" readonly <?php endif; ?> />
-                                </td>
-                                <td data-title="E-Posta" name="eposta">
-                                    <input type="text" class="input-select katMaliki" <?php if (!empty($katMalikiBilgisi['userEmail'])): ?>
-                                            value="<?php echo $katMalikiBilgisi['userEmail']; ?>" readonly <?php endif; ?> />
-                                    <br><br>
-                                    <input type="text" class="input-select kiracii" <?php if (!empty($kiraciBilgisi['userEmail'])): ?>
-                                            value="<?php echo $kiraciBilgisi['userEmail']; ?>" readonly <?php endif; ?> />
-                                </td>
-                            </tr>
-                            <?php
+                </td>
+                <td data-title="Kat Maliki" name="katmaliki">Kat Maliki <br><br> Kiracı</td>
+                <td data-title="Ad Soyad" name="adsoyad">
+                    <input type="text" class="input-select katMaliki"
+                        <?php if (!empty($katMalikiBilgisi['userName'])): ?>
+                        value="<?php echo $katMalikiBilgisi['userName']; ?>" readonly <?php endif; ?> />
+                    <br><br>
+                    <input type="text" class="input-select kiracii" <?php if (!empty($kiraciBilgisi['userName'])): ?>
+                        value="<?php echo $kiraciBilgisi['userName']; ?>" readonly <?php endif; ?> />
+                </td>
+                <td data-title="T.C. Kat Maliki" name="tcKatMaliki">
+                    <input type="text" class="input-select katMaliki" <?php if (!empty($katMalikiBilgisi['tc'])): ?>
+                        value="<?php echo $katMalikiBilgisi['tc']; ?>" readonly <?php endif; ?> />
+                    <br><br>
+                    <input type="text" class="input-select kiracii" <?php if (!empty($kiraciBilgisi['tc'])): ?>
+                        value="<?php echo $kiraciBilgisi['tc']; ?>" readonly <?php endif; ?> />
+                </td>
+                <td data-title="Telefon" name="telefon">
+                    <input type="text" class="input-select katMaliki"
+                        <?php if (!empty($katMalikiBilgisi['phoneNumber'])): ?>
+                        value="<?php echo $katMalikiBilgisi['phoneNumber']; ?>" readonly <?php endif; ?> />
+                    <br><br>
+                    <input type="text" class="input-select kiracii" <?php if (!empty($kiraciBilgisi['phoneNumber'])): ?>
+                        value="<?php echo $kiraciBilgisi['phoneNumber']; ?>" readonly <?php endif; ?> />
+                </td>
+                <td data-title="E-Posta" name="eposta">
+                    <input type="text" class="input-select katMaliki"
+                        <?php if (!empty($katMalikiBilgisi['userEmail'])): ?>
+                        value="<?php echo $katMalikiBilgisi['userEmail']; ?>" readonly <?php endif; ?> />
+                    <br><br>
+                    <input type="text" class="input-select kiracii" <?php if (!empty($kiraciBilgisi['userEmail'])): ?>
+                        value="<?php echo $kiraciBilgisi['userEmail']; ?>" readonly <?php endif; ?> />
+                </td>
+            </tr>
+            <?php
                         }
                         $i++;
                     }
@@ -176,227 +182,237 @@
         echo "Bağlantı hatası: " . $e->getMessage();
     }
     ?>
-   <script type="text/javascript">
-    // Sayfa yüklendiğinde mevcut input değerlerini bir diziye kaydetme
-    var initialData = [];
+            <script type="text/javascript">
+            // Sayfa yüklendiğinde mevcut input değerlerini bir diziye kaydetme
+            var initialData = [];
 
-window.onload = function() {
-    var rows = document.querySelectorAll('.git-ac.toplu-td');
+            window.onload = function() {
+                var rows = document.querySelectorAll('.git-ac.toplu-td');
 
-    rows.forEach(function(row) {
-        var blokAdi = row.querySelector('[data-title="Blok Adı"]');
-        var katMalikiUserNameInput = row.querySelector('.katMaliki');
-        var kiraciUserNameInput = row.querySelector('.kiracii');
-        var katMalikiTCInput = row.querySelector('[name="tcKatMaliki"] .katMaliki');
-        var kiraciTCInput = row.querySelector('[name="tcKatMaliki"] .kiracii');
-        var katMalikiPhoneInput = row.querySelector('[name="telefon"] .katMaliki');
-        var kiraciPhoneInput = row.querySelector('[name="telefon"] .kiracii');
-        var katMalikiEmailInput = row.querySelector('[name="eposta"] .katMaliki');
-        var kiraciEmailInput = row.querySelector('[name="eposta"] .kiracii');
+                rows.forEach(function(row) {
+                    var blokAdi = row.querySelector('[data-title="Blok Adı"]');
+                    var katMalikiUserNameInput = row.querySelector('.katMaliki');
+                    var kiraciUserNameInput = row.querySelector('.kiracii');
+                    var katMalikiTCInput = row.querySelector('[name="tcKatMaliki"] .katMaliki');
+                    var kiraciTCInput = row.querySelector('[name="tcKatMaliki"] .kiracii');
+                    var katMalikiPhoneInput = row.querySelector('[name="telefon"] .katMaliki');
+                    var kiraciPhoneInput = row.querySelector('[name="telefon"] .kiracii');
+                    var katMalikiEmailInput = row.querySelector('[name="eposta"] .katMaliki');
+                    var kiraciEmailInput = row.querySelector('[name="eposta"] .kiracii');
 
-        var blokAdiText = blokAdi.innerText.trim();
-        var katMalikiUserName = katMalikiUserNameInput.value.trim();
-        var kiraciUserName = kiraciUserNameInput.value.trim();
-        var katMalikiTC = katMalikiTCInput.value.trim();
-        var kiraciTC = kiraciTCInput.value.trim();
-        var katMalikiPhone = katMalikiPhoneInput.value.trim();
-        var kiraciPhone = kiraciPhoneInput.value.trim();
-        var katMalikiEmail = katMalikiEmailInput.value.trim();
-        var kiraciEmail = kiraciEmailInput.value.trim();
+                    var blokAdiText = blokAdi.innerText.trim();
+                    var katMalikiUserName = katMalikiUserNameInput.value.trim();
+                    var kiraciUserName = kiraciUserNameInput.value.trim();
+                    var katMalikiTC = katMalikiTCInput.value.trim();
+                    var kiraciTC = kiraciTCInput.value.trim();
+                    var katMalikiPhone = katMalikiPhoneInput.value.trim();
+                    var kiraciPhone = kiraciPhoneInput.value.trim();
+                    var katMalikiEmail = katMalikiEmailInput.value.trim();
+                    var kiraciEmail = kiraciEmailInput.value.trim();
 
-        if (katMalikiUserName !== "") {
-            initialData.push({
-                userName: katMalikiUserName,
-                durum: "kat Maliki",
-                blok: blokAdiText,
-                tc: katMalikiTC,
-                telefon: katMalikiPhone,
-                eposta: katMalikiEmail
-            });
-        }
+                    if (katMalikiUserName !== "") {
+                        initialData.push({
+                            userName: katMalikiUserName,
+                            durum: "kat Maliki",
+                            blok: blokAdiText,
+                            tc: katMalikiTC,
+                            telefon: katMalikiPhone,
+                            eposta: katMalikiEmail
+                        });
+                    }
 
-        if (kiraciUserName !== "") {
-            initialData.push({
-                userName: kiraciUserName,
-                durum: "kiracı",
-                blok: blokAdiText,
-                tc: kiraciTC,
-                telefon: kiraciPhone,
-                eposta: kiraciEmail
-            });
-        }
-    });
-saveButton.addEventListener('click', function() {
-    var newEntries = [];
+                    if (kiraciUserName !== "") {
+                        initialData.push({
+                            userName: kiraciUserName,
+                            durum: "kiracı",
+                            blok: blokAdiText,
+                            tc: kiraciTC,
+                            telefon: kiraciPhone,
+                            eposta: kiraciEmail
+                        });
+                    }
+                });
+                saveButton.addEventListener('click', function() {
+                    var newEntries = [];
 
-    var rows = document.querySelectorAll('.git-ac.toplu-td');
+                    var rows = document.querySelectorAll('.git-ac.toplu-td');
 
-    rows.forEach(function(row) {
-        var blokAdi = row.querySelector('[data-title="Blok Adı"]');
-        var katMalikiUserNameInput = row.querySelector('.katMaliki');
-        var kiraciUserNameInput = row.querySelector('.kiracii');
-        var katMalikiTCInput = row.querySelector('[name="tcKatMaliki"] .katMaliki');
-        var kiraciTCInput = row.querySelector('[name="tcKatMaliki"] .kiracii');
-        var katMalikiPhoneInput = row.querySelector('[name="telefon"] .katMaliki');
-        var kiraciPhoneInput = row.querySelector('[name="telefon"] .kiracii');
-        var katMalikiEmailInput = row.querySelector('[name="eposta"] .katMaliki');
-        var kiraciEmailInput = row.querySelector('[name="eposta"] .kiracii');
+                    rows.forEach(function(row) {
+                        var blokAdi = row.querySelector('[data-title="Blok Adı"]');
+                        var katMalikiUserNameInput = row.querySelector('.katMaliki');
+                        var kiraciUserNameInput = row.querySelector('.kiracii');
+                        var katMalikiTCInput = row.querySelector('[name="tcKatMaliki"] .katMaliki');
+                        var kiraciTCInput = row.querySelector('[name="tcKatMaliki"] .kiracii');
+                        var katMalikiPhoneInput = row.querySelector('[name="telefon"] .katMaliki');
+                        var kiraciPhoneInput = row.querySelector('[name="telefon"] .kiracii');
+                        var katMalikiEmailInput = row.querySelector('[name="eposta"] .katMaliki');
+                        var kiraciEmailInput = row.querySelector('[name="eposta"] .kiracii');
 
-        var blokAdiText = blokAdi.innerText.trim();
-        var katMalikiUserName = katMalikiUserNameInput.value.trim();
-        var kiraciUserName = kiraciUserNameInput.value.trim();
-        var katMalikiTC = katMalikiTCInput.value.trim();
-        var kiraciTC = kiraciTCInput.value.trim();
-        var katMalikiPhone = katMalikiPhoneInput.value.trim();
-        var kiraciPhone = kiraciPhoneInput.value.trim();
-        var katMalikiEmail = katMalikiEmailInput.value.trim();
-        var kiraciEmail = kiraciEmailInput.value.trim();
+                        var blokAdiText = blokAdi.innerText.trim();
+                        var katMalikiUserName = katMalikiUserNameInput.value.trim();
+                        var kiraciUserName = kiraciUserNameInput.value.trim();
+                        var katMalikiTC = katMalikiTCInput.value.trim();
+                        var kiraciTC = kiraciTCInput.value.trim();
+                        var katMalikiPhone = katMalikiPhoneInput.value.trim();
+                        var kiraciPhone = kiraciPhoneInput.value.trim();
+                        var katMalikiEmail = katMalikiEmailInput.value.trim();
+                        var kiraciEmail = kiraciEmailInput.value.trim();
 
-        // Yalnızca dolu olan inputlar için yeni girdileri kontrol et
-        if (katMalikiUserName !== "") {
-            var entry = {
-                userName: katMalikiUserName,
-                durum: "kat Maliki",
-                blok: blokAdiText,
-                tc: katMalikiTC,
-                telefon: katMalikiPhone,
-                eposta: katMalikiEmail
-            };
-            // Daha önce initialData'da bu kullanıcı yoksa yeni girdi olarak kabul et
-            if (!initialData.some(function(item) {
-                return item.userName === entry.userName && item.durum === entry.durum && item.blok === entry.blok;
-            })) {
-                newEntries.push(entry);
-            }
-        }
-
-        if (kiraciUserName !== "") {
-            var entry = {
-                userName: kiraciUserName,
-                durum: "kiracı",
-                blok: blokAdiText,
-                tc: kiraciTC,
-                telefon: kiraciPhone,
-                eposta: kiraciEmail
-            };
-            // Daha önce initialData'da bu kullanıcı yoksa yeni girdi olarak kabul et
-            if (!initialData.some(function(item) {
-                return item.userName === entry.userName && item.durum === entry.durum && item.blok === entry.blok;
-            })) {
-                newEntries.push(entry);
-            }
-        }
-    });
-
-    $.ajax({
-            url: 'Controller/bulkAddingUser.php',
-            type: 'POST',
-            data: {
-                newEntries: JSON.stringify(newEntries)
-            },
-            success: function (response) {
-                console.log(response);
-                if(response == 1){
-                    location.reload();
-                }
-            },
-            error: function (error) {
-                console.error(error);
-            }
-        });
-});
-};
-
-    </script>
-    
-            <script>
-                function sortTable(n) {
-                    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-                    table = document.getElementById("table");
-                    switching = true;
-                    dir = "asc";
-                    while (switching) {
-                        switching = false;
-                        rows = table.rows;
-                        for (i = 1; i < (rows.length - 1); i++) {
-                            shouldSwitch = false;
-                            x = rows[i].getElementsByTagName("TD")[n];
-                            y = rows[i + 1].getElementsByTagName("TD")[n];
-
-                            for (var j = 1; j < 8; j++) {
-                                if (n != j) {
-                                    $('#icon-table' + j).removeClass("rotate");
-                                    $('#icon-table' + j).removeClass("opacity");
-                                }
-                            }
-
-                            if (dir == "asc") {
-                                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-                                    shouldSwitch = true;
-                                    $('#icon-table' + n).removeClass("rotate");
-                                    $('#icon-table' + n).addClass("opacity");
-                                    break;
-                                }
-                            } else if (dir == "desc") {
-                                if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-                                    shouldSwitch = true;
-                                    $('#icon-table' + n).addClass("rotate");
-                                    $('#icon-table' + n).addClass("opacity");
-                                    break;
-                                }
+                        // Yalnızca dolu olan inputlar için yeni girdileri kontrol et
+                        if (katMalikiUserName !== "") {
+                            var entry = {
+                                userName: katMalikiUserName,
+                                durum: "katMaliki",
+                                blok: blokAdiText,
+                                tc: katMalikiTC,
+                                telefon: katMalikiPhone,
+                                eposta: katMalikiEmail
+                            };
+                            // Daha önce initialData'da bu kullanıcı yoksa yeni girdi olarak kabul et
+                            if (!initialData.some(function(item) {
+                                    return item.userName === entry.userName && item.durum ===
+                                        entry.durum && item.blok === entry.blok;
+                                })) {
+                                newEntries.push(entry);
                             }
                         }
-                        if (shouldSwitch) {
-                            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-                            switching = true;
-                            switchcount++;
-                        } else {
-                            if (switchcount == 0 && dir == "asc") {
-                                dir = "desc";
-                                switching = true;
+
+                        if (kiraciUserName !== "") {
+                            var entry = {
+                                userName: kiraciUserName,
+                                durum: "kiracı",
+                                blok: blokAdiText,
+                                tc: kiraciTC,
+                                telefon: kiraciPhone,
+                                eposta: kiraciEmail
+                            };
+                            // Daha önce initialData'da bu kullanıcı yoksa yeni girdi olarak kabul et
+                            if (!initialData.some(function(item) {
+                                    return item.userName === entry.userName && item.durum ===
+                                        entry.durum && item.blok === entry.blok;
+                                })) {
+                                newEntries.push(entry);
+                            }
+                        }
+                    });
+
+                    $.ajax({
+                        url: 'Controller/bulkAddingUser.php',
+                        type: 'POST',
+                        data: {
+                            newEntries: JSON.stringify(newEntries)
+                        },
+                        success: function(response) {
+                            console.log(response)
+                            if (response == "success") {
+                                $.ajax({
+                                    url: 'Controller/demo3.php',
+                                    type: 'POST',
+                                    data: {},
+                                    success: function(secondResponse) {
+                                        console.log(secondResponse)
+                                    },
+                                    error: function(error) {
+                                        console.error(error);
+                                    }
+                                });
+                            }
+                        },
+                        error: function(error) {
+                            console.error(error);
+                        }
+                    });
+                });
+            };
+            </script>
+
+            <script>
+            function sortTable(n) {
+                var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+                table = document.getElementById("table");
+                switching = true;
+                dir = "asc";
+                while (switching) {
+                    switching = false;
+                    rows = table.rows;
+                    for (i = 1; i < (rows.length - 1); i++) {
+                        shouldSwitch = false;
+                        x = rows[i].getElementsByTagName("TD")[n];
+                        y = rows[i + 1].getElementsByTagName("TD")[n];
+
+                        for (var j = 1; j < 8; j++) {
+                            if (n != j) {
+                                $('#icon-table' + j).removeClass("rotate");
+                                $('#icon-table' + j).removeClass("opacity");
+                            }
+                        }
+
+                        if (dir == "asc") {
+                            if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                                shouldSwitch = true;
+                                $('#icon-table' + n).removeClass("rotate");
+                                $('#icon-table' + n).addClass("opacity");
+                                break;
+                            }
+                        } else if (dir == "desc") {
+                            if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                                shouldSwitch = true;
+                                $('#icon-table' + n).addClass("rotate");
+                                $('#icon-table' + n).addClass("opacity");
+                                break;
                             }
                         }
                     }
-                    // Döngü tamamlandığında 'i' değeri burada kapanır
+                    if (shouldSwitch) {
+                        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                        switching = true;
+                        switchcount++;
+                    } else {
+                        if (switchcount == 0 && dir == "asc") {
+                            dir = "desc";
+                            switching = true;
+                        }
+                    }
                 }
+                // Döngü tamamlandığında 'i' değeri burada kapanır
+            }
             </script>
 
 
             <script type="text/javascript">
-                // Sayfa yüklendiğinde mevcut input değerlerini bir diziye kaydetme
-                // var initialData = [];
+            // Sayfa yüklendiğinde mevcut input değerlerini bir diziye kaydetme
+            // var initialData = [];
 
-                // window.onload = function () {
-                //     var kiraciUserNameInputs = document.getElementsByName('kiraciUserName');
-                //     var katMalikiUserNameInputs = document.getElementsByName('katMalikiUserName');
-                //     var blok = document.getElementsByName('blok');
-                //     var daire = document.getElementsByName('daire');
+            // window.onload = function () {
+            //     var kiraciUserNameInputs = document.getElementsByName('kiraciUserName');
+            //     var katMalikiUserNameInputs = document.getElementsByName('katMalikiUserName');
+            //     var blok = document.getElementsByName('blok');
+            //     var daire = document.getElementsByName('daire');
 
-                //     for (var i = 0; i < kiraciUserNameInputs.length; i++) {
-                //         if (kiraciUserNameInputs[i].value.trim() !== "") {
-                //             initialData.push({
-                //                 userName: kiraciUserNameInputs[i].value,
-                //                 durum: "kiracı",
-                //                 blok: blok[i].innerText,
-                //                 daire: daire[i].innerText
-                //             });
-                //         }
-                //     }
+            //     for (var i = 0; i < kiraciUserNameInputs.length; i++) {
+            //         if (kiraciUserNameInputs[i].value.trim() !== "") {
+            //             initialData.push({
+            //                 userName: kiraciUserNameInputs[i].value,
+            //                 durum: "kiracı",
+            //                 blok: blok[i].innerText,
+            //                 daire: daire[i].innerText
+            //             });
+            //         }
+            //     }
 
-                //     for (var i = 0; i < katMalikiUserNameInputs.length; i++) {
-                //         if (katMalikiUserNameInputs[i].value.trim() !== "") {
-                //             initialData.push({
-                //                 userName: katMalikiUserNameInputs[i].value,
-                //                 durum: "kat Maliki",
-                //                 blok: blok[i].innerText,
-                //                 daire: daire[i].innerText
-                //             });
-                //         }
-                //     }
-                // };
-                // console.log(initialData);
-                // Save buttona basıldığında verileri karşılaştırma ve sunucuya gönderme
-
+            //     for (var i = 0; i < katMalikiUserNameInputs.length; i++) {
+            //         if (katMalikiUserNameInputs[i].value.trim() !== "") {
+            //             initialData.push({
+            //                 userName: katMalikiUserNameInputs[i].value,
+            //                 durum: "kat Maliki",
+            //                 blok: blok[i].innerText,
+            //                 daire: daire[i].innerText
+            //             });
+            //         }
+            //     }
+            // };
+            // console.log(initialData);
+            // Save buttona basıldığında verileri karşılaştırma ve sunucuya gönderme
             </script>
             </body>
 
