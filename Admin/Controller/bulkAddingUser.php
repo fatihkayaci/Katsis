@@ -9,6 +9,7 @@ $userStatus="Y";
 $userNO = generateUniqueUserID( $conn);
 $userPass = randomPassword();
 $blok_listesi = array();
+$durum_listesi = array();
 foreach ($newEntries as $entry) {
     $blok=$entry['blok'];
     $userName = $entry['userName'];
@@ -41,8 +42,11 @@ foreach ($newEntries as $entry) {
     // Sorguyu çalıştır
     $stmt->execute();
     $blok_listesi[] = $blok;
+    $durum_listesi[] = $durum;
 }
 $_SESSION['blok_listesi'] = $blok_listesi;
+$_SESSION['durum_listesi'] = $durum_listesi;
+$_SESSION['lastID'] = $conn->lastInsertId();
 // Eğer her şey başarılıysa, 'success' mesajını döndür
 echo 'success';
 ?>
