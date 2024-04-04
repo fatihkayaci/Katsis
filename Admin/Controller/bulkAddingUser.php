@@ -47,6 +47,7 @@ foreach ($newEntries as $entry) {
 }
 $_SESSION['blok_listesi'] = $blok_listesi;
 $_SESSION['durum_listesi'] = $durum_listesi;
+$_SESSION['lastID'] = $conn->lastInsertId();
 // Eğer her şey başarılıysa, 'success' mesajını döndür
 echo 'success';
 ?>
