@@ -302,7 +302,6 @@
                             hasDuplicateEmail = true;
                         }
                     });
-                    if (!hasDuplicateEmail) {
                         $.ajax({
                             url: 'Controller/bulkAddingUser.php',
                             type: 'POST',
@@ -310,7 +309,9 @@
                                 newEntries: JSON.stringify(newEntries)
                             },
                             success: function(response) {
+                                alert(response);
                                 if (response == "success") {
+                                    
                                     $.ajax({
                                         url: 'Controller/demo3.php',
                                         type: 'POST',
@@ -335,9 +336,6 @@
                                 console.error(error);
                             }
                         });
-                    }else{
-                        alert("Epostası aynı olanlar var lütfen düzeltiniz");
-                    }
                 });
             };
             </script>

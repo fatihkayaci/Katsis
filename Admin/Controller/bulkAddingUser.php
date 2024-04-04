@@ -11,6 +11,7 @@ $userNO = generateUniqueUserID($conn);
 $blok_listesi = array();
 $durum_listesi = array();
 $userIds = array(); // Kullanıcı ID'lerini saklamak için bir dizi oluştur
+$i = 0;
 foreach ($newEntries as $entry) {
     $userPass = randomPassword();
     $blok = $entry['blok'];
@@ -41,15 +42,16 @@ foreach ($newEntries as $entry) {
         $popup = 0;
         $stmt->bindParam(':rol', $rol);
         $stmt->bindParam(':popup', $popup);
-
-        // Sorguyu çalıştır
         $stmt->execute();
+        $blok_listesi[] = $blok;
+        $durum_listesi[] = $durum;
+        $lastInsertedId = $conn->lastInsertId();
+        $userIds[] = $lastInsertedId;
     } else {
         $emailCheckSQL = "SELECT COUNT(*) FROM tbl_users WHERE userEmail = :userEmail";
         $emailCheckStmt = $conn->prepare($emailCheckSQL);
         $emailCheckStmt->bindParam(':userEmail', $eposta);
         $emailCheckStmt->execute();
-
         if ($emailCheckStmt->fetchColumn() > 0) {
             echo "Bu e-posta adresi zaten var. Lütfen farklı bir e-posta adresi seçiniz.";
         } else {
@@ -75,22 +77,16 @@ foreach ($newEntries as $entry) {
             $stmt->bindParam(':rol', $rol);
             $stmt->bindParam(':popup', $popup);
             $stmt->execute();
+            $blok_listesi[] = $blok;
+            $durum_listesi[] = $durum;
+            $lastInsertedId = $conn->lastInsertId();
+            $userIds[] = $lastInsertedId;
         }
     }
-
-    // Sorguyu çalıştır
-   
-    $blok_listesi[] = $blok;
-    $durum_listesi[] = $durum;
-    // Son eklenen kullanıcının ID'sini al
-    $lastInsertedId = $conn->lastInsertId();
-
-    // Son eklenen kullanıcıların ID'lerini saklamak için diziye ekle
-    $userIds[] = $lastInsertedId;
 }
 $_SESSION['blok_listesi'] = $blok_listesi;
 $_SESSION['durum_listesi'] = $durum_listesi;
 $_SESSION['userIds'] = $userIds;
 // Eğer her şey başarılıysa, 'success' mesajını döndür
-echo 'success';
+echo 'success';  
 ?>
