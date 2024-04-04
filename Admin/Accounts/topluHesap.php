@@ -232,11 +232,11 @@
                         });
                     }
                 });
+                // Kaydet butonuna tıklandığında yeni girdileri işle
                 saveButton.addEventListener('click', function() {
                     var newEntries = [];
 
                     var rows = document.querySelectorAll('.git-ac.toplu-td');
-
                     rows.forEach(function(row) {
                         var blokAdi = row.querySelector('[data-title="Blok Adı"]');
                         var katMalikiUserNameInput = row.querySelector('.katMaliki');
@@ -258,70 +258,86 @@
                         var katMalikiEmail = katMalikiEmailInput.value.trim();
                         var kiraciEmail = kiraciEmailInput.value.trim();
 
-                        // Yalnızca dolu olan inputlar için yeni girdileri kontrol et
-                        if (katMalikiUserName !== "") {
-                            var entry = {
+                        // Sadece yeni girdileri kontrol et
+                        if (katMalikiUserName !== "" && !initialData.some(function(item) {
+                                return item.userName === katMalikiUserName && item.durum ===
+                                    "kat Maliki" && item.blok === blokAdiText;
+                            })) {
+                            newEntries.push({
                                 userName: katMalikiUserName,
-                                durum: "katMaliki",
+                                durum: "kat Maliki",
                                 blok: blokAdiText,
                                 tc: katMalikiTC,
                                 telefon: katMalikiPhone,
                                 eposta: katMalikiEmail
-                            };
-                            // Daha önce initialData'da bu kullanıcı yoksa yeni girdi olarak kabul et
-                            if (!initialData.some(function(item) {
-                                    return item.userName === entry.userName && item.durum ===
-                                        entry.durum && item.blok === entry.blok;
-                                })) {
-                                newEntries.push(entry);
-                            }
+                            });
                         }
 
-                        if (kiraciUserName !== "") {
-                            var entry = {
+                        if (kiraciUserName !== "" && !initialData.some(function(item) {
+                                return item.userName === kiraciUserName && item.durum ===
+                                    "kiracı" && item.blok === blokAdiText;
+                            })) {
+                            newEntries.push({
                                 userName: kiraciUserName,
                                 durum: "kiracı",
                                 blok: blokAdiText,
                                 tc: kiraciTC,
                                 telefon: kiraciPhone,
                                 eposta: kiraciEmail
-                            };
-                            // Daha önce initialData'da bu kullanıcı yoksa yeni girdi olarak kabul et
-                            if (!initialData.some(function(item) {
-                                    return item.userName === entry.userName && item.durum ===
-                                        entry.durum && item.blok === entry.blok;
-                                })) {
-                                newEntries.push(entry);
-                            }
+                            });
                         }
                     });
 
-                    $.ajax({
-                        url: 'Controller/bulkAddingUser.php',
-                        type: 'POST',
-                        data: {
-                            newEntries: JSON.stringify(newEntries)
-                        },
-                        success: function(response) {
-                            console.log(response)
-                            if (response == "success") {
-                                $.ajax({
-                                    url: 'Controller/demo3.php',
-                                    type: 'POST',
-                                    data: {},
-                                    success: function(secondResponse) {
-                                        console.log(secondResponse)
-                                    },
-                                    error: function(error) {
-                                        console.error(error);
-                                    }
-                                });
-                            }
-                        },
-                        error: function(error) {
-                            console.error(error);
+                    console.log(newEntries);
+
+                    // E-posta kontrolü yap
+                    var hasDuplicateEmail = false;
+                    var emailList = newEntries.map(function(entry) {
+                        return entry.eposta;
+                    });
+
+                    // E-posta listesindeki her bir adresi kontrol et
+                    emailList.forEach(function(email, index) {
+                        if (emailList.indexOf(email) !== index) {
+                            hasDuplicateEmail = true;
                         }
                     });
+                    if (!hasDuplicateEmail) {
+                        $.ajax({
+                            url: 'Controller/bulkAddingUser.php',
+                            type: 'POST',
+                            data: {
+                                newEntries: JSON.stringify(newEntries)
+                            },
+                            success: function(response) {
+                                if (response == "success") {
+                                    $.ajax({
+                                        url: 'Controller/demo3.php',
+                                        type: 'POST',
+                                        data: {},
+                                        success: function(secondResponse) {
+                                            if(secondResponse == "success"){
+                                                location.reload();
+                                            }else{
+                                                alert(secondResponse);
+                                            }
+                                            
+                                        },
+                                        error: function(error) {
+                                            console.error(error);
+                                        }
+                                    });
+                                }else{
+                                    alert(response);
+                                }
+                            },
+                            error: function(error) {
+                                console.error(error);
+                            }
+                        });
+                    }else{
+                        alert("Epostası aynı olanlar var lütfen düzeltiniz");
+                    }
                 });
             };
             </script>

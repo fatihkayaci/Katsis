@@ -1,50 +1,37 @@
 <?php
-include("../../DB/dbconfig.php");
+include ("../../DB/dbconfig.php");
 
 try {
     session_start();
-    $lastID = $_SESSION['lastID'];
+    $userIds = $_SESSION['userIds'];
     $blok_listesi = $_SESSION['blok_listesi'];
     $durum_listesi = $_SESSION['durum_listesi'];
-    $blokArray = array();
-    $daireArray = array();
-   foreach($blok_listesi as $blok){
-        $parcalanmis = explode("/", $blok);
-        $blok = $parcalanmis[0]; // Blok kısmı
-        $daire = $parcalanmis[1]; // Daire kısmı
 
-        // Blok ve daireyi ilgili dizilere ekleyin
-        $blokArray[] = $blok;
-        $daireArray[] = $daire;
+    foreach ($durum_listesi as $i => $durum) {
+        $columnName = ($durum == "kiracı") ? "kiraciID" : "katMalikiID";
+        // Blok ve daireyi ayır
+        $parcalanmis = explode("/", $blok_listesi[$i]);
+        $blok = $parcalanmis[0];
+        $daire = $parcalanmis[1];
+
+        $sql = "UPDATE tbl_daireler AS d
+                INNER JOIN tbl_blok AS b ON d.blok_adi = b.blok_id
+                SET d.$columnName = :userID
+                WHERE d.daire_sayisi = :daire 
+                AND b.blok_adi = :blok
+                AND d.apartman_id = :apartID
+                AND d.$columnName IS NULL"; // Eski kullanıcıyı null yapmak yerine direkt yeni kullanıcıyı atayalım
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':userID', $userIds[$i], PDO::PARAM_INT); // $userIds dizisinden ilgili kullanıcıyı al
+        $stmt->bindParam(':daire', $daire, PDO::PARAM_STR); // Daireyi al
+        $stmt->bindParam(':blok', $blok, PDO::PARAM_STR); // Bloku al
+        $stmt->bindParam(':apartID', $_SESSION["apartID"], PDO::PARAM_INT);
+        $stmt->execute();
     }
 
-    foreach($durum_listesi as $key => $durum ){
-            if ($durum == "kiracı") {
-                $sql  = "UPDATE tbl_daireler
-                             SET kiraciID = (SELECT userID FROM tbl_users WHERE userID = :lastID)
-                             WHERE blok_adi = :blok AND daire_sayisi = :daire AND apartman_id = " . $_SESSION["apartID"];
-    
-                $stmt = $conn->prepare($sql);
-                $stmt->bindParam(':lastID', $lastID, PDO::PARAM_INT);
-                $stmt->bindParam(':blok', $blokArray[$key], PDO::PARAM_STR);
-                   $sql  = "UPDATE tbl_daireler
-                             SET katMalikiID = (SELECT userID FROM tbl_users WHERE userID = :lastID)
-                             WHERE blok_adi = :blok AND daire_sayisi = :daire AND apartman_id = " . $_SESSION["apartID"];
-    
-                $stmt = $conn->prepare($sql);
-                $stmt->bindParam(':lastID', $lastID, PDO::PARAM_INT);
-                $stmt->bindParam(':blok', $blokArray[$key], PDO::PARAM_STR);
-                $stmt->bindParam(':daire', $daireArray[$key], PDO::PARAM_STR);
-                $stmt->execute();
-            }
-        }
-        
-        echo 1;
-    } catch (PDOException $e) {
-        echo $e->getMessage(); // Hata mesajını ekrana yazdır
-    }
+    echo "success";
+} catch (PDOException $e) {
+    echo "Hata oluştu: " . $e->getMessage(); // Hata mesajını ekrana yazdır
+}
 ?>
-$stmt->bindParam(':daire', $daireArray[$key], PDO::PARAM_STR);
-                $stmt->execute();
-            } else if ($durum == "katMaliki") {
-            
