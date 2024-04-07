@@ -24,7 +24,7 @@ try {
     FROM tbl_users u
     LEFT JOIN tbl_daireler d ON u.userID = d.katMalikiID OR u.userID = d.kiraciID
     LEFT JOIN tbl_blok b ON d.blok_adi = b.blok_id
-    WHERE arsive=0 AND rol=3 AND u.apartman_id = " . $_SESSION["apartID"] . "
+    WHERE rol=3 AND u.apartman_id = " . $_SESSION["apartID"] . "
     ORDER BY u.userID ASC";
 
     $stmt = $conn->prepare($sql2);
@@ -1010,7 +1010,6 @@ try {
         var blokArray = [];
         var durumArray = [];
         var isConflict = false; // Çakışma durumunu kontrol etmek için bir bayrak
-        var arsive = 0;
         //console.log(userName + "," + tc + "," + phoneNumber + "," + userEmail + "," + plate + "," + gender);
 
         for (var i = 0; i < selectedDurumArray.length; i++) {

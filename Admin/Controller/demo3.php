@@ -15,12 +15,22 @@ try {
         $daire = $parcalanmis[1];
 
         $sql = "UPDATE tbl_daireler AS d
-                INNER JOIN tbl_blok AS b ON d.blok_adi = b.blok_id
-                SET d.$columnName = :userID
-                WHERE d.daire_sayisi = :daire 
-                AND b.blok_adi = :blok
-                AND d.apartman_id = :apartID
-                AND d.$columnName IS NULL"; // Eski kullanıcıyı null yapmak yerine direkt yeni kullanıcıyı atayalım
+            INNER JOIN tbl_blok AS b ON d.blok_adi = b.blok_id
+            SET d.$columnName = :userID";
+
+    // Eğer columnName 'kiraciID' ise 'kiraciGiris' sütununa şu anki zamanı ekle
+    if ($columnName === "kiraciID") {
+        $sql .= ", d.kiraciGiris = NOW()";
+    }
+    // Eğer columnName 'katMalikiID' ise 'katMGiris' sütununa şu anki zamanı ekle
+    elseif ($columnName === "katMalikiID") {
+        $sql .= ", d.katMGiris = NOW()";
+    }
+
+    $sql .= " WHERE d.daire_sayisi = :daire 
+              AND b.blok_adi = :blok
+              AND d.apartman_id = :apartID
+              AND d.$columnName IS NULL";
 
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':userID', $userIds[$i], PDO::PARAM_INT); // $userIds dizisinden ilgili kullanıcıyı al
