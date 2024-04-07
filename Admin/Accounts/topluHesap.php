@@ -304,7 +304,7 @@
                             }
                         });
 
-                        // E-posta adreslerinden en az biri boşsa, hasDuplicateEmail'i false yap
+                        // E-posta adresalerinden en az biri boşsa, hasDuplicateEmail'i false yap
                         if (emailList.some(function (email) {
                             return email === "";
                         })) {
