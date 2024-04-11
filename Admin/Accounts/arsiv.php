@@ -103,12 +103,12 @@ try {
                     <div class="main-durum <?php
                                 if ($row["status"] == "kiraci") {
                                     echo "kiraci";
-                                } elseif ($row["status"] == "Kat Maliki") {
+                                } elseif ($row["status"] == "katMaliki") {
                                     echo "kat-maliki";
                                 } else {
                                     echo "belirtilmemis";
                                 }
-                                ?>">
+                                ?> ">
                         <?php echo $row["status"]; ?>
                     </div>
                 </td>

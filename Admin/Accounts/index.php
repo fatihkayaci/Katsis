@@ -342,13 +342,15 @@ try {
                 <label for="plate">Araç Plakası</label>
             </div>
 
-            <div class="col-md-6 col">
-                <select class="input select-ayar" id="gender" required="">
-                    <option style="display: none;" value="" selected disabled></option>
-                    <option value="Erkek">Erkek</option>
-                    <option value="Kadın">Kadın</option>
-                </select>
-                <label for="gender">Cinsiyet :</label>
+            <div class="col-md-6 col margint">
+                <div class="select-div m-0">
+                    <input class="search-selectx input" type="text" list="Users" id="userInput" required="" />
+                    <label class="selectx-label" for="userInput" for="gender">Cinsiyet :</label>
+                    <ul class="value-listx" id="userInputDrop">                                        
+                        <li class="li-select" data-user-id="Erkek">Erkek</li>
+                        <li class="li-select" data-user-id="Kadin">Kadın</li>
+                    </ul>
+                </div>
             </div>
         </div>
 
@@ -409,10 +411,24 @@ try {
 
         <div class="row w-90">
             <div class="col-btn">
-                <select class="input" id="optionsBlok" name="options" required="">
-                    <?php echo $optionsBlok; ?>
-                </select>
-                <label for="options">Daire:</label>
+                <div class="select-div">
+                    <input class="search-selectx input" type="text" list="Users" id="optionsBlok" name="options" required="" />
+                    <label class="selectx-label" for="options">Daire :</label>
+                    <ul class="value-listx" id="optionsBlokDrop">
+                        <?php 
+                            foreach ($kategori_listesi as $optionsBlok) {
+                             echo '                                        
+                                <li class="li-select" data-user-id="">' . $optionsBlok . '</li>';
+                            }
+                        ?>
+ 
+                        <!-- <select class="input" id="optionsBlok" name="options" required="">
+                            <?php // echo $optionsBlok; ?>
+                        </select>
+                        <label for="options">Daire:</label> -->
+
+                    </ul>
+                </div>
             </div>
             <div class="col-btn">
                 <select class="input" id="durum">
@@ -430,6 +446,80 @@ try {
 
     </form>
 </div>
+
+<!-- =============================== -->
+<!-- custom gender input start -->
+
+<script>
+function setupSearchSelect(inputSelector, dropdownSelector) {
+  const inputField = document.querySelector(inputSelector);
+  const dropdown = document.querySelector(dropdownSelector);
+  const dropdownArray = [...dropdown.querySelectorAll('.li-select')];
+  let valueArray = [];
+
+  dropdown.classList.add('open');
+  inputField.focus();
+
+  dropdownArray.forEach(item => {
+    valueArray.push(item.textContent);
+  });
+
+  const closeDropdown = () => {
+    dropdown.classList.remove('open');
+  }
+
+  inputField.addEventListener('input', () => {
+    dropdown.classList.add('open');
+    let inputValue = inputField.value.toLowerCase();
+    let valueSubstring;
+    if (inputValue.length > 0) {
+      for (let j = 0; j < valueArray.length; j++) {
+        if (!(inputValue.substring(0, inputValue.length) === valueArray[j].substring(0, inputValue.length).toLowerCase())) {
+          dropdownArray[j].classList.add('closed'); 
+        } else {
+          dropdownArray[j].classList.remove('closed');
+        }
+      }
+    } else {
+      dropdownArray.forEach(item => {
+        item.classList.remove('closed');
+      });
+    }
+  });
+
+  dropdownArray.forEach(item => {
+    item.addEventListener('click', (evt) => {
+      selectedUserID = evt.target.dataset.userId;
+      inputField.value = item.textContent;
+      dropdownArray.forEach(dropdown => {
+        dropdown.classList.add('closed');
+      });
+    });
+  });
+
+  inputField.addEventListener('focus', () => {
+    dropdown.classList.add('open');
+    dropdownArray.forEach(dropdown => {
+      dropdown.classList.remove('closed');
+    });
+  });
+
+  inputField.addEventListener('blur', () => {
+    dropdown.classList.remove('open');
+  });
+
+  document.addEventListener('click', (evt) => {
+    const isDropdown = dropdown.contains(evt.target);
+    const isInput = inputField.contains(evt.target);
+    if (!isDropdown && !isInput) {
+      dropdown.classList.remove('open');
+    }
+  });
+}
+
+setupSearchSelect('#userInput', '#userInputDrop');
+setupSearchSelect('#optionsBlok', '#optionsBlokDrop');
+</script>
 
 <!-- =============================== -->
 <!-- select input start -->

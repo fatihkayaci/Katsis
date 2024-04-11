@@ -82,46 +82,71 @@
                         if ($kiraciBilgisi && $katMalikiBilgisi) {
                             ?>
                             <tr data-userid="" class="git-ac toplu-td <?php echo $i ?>">
-                                <td data-title="Blok Adı" name="blok">
+                                <td data-title="Blok Adı" name="blok" class="br-r">
                                     <?php
                                     if (!empty($row["blok_adi"]) && !empty($row["daire_sayisi"])) {
                                         echo $row["blok_adi"] . " / " . $row["daire_sayisi"];
                                     }
                                     ?>
                                 </td>
-                                <td data-title="Kat Maliki" name="katmaliki">Kat Maliki <br><br> Kiracı</td>
-                                <td data-title="Ad Soyad" name="adsoyad">
-                                    <input type="text" class="input-select katMaliki"
-                                        value="<?php echo isset($katMalikiBilgisi['userName']) ? $katMalikiBilgisi['userName'] : ''; ?>"
-                                        <?php echo !empty($katMalikiBilgisi['userName']) ? 'readonly' : ''; ?> />
-                                    <br><br>
-                                    <input type="text" class="input-select kiracii"
-                                        value="<?php echo isset($kiraciBilgisi['userName']) ? $kiraciBilgisi['userName'] : ''; ?>" <?php echo !empty($kiraciBilgisi['userName']) ? 'readonly' : ''; ?> />
+                                <td data-title="Kat Maliki" name="katmaliki" class="p-0">
+                                    <div class="toplu-td-div">
+                                        <span class="border-1">Kat Maliki</span>
+                                        <span>Kiracı</span>
+                                    </div>
                                 </td>
-                                <td data-title="T.C. Kat Maliki" name="tcKatMaliki">
-                                    <input type="text" class="input-select katMaliki"
-                                        value="<?php echo isset($katMalikiBilgisi['tc']) ? $katMalikiBilgisi['tc'] : ''; ?>" <?php echo !empty($katMalikiBilgisi['userName']) ? 'readonly' : ''; ?> />
-                                    <br><br>
-                                    <input type="text" class="input-select kiracii"
-                                        value="<?php echo isset($kiraciBilgisi['tc']) ? $kiraciBilgisi['tc'] : ''; ?>" <?php echo !empty($kiraciBilgisi['userName']) ? 'readonly' : ''; ?> />
+                                <td data-title="Ad Soyad" name="adsoyad" class="p-0">
+                                    <div class="toplu-td-div">
+                                        <span class="border-1">
+                                            <input type="text" class="input-select katMaliki"
+                                                value="<?php echo isset($katMalikiBilgisi['userName']) ? $katMalikiBilgisi['userName'] : ''; ?>"
+                                                <?php echo !empty($katMalikiBilgisi['userName']) ? 'readonly' : ''; ?> />
+                                        </span>
+                                        <span>
+                                        <input type="text" class="input-select kiracii"
+                                            value="<?php echo isset($kiraciBilgisi['userName']) ? $kiraciBilgisi['userName'] : ''; ?>" <?php echo !empty($kiraciBilgisi['userName']) ? 'readonly' : ''; ?> />
+                                        </span>    
+                                    </div>
                                 </td>
-                                <td data-title="Telefon" name="telefon">
-                                    <input type="text" class="input-select katMaliki"
-                                        value="<?php echo isset($katMalikiBilgisi['phoneNumber']) ? $katMalikiBilgisi['phoneNumber'] : ''; ?>"
-                                        <?php echo !empty($katMalikiBilgisi['userName']) ? 'readonly' : ''; ?> />
-                                    <br><br>
-                                    <input type="text" class="input-select kiracii"
-                                        value="<?php echo isset($kiraciBilgisi['phoneNumber']) ? $kiraciBilgisi['phoneNumber'] : ''; ?>"
-                                        <?php echo !empty($kiraciBilgisi['userName']) ? 'readonly' : ''; ?> />
+                                <td data-title="T.C. Kat Maliki" name="tcKatMaliki" class="p-0">
+                                    <div class="toplu-td-div">
+                                        <span class="border-1">
+                                            <input type="text" class="input-select katMaliki"
+                                                value="<?php echo isset($katMalikiBilgisi['tc']) ? $katMalikiBilgisi['tc'] : ''; ?>" <?php echo !empty($katMalikiBilgisi['userName']) ? 'readonly' : ''; ?> />
+                                        </span>
+                                        <span>
+                                            <input type="text" class="input-select kiracii"
+                                                value="<?php echo isset($kiraciBilgisi['tc']) ? $kiraciBilgisi['tc'] : ''; ?>" <?php echo !empty($kiraciBilgisi['userName']) ? 'readonly' : ''; ?> />
+                                        </span>
+                                    </div>
                                 </td>
-                                <td data-title="E-Posta" name="eposta">
-                                    <input type="text" class="input-select katMaliki"
-                                        value="<?php echo isset($katMalikiBilgisi['userEmail']) ? $katMalikiBilgisi['userEmail'] : ''; ?>"
-                                        <?php echo !empty($katMalikiBilgisi['userName']) ? 'readonly' : ''; ?> />
-                                    <br><br>
-                                    <input type="text" class="input-select kiracii"
-                                        value="<?php echo isset($kiraciBilgisi['userEmail']) ? $kiraciBilgisi['userEmail'] : ''; ?>"
-                                        <?php echo !empty($kiraciBilgisi['userName']) ? 'readonly' : ''; ?> />
+                                <td data-title="Telefon" name="telefon" class="p-0">
+                                    <div class="toplu-td-div">
+                                        <span class="border-1">
+                                            <input type="text" class="input-select katMaliki"
+                                                value="<?php echo isset($katMalikiBilgisi['phoneNumber']) ? $katMalikiBilgisi['phoneNumber'] : ''; ?>"
+                                                <?php echo !empty($katMalikiBilgisi['userName']) ? 'readonly' : ''; ?> />
+                                        </span>
+                                        <span>
+                                            <input type="text" class="input-select kiracii"
+                                                value="<?php echo isset($kiraciBilgisi['phoneNumber']) ? $kiraciBilgisi['phoneNumber'] : ''; ?>"
+                                                <?php echo !empty($kiraciBilgisi['userName']) ? 'readonly' : ''; ?> />
+                                        </span>   
+                                    </div>             
+                                </td>
+                                <td data-title="E-Posta" name="eposta" class="p-0 br-end">
+                                    <div class="toplu-td-div">
+                                        <span class="border-1">
+                                            <input type="text" class="input-select katMaliki"
+                                                value="<?php echo isset($katMalikiBilgisi['userEmail']) ? $katMalikiBilgisi['userEmail'] : ''; ?>"
+                                                <?php echo !empty($katMalikiBilgisi['userName']) ? 'readonly' : ''; ?> />
+                                        </span>
+                                        <span>
+                                            <input type="text" class="input-select kiracii"
+                                                value="<?php echo isset($kiraciBilgisi['userEmail']) ? $kiraciBilgisi['userEmail'] : ''; ?>"
+                                                <?php echo !empty($kiraciBilgisi['userName']) ? 'readonly' : ''; ?> />
+                                        </span>   
+                                    </div>     
                                 </td>
                             </tr>
                             <?php
@@ -131,41 +156,66 @@
                             // Kullanıcı bilgileri bulunamadıysa, hata mesajı veya başka bir işlem
                             ?>
                             <tr data-userid="" class="git-ac toplu-td <?php echo $i ?>">
-                                <td data-title="Blok Adı" name="blok">
+                                <td data-title="Blok Adı" name="blok" class="br-r">
                                     <?php
                                     if (!empty($row["blok_adi"]) && !empty($row["daire_sayisi"])) {
                                         echo $row["blok_adi"] . " / " . $row["daire_sayisi"];
                                     }
                                     ?>
                                 </td>
-                                <td data-title="Kat Maliki" name="katmaliki">Kat Maliki <br><br> Kiracı</td>
-                                <td data-title="Ad Soyad" name="adsoyad">
-                                    <input type="text" class="input-select katMaliki"
-                                        value="<?php echo isset($katMalikiBilgisi['userName']) ? $katMalikiBilgisi['userName'] : ''; ?>" />
-                                    <br><br>
-                                    <input type="text" class="input-select kiracii"
-                                        value="<?php echo isset($kiraciBilgisi['userName']) ? $kiraciBilgisi['userName'] : ''; ?>" />
+                                <td data-title="Kat Maliki" name="katmaliki" class="p-0">
+                                    <div class="toplu-td-div">
+                                            <span class="border-1">Kat Maliki</span>
+                                            <span>Kiracı</span>   
+                                        </div> 
+                                    </td>
+                                <td data-title="Ad Soyad" name="adsoyad" class="p-0">
+                                    <div class="toplu-td-div">
+                                        <span class="border-1">
+                                            <input type="text" class="input-select katMaliki"
+                                                value="<?php echo isset($katMalikiBilgisi['userName']) ? $katMalikiBilgisi['userName'] : ''; ?>" />
+                                        </span>
+                                        <span>
+                                            <input type="text" class="input-select kiracii"
+                                                value="<?php echo isset($kiraciBilgisi['userName']) ? $kiraciBilgisi['userName'] : ''; ?>" />
+                                        </span>   
+                                    </div> 
                                 </td>
-                                <td data-title="T.C. Kat Maliki" name="tcKatMaliki">
-                                    <input type="text" class="input-select katMaliki"
-                                        value="<?php echo isset($katMalikiBilgisi['tc']) ? $katMalikiBilgisi['tc'] : ''; ?>" />
-                                    <br><br>
-                                    <input type="text" class="input-select kiracii"
-                                        value="<?php echo isset($kiraciBilgisi['tc']) ? $kiraciBilgisi['tc'] : ''; ?>" />
+                                <td data-title="T.C. Kat Maliki" name="tcKatMaliki" class="p-0">
+                                    <div class="toplu-td-div">
+                                        <span class="border-1">
+                                            <input type="text" class="input-select katMaliki"
+                                                value="<?php echo isset($katMalikiBilgisi['tc']) ? $katMalikiBilgisi['tc'] : ''; ?>" />
+                                        </span>
+                                        <span>
+                                            <input type="text" class="input-select kiracii"
+                                                value="<?php echo isset($kiraciBilgisi['tc']) ? $kiraciBilgisi['tc'] : ''; ?>" />
+                                        </span>   
+                                    </div>    
                                 </td>
-                                <td data-title="Telefon" name="telefon">
-                                    <input type="text" class="input-select katMaliki"
-                                        value="<?php echo isset($katMalikiBilgisi['phoneNumber']) ? $katMalikiBilgisi['phoneNumber'] : ''; ?>" />
-                                    <br><br>
-                                    <input type="text" class="input-select kiracii"
-                                        value="<?php echo isset($kiraciBilgisi['phoneNumber']) ? $kiraciBilgisi['phoneNumber'] : ''; ?>" />
+                                <td data-title="Telefon" name="telefon" class="p-0">
+                                    <div class="toplu-td-div">
+                                        <span class="border-1">
+                                            <input type="text" class="input-select katMaliki"
+                                                value="<?php echo isset($katMalikiBilgisi['phoneNumber']) ? $katMalikiBilgisi['phoneNumber'] : ''; ?>" />
+                                        </span>
+                                        <span>
+                                            <input type="text" class="input-select kiracii"
+                                                value="<?php echo isset($kiraciBilgisi['phoneNumber']) ? $kiraciBilgisi['phoneNumber'] : ''; ?>" />
+                                        </span>   
+                                    </div>
                                 </td>
-                                <td data-title="E-Posta" name="eposta">
-                                    <input type="text" class="input-select katMaliki"
-                                        value="<?php echo isset($katMalikiBilgisi['userEmail']) ? $katMalikiBilgisi['userEmail'] : ''; ?>" />
-                                    <br><br>
-                                    <input type="text" class="input-select kiracii"
-                                        value="<?php echo isset($kiraciBilgisi['userEmail']) ? $kiraciBilgisi['userEmail'] : ''; ?>" />
+                                <td data-title="E-Posta" name="eposta" class="p-0 br-end">
+                                    <div class="toplu-td-div">
+                                        <span class="border-1">
+                                            <input type="text" class="input-select katMaliki"
+                                                value="<?php echo isset($katMalikiBilgisi['userEmail']) ? $katMalikiBilgisi['userEmail'] : ''; ?>" />
+                                        </span>
+                                        <span>
+                                            <input type="text" class="input-select kiracii"
+                                                value="<?php echo isset($kiraciBilgisi['userEmail']) ? $kiraciBilgisi['userEmail'] : ''; ?>" />
+                                        </span>   
+                                    </div>            
                                 </td>
                             </tr>
                             <?php

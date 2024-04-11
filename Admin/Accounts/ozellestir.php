@@ -153,7 +153,8 @@ WHERE m.user_id = :user_id AND m.apartman_id = :apartman_id AND maliye_turu = :m
                             </div>
 
                             <div class="col-md-6 col-btn">
-                                <select class="input" id="kategori" required="">
+
+                                <!-- <select class="input" id="kategori" required="">
                                     <option style="display: none;" value="" disabled selected></option>
                                     <?php
                                     foreach ($kategori_listesi as $kategori_id => $kategori_adi) {
@@ -161,7 +162,20 @@ WHERE m.user_id = :user_id AND m.apartman_id = :apartman_id AND maliye_turu = :m
                                     }
                                     ?>
                                 </select>
-                                <label id="kategoriLabel" for="kategori">Kategoriler *</label>
+                                <label id="kategoriLabel" for="kategori">Kategoriler *</label> -->
+
+                                <div class="select-div">
+                                    <input class="search-selectx input" type="text" list="Users" id="kategori" name="options" required="" />
+                                    <label id="kategoriLabel" class="selectx-label" for="kategori">Kategoriler : *</label>
+                                    <ul class="value-listx" id="kategoriDrop">
+                                        <?php 
+                                            foreach($kategori_listesi as $kategori_id => $kategori_adi){
+                                                echo '                                        
+                                                   <li class="li-select" data-user-id="' . $kategori_adi . '">' . $kategori_adi . '</li>';
+                                            }
+                                        ?>                                        
+                                    </ul>
+                                </div>
                             </div>
 
                         </div>
@@ -190,17 +204,17 @@ WHERE m.user_id = :user_id AND m.apartman_id = :apartman_id AND maliye_turu = :m
 
                         <div class="row">
 
-                            <div class="col-md-6 col-btn">
+                            <div class="col-md-12 col-btn">
                                 <input class="input" type="text" id="aciklama_tahsilat" required="" />
                                 <label id="aciklamaLabel_tahsilat" for="aciklama_tahsilat">Açıklama *: </label>
                             </div>
 
-                            <div class="col-md-6 col-btn">
+                            <div class="col-md-12 col-btn">
                                 <input class="input" type="text" id="tahsilatTutar" />
                                 <label id="tahsilatLabel" for="tahsilatTutar">Tahsilat Tutarı *:</label>
                             </div>
 
-                            <div class="col-md-6 col">
+                            <div class="col-md-12 col-btn">
                                 <input class="input" type="date" value="<?php echo date('Y-m-d'); ?>" id="dateInput3" required="" />
                                 <label id="label_tarih3" for="dateInput3">Tahsilat Tarihi :</label>
                             </div>
@@ -921,3 +935,76 @@ $('#label_tarih3').css('color', '#0d0c22');
             }
         });
     </script>
+
+    <!-- =============================== -->
+<!-- custom gender input start -->
+
+<script>
+function setupSearchSelect(inputSelector, dropdownSelector) {
+  const inputField = document.querySelector(inputSelector);
+  const dropdown = document.querySelector(dropdownSelector);
+  const dropdownArray = [...dropdown.querySelectorAll('.li-select')];
+  let valueArray = [];
+
+  dropdown.classList.add('open');
+  inputField.focus();
+
+  dropdownArray.forEach(item => {
+    valueArray.push(item.textContent);
+  });
+
+  const closeDropdown = () => {
+    dropdown.classList.remove('open');
+  }
+
+  inputField.addEventListener('input', () => {
+    dropdown.classList.add('open');
+    let inputValue = inputField.value.toLowerCase();
+    let valueSubstring;
+    if (inputValue.length > 0) {
+      for (let j = 0; j < valueArray.length; j++) {
+        if (!(inputValue.substring(0, inputValue.length) === valueArray[j].substring(0, inputValue.length).toLowerCase())) {
+          dropdownArray[j].classList.add('closed'); 
+        } else {
+          dropdownArray[j].classList.remove('closed');
+        }
+      }
+    } else {
+      dropdownArray.forEach(item => {
+        item.classList.remove('closed');
+      });
+    }
+  });
+
+  dropdownArray.forEach(item => {
+    item.addEventListener('click', (evt) => {
+      selectedUserID = evt.target.dataset.userId;
+      inputField.value = item.textContent;
+      dropdownArray.forEach(dropdown => {
+        dropdown.classList.add('closed');
+      });
+    });
+  });
+
+  inputField.addEventListener('focus', () => {
+    dropdown.classList.add('open');
+    dropdownArray.forEach(dropdown => {
+      dropdown.classList.remove('closed');
+    });
+  });
+
+  inputField.addEventListener('blur', () => {
+    dropdown.classList.remove('open');
+  });
+
+  document.addEventListener('click', (evt) => {
+    const isDropdown = dropdown.contains(evt.target);
+    const isInput = inputField.contains(evt.target);
+    if (!isDropdown && !isInput) {
+      dropdown.classList.remove('open');
+    }
+  });
+}
+
+setupSearchSelect('#kategori', '#kategoriDrop');
+</script>
