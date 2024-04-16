@@ -16,6 +16,8 @@ try {
     $apartman_id = $_POST['apartman_id'];
     $plate = $_POST['plate'];
     $gender = $_POST['gender'];
+    $openingBalance = $_POST['openingBalance'];
+    $promise = $_POST['promise'];
     $elemanSayisi = count($durumArray);
     // DurumArray boşsa kayıt yapmayı dene
     if (empty($durumArray)) {
@@ -25,8 +27,8 @@ try {
                 $userNO = generateUniqueUserID( $conn);
                 $t = "Y"; 
 
-                $sql = "INSERT INTO tbl_users (userName, user_no, tc, phoneNumber, durum, userEmail, userPass, plate, gender, apartman_id, rol, popup, userStatus) VALUES 
-                (:userName, :user_no, :tc, :phoneNumber, :durum, :userEmail, :userPass, :plate, :gender, :apartman_id, :rol, :popup, :userStatus)";
+                $sql = "INSERT INTO tbl_users (userName, user_no, tc, phoneNumber, durum, userEmail, userPass, plate, gender, apartman_id, rol, popup, userStatus, openingBalance, promise) VALUES 
+                (:userName, :user_no, :tc, :phoneNumber, :durum, :userEmail, :userPass, :plate, :gender, :apartman_id, :rol, :popup, :userStatus, :openingBalance, :promise)";
 
                 $stmt = $conn->prepare($sql);
                 $stmt->bindParam(':userName', $userName);
@@ -39,7 +41,8 @@ try {
                 $stmt->bindParam(':plate', $plate);
                 $stmt->bindParam(':gender', $gender);
                 $stmt->bindParam(':userStatus', $t);
-                $stmt->bindParam(':apartman_id', $apartman_id);
+                $stmt->bindParam(':openingBalance', $openingBalance);
+                $stmt->bindParam(':promise', $promise);
                 $rol = 3;
                 $popup = 0;
                 $stmt->bindParam(':rol', $rol);
@@ -59,8 +62,8 @@ try {
                 $userNO = generateUniqueUserID( $conn);
                 $t = "Y";
         
-                $sql = "INSERT INTO tbl_users (userName,user_no, tc, phoneNumber, durum, userEmail, userPass, plate, gender, apartman_id, rol, popup, userStatus) VALUES 
-                (:userName,:user_no, :tc, :phoneNumber, :durum, :userEmail, :userPass, :plate, :gender, :apartman_id, :rol, :popup, :userStatus)";
+                $sql = "INSERT INTO tbl_users (userName, user_no, tc, phoneNumber, durum, userEmail, userPass, plate, gender, apartman_id, rol, popup, userStatus, openingBalance, promise) VALUES 
+                (:userName, :user_no, :tc, :phoneNumber, :durum, :userEmail, :userPass, :plate, :gender, :apartman_id, :rol, :popup, :userStatus, :openingBalance, :promise)";
         
                 $stmt = $conn->prepare($sql);
                 $stmt->bindParam(':userName', $userName);
@@ -72,7 +75,11 @@ try {
                 $stmt->bindParam(':userPass', $hashedPassword);
                 $stmt->bindParam(':plate', $plate);
                 $stmt->bindParam(':gender', $gender);
+                 $stmt->bindParam(':openingBalance', $openingBalance);
+                $stmt->bindParam(':promise', $promise);
                 $stmt->bindParam(':userStatus', $t);
+                $stmt->bindParam(':openingBalance', $openingBalance);
+                $stmt->bindParam(':promise', $promise);
                 $stmt->bindParam(':apartman_id', $apartman_id);
                 $rol = 3;
                 $popup = 0;
@@ -91,8 +98,8 @@ try {
                 $hashedPassword = base64_encode($userPass);
                 $t = "Y";
                 $userNO = generateUniqueUserID( $conn);
-                $sql = "INSERT INTO tbl_users (userName,user_no, tc, phoneNumber, durum, userEmail, userPass, plate, gender, apartman_id, rol, popup, userStatus) VALUES 
-                (:userName,:user_no, :tc, :phoneNumber, :durum, :userEmail, :userPass, :plate, :gender, :apartman_id, :rol, :popup, :userStatus)";
+                $sql = "INSERT INTO tbl_users (userName, user_no, tc, phoneNumber, durum, userEmail, userPass, plate, gender, apartman_id, rol, popup, userStatus, openingBalance, promise) VALUES 
+                (:userName, :user_no, :tc, :phoneNumber, :durum, :userEmail, :userPass, :plate, :gender, :apartman_id, :rol, :popup, :userStatus, :openingBalance, :promise)";
 
                 $stmt = $conn->prepare($sql);
                 $stmt->bindParam(':userName', $userName);
@@ -105,6 +112,8 @@ try {
                 $stmt->bindParam(':plate', $plate);
                 $stmt->bindParam(':gender', $gender);
                 $stmt->bindParam(':userStatus', $t);
+                $stmt->bindParam(':openingBalance', $openingBalance);
+                $stmt->bindParam(':promise', $promise);
                 $stmt->bindParam(':apartman_id', $apartman_id);
                 $rol = 3;
                 $popup = 0;
@@ -127,8 +136,8 @@ try {
                     $hashedPassword = base64_encode($userPass);
                     $userNO = generateUniqueUserID( $conn);
                     $t = "Y";
-                    $sql = "INSERT INTO tbl_users (userName, user_no, tc, phoneNumber, durum, userEmail, userPass, plate, gender, apartman_id, rol, popup, userStatus) VALUES 
-                    (:userName, :user_no, :tc, :phoneNumber, :durum, :userEmail, :userPass, :plate, :gender, :apartman_id, :rol, :popup, :userStatus)";
+                    $sql = "INSERT INTO tbl_users (userName, user_no, tc, phoneNumber, durum, userEmail, userPass, plate, gender, apartman_id, rol, popup, userStatus, openingBalance, promise) VALUES 
+                    (:userName, :user_no, :tc, :phoneNumber, :durum, :userEmail, :userPass, :plate, :gender, :apartman_id, :rol, :popup, :userStatus, :openingBalance, :promise)";
 
                     $stmt = $conn->prepare($sql);
                     $stmt->bindParam(':userName', $userName);
@@ -141,6 +150,8 @@ try {
                     $stmt->bindParam(':plate', $plate);
                     $stmt->bindParam(':gender', $gender);
                     $stmt->bindParam(':userStatus', $t);
+                    $stmt->bindParam(':openingBalance', $openingBalance);
+                    $stmt->bindParam(':promise', $promise);
                     $stmt->bindParam(':apartman_id', $apartman_id);
                     $rol = 3;
                     $popup = 0;
