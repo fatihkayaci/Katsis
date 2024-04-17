@@ -34,16 +34,20 @@ foreach ($newEntries as $entry) {
     $tc = $entry['tc'];
     $telefon = $entry['telefon'];
     $eposta = $entry['eposta'];
+    $openingBalance = $entry['openingBalance'];
+    $balanceType = $entry['balanceType'];
+    $promise = $entry['promise'];
     
     if (empty($eposta) || trim($eposta) === "") {
-        $sql = "INSERT INTO tbl_users (user_no, userName,userPass, tc, phoneNumber, durum, userEmail, userStatus, apartman_id, rol, popup) VALUES 
-            (:user_no, :userName,:userPass, :tc, :phoneNumber, :durum, :userEmail, :userStatus, :apartman_id, :rol, :popup)";
+        $sql = "INSERT INTO tbl_users (user_no, userName,userPass, tc, phoneNumber, durum, userEmail, openingBalance, balanceType, promise, userStatus, apartman_id, rol, popup) VALUES 
+            (:user_no, :userName,:userPass, :tc, :phoneNumber, :durum, :userEmail, :openingBalance, :balanceType, :promise, :userStatus, :apartman_id, :rol, :popup)";
 
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':userEmail', $eposta, PDO::PARAM_NULL);
     } else {
-        $sql = "INSERT INTO tbl_users (user_no, userName,userPass, tc, phoneNumber, durum, userEmail, userStatus, apartman_id, rol, popup) VALUES 
-            (:user_no, :userName,:userPass, :tc, :phoneNumber, :durum, :userEmail, :userStatus, :apartman_id, :rol, :popup)";
+        $sql = "INSERT INTO tbl_users (user_no, userName, userPass, tc, phoneNumber, durum, userEmail, openingBalance, balanceType, promise, userStatus, apartman_id, rol, popup) VALUES 
+        (:user_no, :userName,:userPass, :tc, :phoneNumber, :durum, :userEmail, :openingBalance, :balanceType, :promise, :userStatus, :apartman_id, :rol, :popup)";
+
 
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':userEmail', $eposta);
@@ -55,6 +59,9 @@ foreach ($newEntries as $entry) {
     $stmt->bindParam(':tc', $tc);
     $stmt->bindParam(':phoneNumber', $telefon);
     $stmt->bindValue(':durum', $durum);
+    $stmt->bindParam('openingBalance', $openingBalance);
+    $stmt->bindParam('balanceType', $balanceType);
+    $stmt->bindParam('promise', $promise);
     $stmt->bindParam(':apartman_id', $apartman_id);
     $stmt->bindParam(':userStatus', $userStatus);
     $rol = 3;

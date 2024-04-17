@@ -362,11 +362,19 @@ if ($result->rowCount() > 0) {
             </div>
 
             <div class="col-md-6 col margint">
-                <input class="input" type="date" name="promise" required="">
-                <label for="promise">vadesi</label>
+                <select name="balanceType">
+                    <option value="Borç">Borç</option>
+                    <option value="Alacak">Alacak</option>
+                </select>
             </div>
         </div>
 
+        <div class="row">
+
+            <div class="col-md-6 col margint">
+                <input class="input" type="date" name="promise" required="">
+            </div>
+        </div>
         <input class="input" type="text" name="apartman_id" value=<?php echo $_SESSION["apartID"]; ?> hidden>
 
         <div class="row">
@@ -1111,6 +1119,7 @@ function saveUser() {
     var blokArray = [];
     var durumArray = [];
     var openingBalance = $('input[name="openingBalance"]').val();
+    var balanceType = $('select[name="balanceType"]').val();
     var promise = $('input[name="promise"]').val();
     // alert("openingBalance "+ openingBalance+ " promise "+ promise);
     var isConflict = false; // Çakışma durumunu kontrol etmek için bir bayrak
@@ -1178,7 +1187,7 @@ function saveUser() {
                 status + " bu dairede oturan kullanıcıyı silmek ister misin?")) {
             if (kisitlamalar(userName /* tc, phoneNumber, userEmail, plate*/ )) {
                 demo = 1;
-                saveUserData(userName, tc, phoneNumber, durumArray, userEmail, plate, gender, apartman_id, blokArray, openingBalance, promise);
+                saveUserData(userName, tc, phoneNumber, durumArray, userEmail, plate, gender, apartman_id, blokArray, openingBalance, balanceType, promise);
             } else {
                 return;
             }
@@ -1187,7 +1196,7 @@ function saveUser() {
         }
     } else {
         if (kisitlamalar(userName /* tc, phoneNumber, userEmail, plate*/ )) {
-            saveUserData(userName, tc, phoneNumber, durumArray, userEmail, plate, gender, apartman_id, blokArray, openingBalance, promise);
+            saveUserData(userName, tc, phoneNumber, durumArray, userEmail, plate, gender, apartman_id, blokArray, openingBalance, balanceType, promise);
         } else {
             return;
         }
@@ -1195,7 +1204,7 @@ function saveUser() {
 
 };
 
-function saveUserData(userName, tc, phoneNumber, durumArray, userEmail, plate, gender, apartman_id, blokArray, openingBalance, promise) {
+function saveUserData(userName, tc, phoneNumber, durumArray, userEmail, plate, gender, apartman_id, blokArray, openingBalance, balanceType, promise) {
     $.ajax({
         url: 'Controller/save_user.php',
         type: 'POST',
@@ -1209,9 +1218,11 @@ function saveUserData(userName, tc, phoneNumber, durumArray, userEmail, plate, g
             gender: gender,
             apartman_id: apartman_id,
             openingBalance: openingBalance,
+            balanceType: balanceType,
             promise: promise
         },
         success: function(response) {
+            console.log(response);
             if (response == 1) {
                 sendData(blokArray, durumArray);
             }
