@@ -35,7 +35,11 @@ if ($result->rowCount() > 0) {
     //contenteditable="true"
     if ($result) {
         ?>
-
+<style>
+.hidden {
+    display: none;
+}
+</style>
 <div class="cener-table">
 
     <div class="input-group-div">
@@ -354,27 +358,36 @@ if ($result->rowCount() > 0) {
                 </div>
             </div>
         </div>
-
+        <!-- buraya bak yusuf bunlara css atılacak -->
         <div class="row">
             <div class="col-md-6 col margint">
-                <input class="input" type="text" name="openingBalance" required="">
-                <label for="openingBalance">Açılış Bakiyesi</label>
-            </div>
-
-            <div class="col-md-6 col margint">
-                <select name="balanceType">
-                    <option value="Borç">Borç</option>
-                    <option value="Alacak">Alacak</option>
-                </select>
+                <input class="input" type="checkbox" name="onay" id="onay" onchange="toggleDisplay()" required="">
             </div>
         </div>
 
-        <div class="row">
+        <div class="additional-fields hidden">
+            <div class="row">
+                <div class="col-md-6 col margint">
+                    <input class="input" type="text" name="openingBalance" required="">
+                    <label for="openingBalance">Açılış Bakiyesi</label>
+                </div>
 
-            <div class="col-md-6 col margint">
-                <input class="input" type="date" name="promise" required="">
+                <div class="col-md-6 col margint">
+                    <select name="balanceType">
+                        <option value=""></option>
+                        <option value="Borç">Borç</option>
+                        <option value="Alacak">Alacak</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 col margint">
+                    <input class="input" type="date" name="promise" required="">
+                </div>
             </div>
         </div>
+        <!-- buraya kadar -->
         <input class="input" type="text" name="apartman_id" value=<?php echo $_SESSION["apartID"]; ?> hidden>
 
         <div class="row">
@@ -468,7 +481,20 @@ if ($result->rowCount() > 0) {
 
     </form>
 </div>
+<script>
+        
+    //buraya bakılacak fatih bey
+function toggleDisplay() {
+    var checkbox = document.getElementById('onay');
+    var additionalFields = document.querySelector('.additional-fields');
 
+    if (checkbox.checked) {
+        additionalFields.classList.remove('hidden');
+    } else {
+        additionalFields.classList.add('hidden');
+    }
+}
+</script>
 <!-- =============================== -->
 <!-- custom gender input start -->
 
@@ -962,7 +988,6 @@ function kisitlamalar(userName) {
         alert('Full Name 100den fazla karakter olamaz.');
         return;
     }
-
     return true;
 }
 
@@ -1111,16 +1136,16 @@ function saveUser() {
     var userName = $('input[name="userName"]').val();
     var tc = $('input[name="tc"]').val();
     var phoneNumber = $('input[name="phoneNumber"]').val();
-    var userEmail = $('input[name="userEmail"]').val();
+    var userEmail = $('input[name="userEmail"]').val() || null;
     var plate = $('input[name="plate"]').val();
     var gender = $('input#userInput').val();
     var apartman_id = $('input[name="apartman_id"]').val();
     var optionsBlok = $('select#optionsBlok').val();
     var blokArray = [];
     var durumArray = [];
-    var openingBalance = $('input[name="openingBalance"]').val();
-    var balanceType = $('select[name="balanceType"]').val();
-    var promise = $('input[name="promise"]').val();
+    var openingBalance = $('input[name="openingBalance"]').val() || null;
+    var balanceType = $('select[name="balanceType"]').val() || null;
+    var promise = $('input[name="promise"]').val() || null;
     // alert("openingBalance "+ openingBalance+ " promise "+ promise);
     var isConflict = false; // Çakışma durumunu kontrol etmek için bir bayrak
     //console.log(userName + "," + tc + "," + phoneNumber + "," + userEmail + "," + plate + "," + gender);
@@ -1178,7 +1203,6 @@ function saveUser() {
             }
         }
         // Çakışma durumu varsa uyarı ver
-
     }
     // console.log(isConflict);
     if (isConflict) {
@@ -1187,7 +1211,8 @@ function saveUser() {
                 status + " bu dairede oturan kullanıcıyı silmek ister misin?")) {
             if (kisitlamalar(userName /* tc, phoneNumber, userEmail, plate*/ )) {
                 demo = 1;
-                saveUserData(userName, tc, phoneNumber, durumArray, userEmail, plate, gender, apartman_id, blokArray, openingBalance, balanceType, promise);
+                saveUserData(userName, tc, phoneNumber, durumArray, userEmail, plate, gender, apartman_id, blokArray,
+                    openingBalance, balanceType, promise);
             } else {
                 return;
             }
@@ -1196,7 +1221,8 @@ function saveUser() {
         }
     } else {
         if (kisitlamalar(userName /* tc, phoneNumber, userEmail, plate*/ )) {
-            saveUserData(userName, tc, phoneNumber, durumArray, userEmail, plate, gender, apartman_id, blokArray, openingBalance, balanceType, promise);
+            saveUserData(userName, tc, phoneNumber, durumArray, userEmail, plate, gender, apartman_id, blokArray,
+                openingBalance, balanceType, promise);
         } else {
             return;
         }
@@ -1204,7 +1230,8 @@ function saveUser() {
 
 };
 
-function saveUserData(userName, tc, phoneNumber, durumArray, userEmail, plate, gender, apartman_id, blokArray, openingBalance, balanceType, promise) {
+function saveUserData(userName, tc, phoneNumber, durumArray, userEmail, plate, gender, apartman_id, blokArray,
+    openingBalance, balanceType, promise) {
     $.ajax({
         url: 'Controller/save_user.php',
         type: 'POST',
