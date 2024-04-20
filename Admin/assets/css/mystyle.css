@@ -1806,6 +1806,7 @@ min-width: 0;
   justify-content: center;
   align-items: center;
   text-align: center;
+  position: relative;
 }
 
 .bell {
@@ -1825,7 +1826,7 @@ min-width: 0;
 .bell-dot {
   position: absolute;
   top: 6px;
-  right: 22px;
+  right: 8px;
   background-color: #277CE0;
   width: 12px;
   height: 12px;
