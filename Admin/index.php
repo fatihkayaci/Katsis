@@ -47,7 +47,7 @@ include('leftbar.php');
 
 if($indexx == 'Accounts'){
     include ("Accounts/index.php");
-    echo "<script>pagename('KULLANICILAR');</script>";
+    echo "<script>pagename('Kullanıcılar');</script>";
     echo "<script>
             localStorage.setItem('selectedLink', 'Accounts');
          </script>";
@@ -58,37 +58,49 @@ else if($indexx == 'Arsiv'){
 }
 else if($indexx == 'TopluHesap'){
     include ("Accounts/topluHesap.php");
-    echo "<script>pagename('TOPLU HESAP EKLEME');</script>";
+    echo "<script>pagename('Toplu Hesap Ekleme');</script>";
 }
 else if($indexx == 'custom'){
     include ("Accounts/ozellestir.php");
-    echo "<script>pagename('KULLANICI AYRINTILARI');</script>";
+    echo "<script>pagename('Kullanıcı Ayrıntıları');</script>";
 }
 else if($indexx == 'Sections'){
     include ("Sections/index.php");
-    echo "<script>pagename('BÖLÜMLER');</script>";
+    echo "<script>pagename('Bölümler');</script>";
     echo "<script>
             localStorage.setItem('selectedLink', 'Sections');
          </script>";
 } else if($indexx == 'detail'){
     include ("Sections/detail.php");
-    echo "<script>pagename('DAİRE AYRINTILARI');</script>";
+    echo "<script>pagename('Daire Ayrıntıları');</script>";
     echo "<script>
             localStorage.setItem('selectedLink', 'Sections');
          </script>";
 }  
 else if($indexx == 'dashboard'){
     include ("Dashboard/index.php");
-    echo "<script>pagename('ANA SAYFA');</script>";
+    echo "<script>pagename('Ana Sayfa');</script>";
     echo "<script>
             localStorage.setItem('selectedLink', 'dashboard');
          </script>";
 }
 else if($indexx == 'profile'){
     include ("profile/profile.php");
-    echo "<script>pagename('PROFİL');</script>";
+    echo "<script>pagename('Profil');</script>";
     echo "<script>
             localStorage.setItem('selectedLink', 'profile');
+         </script>";
+}else if($indexx == 'employee'){
+    include ("employee/index.php");
+    echo "<script>pagename('Personeller');</script>";
+    echo "<script>
+            localStorage.setItem('selectedLink', 'employee');
+         </script>";
+}else if($indexx == 'employee-arsiv'){
+    include ("employee/arsiv.php");
+    echo "<script>pagename('Personeller / Aşiv');</script>";
+    echo "<script>
+            localStorage.setItem('selectedLink', 'employee-arsiv');
          </script>";
 }else{
     include ("Dashboard/index.php");

@@ -54,12 +54,33 @@ $idapartman =$_SESSION["apartID"];
               </span>
             </li>
           </a>
-          <a class="nav-item modul" href="#">
+        </div>
+
+        <button class="dropdown-btn  nav-item">
+          <li class="nav-link">
+            <div class="nav-ico">
+            <i class="fa-solid fa-user-tie"></i>
+            </div>
+            <span class="nav-link-text">Personeller</span>
+            <i class="fa-solid fa-angle-right ms-5"></i>
+          </li>
+        </button>
+        <div class="dropdown-container">
+          <a class="nav-item modul"  href="index?parametre=employee">
             <li class="nav-link">
               <div class="nav-ico"></div>
               <span class="nav-link-text color-fff">
-              <i class="fa-solid fa-user-xmark me-2"></i>
-                Silinenler
+              <i class="fa-solid fa-building-user me-2"></i>
+                Personeller
+              </span>
+            </li>
+          </a>
+          <a class="nav-item modul" href="index?parametre=employee-arsiv">
+            <li class="nav-link">
+              <div class="nav-ico"></div>
+              <span class="nav-link-text color-fff">
+              <i class="fa-solid fa-box-archive me-2"></i>
+                Arşiv
               </span>
             </li>
           </a>
