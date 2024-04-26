@@ -10,7 +10,6 @@ try {
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     //contenteditable="true"
-    if ($result) {
         ?>
 <style>
 .hidden {
@@ -164,109 +163,6 @@ try {
 
 </div>
 <?php
-    } else {
-        ?>
-
-<div class="cener-table">
-
-    <div class="input-group-div">
-
-        <div class="input-group1">
-
-            <button class="adduser btn-custom-outline bcoc1">Kullanıcı Ekle</button>
-            <button class="toplu btn-custom-outline bcoc2">Toplu İşlemler</button>
-
-            <div class="check-box">
-                <p class="check-p">Düzenleme :</p>
-
-                <div class="custom-checkbox">
-                    <input type="checkbox" name="status" id="editToggle">
-                    <label for="editToggle">
-                        <div class="status-switch" data-unchecked="kapalı" data-checked="açık"></div>
-                    </label>
-                </div>
-            </div>
-
-        </div>
-
-
-        <div class="input-group1">
-            <button class="topluGuncelle btn-custom-outline bcoc3" id="guncelleButton"
-                style="display: none;">Güncelle</button>
-            <button class="topluSil btn-custom-outline bcoc4" id="silButton" style="display: none;">Sil</button>
-
-
-            <div class="search-box">
-                <i class="fas fa-search search-icon" aria-hidden="true"></i>
-                <input type="text" class="search-input" id="searchValue" onkeyup="filtrele()" placeholder="Arama...">
-            </div>
-        </div>
-
-    </div>
-
-    <hr class="horizontal dark mb-1 w-100">
-
-    <table id="example" class="users-table">
-        <thead>
-            <tr class="users-table-info">
-                <th class="check-style">
-                </th>
-                <th onclick="sortTable(1)">Ad Soyad <i id="icon-table1" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(2)">Telefon Numarası <i id="icon-table2" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(3)">Email<i id="icon-table3" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(4)">Görevi<i id="icon-table4" class="fa-solid fa-sort-down"></i></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Kullanıcı Bulunamamaktadır</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <hr class="horizontal dark mb-0 w-100">
-
-    <div class="input-group-div">
-
-        <div class="input-group1">
-
-            <div class="custom-select">
-                <select>
-                    <option selected value="1">10</option>
-                    <option value="2">20</option>
-                    <option value="3">50</option>
-                    <option value="4">100</option>
-                </select>
-            </div>
-
-            <p class="adet-txt">Adet Veri Gösteriliyor</p>
-
-        </div>
-
-        <div class="input-group1">
-
-            <ul class="pagination">
-                <a href="#" class="pagination-arrow arrow-left">
-                    <i class="fa-solid fa-angle-left"></i>
-                </a>
-                <a href="#" class="pagination-number">1</a>
-                <a href="#" class="pagination-number">2</a>
-                <a href="#" class="pagination-number current-number">3</a>
-                <a href="#" class="pagination-number">4</a>
-                <a href="#" class="pagination-number">5</a>
-                <a href="#" class="pagination-arrow arrow-right">
-                    <i class="fa-solid fa-angle-right"></i>
-                </a>
-            </ul>
-
-        </div>
-
-    </div>
-
-</div>
-
-<?php
-    }
 } catch (PDOException $e) {
     echo "Bağlantı hatası: " . $e->getMessage();
 }
@@ -481,18 +377,21 @@ function toggleDisplay() {
 </script>
 <!-- =============================== -->
 <!-- custom gender input start -->
-
 <script>
 function setupSearchSelect(inputSelector, dropdownSelector) {
+    const table = document.getElementById('example');
+    const rowCount = table.rows.length;
     const inputField = document.querySelector(inputSelector);
     const dropdown = document.querySelector(dropdownSelector);
     const dropdownArray = [...dropdown.querySelectorAll('.li-select')];
     let valueArray = [];
-
     dropdown.classList.add('open');
     inputField.focus();
+    if (rowCount === 0) {
+        console.log("Tablo boş!");
+    }else{
 
-    dropdownArray.forEach(item => {
+        dropdownArray.forEach(item => {
         valueArray.push(item.textContent);
     });
 
@@ -552,6 +451,8 @@ function setupSearchSelect(inputSelector, dropdownSelector) {
 
 setupSearchSelect('#userInput', '#userInputDrop');
 setupSearchSelect('#optionsBlok', '#optionsBlokDrop');
+    }
+
 </script>
 
 <!-- =============================== -->
@@ -912,6 +813,84 @@ function kisitlamalar(userName) {
     return true;
 }
 
+var demo = 0;
+
+//bakılacak
+//var saveButton = document.getElementById('saveButton');
+function saveUser() {
+    var apartman_id = $('input[name="apartman_id"]').val();
+    var userName = $('input[name="userName"]').val();
+    var tc = $('input[name="tc"]').val();
+    var phoneNumber = $('input[name="phoneNumber"]').val();
+    var userEmail = $('input[name="userEmail"]').val() || null;
+    var gender = $('input#userInput').val();
+    var educationStatus = $('input[name="educationStatus"]').val();
+    var iban =  $('input[name="iban"]').val();
+    var startingWorking = $('input[name="startingWorking"]').val();
+    var task = $('input[name="task"]').val();
+    var sigortaNo = $('input[name="sigortaNo"]').val();
+    var salary = $('input[name="salary"]').val();
+    var unit = $('input[name="unit"]').val();
+    var openingBalance = $('input[name="openingBalance"]').val() || null;
+    var balanceType = $('select[name="balanceType"]').val() || null;
+    var promise = $('input[name="promise"]').val() || null;
+    /*
+    console.log("apartman_id:", apartman_id);
+    console.log("userName:", userName);
+    console.log("tc:", tc);
+    console.log("phoneNumber:", phoneNumber);
+    console.log("userEmail:", userEmail);
+    console.log("gender:", gender);
+    console.log("educationStatus:", educationStatus);
+    console.log("iban:", iban);
+    console.log("startingWorking:", startingWorking);
+    console.log("task:", task);
+    console.log("sigortaNo:", sigortaNo);
+    console.log("salary:", salary);
+    console.log("unit:", unit);
+    console.log("openingBalance:", openingBalance);
+    console.log("balanceType:", balanceType);
+    console.log("promise:", promise);
+    */
+    saveUserData(apartman_id, userName, tc, phoneNumber, userEmail, gender, educationStatus,
+    iban, startingWorking, task, sigortaNo, salary, unit, openingBalance, balanceType, promise);
+}
+
+function saveUserData(apartman_id, userName, tc, phoneNumber, userEmail, gender, educationStatus, 
+iban, startingWorking, task, sigortaNo, salary, unit, openingBalance, balanceType, promise) {
+    $.ajax({
+        url: 'Controller/Employeed/employedSave.php',
+        type: 'POST',
+        data: {
+            apartman_id: apartman_id,
+            userName: userName,
+            tc: tc,
+            phoneNumber: phoneNumber,
+            userEmail: userEmail,
+            gender: gender,
+            educationStatus: educationStatus,
+            iban: iban,
+            startingWorking: startingWorking,
+            task: task,
+            sigortaNo: sigortaNo,
+            salary: salary,
+            unit: unit,
+            openingBalance: openingBalance,
+            balanceType: balanceType,
+            promise: promise
+        },
+        success: function(response) {
+            console.log(response);
+            if(response == 1){
+                location.reload();
+            }
+        },
+        error: function(error) {
+            console.error(error);
+        }
+    });
+}
+
 //kısıtlama ile ilgili fonksiyonlar bitiş...
 //var toplusil 
 var topluGuncelleButtons = document.querySelectorAll('.topluGuncelle');
@@ -921,20 +900,22 @@ topluGuncelleButtons.forEach(function(button) {
         var rows = document.querySelectorAll('#example tbody tr.git-ac:not(.none)');
         rows.forEach(function(row) {
             var userID = row.getAttribute('data-userid');
-            var userName = row.querySelector('td:nth-child(2)').textContent.trim();
+            var fullName = row.querySelector('td:nth-child(2)').textContent.trim();
             var phoneNumber = row.querySelector('td:nth-child(3)').textContent.trim();
-            $.ajax({
-                url: 'Controller/update_user.php',
+            var userEmail = row.querySelector('td:nth-child(4)').textContent.trim();
+            var task =  row.querySelector('td:nth-child(5)').textContent.trim();
+          $.ajax({
+                url: 'Controller/Employeed/employedUpdate.php',
                 type: 'POST',
                 data: {
                     userID: userID,
-                    userName: userName,
-                    phoneNumber: phoneNumber
+                    fullName: fullName,
+                    phoneNumber: phoneNumber,
+                    userEmail: userEmail,
+                    task: task
                 },
                 success: function(response) {
-                    if (response == 1) {
-                        location.reload();
-                    }
+                    console.log(response);
                 },
                 error: function(error) {
                     console.error('Gönderim hatası:', error);
@@ -946,6 +927,7 @@ topluGuncelleButtons.forEach(function(button) {
 // Toplu silme işlemi için butonları seç
 var topluSilButton = document.getElementById('silButton');
 topluSilButton.addEventListener('click', function() {
+    alert("girdimm");
     var silButton = document.getElementById('silButton');
     var checkboxes = document.querySelectorAll('#example tbody input[type="checkbox"]:checked');
 
@@ -953,13 +935,14 @@ topluSilButton.addEventListener('click', function() {
         var row = checkbox.closest('tr');
         var userID = row.getAttribute('data-userid');
         $.ajax({
-            url: 'Controller/Employeed/employedSave.php',
+            url: 'Controller/Employeed/arsiveSend.php',
             type: 'POST',
             data: {
                 userID: userID
             },
             success: function(response) {
                 console.log(response);
+                location.reload();
             },
             error: function(error) {
                 console.error('Silme hatası:', error);
@@ -1009,80 +992,6 @@ tableRows.forEach(row => {
 
 });
 
-var demo = 0;
-
-//bakılacak
-//var saveButton = document.getElementById('saveButton');
-function saveUser() {
-    var apartman_id = $('input[name="apartman_id"]').val();
-    var userName = $('input[name="userName"]').val();
-    var tc = $('input[name="tc"]').val();
-    var phoneNumber = $('input[name="phoneNumber"]').val();
-    var userEmail = $('input[name="userEmail"]').val() || null;
-    var gender = $('input#userInput').val();
-    var educationStatus = $('input[name="educationStatus"]').val();
-    var iban =  $('input[name="iban"]').val();
-    var startingWorking = $('input[name="startingWorking"]').val();
-    var task = $('input[name="task"]').val();
-    var sigortaNo = $('input[name="sigortaNo"]').val();
-    var salary = $('input[name="salary"]').val();
-    var unit = $('input[name="unit"]').val();
-    var openingBalance = $('input[name="openingBalance"]').val() || null;
-    var balanceType = $('select[name="balanceType"]').val() || null;
-    var promise = $('input[name="promise"]').val() || null;
-    /*console.log("apartman_id:", apartman_id);
-    console.log("userName:", userName);
-    console.log("tc:", tc);
-    console.log("phoneNumber:", phoneNumber);
-    console.log("userEmail:", userEmail);
-    console.log("gender:", gender);
-    console.log("educationStatus:", educationStatus);
-    console.log("iban:", iban);
-    console.log("startingWorking:", startingWorking);
-    console.log("task:", task);
-    console.log("sigortaNo:", sigortaNo);
-    console.log("salary:", salary);
-    console.log("unit:", unit);
-    console.log("openingBalance:", openingBalance);
-    console.log("balanceType:", balanceType);
-    console.log("promise:", promise);*/
-    saveUserData(apartman_id, userName, tc, phoneNumber, userEmail, gender, educationStatus,
-    iban, startingWorking, task, sigortaNo, salary, unit, openingBalance, balanceType, promise);
-}
-function saveUserData(apartman_id, userName, tc, phoneNumber, userEmail, gender, educationStatus, 
-iban, startingWorking, task, sigortaNo, salary, unit, openingBalance, balanceType, promise) {
-    $.ajax({
-        url: 'Controller/Employeed/employedSave.php',
-        type: 'POST',
-        data: {
-            apartman_id: apartman_id,
-            userName: userName,
-            tc: tc,
-            phoneNumber: phoneNumber,
-            userEmail: userEmail,
-            gender: gender,
-            educationStatus: educationStatus,
-            iban: iban,
-            startingWorking: startingWorking,
-            task: task,
-            sigortaNo: sigortaNo,
-            salary: salary,
-            unit: unit,
-            openingBalance: openingBalance,
-            balanceType: balanceType,
-            promise: promise
-        },
-        success: function(response) {
-            console.log(response);
-            if(response == 1){
-                location.reload();
-            }
-        },
-        error: function(error) {
-            console.error(error);
-        }
-    });
-}
 
 var checkEdit = true;
 // Checkbox durumuna göre düzenleme fonksiyonlarını etkinleştirme veya devre dışı bırakma

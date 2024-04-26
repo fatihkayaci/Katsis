@@ -7,11 +7,9 @@ $newEntriesJSON = $_POST['newEntries'];
 $newEntries = json_decode($newEntriesJSON, true);
 $apartman_id = $_SESSION["apartID"];
 $userStatus = "Y";
-$userNO = generateUniqueUserID($conn);
 $blok_listesi = array();
 $durum_listesi = array();
 $userIds = array(); // Kullanıcı ID'lerini saklamak için bir dizi oluştur
-
 $emailCheckSQL = "SELECT COUNT(*) FROM tbl_users WHERE userEmail = :userEmail";
 $emailCheckStmt = $conn->prepare($emailCheckSQL);
 
@@ -37,7 +35,9 @@ foreach ($newEntries as $entry) {
     $openingBalance = $entry['openingBalance'];
     $balanceType = $entry['balanceType'];
     $promise = $entry['promise'];
-    
+    $userPass = randomPassword();
+    $hashedPassword = base64_encode($userPass);
+    $userNO = generateUniqueUserID($conn);
     if (empty($eposta) || trim($eposta) === "") {
         $sql = "INSERT INTO tbl_users (user_no, userName,userPass, tc, phoneNumber, durum, userEmail, openingBalance, balanceType, promise, userStatus, apartman_id, rol, popup) VALUES 
             (:user_no, :userName,:userPass, :tc, :phoneNumber, :durum, :userEmail, :openingBalance, :balanceType, :promise, :userStatus, :apartman_id, :rol, :popup)";

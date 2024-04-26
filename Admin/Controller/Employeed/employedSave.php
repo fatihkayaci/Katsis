@@ -19,7 +19,7 @@
     echo "promise: " . $promise . "<br>"; */
 
 session_start();
-include ("../../DB/dbconfig.php");
+include ("../../../DB/dbconfig.php");
 require_once 'class.func.php';
 try {
     //apartman_id, userName, tc, phoneNumber, userEmail, gender, educationStatus,iban, startingWorking, task, sigortaNo, salary, unit, openingBalance, balanceType, promise
@@ -48,13 +48,16 @@ try {
     if ($emailCheckStmt->fetchColumn() > 0) {
         echo "Bu e-posta adresi zaten var. Lütfen farklı bir e-posta adresi seçiniz.";
     } else {
-       /* $userPass = randomPassword();
-        $hashedPassword = base64_encode($userPass);
-        $userNO = generateUniqueUserID($conn);*/
-        $sql = "INSERT INTO tbl_employed (apartman_id, fullName, tc, phoneNumber, userEmail, gender, educationStatus, iban, startingWorking, task, sigortaNo, salary, unit, openingBalance, balanceType, promise) VALUES 
-            (:apartman_id, :fullName, :tc, :phoneNumber, :userEmail, :gender, :educationStatus, :iban, :startingWorking, :task, :sigortaNo, :salary, :unit, :openingBalance, :balanceType, :promise)";
+        $employeedPassword = randomPassword();
+        $hashedPassword = base64_encode($employeedPassword);
+        $userNO = generateUniqueUserID($conn);
+       
+        $sql = "INSERT INTO tbl_employed (apartman_id, userNO, employeedPassword, fullName, tc, phoneNumber, userEmail, gender, educationStatus, iban, startingWorking, task, sigortaNo, salary, unit, openingBalance, balanceType, promise) VALUES 
+        (:apartman_id, :userNO, :employeedPassword, :fullName, :tc, :phoneNumber, :userEmail, :gender, :educationStatus, :iban, :startingWorking, :task, :sigortaNo, :salary, :unit, :openingBalance, :balanceType, :promise)";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':apartman_id', $apartman_id);
+        $stmt->bindParam(':userNO', $userNO);
+        $stmt->bindParam(':employeedPassword', $hashedPassword);
         $stmt->bindParam(':fullName', $userName);
         $stmt->bindParam(':tc', $tc);
         $stmt->bindParam(':phoneNumber', $phoneNumber);

@@ -33,7 +33,6 @@ if ($result->rowCount() > 0) {
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     //contenteditable="true"
-    if ($result) {
         ?>
 <style>
 .hidden {
@@ -201,110 +200,8 @@ if ($result->rowCount() > 0) {
     </div>
 
 </div>
-<?php
-    } else {
-        ?>
-
-<div class="cener-table">
-
-    <div class="input-group-div">
-
-        <div class="input-group1">
-
-            <button class="adduser btn-custom-outline bcoc1">Kullanıcı Ekle</button>
-            <button class="toplu btn-custom-outline bcoc2">Toplu İşlemler</button>
-
-            <div class="check-box">
-                <p class="check-p">Düzenleme :</p>
-
-                <div class="custom-checkbox">
-                    <input type="checkbox" name="status" id="editToggle">
-                    <label for="editToggle">
-                        <div class="status-switch" data-unchecked="kapalı" data-checked="açık"></div>
-                    </label>
-                </div>
-            </div>
-
-        </div>
-
-
-        <div class="input-group1">
-            <button class="topluGuncelle btn-custom-outline bcoc3" id="guncelleButton"
-                style="display: none;">Güncelle</button>
-            <button class="topluSil btn-custom-outline bcoc4" id="silButton" style="display: none;">Sil</button>
-
-
-            <div class="search-box">
-                <i class="fas fa-search search-icon" aria-hidden="true"></i>
-                <input type="text" class="search-input" id="searchValue" onkeyup="filtrele()" placeholder="Arama...">
-            </div>
-        </div>
-
-    </div>
-
-    <hr class="horizontal dark mb-1 w-100">
-
-    <table id="example" class="users-table">
-        <thead>
-            <tr class="users-table-info">
-                <th class="check-style">
-                </th>
-                <th onclick="sortTable(1)">Ad Soyad <i id="icon-table1" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(2)">Telefon Numarası <i id="icon-table2" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(3)">Blok / Daire <i id="icon-table3" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(4)">Durum <i id="icon-table5" class="fa-solid fa-sort-down"></i></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Kullanıcı Bulunamamaktadır</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <hr class="horizontal dark mb-0 w-100">
-
-    <div class="input-group-div">
-
-        <div class="input-group1">
-
-            <div class="custom-select">
-                <select>
-                    <option selected value="1">10</option>
-                    <option value="2">20</option>
-                    <option value="3">50</option>
-                    <option value="4">100</option>
-                </select>
-            </div>
-
-            <p class="adet-txt">Adet Veri Gösteriliyor</p>
-
-        </div>
-
-        <div class="input-group1">
-
-            <ul class="pagination">
-                <a href="#" class="pagination-arrow arrow-left">
-                    <i class="fa-solid fa-angle-left"></i>
-                </a>
-                <a href="#" class="pagination-number">1</a>
-                <a href="#" class="pagination-number">2</a>
-                <a href="#" class="pagination-number current-number">3</a>
-                <a href="#" class="pagination-number">4</a>
-                <a href="#" class="pagination-number">5</a>
-                <a href="#" class="pagination-arrow arrow-right">
-                    <i class="fa-solid fa-angle-right"></i>
-                </a>
-            </ul>
-
-        </div>
-
-    </div>
-
-</div>
 
 <?php
-    }
 } catch (PDOException $e) {
     echo "Bağlantı hatası: " . $e->getMessage();
 }

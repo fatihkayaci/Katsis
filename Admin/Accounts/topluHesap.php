@@ -385,9 +385,13 @@
                             promise: kiraciPromise
                         });
                     }
+                    
+                    // console.log("initialData = ", JSON.stringify(initialData, null, 2));
+
                 });
                 // Kaydet butonuna tıklandığında yeni girdileri işle
                 saveButton.addEventListener('click', function() {
+                    
                     var newEntries = [];
 
                     var rows = document.querySelectorAll('.git-ac.toplu-td');
@@ -400,7 +404,6 @@
                         var katMalikiOpeningBalanceInput = row.querySelector('[name="openingBalance"] .katMaliki');
                         var katMalikiBalanceTypeInput = row.querySelector('[name="balanceType"] .katMaliki');
                         var katMalikiPromiseInput = row.querySelector('[name="promise"] .katMaliki');
-
                         var kiraciUserNameInput = row.querySelector('.kiracii');
                         var kiraciTCInput = row.querySelector('[name="tcKatMaliki"] .kiracii');
                         var kiraciPhoneInput = row.querySelector('[name="telefon"] .kiracii');
@@ -411,13 +414,13 @@
 
                         var blokAdiText = blokAdi.innerText.trim();
                         var katMalikiUserName = katMalikiUserNameInput.value.trim();
+                        
                         var katMalikiTC = katMalikiTCInput.value.trim();
                         var katMalikiPhone = katMalikiPhoneInput.value.trim();
                         var katMalikiEmail = katMalikiEmailInput.value.trim();
                         var katMalikiOpeningBalance = katMalikiOpeningBalanceInput.value.trim();
                         var katMalikiBalanceType = katMalikiBalanceTypeInput.value.trim();
                         var katMalikiPromise = katMalikiPromiseInput.value.trim();
-
                         var kiraciUserName = kiraciUserNameInput.value.trim();
                         var kiraciTC = kiraciTCInput.value.trim();
                         var kiraciPhone = kiraciPhoneInput.value.trim();
@@ -433,14 +436,14 @@
                             })) {
                             newEntries.push({
                                 userName: katMalikiUserName,
-                durum: "kat Maliki",
-                blok: blokAdiText,
-                tc: katMalikiTC,
-                telefon: katMalikiPhone,
-                eposta: katMalikiEmail,
-                openingBalance: katMalikiOpeningBalance, // Düzeltildi
-                balanceType: katMalikiBalanceType,
-                promise: katMalikiPromise
+                                durum: "kat Maliki",
+                                blok: blokAdiText,
+                                tc: katMalikiTC,
+                                telefon: katMalikiPhone,
+                                eposta: katMalikiEmail,
+                                openingBalance: katMalikiOpeningBalance, // Düzeltildi
+                                balanceType: katMalikiBalanceType,
+                                promise: katMalikiPromise
                             });
                         }
 
@@ -450,14 +453,14 @@
                             })) {
                             newEntries.push({
                                 userName: kiraciUserName,
-                durum: "kiracı",
-                blok: blokAdiText,
-                tc: kiraciTC,
-                telefon: kiraciPhone,
-                eposta: kiraciEmail,
-                openingBalance: kiraciOpeningBalance, // Düzeltildi
-                balanceType: kiraciBalanceType,
-                promise: kiraciPromise
+                                durum: "kiracı",
+                                blok: blokAdiText,
+                                tc: kiraciTC,
+                                telefon: kiraciPhone,
+                                eposta: kiraciEmail,
+                                openingBalance: kiraciOpeningBalance, // Düzeltildi
+                                balanceType: kiraciBalanceType,
+                                promise: kiraciPromise
                             });
                         }
                     });
@@ -492,7 +495,7 @@
                                 newEntries: JSON.stringify(newEntries)
                             },
                             success: function(response) {
-                                console.log(response);
+                                console.log("response = "+response);
                                 if (response == "success") {
                                     $.ajax({
                                         url: 'Controller/demo3.php',
@@ -500,7 +503,8 @@
                                         data: {},
                                         success: function(secondResponse) {
                                             if (secondResponse == "success") {
-                                                location.reload();
+                                                // location.reload();
+                                                console.log("başardı");
                                             } else {
                                                 alert(secondResponse);
                                             }
