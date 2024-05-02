@@ -13,7 +13,7 @@ function randomPassword($length = 8) {
 
 function generateUniqueUserID( $conn) {
 
-    $query = "SELECT COALESCE(MAX(userID), 0) AS max_userID FROM tbl_employed";
+    $query = "SELECT COALESCE(MAX(userID), 0) AS max_userID FROM tbl_users";
     $statement =  $conn->query($query);
     $result = $statement->fetch(PDO::FETCH_ASSOC);
     $maxUserID = $result['max_userID'];

@@ -42,11 +42,11 @@ try {
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(':userName', $userName);
             $stmt->bindParam(':user_no', $userNO);
+            $stmt->bindParam(':userPass', $hashedPassword);
             $stmt->bindParam(':tc', $tc);
             $stmt->bindParam(':phoneNumber', $phoneNumber);
             $stmt->bindValue(':durum', null, PDO::PARAM_NULL); // DurumArray boş olduğunda null atar
             $stmt->bindParam(':userEmail', $userEmail);
-            $stmt->bindParam(':userPass', $hashedPassword);
             $stmt->bindParam(':plate', $plate);
             $stmt->bindParam(':gender', $gender);
             $stmt->bindParam(':userStatus', $t);

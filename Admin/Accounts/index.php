@@ -319,8 +319,9 @@ if ($result->rowCount() > 0) {
         <div class="row">
             <div class="col-md-12 col-btn mb-0">
                 <a class="ahref btn-custom-daire w-100" href="index?parametre=TopluHesap">Toplu Hesap</a>
-                <button class="btn-custom-daire w-100" type="button">Excel İle Dışarıdan Aktar</button>
-                <!--bakılacak excel-->
+                <a class="ahref btn-custom-daire w-100" href="Controller/excelCreate.php" id="excelDownload" download="KullaniciEkle.xlsx">Excel İndir</a>
+                <input type="file" id="excel_file" accept=".xlsx">
+                <button id="upload_btn">Gönder</button>
             </div>
         </div>
 
@@ -354,11 +355,6 @@ if ($result->rowCount() > 0) {
                             }
                         ?>
 
-                        <!-- <select class="input" id="optionsBlok" name="options" required="">
-                            <?php // echo $optionsBlok; ?>
-                        </select>
-                        <label for="options">Daire:</label> -->
-
                     </ul>
                 </div>
             </div>
@@ -379,8 +375,31 @@ if ($result->rowCount() > 0) {
     </form>
 </div>
 <script>
-        
-    //buraya bakılacak fatih bey
+        $(document).ready(function(){
+            $('#upload_btn').click(function(){
+                var excel_file = $('#excel_file').prop('files')[0];
+                var form_data = new FormData();
+                form_data.append('excel_file', excel_file);
+                
+                $.ajax({
+                    url: 'Controller/uploadFiles.php',
+                    type: 'POST',
+                    data: form_data,
+                    contentType: false,
+                    processData: false,
+                    success: function(response){
+                        alert(response);
+                    },
+                    error: function(xhr, status, error){
+                        console.error(xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>
+
+<script>
+//buraya bakılacak fatih bey
 function toggleDisplay() {
     var checkbox = document.getElementById('onay');
     var additionalFields = document.querySelector('.additional-fields');

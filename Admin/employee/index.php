@@ -314,7 +314,9 @@ try {
         <div class="row">
             <div class="col-md-12 col-btn mb-0">
                 <a class="ahref btn-custom-daire w-100" href="index?parametre=TopluHesap">Toplu Hesap</a>
-                <button class="btn-custom-daire w-100" type="button">Excel İle Dışarıdan Aktar</button>
+                <a class="ahref btn-custom-daire w-100" href="Controller/Employeed/excelCreate.php" id="excelDownload" download="PersonelEkle.xlsx">Excel İndir</a>
+                <input type="file" id="excel_file" accept=".xlsx">
+                <button id="upload_btn">Gönder</button>
                 <!--bakılacak excel-->
             </div>
         </div>
@@ -329,6 +331,29 @@ try {
 
     </form>
 </div>
+<script>
+    $(document).ready(function(){
+        $('#upload_btn').click(function(){
+            var excel_file = $('#excel_file').prop('files')[0];
+            var form_data = new FormData();
+            form_data.append('excel_file', excel_file);
+            
+            $.ajax({
+                url: 'Controller/Employeed/uploadFiles.php',
+                type: 'POST',
+                data: form_data,
+                contentType: false,
+                processData: false,
+                success: function(response){
+                    alert(response);
+                },
+                error: function(xhr, status, error){
+                    console.error(xhr.responseText);
+                }
+            });
+        });
+    });
+</script>
 <script>
     //deneme scripti
     function addTRPrefix(input) {
