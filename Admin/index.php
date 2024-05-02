@@ -59,6 +59,9 @@ else if($indexx == 'Arsiv'){
 else if($indexx == 'TopluHesap'){
     include ("Accounts/topluHesap.php");
     echo "<script>pagename('Toplu Hesap Ekleme');</script>";
+}else if($indexx == 'TopluPersonel'){
+    include ("employee/topluPersonel.php");
+    echo "<script>pagename('Toplu Personel Ekleme');</script>";
 }
 else if($indexx == 'custom'){
     include ("Accounts/ozellestir.php");

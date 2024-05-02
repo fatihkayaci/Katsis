@@ -318,7 +318,7 @@ if ($result->rowCount() > 0) {
 
         <div class="row">
             <div class="col-md-12 col-btn mb-0">
-                <a class="ahref btn-custom-daire w-100" href="index?parametre=TopluHesap">Toplu Hesap</a>
+                <a class="ahref btn-custom-daire w-100" href="index?parametre=TopluHesap">Toplu Kullanıcı Ekleme</a>
                 <a class="ahref btn-custom-daire w-100" href="Controller/excelCreate.php" id="excelDownload" download="KullaniciEkle.xlsx">Excel İndir</a>
                 <input type="file" id="excel_file" accept=".xlsx">
                 <button id="upload_btn">Gönder</button>
