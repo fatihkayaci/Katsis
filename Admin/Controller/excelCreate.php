@@ -53,72 +53,73 @@ $sheet->getColumnDimension('K')->setWidth(20);
 $sheet->getColumnDimension('L')->setWidth(20);
 
 /*kısıtlamalar başlangıç*/
-// 'Blok Adi' sütununa verileri veritabanından çek
-$blokAdiValues = []; // Veritabanından alınacak Blok Adi verilerinin saklanacağı dizi
-$sql = "SELECT DISTINCT b.*
-FROM tbl_daireler AS d
-INNER JOIN tbl_blok AS b ON d.blok_adi = b.blok_id
-WHERE d.apartman_id = " . $_SESSION["apartID"];
 
-$stmt = $conn->query($sql); // PDOStatement nesnesi oluştur
+// // 'Blok Adi' sütununa verileri veritabanından çek
+// $blokAdiValues = []; // Veritabanından alınacak Blok Adi verilerinin saklanacağı dizi
+// $sql = "SELECT DISTINCT b.*
+// FROM tbl_daireler AS d
+// INNER JOIN tbl_blok AS b ON d.blok_adi = b.blok_id
+// WHERE d.apartman_id = " . $_SESSION["apartID"];
 
-if ($stmt) {
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        $blokAdiValues[] = $row['blok_adi'];
-    }
-} else {
-    // Veritabanı sorgusunda bir hata oluştuğunda burada işlem yapabilirsiniz
-    echo "Veritabanı hatası: " . $conn->errorInfo()[2];
-}
-// 'Blok Adi' sütununa veri doğrulamasını uygula
-for ($row = 2; $row <= 1000; $row++) {
-    $validation = $sheet->getCell('A' . $row)->getDataValidation();
-    $validation->setType(DataValidation::TYPE_LIST)
-        ->setErrorStyle(DataValidation::STYLE_INFORMATION)
-        ->setAllowBlank(true)
-        ->setShowInputMessage(true)
-        ->setShowErrorMessage(true)
-        ->setShowDropDown(true)
-        ->setErrorTitle('Hatalı Giriş')
-        ->setError('Lütfen geçerli bir blok adı seçin.')
-        ->setPromptTitle('Blok Adi')
-        ->setPrompt('Blok Adi seçiniz.')
-        ->setFormula1('"'.implode(',', $blokAdiValues).'"');
-}
+// $stmt = $conn->query($sql); // PDOStatement nesnesi oluştur
 
-$daireAdiValues = []; // Veritabanından alınacak Blok Adi verilerinin saklanacağı dizi
-$sqlDaire = "SELECT DISTINCT daire_sayisi
-FROM tbl_daireler 
-WHERE apartman_id = " . $_SESSION["apartID"];
-$stmt2 = $conn->query($sqlDaire); // PDOStatement nesnesi oluştur
+// if ($stmt) {
+//     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+//         $blokAdiValues[] = $row['blok_adi'];
+//     }
+// } else {
+//     // Veritabanı sorgusunda bir hata oluştuğunda burada işlem yapabilirsiniz
+//     echo "Veritabanı hatası: " . $conn->errorInfo()[2];
+// }
+// // 'Blok Adi' sütununa veri doğrulamasını uygula
+// for ($row = 2; $row <= 1000; $row++) {
+//     $validation = $sheet->getCell('A' . $row)->getDataValidation();
+//     $validation->setType(DataValidation::TYPE_LIST)
+//         ->setErrorStyle(DataValidation::STYLE_INFORMATION)
+//         ->setAllowBlank(true)
+//         ->setShowInputMessage(true)
+//         ->setShowErrorMessage(true)
+//         ->setShowDropDown(true)
+//         ->setErrorTitle('Hatalı Giriş')
+//         ->setError('Lütfen geçerli bir blok adı seçin.')
+//         ->setPromptTitle('Blok Adi')
+//         ->setPrompt('Blok Adi seçiniz.')
+//         ->setFormula1('"'.implode(',', $blokAdiValues).'"');
+// }
 
-if ($stmt2) {
-    $daireAdiValues = array();
-    while ($row = $stmt2->fetch(PDO::FETCH_ASSOC)) {
-        $daireAdiValues[] = $row['daire_sayisi'];
-    }
-    // Her bir değeri yalnızca bir kere gösteren bir dizi elde etmek için array_unique kullan
-    $uniqueDaireAdiValues = array_unique($daireAdiValues);
-} else {
-    // Veritabanı sorgusunda bir hata oluştuğunda burada işlem yapabilirsiniz
-    echo "Veritabanı hatası: " . $conn->errorInfo()[2];
-}
+// $daireAdiValues = []; // Veritabanından alınacak Blok Adi verilerinin saklanacağı dizi
+// $sqlDaire = "SELECT DISTINCT daire_sayisi
+// FROM tbl_daireler 
+// WHERE apartman_id = " . $_SESSION["apartID"];
+// $stmt2 = $conn->query($sqlDaire); // PDOStatement nesnesi oluştur
 
-// 'Blok Adi' sütununa veri doğrulamasını uygula
-for ($row = 2; $row <= 1000; $row++) {
-    $validation = $sheet->getCell('B' . $row)->getDataValidation();
-    $validation->setType(DataValidation::TYPE_LIST)
-        ->setErrorStyle(DataValidation::STYLE_INFORMATION)
-        ->setAllowBlank(true)
-        ->setShowInputMessage(true)
-        ->setShowErrorMessage(true)
-        ->setShowDropDown(true)
-        ->setErrorTitle('Hatalı Giriş')
-        ->setError('Lütfen geçerli bir blok adı seçin.')
-        ->setPromptTitle('Blok Adi')
-        ->setPrompt('Blok Adi seçiniz.')
-        ->setFormula1('"'.implode(',', $uniqueDaireAdiValues).'"');
-}
+// if ($stmt2) {
+//     $daireAdiValues = array();
+//     while ($row = $stmt2->fetch(PDO::FETCH_ASSOC)) {
+//         $daireAdiValues[] = $row['daire_sayisi'];
+//     }
+//     // Her bir değeri yalnızca bir kere gösteren bir dizi elde etmek için array_unique kullan
+//     $uniqueDaireAdiValues = array_unique($daireAdiValues);
+// } else {
+//     // Veritabanı sorgusunda bir hata oluştuğunda burada işlem yapabilirsiniz
+//     echo "Veritabanı hatası: " . $conn->errorInfo()[2];
+// }
+
+// // 'Blok Adi' sütununa veri doğrulamasını uygula
+// for ($row = 2; $row <= 1000; $row++) {
+//     $validation = $sheet->getCell('B' . $row)->getDataValidation();
+//     $validation->setType(DataValidation::TYPE_LIST)
+//         ->setErrorStyle(DataValidation::STYLE_INFORMATION)
+//         ->setAllowBlank(true)
+//         ->setShowInputMessage(true)
+//         ->setShowErrorMessage(true)
+//         ->setShowDropDown(true)
+//         ->setErrorTitle('Hatalı Giriş')
+//         ->setError('Lütfen geçerli bir blok adı seçin.')
+//         ->setPromptTitle('Blok Adi')
+//         ->setPrompt('Blok Adi seçiniz.')
+//         ->setFormula1('"'.implode(',', $uniqueDaireAdiValues).'"');
+// }
 
 // 'Durum' sütununda geçerli değerleri tanımlayın
 $validStatusValues = ['Katmaliki', 'Kiracı'];
