@@ -156,22 +156,18 @@ WHERE m.user_id = :user_id AND m.apartman_id = :apartman_id AND maliye_turu = :m
 
                                 <!-- <select class="input" id="kategori" required="">
                                     <option style="display: none;" value="" disabled selected></option>
-                                    <?php
-                                    foreach ($kategori_listesi as $kategori_id => $kategori_adi) {
-                                        echo "<option value='" . $kategori_id . "'>" . $kategori_adi . "</option>";
-                                    }
-                                    ?>
+                                  
                                 </select>
                                 <label id="kategoriLabel" for="kategori">Kategoriler *</label> -->
 
                                 <div class="select-div">
-                                    <input class="search-selectx input" type="text" list="Users" id="kategori" name="options" required="" />
+                                    <input class="search-selectx input" data-user-id="" type="text" list="Users" id="kategori" name="options" required="" />
                                     <label id="kategoriLabel" class="selectx-label" for="kategori">Kategoriler : *</label>
                                     <ul class="value-listx" id="kategoriDrop">
                                         <?php 
                                             foreach($kategori_listesi as $kategori_id => $kategori_adi){
                                                 echo '                                        
-                                                   <li class="li-select" data-user-id="' . $kategori_adi . '">' . $kategori_adi . '</li>';
+                                                   <li class="li-select" data-user-id="' . $kategori_id . '">' . $kategori_adi . '</li>';
                                             }
                                         ?>                                        
                                     </ul>
@@ -591,7 +587,15 @@ WHERE m.user_id = :user_id AND m.apartman_id = :apartman_id AND maliye_turu = :m
             var borcTutarValue = document.getElementById('borcTutar').value;
             var dateInputValue = document.getElementById('dateInput').value;
             var dateInput2Value = document.getElementById('dateInput2').value;
-            var kategoriValue = document.getElementById('kategori').value;
+            var kategoriAd = document.getElementById('kategori').value;
+            if(kategoriAd =="" || kategoriAd==null){
+                var kategoriValue ="";
+            }else{
+                var kategoriValue = document.getElementById('kategori').dataset.userId;
+            }
+
+            alert(kategoriValue);
+           
             var a1 = true,
                 a2 = true,
                 a3 = true,
@@ -985,6 +989,7 @@ $('#label_tarih3').css('color', '#0d0c22');
 function setupSearchSelect(inputSelector, dropdownSelector) {
   const inputField = document.querySelector(inputSelector);
   const dropdown = document.querySelector(dropdownSelector);
+  
   const dropdownArray = [...dropdown.querySelectorAll('.li-select')];
   let valueArray = [];
 
@@ -992,6 +997,7 @@ function setupSearchSelect(inputSelector, dropdownSelector) {
   inputField.focus();
 
   dropdownArray.forEach(item => {
+ 
     valueArray.push(item.textContent);
   });
 
@@ -1000,6 +1006,7 @@ function setupSearchSelect(inputSelector, dropdownSelector) {
   }
 
   inputField.addEventListener('input', () => {
+    inputField.setAttribute("data-user-id", "");
     dropdown.classList.add('open');
     let inputValue = inputField.value.toLowerCase();
     let valueSubstring;
@@ -1021,6 +1028,7 @@ function setupSearchSelect(inputSelector, dropdownSelector) {
   dropdownArray.forEach(item => {
     item.addEventListener('click', (evt) => {
       selectedUserID = evt.target.dataset.userId;
+      inputField.setAttribute("data-user-id", selectedUserID);
       inputField.value = item.textContent;
       dropdownArray.forEach(dropdown => {
         dropdown.classList.add('closed');
