@@ -388,7 +388,9 @@ if ($result->rowCount() > 0) {
                     contentType: false,
                     processData: false,
                     success: function(response){
-                        alert(response);
+                        console.log(response);
+                        
+                        alert("dur");
                     },
                     error: function(xhr, status, error){
                         console.error(xhr.responseText);

@@ -995,6 +995,7 @@ function save() {
     var kTarih = document.getElementById("dateInput").value;
     var daireID = document.getElementById("hiddenDaireID").value;
     var apartId = document.getElementById('hiddenDaireID2').value;
+
     if (userr === null || userr === "") {
         $('#userInput').css('border-color', 'red');
     } else {
@@ -1317,6 +1318,7 @@ const closeDropdown = () => {
 }
 
 inputField.addEventListener('input', () => {
+    selectedUserID ="";
     dropdown.classList.add('open');
     let inputValue = inputField.value.toLowerCase();
     let valueSubstring;
@@ -1349,6 +1351,7 @@ dropdownArray.forEach(item => {
 })
 
 inputField.addEventListener('focus', () => {
+
     dropdown.classList.add('open');
     dropdownArray.forEach(dropdown => {
         dropdown.classList.remove('closed');
@@ -1356,6 +1359,7 @@ inputField.addEventListener('focus', () => {
 });
 
 inputField.addEventListener('blur', () => {
+    
     dropdown.classList.remove('open');
 });
 
