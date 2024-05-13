@@ -1031,6 +1031,22 @@ table tbody tr:last-child td:last-child {
   text-transform: none;
 }
 
+/* Bolumler Detay profil sayfası */
+
+.bilgi-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  gap: 20px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.b-new {
+  padding: 0px 20px;
+}
+
 /* Borc Area */
 
 .borc-info {
