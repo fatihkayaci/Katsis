@@ -903,6 +903,61 @@ table tbody tr:last-child td:last-child {
   }
 }
 
+/* Profile Area eski tasarim */
+
+.user-profile-old {
+  margin: 0 0 1rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.user-profile-old .user-avatar-old {
+  margin: 0 0 1rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.user-profile-old .user-avatar-old p {
+  width: 90px;
+  height: 90px;
+  -webkit-border-radius: 100px;
+  -moz-border-radius: 100px;
+  border-radius: 100px;
+  background-color: #277CE0;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 50px;
+  font-family: 'poppins-medium';
+}
+.user-name-old {
+  margin: 0 0 0.5rem 0;
+  font-family: 'poppins-regular';
+  letter-spacing: 1px;
+}
+
+.user-profile-old h6.user-email-old {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: #9fa8b9;
+text-transform: none;
+}
+
+.account-settings {
+  width: 100%;
+}
+
+.b-old {
+  padding: 0px 0px;
+}
+
 /* Profile Area */
 
 .profile-area {
