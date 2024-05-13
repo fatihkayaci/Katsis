@@ -235,214 +235,257 @@ WHERE m.user_id = :user_id AND m.apartman_id = :apartman_id AND maliye_turu = :m
 
                 </div>
                 <!-- =========================================== -->
+                <!-- profile area -->
+                                        
+                <div class="review-area">
 
-                <div class="emp-profile row">
+                    <div class="profile-area">
 
-                    <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
-                        <div class="h-100">
-                            <div class="contact-form">
-                                <div class="account-settings">
-
-                                    <div class="user-profile">
-                                        <?php
-                                        $names = explode(" ", $row["userName"]);
-                                        $initials = "";
-                                        $count = 0;
-                                        foreach ($names as $name) {
-                                            $initials .= strtoupper(substr($name, 0, 1));
-                                            $count++;
-                                            if ($count == 2) {
-                                                break;
-                                            }
+                        <div class="name-area">
+                            <div class="user-profile">
+                                <?php
+                                $names = explode(" ", $row["userName"]);
+                                $initials = "";
+                                $count = 0;
+                                foreach ($names as $name) {
+                                    $initials .= strtoupper(substr($name, 0, 1));
+                                    $count++;
+                                    if ($count == 2) {
+                                        break;
+                                    }
+                                }
+                                ?>
+                                <div class="user-avatar">
+                                    <p>
+                                        <?php echo $initials; ?>
+                                    </p>
+                                </div>
+                            </div> 
+                            <div class="user-info-top">
+                                <h5 class="user-name">
+                                    <?= !empty($row["userName"]) ? $row["userName"] : "-" ?>
+                                </h5>
+                                <div class="bilgi-p">
+                                    <p>Durumu :</p>
+                                    <div class="cursor-none main-durum <?php
+                                  
+                                        if ($row["durum"] == "Kiracı") {
+                                            echo "kiraci";
+                                        } elseif ($row["durum"] == "Kat Maliki") {
+                                            echo "kat-maliki";
+                                        } else {
+                                            echo "belirtilmemis";
                                         }
+                                    ?>">
+                                        <?php
+                            
+                                            echo $row["durum"];
                                         ?>
-                                        <div class="user-avatar">
-                                            <p>
-                                                <?php echo $initials; ?>
+                                    </div>
+                                </div>
+
+                                <div class="bilgi-p">
+                                    <p>Daire :</p>
+                                    <?php
+                                    if (!empty($row["blok_adi"]) && !empty($row["daire_sayisi"])) { ?>
+
+                                        <p class="daire-link hover-link" onclick=userGo(<?= !empty($row["daire_id"]) ? $row["daire_id"] : "null" ?>)>
+                                            <?php
+                                            if (!empty($row["blok_adi"]) && !empty($row["daire_sayisi"])) {
+                                                echo $row["blok_adi"] . " / " . $row["daire_sayisi"];
+                                                ?>
+                                                <i class="fa-solid fa-link"></i>
                                             </p>
-                                        </div>
-                                        <h5 class="user-name">
-                                            <?= !empty($row["userName"]) ? $row["userName"] : "-" ?>
-                                        </h5>
-                                    </div>
-                                    <hr class="horizontal dark mt-0">
-                                    <div class="ps-3 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                        <label for="tc">T.C. Kimlik No</label>
-                                        <p id="tc">
-                                            <?= !empty($row["tc"]) ? $row["tc"] : "-" ?>
-                                        </p>
-                                    </div>
-                                    <hr class="horizontal dark mt-0">
-                                    <div class="ps-3 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                        <label for="phoneNumber">Telefon Numarası</label>
-                                        <p id="phoneNumber">
-                                            <?= !empty($row["phoneNumber"]) ? $row["phoneNumber"] : "-" ?>
-                                        </p>
-                                    </div>
-                                    <hr class="horizontal dark mt-0">
-                                    <div class="ps-3 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                        <label for="userEmail">E-Posta</label>
-                                        <p id="userEmail">
-                                            <?= !empty($row["userEmail"]) ? $row["userEmail"] : "-" ?>
-                                        </p>
-                                    </div>
-                                    <hr class="horizontal dark mt-0">
-                                    <div class="ps-3 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                        <label for="gender">Cinsiyet</label>
-                                        <p id="gender">
-                                            <?= !empty($row["gender"]) ? $row["gender"] : "-" ?>
-                                        </p>
-                                    </div>
+                                            <?php
+
+                                            } else {
+                                                echo "-";
+                                            }
+                                    }
+                                    ?>
 
                                 </div>
-                            </div>
+                            </div> 
+                                                                                                
                         </div>
+
+                        <div class="shown-info">
+
+                            <div class="bilgi-p p-new">
+                                <p>T.C. Kimlik No</p>
+                                <p id="tc">
+                                    <?= !empty($row["tc"]) ? $row["tc"] : "-" ?>
+                                </p>
+                            </div>
+
+                            <div class="bilgi-p p-new">
+                                <p>Telefon Numarası</p>
+                                <p id="phoneNumber">
+                                    <?= !empty($row["phoneNumber"]) ? $row["phoneNumber"] : "-" ?>
+                                </p>
+                            </div>
+
+                            <div class="bilgi-p p-new">
+                                <p>E-Posta</p>
+                                <p id="userEmail">
+                                    <?= !empty($row["userEmail"]) ? $row["userEmail"] : "-" ?>
+                                </p>
+                            </div>
+
+                            <div class="bilgi-p p-new">
+                                <p>Cinsiyet</p>
+                                <p id="gender">
+                                    <?= !empty($row["gender"]) ? $row["gender"] : "-" ?>
+                                </p>
+                            </div>
+                        
+                        </div>
+
+                        <div class="hide-info">
+
+                            <div class="bilgi-p p-new">
+                                <p>Kullanıcı No :</p>
+                                <p>
+                                    <?= !empty($row["user_no"]) ? $row["user_no"] : "-" ?>
+                                </p>
+                            </div>
+
+                            <div class="bilgi-p p-new">
+                                <p>Giriş Tarihi :</p>
+                                <p>
+                                    <?php
+                                    if ($row["durum"] == "Kiracı") {
+                                        echo $row["kiraciGiris"];
+                                    } else if ($row["durum"] == "Kat Maliki") {
+                                        echo $row["katMGiris"];
+                                    }
+                                    ?>
+                                </p>
+                            </div>
+
+                            <div class="bilgi-p p-new">
+                                <p>Son Oturum Açma Tarihi :</p>
+                                <p>Son Oturum Açma Tarihi yazılacak</p>
+                            </div>
+
+                            <div class="bilgi-p p-new">
+                                <p>Parola :</p>
+                                <p>
+                                    <?php echo base64_decode($row["userPass"]); ?>
+                                </p>
+                            </div>
+
+                            <div class="bilgi-p p-new">
+                                <p>Araç Plakası :</p>
+                                <p>
+                                    <?= !empty($row["plate"]) ? $row["plate"] : "-" ?>
+                                </p>
+                            </div>
+                        
+                        </div>
+
                     </div>
 
-                    <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12 col-12">
-                        <div class="h-100">
-                            <div class="contact-form">
+                    <div class="borc-info">
 
-                                <form id="" method="post" action="">
+                        <div class="borc-area overflow-borc">
+                            <div class="account-settings">
 
-                                    <div class="row">
-                                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                            <h6 class="mb-2">Daire Bilgileri</h6>
+                                <div class="input-group-div fixed-borc">
+                                    <div class="input-group1">
+                                        <button class="btn-custom-outline bcoc1"
+                                            onclick=" popupOpenControl('popupBorcEkle','borcEkleForm')">Borç</button>
+
+                                        <?php if ($toplamBorc > 0) { ?>
+
+
+                                            <button class="btn-custom-outline bcoc1"
+                                                onclick=" popupOpenControl('popupTahsilatEkle','tahsilatEkleForm')">Tahsilat</button>
+                                        <?php } ?>
+
+                                    </div>
+                                    <div class="input-group1">
+                                        <button class="btn-custom-outline bcoc3">Düzenle</button>
+                                    </div>
+                                </div>
+                                <input type="hidden" id="topborc" value=<?php echo $toplamBorc; ?> />
+                                <div class="borc-box">
+                                        <div class="bakiye-header">
+                                            <p class="tarih">BAKİYE : </p>
+                                            <p class="borc">
+                                                <?php echo $toplamBorc; ?> <img class="tl-img"
+                                                    src="../Admin\assets\img\tl.png" alt="">
+                                            </p>
                                         </div>
+                                    <?php
 
-                                        <hr class="horizontal dark mt-3">
+                                    if ($result4) {
+                                        foreach ($result4 as $row4) {
 
-                                        <div class="bilgi-p col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                                            <p class="bilgi-p">Durumu :</p>
-                                        </div>
-                                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                                            <div class="cursor-none main-durum <?php
-                                          
-                                                if ($row["durum"] == "Kiracı") {
-                                                    echo "kiraci";
-                                                } elseif ($row["durum"] == "Kat Maliki") {
-                                                    echo "kat-maliki";
-                                                } else {
-                                                    echo "belirtilmemis";
-                                                }
-                                            ?>">
-                                                <?php
-                            
-                                                    echo $row["durum"];
-                                                ?>
-                                            </div>
-                                        </div>
+                                            $odeme_tarihi = $row4['odeme_tar'];
 
-                                        <hr class="horizontal dark mt-0">
+                                            // Türkçe ay isimleri dizisi
+                                            $turkce_aylar = array(
+                                                '01' => 'Ocak',
+                                                '02' => 'Şubat',
+                                                '03' => 'Mart',
+                                                '04' => 'Nisan',
+                                                '05' => 'Mayıs',
+                                                '06' => 'Haziran',
+                                                '07' => 'Temmuz',
+                                                '08' => 'Ağustos',
+                                                '09' => 'Eylül',
+                                                '10' => 'Ekim',
+                                                '11' => 'Kasım',
+                                                '12' => 'Aralık'
+                                            );
 
-                                        <div class="bilgi-p col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                                            <p class="bilgi-p">Daire :</p>
-                                        </div>
-                                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                                            // Tarihi parçalara ayırma
+                                            $tarih_parcalari = explode('-', $odeme_tarihi);
+                                            $gun = $tarih_parcalari[2];
+                                            $ay = $turkce_aylar[$tarih_parcalari[1]];
+                                            $yil = $tarih_parcalari[0];
 
-                                            <?php
-                                            if (!empty($row["blok_adi"]) && !empty($row["daire_sayisi"])) { ?>
-
-                                                <p class="daire-link" onclick=userGo(<?= !empty($row["daire_id"]) ? $row["daire_id"] : "null" ?>)>
-                                                    <?php
-                                                    if (!empty($row["blok_adi"]) && !empty($row["daire_sayisi"])) {
-                                                        echo $row["blok_adi"] . " / " . $row["daire_sayisi"];
-                                                        ?>
-                                                        <i class="fa-solid fa-link"></i>
-                                                    </p>
-                                                    <?php
-
-                                                    } else {
-                                                        echo "-";
-                                                    }
-                                            }
+                                            // Yeni format
+                                            $yeni_format = $gun . ' ' . $ay . ' ' . $yil;
                                             ?>
 
-                                        </div>
+                                            <a href="" class="bakiye-area">
+                                                <p class="tarih">
+                                                    <?php echo $yeni_format; ?>
+                                                </p>
+                                                <p class="aciklama">
+                                                <?php echo $row4['aciklama']; ?>
+                                                <p class="aciklama">
+                                                    <?php echo $row4['kategori_adi']; ?>
+                                                </p>
+                                                <p class="borc">
+                                                    <?php echo $row4['borc_miktar']; ?> <img class="tl-img"
+                                                        src="../Admin\assets\img\tl.png" alt="">
+                                                </p>
+                                            </a>
 
-                                        <hr class="horizontal dark mt-0">
-
-                                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                                            <p class="bilgi-p">Kullanıcı No :</p>
-                                        </div>
-                                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                                            <p class="bilgi-p">
-                                                <?= !empty($row["user_no"]) ? $row["user_no"] : "-" ?>
-                                            </p>
-                                        </div>
-
-                                        <hr class="horizontal dark mt-0">
-
-                                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                                            <p class="bilgi-p">Giriş Tarihi :</p>
-                                        </div>
-                                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                                            <p class="bilgi-p">
-                                                <?php
-                                                if ($row["durum"] == "Kiracı") {
-                                                    echo $row["kiraciGiris"];
-                                                } else if ($row["durum"] == "Kat Maliki") {
-                                                    echo $row["katMGiris"];
-                                                }
-                                                ?>
-                                            </p>
-                                        </div>
-
-                                        <hr class="horizontal dark mt-0">
-
-                                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                                            <p class="bilgi-p">Son Oturum Açma Tarihi :</p>
-                                        </div>
-                                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                                            <p class="bilgi-p">Son Oturum Açma Tarihi yazılacak</p>
-                                        </div>
-
-                                        <hr class="horizontal dark mt-0">
-
-                                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                                            <p class="bilgi-p">Parola :</p>
-                                        </div>
-                                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                                            <p class="bilgi-p">
-                                                <?php echo base64_decode($row["userPass"]); ?>
-                                            </p>
-                                        </div>
-
-                                        <hr class="horizontal dark mt-0">
-
-                                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                                            <p class="bilgi-p">Araç Plakası :</p>
-                                        </div>
-                                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                                            <p class="bilgi-p">
-                                                <?= !empty($row["plate"]) ? $row["plate"] : "-" ?>
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                </form>
+                                        <?php } ?>
+                                      
+                                </div>
 
                             </div>
                         </div>
-                    </div>
-
-                    <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
-                        <div class="h-100">
-                            <div class="contact-form overflow-borc">
+                        <div class="borc-area overflow-borc">
                                 <div class="account-settings">
 
-                                    <div class="row todo-div mt-4">
+                                    <div class="row todo-div mt-2">
                                         <div id="myDIV" class="to-do">
 
                                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-        	    		                    	<h6 class="mt-2 mb-2">Yapılacaklar Listesi</h6>
+        	    		                    	<h6 class="mt-2 mb-2">Notlar</h6>
         	    		                    </div>
 
                                             <hr class="horizontal dark mt-3">
 
                                             <div class="nowrap">
 
-                                                <input class="todo-input" type="text" id="myInput" placeholder="Görev Yazınız..">
+                                                <input class="todo-input" type="text" id="myInput" placeholder="Notunuzu Yazınız..">
                                                
 
                                                 <span onclick="newElement()" class="todo-btn btn-custom-outline bcoc1">Ekle</span>
@@ -453,113 +496,26 @@ WHERE m.user_id = :user_id AND m.apartman_id = :apartman_id AND maliye_turu = :m
 
                                         <div class="row">
                                             <ul class="todo-ul" id="myUL">
-                                                <li class="todo-li">yapılacak 1</li>
-                                                <li class="todo-li checked">yapılacak 2</li>
-                                                <li class="todo-li">yapılacak 3</li>
-                                                <li class="todo-li">yapılacak 4</li>
-                                                <li class="todo-li">yapılacak 5</li>
+                                                <li class="todo-li">not 1</li>
+                                                <li class="todo-li checked">not 2</li>
+                                                <li class="todo-li">not 3</li>
+                                                <li class="todo-li">not 4</li>
+                                                <li class="todo-li">not 5</li>
                                             </ul>
                                         </div>
                                     </div>
                     
                                 </div>
                             </div>
-                        </div>
-
+                        
                     </div>
+                    
+                </div>
+                
 
-                    <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12 col-12">
-                        <div class="h-100">
-                            <div class="contact-form overflow-borc">
-                                <div class="account-settings">
+                    
 
-                                    <div class="input-group-div fixed-borc">
-                                        <div class="input-group1">
-                                            <button class="btn-custom-outline bcoc1"
-                                                onclick=" popupOpenControl('popupBorcEkle','borcEkleForm')">Borç</button>
-
-                                            <?php if ($toplamBorc > 0) { ?>
-
-
-                                                <button class="btn-custom-outline bcoc1"
-                                                    onclick=" popupOpenControl('popupTahsilatEkle','tahsilatEkleForm')">Tahsilat</button>
-                                            <?php } ?>
-
-                                        </div>
-                                        <div class="input-group1">
-                                            <button class="btn-custom-outline bcoc3">Düzenle</button>
-                                        </div>
-                                    </div>
-                                    <input type="hidden" id="topborc" value=<?php echo $toplamBorc; ?> />
-                                    <div class="borc-box">
-                                    <a href="">
-                                                <p class="tarih">BAKİYE : </p>
-                                                <p class="borc">
-                                                    <?php echo $toplamBorc; ?> <img class="tl-img"
-                                                        src="../Admin\assets\img\tl.png" alt="">
-                                                </p>
-                                            </a>
-                                        <?php
-
-                                        if ($result4) {
-                                            foreach ($result4 as $row4) {
-
-                                                $odeme_tarihi = $row4['odeme_tar'];
-
-                                                // Türkçe ay isimleri dizisi
-                                                $turkce_aylar = array(
-                                                    '01' => 'Ocak',
-                                                    '02' => 'Şubat',
-                                                    '03' => 'Mart',
-                                                    '04' => 'Nisan',
-                                                    '05' => 'Mayıs',
-                                                    '06' => 'Haziran',
-                                                    '07' => 'Temmuz',
-                                                    '08' => 'Ağustos',
-                                                    '09' => 'Eylül',
-                                                    '10' => 'Ekim',
-                                                    '11' => 'Kasım',
-                                                    '12' => 'Aralık'
-                                                );
-
-                                                // Tarihi parçalara ayırma
-                                                $tarih_parcalari = explode('-', $odeme_tarihi);
-                                                $gun = $tarih_parcalari[2];
-                                                $ay = $turkce_aylar[$tarih_parcalari[1]];
-                                                $yil = $tarih_parcalari[0];
-
-                                                // Yeni format
-                                                $yeni_format = $gun . ' ' . $ay . ' ' . $yil;
-                                                ?>
-
-                                                <a href="">
-                                                    <p class="tarih">
-                                                        <?php echo $yeni_format; ?>
-                                                    </p>
-                                                    <p class="aciklama">
-                                                        <?php echo $row4['aciklama']; ?>
-                                                        <p class="aciklama">
-                                                            <?php echo $row4['kategori_adi']; ?>
-                                                        </p>
-                                                        <p class="borc">
-                                                            <?php echo $row4['borc_miktar']; ?> <img class="tl-img"
-                                                                src="../Admin\assets\img\tl.png" alt="">
-                                                        </p>
-                                                </a>
-
-                                            <?php } ?>
-                                          
-                                        </div>
-
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <?php
+                <?php
                                         }
             }
         }

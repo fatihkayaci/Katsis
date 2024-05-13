@@ -426,7 +426,49 @@ WHERE m.user_id = :user_id AND m.apartman_id = :apartman_id AND maliye_turu = :m
                         </div>
                     </div>
 
-                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
+                        <div class="h-100">
+                            <div class="contact-form overflow-borc">
+                                <div class="account-settings">
+
+                                    <div class="row todo-div mt-4">
+                                        <div id="myDIV" class="to-do">
+
+                                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        	    		                    	<h6 class="mt-2 mb-2">Yapılacaklar Listesi</h6>
+        	    		                    </div>
+
+                                            <hr class="horizontal dark mt-3">
+
+                                            <div class="nowrap">
+
+                                                <input class="todo-input" type="text" id="myInput" placeholder="Görev Yazınız..">
+                                               
+
+                                                <span onclick="newElement()" class="todo-btn btn-custom-outline bcoc1">Ekle</span>
+                                                
+                                            </div>
+
+                                        </div>
+
+                                        <div class="row">
+                                            <ul class="todo-ul" id="myUL">
+                                                <li class="todo-li">yapılacak 1</li>
+                                                <li class="todo-li checked">yapılacak 2</li>
+                                                <li class="todo-li">yapılacak 3</li>
+                                                <li class="todo-li">yapılacak 4</li>
+                                                <li class="todo-li">yapılacak 5</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                    
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12 col-12">
                         <div class="h-100">
                             <div class="contact-form overflow-borc">
                                 <div class="account-settings">
