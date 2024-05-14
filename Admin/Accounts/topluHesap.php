@@ -20,25 +20,25 @@
     $idapartman = $_SESSION["apartID"];
 
     try {
-
-
-
-        $sql = "SELECT d.*, b.blok_adi
-        FROM tbl_daireler d
-        LEFT JOIN tbl_blok b ON d.blok_adi = b.blok_id
-        WHERE d.apartman_id = " . $_SESSION["apartID"];
-
-        /* $sql = "SELECT blok_adi, daire_sayisi, kiraciID, katMalikiID
-                FROM tbl_daireler
-                WHERE apartman_id=" . $_SESSION["apartID"];
-                */
-
+        // SQL sorgusu
+        $sql = "SELECT d.*, b.blok_adi, u1.userName AS katMalikiName, u1.tc AS katMalikiTC, u1.phoneNumber AS katMalikiPhoneNumber, 
+                u1.userEmail AS katMalikiEmail, u1.plate AS katMalikiPlate, u1.gender AS katMalikiGender, u1.openingBalance AS katMalikiOpeningBalance, u1.balanceType AS katMalikiBalanceType, 
+                u1.promise AS katMalikiPromise, u2.userName AS kiraciName, u2.tc AS kiraciTC, u2.phoneNumber AS kiraciPhoneNumber, 
+                u2.userEmail AS kiraciEmail, u2.plate AS kiraciPlate, u2.gender AS kiraciGender, u2.openingBalance AS kiraciOpeningBalance, u2.balanceType AS kiraciBalanceType, 
+                u2.promise AS kiraciPromise
+                FROM tbl_daireler d
+                LEFT JOIN tbl_blok b ON d.blok_adi = b.blok_id
+                LEFT JOIN tbl_users u1 ON d.katMalikiID = u1.userID
+                LEFT JOIN tbl_users u2 ON d.kiraciID = u2.userID
+                WHERE d.apartman_id = :apartmanID";
+        
         $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':apartmanID', $_SESSION["apartID"]);
         $stmt->execute();
-
+    
         // Sonuç kümesinin satır sayısını kontrol etme
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
+    
         if ($result) {
             ?>
     <table id="table" class="users-table">
@@ -50,45 +50,20 @@
                 <th onclick="sortTable(3)">T.C. No <i id="icon-table4" class="fa-solid fa-sort-down"></i></th>
                 <th onclick="sortTable(4)">Telefon <i id="icon-table5" class="fa-solid fa-sort-down"></i></th>
                 <th onclick="sortTable(5)">E-Posta <i id="icon-table6" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(6)">Açılış Bakiyesi <i id="icon-table7" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(7)">Bakiye Türü<i id="icon-table8" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(8)">Vadesi <i id="icon-table9" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(6)">Araç Plakası<i id="icon-table7" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(7)">Cinsiyet<i id="icon-table8" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(8)">Açılış Bakiyesi <i id="icon-table9" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(9)">Bakiye Türü<i id="icon-table10" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(10)">Vadesi <i id="icon-table11" class="fa-solid fa-sort-down"></i></th>
             </tr>
         </thead>
         <tbody>
-
             <?php
-                    $i = 1;
-                    foreach ($result as $row) {
-                        $blokAdi = $row["blok_adi"];
-                        $daireSayisi = $row["daire_sayisi"];
-                        $kiraciID = $row["kiraciID"];
-                        $katMalikiID = $row["katMalikiID"];
-
-                        // Diğer tablodan ilgili kiracı bilgilerini çekme
-                        $sqlKiraci = "SELECT * FROM tbl_users WHERE userID = :kiraciID";
-                        $stmtKiraci = $conn->prepare($sqlKiraci);
-                        $stmtKiraci->bindParam(':kiraciID', $kiraciID);
-                        $stmtKiraci->execute();
-                        $kiraciBilgisi = $stmtKiraci->fetch(PDO::FETCH_ASSOC);
-
-                        // Diğer tablodan ilgili kat maliki bilgilerini çekme
-                        $sqlKatMaliki = "SELECT * FROM tbl_users WHERE userID = :katMalikiID";
-                        $stmtKatMaliki = $conn->prepare($sqlKatMaliki);
-                        $stmtKatMaliki->bindParam(':katMalikiID', $katMalikiID);
-                        $stmtKatMaliki->execute();
-                        $katMalikiBilgisi = $stmtKatMaliki->fetch(PDO::FETCH_ASSOC);
-
-                        // Kiracı ve Kat Maliki bilgileri var mı kontrolü
-                        if ($kiraciBilgisi && $katMalikiBilgisi) {
-                            ?>
+            foreach ($result as $row) {
+                ?>
             <tr data-userid="" class="git-ac toplu-td <?php echo $i ?>">
                 <td data-title="Blok Adı" name="blok" class="br-r">
-                    <?php
-                                    if (!empty($row["blok_adi"]) && !empty($row["daire_sayisi"])) {
-                                        echo $row["blok_adi"] . " / " . $row["daire_sayisi"];
-                                    }
-                                    ?>
+                    <?php echo !empty($row["blok_adi"]) && !empty($row["daire_sayisi"]) ? $row["blok_adi"] . " / " . $row["daire_sayisi"] : ""; ?>
                 </td>
                 <td data-title="Kat Maliki" name="katmaliki" class="p-0">
                     <div class="toplu-td-div">
@@ -100,41 +75,41 @@
                     <div class="toplu-td-div">
                         <span class="border-1">
                             <input type="text" class="input-select katMaliki"
-                                value="<?php echo isset($katMalikiBilgisi['userName']) ? $katMalikiBilgisi['userName'] : ''; ?>"
-                                <?php echo !empty($katMalikiBilgisi['userName']) ? 'readonly' : ''; ?> />
+                                value="<?php echo $row["katMalikiName"] ?? ''; ?>"
+                                <?php echo isset($row["katMalikiName"]) ? 'readonly' : ''; ?> />
                         </span>
                         <span>
                             <input type="text" class="input-select kiracii"
-                                value="<?php echo isset($kiraciBilgisi['userName']) ? $kiraciBilgisi['userName'] : ''; ?>"
-                                <?php echo !empty($kiraciBilgisi['userName']) ? 'readonly' : ''; ?> />
+                                value="<?php echo $row["kiraciName"] ?? ''; ?>"
+                                <?php echo isset($row["kiraciName"]) ? 'readonly' : ''; ?> />
                         </span>
                     </div>
                 </td>
                 <td data-title="T.C. Kat Maliki" name="tcKatMaliki" class="p-0">
                     <div class="toplu-td-div">
                         <span class="border-1">
-                            <input type="text" class="input-select katMaliki"
-                                value="<?php echo isset($katMalikiBilgisi['tc']) ? $katMalikiBilgisi['tc'] : ''; ?>"
-                                <?php echo !empty($katMalikiBilgisi['userName']) ? 'readonly' : ''; ?> />
+                            <input type="text" class="input-select katMaliki" oninput="checkTCNumberLength(this)"
+                                value="<?php echo $row["katMalikiTC"] ?? ''; ?>"
+                                <?php echo isset($row["katMalikiName"]) ? 'readonly' : ''; ?> />
                         </span>
                         <span>
-                            <input type="text" class="input-select kiracii"
-                                value="<?php echo isset($kiraciBilgisi['tc']) ? $kiraciBilgisi['tc'] : ''; ?>"
-                                <?php echo !empty($kiraciBilgisi['userName']) ? 'readonly' : ''; ?> />
+                            <input type="text" class="input-select kiracii" oninput="checkTCNumberLength(this)"
+                                value="<?php echo $row["kiraciTC"] ?? ''; ?>"
+                                <?php echo isset($row["kiraciName"]) ? 'readonly' : ''; ?> />
                         </span>
                     </div>
                 </td>
                 <td data-title="Telefon" name="telefon" class="p-0">
                     <div class="toplu-td-div">
                         <span class="border-1">
-                            <input type="text" class="input-select katMaliki"
-                                value="<?php echo isset($katMalikiBilgisi['phoneNumber']) ? $katMalikiBilgisi['phoneNumber'] : ''; ?>"
-                                <?php echo !empty($katMalikiBilgisi['userName']) ? 'readonly' : ''; ?> />
+                            <input type="text" class="input-select katMaliki" oninput="checkPhoneNumberLength(this)"
+                                value="<?php echo $row["katMalikiPhoneNumber"] ?? ''; ?>"
+                                <?php echo isset($row["katMalikiName"]) ? 'readonly' : ''; ?> />
                         </span>
                         <span>
-                            <input type="text" class="input-select kiracii"
-                                value="<?php echo isset($kiraciBilgisi['phoneNumber']) ? $kiraciBilgisi['phoneNumber'] : ''; ?>"
-                                <?php echo !empty($kiraciBilgisi['userName']) ? 'readonly' : ''; ?> />
+                            <input type="text" class="input-select kiracii" oninput="checkPhoneNumberLength(this)"
+                                value="<?php echo $row["kiraciPhoneNumber"] ?? ''; ?>"
+                                <?php echo isset($row["kiraciName"]) ? 'readonly' : ''; ?> />
                         </span>
                     </div>
                 </td>
@@ -142,13 +117,53 @@
                     <div class="toplu-td-div">
                         <span class="border-1">
                             <input type="text" class="input-select katMaliki"
-                                value="<?php echo isset($katMalikiBilgisi['userEmail']) ? $katMalikiBilgisi['userEmail'] : ''; ?>"
-                                <?php echo !empty($katMalikiBilgisi['userName']) ? 'readonly' : ''; ?> />
+                                value="<?php echo $row["katMalikiEmail"] ?? ''; ?>"
+                                <?php echo isset($row["katMalikiName"]) ? 'readonly' : ''; ?> />
                         </span>
                         <span>
                             <input type="text" class="input-select kiracii"
-                                value="<?php echo isset($kiraciBilgisi['userEmail']) ? $kiraciBilgisi['userEmail'] : ''; ?>"
-                                <?php echo !empty($kiraciBilgisi['userName']) ? 'readonly' : ''; ?> />
+                                value="<?php echo $row["kiraciEmail"] ?? ''; ?>"
+                                <?php echo isset($row["kiraciName"]) ? 'readonly' : ''; ?> />
+                        </span>
+                    </div>
+                </td>
+                <td data-title="plate" name="plate" class="p-0 br-end">
+                    <div class="toplu-td-div">
+                        <span class="border-1">
+                            <input type="text" class="input-select katMaliki"
+                                value="<?php echo $row["katMalikiPlate"] ?? ''; ?>"
+                                <?php echo isset($row["katMalikiName"]) ? 'readonly' : ''; ?> />
+                        </span>
+                        <span>
+                            <input type="text" class="input-select kiracii"
+                                value="<?php echo $row["kiraciPlate"] ?? ''; ?>"
+                                <?php echo isset($row["kiraciName"]) ? 'readonly' : ''; ?> />
+                        </span>
+                    </div>
+                </td>
+                <td data-title="gender" name="gender" class="p-0 br-end">
+                    <div class="toplu-td-div">
+                        <span class="border-1">
+                            <select class="input-select katMaliki"
+                                <?php echo isset($row["katMalikiName"]) ? 'disabled' : ''; ?>>
+                                <option value="Erkek"
+                                    <?php if(isset($row["katMalikiGender"]) && $row["katMalikiGender"] === "Erkek") echo "selected"; ?>>
+                                    Erkek</option>
+                                <option value="Kadın"
+                                    <?php if(isset($row["katMalikiGender"]) && $row["katMalikiGender"] === "Kadın") echo "selected"; ?>>
+                                    Kadın</option>
+                            </select>
+                        </span>
+                        <span>
+                            <select class="input-select kiracii"
+                                <?php echo isset($row["kiraciName"]) ? 'disabled' : ''; ?>>
+                                <option value="Erkek"
+                                    <?php if(isset($row["kiraciGender"]) && $row["kiraciGender"] === "Erkek") echo "selected"; ?>>
+                                    Erkek</option>
+                                <option value="Kadın"
+                                    <?php if(isset($row["kiraciGender"]) && $row["kiraciGender"] === "Kadın") echo "selected"; ?>>
+                                    Kadın</option>
+                            </select>
                         </span>
                     </div>
                 </td>
@@ -156,158 +171,70 @@
                     <div class="toplu-td-div">
                         <span class="border-1">
                             <input type="text" class="input-select katMaliki"
-                                value="<?php echo isset($katMalikiBilgisi['openingBalance']) ? $katMalikiBilgisi['openingBalance'] : ''; ?>"
-                                <?php echo !empty($katMalikiBilgisi['userName']) ? 'readonly' : ''; ?> />
+                                value="<?php echo $row["katMalikiOpeningBalance"] ?? ''; ?>"
+                                <?php echo isset($row["katMalikiName"]) ? 'readonly' : ''; ?> />
                         </span>
                         <span>
                             <input type="text" class="input-select kiracii"
-                                value="<?php echo isset($kiraciBilgisi['openingBalance']) ? $kiraciBilgisi['openingBalance'] : ''; ?>"
-                                <?php echo !empty($kiraciBilgisi['userName']) ? 'readonly' : ''; ?> />
+                                value="<?php echo $row["kiraciOpeningBalance"] ?? ''; ?>"
+                                <?php echo isset($row["kiraciName"]) ? 'readonly' : ''; ?> />
                         </span>
                     </div>
                 </td>
                 <td data-title="balanceType" name="balanceType" class="p-0 br-end">
                     <div class="toplu-td-div">
                         <span class="border-1">
-                            <input type="text" class="input-select katMaliki"
-                                value="<?php echo isset($katMalikiBilgisi['balanceType']) ? $katMalikiBilgisi['balanceType'] : ''; ?>"
-                                <?php echo !empty($katMalikiBilgisi['userName']) ? 'readonly' : ''; ?> />
+                            <select class="input-select katMaliki"
+                                <?php echo isset($row["katMalikiName"]) ? 'disabled' : ''; ?>>
+                                <option value="TL"
+                                    <?php if(isset($row["katMalikiBalanceType"]) && $row["katMalikiBalanceType"] === "TL") echo "selected"; ?>>
+                                    TL</option>
+                                <option value="Euro"
+                                    <?php if(isset($row["katMalikiBalanceType"]) && $row["katMalikiBalanceType"] === "Euro") echo "selected"; ?>>
+                                    Euro</option>
+                                <option value="Dolar"
+                                    <?php if(isset($row["katMalikiBalanceType"]) && $row["katMalikiBalanceType"] === "Dolar") echo "selected"; ?>>
+                                    Dolar</option>
+                            </select>
                         </span>
                         <span>
-                            <input type="text" class="input-select kiracii"
-                                value="<?php echo isset($kiraciBilgisi['balanceType']) ? $kiraciBilgisi['balanceType'] : ''; ?>"
-                                <?php echo !empty($kiraciBilgisi['userName']) ? 'readonly' : ''; ?> />
+                            <select class="input-select kiracii"
+                                <?php echo isset($row["kiraciName"]) ? 'disabled' : ''; ?>>
+                                <option value="TL"
+                                    <?php if(isset($row["kiraciBalanceType"]) && $row["kiraciBalanceType"] === "TL") echo "selected"; ?>>
+                                    TL</option>
+                                <option value="Euro"
+                                    <?php if(isset($row["kiraciBalanceType"]) && $row["kiraciBalanceType"] === "Euro") echo "selected"; ?>>
+                                    Euro</option>
+                                <option value="Dolar"
+                                    <?php if(isset($row["kiraciBalanceType"]) && $row["kiraciBalanceType"] === "Dolar") echo "selected"; ?>>
+                                    Dolar</option>
+                            </select>
                         </span>
                     </div>
                 </td>
                 <td data-title="promise" name="promise" class="p-0 br-end">
                     <div class="toplu-td-div">
                         <span class="border-1">
-                            <input type="text" class="input-select katMaliki"
-                                value="<?php echo isset($katMalikiBilgisi['promise']) ? $katMalikiBilgisi['promise'] : ''; ?>"
-                                <?php echo !empty($katMalikiBilgisi['userName']) ? 'readonly' : ''; ?> />
+                            <input type="Date" class="input-select katMaliki"
+                                value="<?php echo $row["katMalikiPromise"] ?? ''; ?>"
+                                <?php echo isset($row["katMalikiName"]) ? 'readonly' : ''; ?> />
                         </span>
                         <span>
-                            <input type="text" class="input-select kiracii"
-                                value="<?php echo isset($kiraciBilgisi['promise']) ? $kiraciBilgisi['promise'] : ''; ?>"
-                                <?php echo !empty($kiraciBilgisi['userName']) ? 'readonly' : ''; ?> />
+                            <input type="Date" class="input-select kiracii"
+                                value="<?php echo $row["kiraciPromise"] ?? ''; ?>"
+                                <?php echo isset($row["kiraciName"]) ? 'readonly' : ''; ?> />
                         </span>
                     </div>
                 </td>
             </tr>
             <?php
-                            ?>
+                ?>
             <?php
-                        } else {
-                            // Kullanıcı bilgileri bulunamadıysa, hata mesajı veya başka bir işlem
-                            ?>
-            <tr data-userid="" class="git-ac toplu-td <?php echo $i ?>">
-                <td data-title="Blok Adı" name="blok" class="br-r">
-                    <?php
-                                    if (!empty($row["blok_adi"]) && !empty($row["daire_sayisi"])) {
-                                        echo $row["blok_adi"] . " / " . $row["daire_sayisi"];
-                                    }
-                                    ?>
-                </td>
-                <td data-title="Kat Maliki" name="katmaliki" class="p-0">
-                    <div class="toplu-td-div">
-                        <span class="border-1">Kat Maliki</span>
-                        <span>Kiracı</span>
-                    </div>
-                </td>
-                <td data-title="Ad Soyad" name="adsoyad" class="p-0">
-                    <div class="toplu-td-div">
-                        <span class="border-1">
-                            <input type="text" class="input-select katMaliki"
-                                value="<?php echo isset($katMalikiBilgisi['userName']) ? $katMalikiBilgisi['userName'] : ''; ?>" />
-                        </span>
-                        <span>
-                            <input type="text" class="input-select kiracii"
-                                value="<?php echo isset($kiraciBilgisi['userName']) ? $kiraciBilgisi['userName'] : ''; ?>" />
-                        </span>
-                    </div>
-                </td>
-                <td data-title="T.C. Kat Maliki" name="tcKatMaliki" class="p-0">
-                    <div class="toplu-td-div">
-                        <span class="border-1">
-                            <input type="text" class="input-select katMaliki"
-                                value="<?php echo isset($katMalikiBilgisi['tc']) ? $katMalikiBilgisi['tc'] : ''; ?>" />
-                        </span>
-                        <span>
-                            <input type="text" class="input-select kiracii"
-                                value="<?php echo isset($kiraciBilgisi['tc']) ? $kiraciBilgisi['tc'] : ''; ?>" />
-                        </span>
-                    </div>
-                </td>
-                <td data-title="Telefon" name="telefon" class="p-0">
-                    <div class="toplu-td-div">
-                        <span class="border-1">
-                            <input type="text" class="input-select katMaliki"
-                                value="<?php echo isset($katMalikiBilgisi['phoneNumber']) ? $katMalikiBilgisi['phoneNumber'] : ''; ?>" />
-                        </span>
-                        <span>
-                            <input type="text" class="input-select kiracii"
-                                value="<?php echo isset($kiraciBilgisi['phoneNumber']) ? $kiraciBilgisi['phoneNumber'] : ''; ?>" />
-                        </span>
-                    </div>
-                </td>
-                <td data-title="E-Posta" name="eposta" class="p-0 br-end">
-                    <div class="toplu-td-div">
-                        <span class="border-1">
-                            <input type="text" class="input-select katMaliki"
-                                value="<?php echo isset($katMalikiBilgisi['userEmail']) ? $katMalikiBilgisi['userEmail'] : ''; ?>" />
-                        </span>
-                        <span>
-                            <input type="text" class="input-select kiracii"
-                                value="<?php echo isset($kiraciBilgisi['userEmail']) ? $kiraciBilgisi['userEmail'] : ''; ?>" />
-                        </span>
-                    </div>
-                </td>
-                <td data-title="openingBalance" name="openingBalance" class="p-0 br-end">
-                    <div class="toplu-td-div">
-                        <span class="border-1">
-                            <input type="text" class="input-select katMaliki" value="<?php echo isset($katMalikiBilgisi['openingBalance']) 
-                                                ? $katMalikiBilgisi['openingBalance'] : ''; ?>" />
-                        </span>
-                        <span>
-                            <input type="text" class="input-select kiracii" value="<?php echo isset($kiraciBilgisi['openingBalance']) 
-                                                ? $kiraciBilgisi['openingBalance'] : ''; ?>" />
-                        </span>
-                    </div>
-                </td>
-                <td data-title="balanceType" name="balanceType" class="p-0 br-end">
-                    <div class="toplu-td-div">
-                        <span class="border-1">
-                            <input type="text" class="input-select katMaliki"
-                                value="<?php echo isset($katMalikiBilgisi['balanceType']) ? $katMalikiBilgisi['balanceType'] : ''; ?>" />
-                        </span>
-                        <span>
-                            <input type="text" class="input-select kiracii"
-                                value="<?php echo isset($kiraciBilgisi['balanceType']) ? $kiraciBilgisi['balanceType'] : ''; ?>" />
-                        </span>
-                    </div>
-                </td>
-                <td data-title="promise" name="promise" class="p-0 br-end">
-                    <div class="toplu-td-div">
-                        <span class="border-1">
-                            <input type="text" class="input-select katMaliki"
-                                value="<?php echo isset($katMalikiBilgisi['promise']) ? $katMalikiBilgisi['promise'] : ''; ?>" />
-                        </span>
-                        <span>
-                            <input type="text" class="input-select kiracii"
-                                value="<?php echo isset($kiraciBilgisi['promise']) ? $kiraciBilgisi['promise'] : ''; ?>" />
-                        </span>
-                    </div>
-                </td>
-            </tr>
-            <?php
-                        }
-                        $i++;
-                    }
-
-                    echo '</tbody>
-                </table>
-            </div>';
+            }
+            echo '</tbody>
+                    </table>
+                </div>';
         } else {
             echo "0 results";
         }
@@ -315,9 +242,25 @@
         echo "Bağlantı hatası: " . $e->getMessage();
     }
     ?>
+            <script>
+            // TC kimlik numarasının uzunluğunu kontrol eden fonksiyon
+            function checkTCNumberLength(input) {
+                if (input.value.length > 11) {
+                    input.value = input.value.slice(0, 11); // Input değerini 11 karaktere kırp
+                }
+            }
+
+            // Telefon numarasının uzunluğunu kontrol eden fonksiyon
+            function checkPhoneNumberLength(input) {
+                if (input.value.length > 10) {
+                    input.value = input.value.slice(0, 10); // Input değerini 10 karaktere kırp
+                }
+            }
+            </script>
             <script type="text/javascript">
             // Sayfa yüklendiğinde mevcut input değerlerini bir diziye kaydetme
             var initialData = [];
+
 
             window.onload = function() {
                 var rows = document.querySelectorAll('.git-ac.toplu-td');
@@ -385,148 +328,160 @@
                             promise: kiraciPromise
                         });
                     }
-                    
+
                     // console.log("initialData = ", JSON.stringify(initialData, null, 2));
 
                 });
-                // Kaydet butonuna tıklandığında yeni girdileri işle
-                saveButton.addEventListener('click', function() {
-                    
-                    var newEntries = [];
+            };
 
-                    var rows = document.querySelectorAll('.git-ac.toplu-td');
-                    rows.forEach(function(row) {
-                        var blokAdi = row.querySelector('[data-title="Blok Adı"]');
-                        var katMalikiUserNameInput = row.querySelector('.katMaliki');
-                        var katMalikiTCInput = row.querySelector('[name="tcKatMaliki"] .katMaliki');
-                        var katMalikiPhoneInput = row.querySelector('[name="telefon"] .katMaliki');
-                        var katMalikiEmailInput = row.querySelector('[name="eposta"] .katMaliki');
-                        var katMalikiOpeningBalanceInput = row.querySelector('[name="openingBalance"] .katMaliki');
-                        var katMalikiBalanceTypeInput = row.querySelector('[name="balanceType"] .katMaliki');
-                        var katMalikiPromiseInput = row.querySelector('[name="promise"] .katMaliki');
-                        var kiraciUserNameInput = row.querySelector('.kiracii');
-                        var kiraciTCInput = row.querySelector('[name="tcKatMaliki"] .kiracii');
-                        var kiraciPhoneInput = row.querySelector('[name="telefon"] .kiracii');
-                        var kiraciEmailInput = row.querySelector('[name="eposta"] .kiracii');
-                        var kiraciOpeningBalanceInput = row.querySelector('[name="openingBalance"] .kiracii');
-                        var kiraciBalanceTypeInput = row.querySelector('[name="balanceType"] .kiracii');
-                        var kiraciPromiseInput = row.querySelector('[name="promise"] .kiracii');
+            // Kaydet butonuna tıklandığında yeni girdileri işle
+            saveButton.addEventListener('click', function() {
 
-                        var blokAdiText = blokAdi.innerText.trim();
-                        var katMalikiUserName = katMalikiUserNameInput.value.trim();
-                        
-                        var katMalikiTC = katMalikiTCInput.value.trim();
-                        var katMalikiPhone = katMalikiPhoneInput.value.trim();
-                        var katMalikiEmail = katMalikiEmailInput.value.trim();
-                        var katMalikiOpeningBalance = katMalikiOpeningBalanceInput.value.trim();
-                        var katMalikiBalanceType = katMalikiBalanceTypeInput.value.trim();
-                        var katMalikiPromise = katMalikiPromiseInput.value.trim();
-                        var kiraciUserName = kiraciUserNameInput.value.trim();
-                        var kiraciTC = kiraciTCInput.value.trim();
-                        var kiraciPhone = kiraciPhoneInput.value.trim();
-                        var kiraciEmail = kiraciEmailInput.value.trim();
-                        var kiraciOpeningBalance = kiraciOpeningBalanceInput.value.trim();
-                        var kiraciBalanceType = kiraciBalanceTypeInput.value.trim();
-                        var kiraciPromise = kiraciPromiseInput.value.trim();
+                var rows = document.querySelectorAll('.git-ac.toplu-td');
+                var newEntries = [];
 
-                        // Sadece yeni girdileri kontrol et
-                        if (katMalikiUserName !== "" && !initialData.some(function(item) {
-                                return item.userName === katMalikiUserName && item.durum ===
-                                    "kat Maliki" && item.blok === blokAdiText;
-                            })) {
-                            newEntries.push({
-                                userName: katMalikiUserName,
-                                durum: "kat Maliki",
-                                blok: blokAdiText,
-                                tc: katMalikiTC,
-                                telefon: katMalikiPhone,
-                                eposta: katMalikiEmail,
-                                openingBalance: katMalikiOpeningBalance, // Düzeltildi
-                                balanceType: katMalikiBalanceType,
-                                promise: katMalikiPromise
-                            });
-                        }
+                rows.forEach(function(row) {
+                    var blokAdi = row.querySelector('[data-title="Blok Adı"]');
+                    var katMalikiUserNameInput = row.querySelector('.katMaliki');
+                    var katMalikiTCInput = row.querySelector('[name="tcKatMaliki"] .katMaliki');
+                    var katMalikiPhoneInput = row.querySelector('[name="telefon"] .katMaliki');
+                    var katMalikiEmailInput = row.querySelector('[name="eposta"] .katMaliki');
+                    var katMalikiOpeningBalanceInput = row.querySelector(
+                        '[name="openingBalance"] .katMaliki');
+                    var katMalikiBalanceTypeInput = row.querySelector(
+                        '[name="balanceType"] .katMaliki');
+                    var katMalikiPromiseInput = row.querySelector('[name="promise"] .katMaliki');
+                    var kiraciUserNameInput = row.querySelector('.kiracii');
+                    var kiraciTCInput = row.querySelector('[name="tcKatMaliki"] .kiracii');
+                    var kiraciPhoneInput = row.querySelector('[name="telefon"] .kiracii');
+                    var kiraciEmailInput = row.querySelector('[name="eposta"] .kiracii');
+                    var kiraciOpeningBalanceInput = row.querySelector(
+                        '[name="openingBalance"] .kiracii');
+                    var kiraciBalanceTypeInput = row.querySelector('[name="balanceType"] .kiracii');
+                    var kiraciPromiseInput = row.querySelector('[name="promise"] .kiracii');
 
-                        if (kiraciUserName !== "" && !initialData.some(function(item) {
-                                return item.userName === kiraciUserName && item.durum ===
-                                    "kiracı" && item.blok === blokAdiText;
-                            })) {
-                            newEntries.push({
-                                userName: kiraciUserName,
-                                durum: "kiracı",
-                                blok: blokAdiText,
-                                tc: kiraciTC,
-                                telefon: kiraciPhone,
-                                eposta: kiraciEmail,
-                                openingBalance: kiraciOpeningBalance, // Düzeltildi
-                                balanceType: kiraciBalanceType,
-                                promise: kiraciPromise
-                            });
-                        }
-                    });
+                    var blokAdiText = blokAdi.innerText.trim();
+                    var katMalikiUserName = katMalikiUserNameInput.value.trim();
+                    var katMalikiTC = katMalikiTCInput.value.trim();
+                    var katMalikiPhone = katMalikiPhoneInput.value.trim();
+                    var katMalikiEmail = katMalikiEmailInput.value.trim();
+                    var katMalikiOpeningBalance = katMalikiOpeningBalanceInput.value.trim();
+                    var katMalikiBalanceType = katMalikiBalanceTypeInput.value.trim();
+                    var katMalikiPromise = katMalikiPromiseInput.value.trim();
+                    var kiraciUserName = kiraciUserNameInput.value.trim();
+                    var kiraciTC = kiraciTCInput.value.trim();
+                    var kiraciPhone = kiraciPhoneInput.value.trim();
+                    var kiraciEmail = kiraciEmailInput.value.trim();
+                    var kiraciOpeningBalance = kiraciOpeningBalanceInput.value.trim();
+                    var kiraciBalanceType = kiraciBalanceTypeInput.value.trim();
+                    var kiraciPromise = kiraciPromiseInput.value.trim();
 
-                    console.log(newEntries);
-
-                    // E-posta kontrolü yap
-                    var hasDuplicateEmail = false;
-                    var emailList = newEntries.map(function(entry) {
-                        return entry.eposta;
-                    });
-
-                    // E-posta listesindeki her bir adresi kontrol et
-                    emailList.forEach(function(email, index) {
-                        if (emailList.indexOf(email) !== index) {
-                            hasDuplicateEmail = true;
-                        }
-                    });
-
-                    // E-posta adresalerinden en az biri boşsa, hasDuplicateEmail'i false yap
-                    if (emailList.some(function(email) {
-                            return email === "";
+                    if ((katMalikiUserName !== "") && !initialData.some(function(item) {
+                            return item.userName === katMalikiUserName && item.durum ===
+                                "kat Maliki" && item.blok === blokAdiText;
                         })) {
-                        hasDuplicateEmail = false;
+                        newEntries.push({
+                            userName: katMalikiUserName,
+                            durum: "kat Maliki",
+                            blok: blokAdiText,
+                            tc: katMalikiTC,
+                            telefon: katMalikiPhone,
+                            eposta: katMalikiEmail,
+                            openingBalance: katMalikiOpeningBalance, // Düzeltildi
+                            balanceType: katMalikiBalanceType,
+                            promise: katMalikiPromise
+                        });
+                    } else if (katMalikiUserName == "" && (katMalikiTC !== "" || katMalikiPhone !==
+                            "" || katMalikiEmail !== "" || katMalikiOpeningBalance !== "") && !initialData.some(function(item) {
+                            return item.userName === katMalikiUserName && item.durum ===
+                                "kat Maliki" && item.blok === blokAdiText;
+                        })) {
+                        alert(blokAdiText +
+                            " daire KatMaliki kullanıcısı ad soyad sütünu boş bırakılmıştır lütfen doldurunuz."
+                            );
                     }
 
-                    if (!hasDuplicateEmail) {
-                        $.ajax({
-                            url: 'Controller/bulkAddingUser.php',
-                            type: 'POST',
-                            data: {
-                                newEntries: JSON.stringify(newEntries)
-                            },
-                            success: function(response) {
-                                console.log("response = "+response);
-                                if (response == "success") {
-                                    $.ajax({
-                                        url: 'Controller/demo3.php',
-                                        type: 'POST',
-                                        data: {},
-                                        success: function(secondResponse) {
-                                            if (secondResponse == "success") {
-                                                // location.reload();
-                                                console.log("başardı");
-                                            } else {
-                                                alert(secondResponse);
-                                            }
-
-                                        },
-                                        error: function(error) {
-                                            console.error(error);
-                                        }
-                                    });
-                                } else {
-                                    alert(response);
-                                }
-                            },
-                            error: function(error) {
-                                console.error(error);
-                            }
+                    if (kiraciUserName !== "" && !initialData.some(function(item) {
+                            return item.userName === kiraciUserName && item.durum === "kiracı" &&
+                                item.blok === blokAdiText;
+                        })) {
+                        newEntries.push({
+                            userName: kiraciUserName,
+                            durum: "kiracı",
+                            blok: blokAdiText,
+                            tc: kiraciTC,
+                            telefon: kiraciPhone,
+                            eposta: kiraciEmail,
+                            openingBalance: kiraciOpeningBalance, // Düzeltildi
+                            balanceType: kiraciBalanceType,
+                            promise: kiraciPromise
                         });
-                    } else {
-                        alert("Epostası aynı olanlar var lütfen düzeltiniz");
+                    } else if (kiraciUserName == "" && (kiraciTC !== "" || kiraciPhone !==
+                            "" || kiraciEmail !== "" || kiraciOpeningBalance !== "") && !initialData.some(function(item) {
+                            return item.userName === kiraciUserName && item.durum === "kiracı" &&
+                                item.blok === blokAdiText;;
+                        })) {
+                        alert(blokAdiText +" daire kiracı kullanıcısı ad soyad sütünu boş bırakılmıştır lütfen doldurunuz.");
                     }
                 });
-            };
+
+                console.log(newEntries);
+
+                var hasDuplicateEmail = false;
+                var emailList = newEntries.map(function(entry) {
+                    return entry.eposta;
+                });
+
+                emailList.forEach(function(email, index) {
+                    if (emailList.indexOf(email) !== index) {
+                        hasDuplicateEmail = true;
+                    }
+                });
+
+                if (emailList.some(function(email) {
+                        return email === "";
+                    })) {
+                    hasDuplicateEmail = false;
+                }
+
+                if (hasDuplicateEmail) {
+                    alert("Epostası aynı olanlar var lütfen düzeltiniz");
+                    return; // Eğer e-posta adreslerinde çakışma varsa, AJAX çağrısını yapmadan işlemi sonlandır
+                }
+
+                // AJAX çağrısı döngünün dışında yapılır
+                $.ajax({
+                    url: 'Controller/bulkAddingUser.php',
+                    type: 'POST',
+                    data: {
+                        newEntries: JSON.stringify(newEntries)
+                    },
+                    success: function(response) {
+                        if (response == "success") {
+                            $.ajax({
+                                url: 'Controller/demo3.php',
+                                type: 'POST',
+                                data: {},
+                                success: function(secondResponse) {
+                                    if (secondResponse == "success") {
+                                        console.log("başardı");
+                                    } else {
+                                        alert(secondResponse);
+                                    }
+                                },
+                                error: function(error) {
+                                    console.error(error);
+                                }
+                            });
+                        } else {
+                            alert(response);
+                        }
+                    },
+                    error: function(error) {
+                        console.error(error);
+                    }
+                });
+            });
             </script>
 
             <script>
