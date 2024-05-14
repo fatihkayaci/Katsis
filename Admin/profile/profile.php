@@ -19,252 +19,228 @@ try {
 
 <div class="cener-table">
 
-<div class="emp-profile row">
+<div class="review-area">
 
-    <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
-        <div class="h-100">
-        	<div class="contact-form">
-        		<div class="account-settings">
+    <div class="profile-area">
+        <div class="name-area">
+        	<div class="account-settings">
 
-                    <div class="user-profile">
-                        <?php
-                            $names = explode(" ", $row["userName"]);
-                            $initials = "";
-                            $count = 0;
-                            foreach ($names as $name) {
-                                $initials .= strtoupper(substr($name, 0, 1));
-                                $count++;
-                                if ($count == 2) {
-                                    break;
-                                }
+                <div class="user-profile-old">
+                    <?php
+                        $names = explode(" ", $row["userName"]);
+                        $initials = "";
+                        $count = 0;
+                        foreach ($names as $name) {
+                            $initials .= strtoupper(substr($name, 0, 1));
+                            $count++;
+                            if ($count == 2) {
+                                break;
                             }
-                        ?>
-        	        	<div class="user-avatar">
-        	        		<p><?php echo $initials; ?></p>
-        	        	</div>
-                        <h5 class="user-name"><?php echo $row["userName"]; ?></h5>
-        	        </div>
-                    <hr class="horizontal dark mt-0">
-        			<div class="ps-3 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        }
+                    ?>
+                	<div class="user-avatar-old">
+                		<p><?php echo $initials; ?></p>
+                	</div>
+                    <h5 class="user-name-old"><?php echo $row["userName"]; ?></h5>
+                </div>
+                <div class="user-info-top">
+        		    <div class="bilgi-p">
                         <label for="tc">T.C. Kimlik No</label>
                         <p id="tc"><?php echo $row["tc"]; ?></p>
-        			</div>
-                    <hr class="horizontal dark mt-0">
-                    <div class="ps-3 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        		    </div>
+
+                    <div class="bilgi-p">
                         <label for="phoneNumber">Telefon Numarası</label>
                         <p id="phoneNumber"><?php echo $row["phoneNumber"]; ?></p>
-        			</div>
-                    <hr class="horizontal dark mt-0">
-                    <div class="ps-3 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        		    </div>
+                    
+                    <div class="bilgi-p">
                         <label for="userEmail">E-Posta</label>
                         <p id="userEmail"><?php echo $row["userEmail"]; ?></p>
-        			</div>
-                    <hr class="horizontal dark mt-0">
-                    <div class="ps-3 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        		    </div>
+
+                    <div class="bilgi-p">
                         <label for="gender">Cinsiyet</label>
                         <p id="gender"><?php echo $row["gender"]; ?></p>
-        			</div>
+        		    </div>
+                </div>
 
-        		</div>
         	</div>
         </div>
     </div>
 
-    <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12 col-12">
-        <div class="h-100">	
+    <div class="borc-info">
+        <div class="borc-area">	
             <div class="contact-form new-padding">     
-                        <div class="col-md-12">
-                			<div class="tabbable-panel">
-                				<div class="tabbable-line">
-                                    
-                					<ul class="nav nav-tabs ">
-                						<li class="active">
-                							<a href="#tab_default_1" data-toggle="tab">Profil</a>
-                						</li>
-                						<li>
-                							<a href="#tab_default_2" data-toggle="tab">Duyurular</a>
-                						</li>
-                						<li>
-                							<a href="#tab_default_3" data-toggle="tab">Ayarlar</a>
-                						</li>
-                					</ul>
+                <div class="col-md-12">
+                	<div class="tabbable-panel">
+                		<div class="tabbable-line">
+                            
+                			<ul class="nav nav-tabs ">
+                				<li class="active">
+                					<a href="#tab_default_1" data-toggle="tab">Profil</a>
+                				</li>
+                				<li>
+                					<a href="#tab_default_2" data-toggle="tab">Duyurular</a>
+                				</li>
+                				<li>
+                					<a href="#tab_default_3" data-toggle="tab">Ayarlar</a>
+                				</li>
+                			</ul>
 
-                					<div class="tab-content">
+                			<div class="tab-content">
 
-                						<div class="tab-pane active" id="tab_default_1">
+                				<div class="tab-pane active" id="tab_default_1">
 
-                                            <div class="row mt-4">
+                                    <div class="bilgi-info mt-4">
 
-        	    		                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-        	    		                        	<h6 class="mt-2 mb-2">Daire Bilgileri</h6>
-        	    		                        </div>
+        	                            <div class="bilgi-p b-old">
+        	                            	<h6 class="mt-2 mb-2">Daire Bilgileri</h6>
+        	                            </div>
 
-                                                <hr class="horizontal dark mt-3">
 
-        	    		                        <div class="bilgi-p col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-        	    		                        	<p class="bilgi-p">Daire :</p>
-        	    		                        </div>
-                                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                                                    <p class="bilgi-p">Daire Yazılacak</p>
-        	    		                        </div>
+        	                            <div class="bilgi-p b-old">
+        	                            	<p>Daire :</p>
+                                            <p>Daire Yazılacak</p>
+        	                            </div>
 
-                                                <hr class="horizontal dark mt-0">
+                                        <div class="bilgi-p b-old">
+                                            <p>Kullanıcı No :</p>
+                                            <p>Kullanıcı No Yazılacak</p>
+        	                            </div>
 
-                                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                                                    <p class="bilgi-p">Kullanıcı No :</p>
-        	    		                        </div>
-                                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                                                    <p class="bilgi-p">Kullanıcı No Yazılacak</p>
-        	    		                        </div>
+                                        <div class="bilgi-p b-old">
+                                            <p>Giriş Tarihi :</p>
+                                            <p>Giriş Tarihi Yazılacak</p>
+        	                            </div>
 
-                                                <hr class="horizontal dark mt-0">
+                                        <div class="bilgi-p b-old">
+                                            <p>Son Oturum Açma Tarihi :</p>
+                                            <p>Son Oturum Açma Tarihi yazılacak</p>
+        	                            </div>
 
-                                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                                                    <p class="bilgi-p">Giriş Tarihi :</p>
-        	    		                        </div>
-                                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                                                    <p class="bilgi-p">Giriş Tarihi Yazılacak</p>
-        	    		                        </div>
+                                        <div class="bilgi-p b-old">
+                                            <p>Parola :</p>
+                                            <p>Parola yazılacak</p>
+        	                            </div>
 
-                                                <hr class="horizontal dark mt-0">
-
-                                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                                                    <p class="bilgi-p">Son Oturum Açma Tarihi :</p>
-        	    		                        </div>
-                                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                                                    <p class="bilgi-p">Son Oturum Açma Tarihi yazılacak</p>
-        	    		                        </div>
-
-                                                <hr class="horizontal dark mt-0">
-
-                                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                                                    <p class="bilgi-p">Parola :</p>
-        	    		                        </div>
-                                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                                                    <p class="bilgi-p">Parola yazılacak</p>
-        	    		                        </div>
-
-                                                <hr class="horizontal dark mt-0">
-
-                                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                                                    <p class="bilgi-p">Araç Plakası :</p>
-        	    		                        </div>
-                                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                                                    <p class="bilgi-p">Araç Plakası yazılacak</p>
-        	    		                        </div>
-                                            </div>
-
-                						</div>
-
-                						<div class="tab-pane" id="tab_default_2">
-
-                                            <div class="row todo-div mt-4">
-                                                <div id="myDIV" class="to-do">
-
-                                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-        	    		                            	<h6 class="mt-2 mb-2">Yapılacaklar Listesi</h6>
-        	    		                            </div>
-
-                                                    <hr class="horizontal dark mt-3">
-
-                                                    <div class="nowrap">
-
-                                                        <input class="todo-input" type="text" id="myInput" placeholder="Görev Yazınız..">
-                                                       
-
-                                                        <span onclick="newElement()" class="todo-btn btn-custom-outline bcoc1">Ekle</span>
-                                                        
-                                                    </div>
-
-                                                </div>
-
-                                                <div class="row">
-                                                    <ul class="todo-ul" id="myUL">
-                                                        <li class="todo-li">yapılacak 1</li>
-                                                        <li class="todo-li checked">yapılacak 2</li>
-                                                        <li class="todo-li">yapılacak 3</li>
-                                                        <li class="todo-li">yapılacak 4</li>
-                                                        <li class="todo-li">yapılacak 5</li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-
-                						</div>
-
-                						<div class="tab-pane" id="tab_default_3">  
-
-        	                                <form  method="post" action="">
-
-        	                                	<div class="row mt-4">
-        	                                		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-        	                                			<h6 class="mt-2 mb-2">Daire Bilgileri</h6>
-        	                                		</div>
-        	                                		<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-        	                                			<label for="daire">Daire</label>
-        	                                			<input class="form-inpt-duzenle" type="text"  id="daire" name="daire" value="Daire">
-        	                                		</div>
-                                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-        	                                			<label for="kullaniciNo">Kullanıcı No</label>
-        	                                			<input class="form-inpt-duzenle" type="text"  id="kullaniciNo" name="kullaniciNo" value="Kullanıcı No">
-        	                                		</div>
-                                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-        	                                			<label for="giris">Giriş Tarihi</label>
-        	                                			<input class="form-inpt-duzenle" type="text"  id="giris" name="giris" value="giris tarihi">
-        	                                		</div>
-        	                                		<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-        	                                			<label for="oturum">Son Oturum Açma Tarihi</label>
-        	                                			<input class="form-inpt-duzenle" type="oturum"  id="oturum" name="oturum" value="Son Oturum Açma Tarihi">
-        	                                		</div>
-                                                </div>
-        	                                	<div class="row">
-        	                                	    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-        	                                	        <div class="text-right">
-        	                                	            <button type="button" id="submit" name="submit1" class="btn-black-outline">Bilgileri Güncelle</button>
-        	                                	        </div>
-        	                                	    </div>
-        	                                	</div>
-
-        	                                </form>
-
-        	                                <hr class="horizontal dark mt-0">
-
-        	                                <form  method="post" action="">
-
-        	                                	<div class="row">
-                                            		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                            		    <h6 class="mt-3 mb-2 mt-4">Parola Değiştirme</h6>
-                                            		</div>
-                                            		<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                            		    <label for="parola">Mevcut Parola</label>
-                                            		    <input class="form-inpt-duzenle" name="parola" type="password"  id="parola" placeholder="Mevcut Parolanızı Giriniz">
-                                            		</div>
-                                            		<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                            		    <label for="parolaYeni">Yeni Parola</label>
-                                            		    <input class="form-inpt-duzenle" name="parolaYeni" type="password"  id="parolaYeni" placeholder="Yeni Parolanızı Giriniz">
-                                            		</div>
-                                            		<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                            		    <label for="parolaYeniTekrar">Yeni Parola Tekrar</label>
-                                            		    <input class="form-inpt-duzenle" name="parolaYeniTekrar" type="password"  id="parolaYeniTekrar" placeholder="Yeni Parolanızı Tekrar Giriniz">
-                                            		</div>
-        	                                	</div>
-        	                                	<div class="row">
-        	                                	    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-        	                                	        <div class="text-right">
-        	                                	            <button type="button" id="submit1" name="submit" class="btn-black-outline">Parola Değiştir</button>
-        	                                	        </div>
-        	                                	    </div>
-        	                                	</div>
-
-        	                                </form>
-
-                						</div>
-
-                					</div>
+                                        <div class="bilgi-p b-old">
+                                            <p>Araç Plakası :</p>
+                                            <p>Araç Plakası yazılacak</p>
+        	                            </div>
+                                    </div>
 
                 				</div>
+
+                				<div class="tab-pane" id="tab_default_2">
+
+                                    <div class="row todo-div mt-4">
+                                        <div id="myDIV" class="to-do">
+
+                                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        	                                	<h6 class="mt-2 mb-2">Yapılacaklar Listesi</h6>
+        	                                </div>
+
+                                            <hr class="horizontal dark mt-3">
+
+                                            <div class="nowrap">
+
+                                                <input class="todo-input" type="text" id="myInput" placeholder="Görev Yazınız..">
+                                               
+
+                                                <span onclick="newElement()" class="todo-btn btn-custom-outline bcoc1">Ekle</span>
+                                                
+                                            </div>
+
+                                        </div>
+
+                                        <div class="row">
+                                            <ul class="todo-ul" id="myUL">
+                                                <li class="todo-li">yapılacak 1</li>
+                                                <li class="todo-li checked">yapılacak 2</li>
+                                                <li class="todo-li">yapılacak 3</li>
+                                                <li class="todo-li">yapılacak 4</li>
+                                                <li class="todo-li">yapılacak 5</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                				</div>
+
+                				<div class="tab-pane" id="tab_default_3">  
+
+        	                        <form  method="post" action="">
+
+        	                        	<div class="row mt-4">
+        	                        		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        	                        			<h6 class="mt-2 mb-2">Daire Bilgileri</h6>
+        	                        		</div>
+        	                        		<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+        	                        			<label for="daire">Daire</label>
+        	                        			<input class="form-inpt-duzenle" type="text"  id="daire" name="daire" value="Daire">
+        	                        		</div>
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+        	                        			<label for="kullaniciNo">Kullanıcı No</label>
+        	                        			<input class="form-inpt-duzenle" type="text"  id="kullaniciNo" name="kullaniciNo" value="Kullanıcı No">
+        	                        		</div>
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+        	                        			<label for="giris">Giriş Tarihi</label>
+        	                        			<input class="form-inpt-duzenle" type="text"  id="giris" name="giris" value="giris tarihi">
+        	                        		</div>
+        	                        		<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+        	                        			<label for="oturum">Son Oturum Açma Tarihi</label>
+        	                        			<input class="form-inpt-duzenle" type="oturum"  id="oturum" name="oturum" value="Son Oturum Açma Tarihi">
+        	                        		</div>
+                                        </div>
+        	                        	<div class="row">
+        	                        	    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        	                        	        <div class="text-right">
+        	                        	            <button type="button" id="submit" name="submit1" class="btn-black-outline">Bilgileri Güncelle</button>
+        	                        	        </div>
+        	                        	    </div>
+        	                        	</div>
+
+        	                        </form>
+
+        	                        <hr class="horizontal dark mt-0">
+
+        	                        <form  method="post" action="">
+
+        	                        	<div class="row">
+                                    		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                    		    <h6 class="mt-3 mb-2 mt-4">Parola Değiştirme</h6>
+                                    		</div>
+                                    		<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                    		    <label for="parola">Mevcut Parola</label>
+                                    		    <input class="form-inpt-duzenle" name="parola" type="password"  id="parola" placeholder="Mevcut Parolanızı Giriniz">
+                                    		</div>
+                                    		<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                    		    <label for="parolaYeni">Yeni Parola</label>
+                                    		    <input class="form-inpt-duzenle" name="parolaYeni" type="password"  id="parolaYeni" placeholder="Yeni Parolanızı Giriniz">
+                                    		</div>
+                                    		<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                    		    <label for="parolaYeniTekrar">Yeni Parola Tekrar</label>
+                                    		    <input class="form-inpt-duzenle" name="parolaYeniTekrar" type="password"  id="parolaYeniTekrar" placeholder="Yeni Parolanızı Tekrar Giriniz">
+                                    		</div>
+        	                        	</div>
+        	                        	<div class="row">
+        	                        	    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        	                        	        <div class="text-right">
+        	                        	            <button type="button" id="submit1" name="submit" class="btn-black-outline">Parola Değiştir</button>
+        	                        	        </div>
+        	                        	    </div>
+        	                        	</div>
+
+        	                        </form>
+
+                				</div>
+
                 			</div>
 
-                        </div>
+                		</div>
+                	</div>
+
+                </div>
 
         	</div>
         </div> 

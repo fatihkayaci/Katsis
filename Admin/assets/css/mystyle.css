@@ -875,23 +875,37 @@ table tbody tr:last-child td:last-child {
 
 /* kullanıcı duzenle css */
 
-.emp-profile{
+.review-area {
   padding: 0.4rem;
   border-radius: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: start;
+  align-items: start;
+  width: 100%;
+  min-width: 270px;
+  margin-top: 10px;
+  position: relative;
+  min-height: 130px;
+  transition: all 1s ease;
+  animation: fadeEffect 0.6s ease;
 }
 
-.contact-form {
-  border-radius: 18px;
-  background: #fff;
-  padding: 20px 20px 20px;
-  margin-bottom: 30px;
-  -webkit-border-radius: 18px;
-  -moz-border-radius: 18px;
-  border: 0;
-  border: 1px solid #b6b6b638;
+@keyframes fadeEffect {
+  0% {
+    opacity: 0;
+    margin-left: 30px;
+  }
+  100% {
+    opacity: 1;
+    margin-left: 0;
+  }
 }
 
-.user-profile {
+/* Profile Area eski tasarim */
+
+.user-profile-old {
   margin: 0 0 1rem 0;
   display: flex;
   flex-direction: column;
@@ -900,8 +914,90 @@ table tbody tr:last-child td:last-child {
   text-align: center;
 }
 
-.user-profile .user-avatar {
+.user-profile-old .user-avatar-old {
   margin: 0 0 1rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.user-profile-old .user-avatar-old p {
+  width: 90px;
+  height: 90px;
+  -webkit-border-radius: 100px;
+  -moz-border-radius: 100px;
+  border-radius: 100px;
+  background-color: #277CE0;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 50px;
+  font-family: 'poppins-medium';
+}
+.user-name-old {
+  margin: 0 0 0.5rem 0;
+  font-family: 'poppins-regular';
+  letter-spacing: 1px;
+}
+
+.user-profile-old h6.user-email-old {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: #9fa8b9;
+text-transform: none;
+}
+
+.account-settings {
+  width: 100%;
+}
+
+.b-old {
+  padding: 0px 0px;
+}
+
+/* Profile Area */
+
+.profile-area {
+  flex: 1 0 40%;
+  max-width: 35%;
+  box-sizing: border-box;
+  min-width: 170px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  border: 1px solid #f3f3f3;
+  background-color: #fff;
+  border-radius: 10px;
+  height: max-content;
+  margin: 0px 0px 10px 10px;
+}
+
+.name-area {
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  padding: 20px;
+  margin-bottom: 5px;
+}
+
+.user-profile {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.user-profile .user-avatar {
+  margin: 0;
+  padding: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -921,11 +1017,65 @@ table tbody tr:last-child td:last-child {
   align-items: center;
   font-size: 50px;
   font-family: 'poppins-medium';
+  margin: 0;
 }
+
+.user-info-top {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  padding: 10px 20px;
+  gap: 20px;
+}
+
 .user-name {
-  margin: 0 0 0.5rem 0;
+  width: 100%;
   font-family: 'poppins-regular';
   letter-spacing: 1px;
+  margin: 0;
+}
+
+.p-new {
+  padding: 0px 40px;
+}
+
+.bilgi-p {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.bilgi-p .main-durum {
+  padding: 0px 15px;
+}
+
+.bilgi-p p {
+  margin: 0;
+}
+
+.shown-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  gap: 20px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.hide-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  gap: 20px;
+  width: 100%;
+  margin-bottom: 20px;
 }
 
 .user-profile h6.user-email {
@@ -933,7 +1083,94 @@ table tbody tr:last-child td:last-child {
   font-size: 0.8rem;
   font-weight: 400;
   color: #9fa8b9;
-text-transform: none;
+  text-transform: none;
+}
+
+/* Bolumler Detay profil sayfası */
+
+.bilgi-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  gap: 20px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.b-new {
+  padding: 0px 20px;
+}
+
+/* Borc Area */
+
+.borc-info {
+  flex: 1 0 60%;
+  max-width: 100%;
+  box-sizing: border-box;
+  min-width: 170px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  margin: 0px 10px;
+  height: max-content;
+}
+
+.borc-area {
+  border-radius: 10px;
+  width: 100%;
+  padding: 20px 20px 20px;
+  border: 1px solid #f3f3f3;
+  background-color: #fff;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 1439px) {
+  .name-area,
+  .user-profile .user-avatar,
+  .user-info-top {
+    padding: 10px 5px;
+  }
+  
+  .p-new {
+    padding: 0px 20px;
+  }
+}
+
+@media (max-width: 900px) {
+  .name-area,
+  .user-profile .user-avatar,
+  .user-info-top {
+    padding: 10px 20px;
+  }
+  
+  .p-new {
+    padding: 0px 40px;
+  }
+
+  .profile-area {
+    flex: 1 0 100%;
+    max-width: 98%;
+  }
+}
+
+@media (max-width: 430px) {
+  .name-area,
+  .user-profile .user-avatar,
+  .user-info-top {
+    padding: 10px 5px;
+  }
+  
+  .p-new {
+    padding: 0px 20px;
+  }
+
+  .profile-area {
+    flex: 1 0 100%;
+    max-width: 95%;
+  }
 }
 
 .about {
@@ -947,12 +1184,12 @@ text-transform: none;
   font-size: 0.825rem;
 }
 
-.contact-form label {
+.borc-area label {
   margin-top: 10px;
   color: #67748e;
 }
 
-.contact-form p {
+.borc-area p {
   color: #0d0c22;
 }
 
@@ -1032,7 +1269,23 @@ text-transform: none;
   padding: 20px;
 }
 
-.borc-box a {
+.bakiye-header {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  text-decoration: none;
+  height: 42px;
+  color: #000;
+  border-bottom: 1px solid #b6b6b638;
+  margin-bottom: 20px;
+  padding: 0px 10px;
+  transition: 0.3s;
+}
+
+.bakiye-area {
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -1042,15 +1295,13 @@ text-transform: none;
   height: 52px;
   background-color: #fff;
   color: #000;
-  box-shadow: 5px 5px 5px 1px #dfdfdf54;
-  border-radius: 8px;
-  border: 1px solid #cfd1d8;
-  margin-bottom: 20px;
+  border-bottom: 1px solid #cfd1d8;
   padding: 0px 10px;
   transition: 0.3s;
 }
 
-.borc-box a p {
+.bakiye-area p,
+.bakiye-header p {
   margin: 0;
   flex: 1;
 }
@@ -1078,11 +1329,6 @@ text-transform: none;
 .borc-box a:hover {
   background-color: #ebebeb;
   box-shadow: inset 5px 5px 5px 1px #dfdfdf54;
-  border-radius: 8px;
-}
-
-.borc-box a:hover > .borc,
-.borc-box a:hover > .para {
 }
 
 .search-box {
@@ -1693,6 +1939,7 @@ min-width: 0;
   border-radius: 15px;
   font-family: 'poppins-medium';
   font-weight: 500;
+  padding: 0px 15px;
 }
 
 .kiraci {
@@ -2205,18 +2452,18 @@ min-width: 0;
 
 /* daire link alani */
 
-.contact-form .daire-link {
+.hover-link {
   cursor: pointer;
-  transition: 0.3s;
+  transition: all 0.3s;
   text-wrap: nowrap;
 }
 
-.contact-form .daire-link:hover {
+.hover-link:hover {
   color: #277CE0;
   transform: translateX(10px);
 }
 
-.contact-form .daire-link i {
+.hover-link i {
   cursor: pointer;
   color: #277CE0;
   margin-left: 5px;

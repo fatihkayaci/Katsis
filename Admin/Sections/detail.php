@@ -37,156 +37,165 @@ AND tbl_daireler.daire_id = " . $_SESSION['daireSayfa'];
             
     ?>
 
-<div class="emp-profile row">
+<div class="review-area">
 
 
 
-    <div class="col-xl-7 col-lg-8 col-md-12 col-sm-12 col-12">
-        <div class="h-100">	
-            <div class="contact-form">                
+    <div class="profile-area">
 
-        	    <form id="" method="post" action="">
+        <div class="bilgi-info pt-3">                
 
-        	    	<div class="row">
-        	    		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-        	    			<h6 class="mb-2">Daire Bilgileri</h6>
-        	    		</div>
+            <div class="bilgi-p b-new">
+            	<h6>Daire Bilgileri</h6>
+            </div>
 
-                        <hr class="horizontal dark mt-3">
-                        
-        	    		<div class="bilgi-p col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-        	    			<p class="bilgi-p">Daire :</p>
-        	    		</div>
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                            <p class="bilgi-p" id="daireInfo"><?php  echo  $row['blok_adi'] ." Blok / No: ".$row['daire_sayisi'] ;    ?></p>
-        	    		</div>
 
-                        <hr class="horizontal dark mt-0">
+            <div class="bilgi-p b-new">
+                <p>Daire :</p>
+                <p id="daireInfo"><?php  echo  $row['blok_adi'] ." Blok / No: ".$row['daire_sayisi'] ;    ?></p>
+            </div>
 
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                            <p class="bilgi-p">Kat Maliki</p>
-        	    		</div>
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+            <div class="bilgi-p b-new">
+                <p>Kat Maliki :</p>
+                <?php 
+                    if(isset($row["kat_maliki_adi"]) && ($row["kat_maliki_adi"] !== null && $row["kat_maliki_adi"] !== 0)) {
+                        echo '<p class="userss daire-link hover-link" onclick=userGo('.$row["kat_maliki_id"].','.$row["daire_id"].')>' . $row["kat_maliki_adi"] . '<i class="fa-solid fa-link"></i></p>';
+                    } else {
+                        echo '<button type="button" class="table-a tca2" onclick="openPopup('.$row["daire_id"].',1)">Kat Maliki Ekle + </button>';
+                    }
+                ?>
+            </div>
 
-                            <?php 
-                                if(isset($row["kat_maliki_adi"]) && ($row["kat_maliki_adi"] !== null && $row["kat_maliki_adi"] !== 0)) {
-                                    echo '<p class="userss daire-link" onclick=userGo('.$row["kat_maliki_id"].','.$row["daire_id"].')>' . $row["kat_maliki_adi"] . '<i class="fa-solid fa-link"></i></p>';
-                                } else {
-                                    echo '<button type="button" class="table-a tca2" onclick="openPopup('.$row["daire_id"].',1)">Kat Maliki Ekle + </button>';
-                                }
-                            ?>
+            <div class="bilgi-p b-new">
+                <p>Kiracı :</p>
+                <?php 
+                    if(isset($row["kiraci_adi"]) && ($row["kiraci_adi"] !== null && $row["kiraci_adi"] !== 0)) {
+                        echo '<p class="userss daire-link hover-link" onclick=userGo('.$row["kiraci_id"].','.$row["daire_id"].')>' . $row["kiraci_adi"] . '<i class="fa-solid fa-link"></i></p>';
+                    } else {
+                        echo '<button type="button" class="table-a tca1" onclick="openPopup('.$row["daire_id"].',0)">Kiracı Ekle + </button>';
+                    }
+                ?>
+            </div>
 
-        	    		</div>
+            <div class="bilgi-p b-new">
+                <p>Daire Grubu :</p>
+                <p><?= !empty($row["grup_adi"]) ? $row["grup_adi"] : "-" ?></p>
+            </div>
 
-                        <hr class="horizontal dark mt-0">
+            <div class="bilgi-p b-new">
+                <p>Kat :</p>
+                <p><?= !empty($row["kat"]) ? $row["kat"] : "-" ?></p>
+            </div>
 
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                            <p class="bilgi-p">Kiracı</p>
-        	    		</div>
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                            <?php 
-                                if(isset($row["kiraci_adi"]) && ($row["kiraci_adi"] !== null && $row["kiraci_adi"] !== 0)) {
-                                    echo '<p class="userss daire-link" onclick=userGo('.$row["kiraci_id"].','.$row["daire_id"].')>' . $row["kiraci_adi"] . '<i class="fa-solid fa-link"></i></p>';
-                                } else {
-                                    echo '<button type="button" class="table-a tca1" onclick="openPopup('.$row["daire_id"].',0)">Kiracı Ekle + </button>';
-                                }
-                            ?>
-        	    		</div>
+            <div class="bilgi-p b-new">
+                <p>Brüt m² :</p>
+                <p><?= !empty($row["brut"]) ? $row["brut"] : "-" ?></p>
+            </div>
 
-                        <hr class="horizontal dark mt-0">
+            <div class="bilgi-p b-new">
+                <p>Net m² :</p>
+                <p><?= !empty($row["net"]) ? $row["net"] : "-" ?></p>
+            </div>
 
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                            <p class="bilgi-p">Daire Grubu</p>
-        	    		</div>
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                            <p class="bilgi-p"><?= !empty($row["grup_adi"]) ? $row["grup_adi"] : "-" ?>
-</p>
-        	    		</div>
+            <div class="bilgi-p b-new">
+                <p>Arsa Payı :</p>
+                <p><?= !empty($row["pay"]) ? $row["pay"] : "-" ?></p>
+            </div>
 
-                        <hr class="horizontal dark mt-0">
+        </div>
 
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                            <p class="bilgi-p">Kat</p>
-        	    		</div>
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                            <p class="bilgi-p"><?= !empty($row["kat"]) ? $row["kat"] : "-" ?></p>
-        	    		</div>
-
-                        <hr class="horizontal dark mt-0">
-
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                            <p class="bilgi-p">Brüt m²</p>
-        	    		</div>
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                            <p class="bilgi-p"><?= !empty($row["brut"]) ? $row["brut"] : "-" ?></p>
-        	    		</div>
-
-                        <hr class="horizontal dark mt-0">
-
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                            <p class="bilgi-p">Net m²</p>
-        	    		</div>
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                            <p class="bilgi-p"><?= !empty($row["net"]) ? $row["net"] : "-" ?></p>
-        	    		</div>
-
-                        <hr class="horizontal dark mt-0">
-
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                            <p class="bilgi-p">Arsa Payı</p>
-        	    		</div>
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                            <p class="bilgi-p"><?= !empty($row["pay"]) ? $row["pay"] : "-" ?></p>
-        	    		</div>
-                    </div>
-        	    	
-        	    </form>
-
-        	</div>
-        </div> 
     </div>
 
-    <div class="col-xl-5 col-lg-12 col-md-12 col-sm-12 col-12">
-        <div class="h-100">
-            <div class="contact-form overflow-borc-bolum">
-                <div class="account-settings">
+    <div class="borc-info">
+        
+        <div class="borc-area overflow-borc">
+            <div class="account-settings">
 
-                    <div class="input-group-div fixed-borc">
-                        <div class="input-group1">
-                            <button class="btn-custom-outline bcoc1"
-                                onclick=" popupOpenControl('popupBorcEkle','borcEkleForm')">Borç</button>
-                            <button class="btn-custom-outline bcoc1">Tahsilat</button>
-                        </div>
-                        <div class="input-group1">
-                            <button class="btn-custom-outline bcoc3">Düzenle</button>
-                        </div>
+                <div class="input-group-div fixed-borc">
+                    <div class="input-group1">
+                        <button class="btn-custom-outline bcoc1"
+                            onclick=" popupOpenControl('popupBorcEkle','borcEkleForm')">Borç</button>
+                        <button class="btn-custom-outline bcoc1">Tahsilat</button>
                     </div>
-
-                    <div class="borc-box">
-                        <a href="">
-                            <p class="borc">borç yazar burda be</p>
-                            <p class="para">30 TL</p>
-                        </a>
-
-                        <a href="">
-                            <p class="borc">borç yazar burda be</p>
-                            <p class="para">30 TL</p>
-                        </a>
-
-                        <a href="">
-                            <p class="borc">borç yazar burda be</p>
-                            <p class="para">30 TL</p>
-                        </a>
-
-                        <a href="">
-                            <p class="borc">borç yazar burda be</p>
-                            <p class="para">30 TL</p>
-                        </a>
+                    <div class="input-group1">
+                        <button class="btn-custom-outline bcoc3">Düzenle</button>
                     </div>
-
                 </div>
+
+                <input type="hidden" id="topborc" value="" />
+                    <div class="borc-box">
+                        <div class="bakiye-header">
+                            <p class="tarih">BAKİYE : </p>
+                            <p class="borc">
+                                123 <img class="tl-img"
+                                    src="../Admin\assets\img\tl.png" alt="">
+                            </p>
+                        </div>
+                        <a href="" class="bakiye-area">
+                            <p class="tarih">
+                                23.09.2024
+                            </p>
+                            <p class="aciklama">
+                            aciklama
+                            <p class="aciklama">
+                            aciklama
+                            </p>
+                            <p class="borc">
+                                124tl <img class="tl-img"
+                                    src="../Admin\assets\img\tl.png" alt="">
+                            </p>
+                        </a>
+
+                        <a href="" class="bakiye-area">
+                            <p class="tarih">
+                                23.09.2024
+                            </p>
+                            <p class="aciklama">
+                            aciklama
+                            <p class="aciklama">
+                            aciklama
+                            </p>
+                            <p class="borc">
+                                124tl <img class="tl-img"
+                                    src="../Admin\assets\img\tl.png" alt="">
+                            </p>
+                        </a>
+
+                        <a href="" class="bakiye-area">
+                            <p class="tarih">
+                                23.09.2024
+                            </p>
+                            <p class="aciklama">
+                            aciklama
+                            <p class="aciklama">
+                            aciklama
+                            </p>
+                            <p class="borc">
+                                124tl <img class="tl-img"
+                                    src="../Admin\assets\img\tl.png" alt="">
+                            </p>
+                        </a>
+
+                        <a href="" class="bakiye-area">
+                            <p class="tarih">
+                                23.09.2024
+                            </p>
+                            <p class="aciklama">
+                            aciklama
+                            <p class="aciklama">
+                            aciklama
+                            </p>
+                            <p class="borc">
+                                124tl <img class="tl-img"
+                                    src="../Admin\assets\img\tl.png" alt="">
+                            </p>
+                        </a>
+                    </div>
+                </div>
+
             </div>
         </div>
+
     </div>
     
 </div>
