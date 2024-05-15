@@ -26,7 +26,7 @@ if ($result->rowCount() > 0) {
     LEFT JOIN tbl_daireler d ON u.userID = d.katMalikiID OR u.userID = d.kiraciID
     LEFT JOIN tbl_blok b ON d.blok_adi = b.blok_id
     WHERE rol=3 AND u.apartman_id = " . $_SESSION["apartID"] . "
-    ORDER BY u.userID ASC";
+    ORDER BY u.userName ASC";
 
     $stmt = $conn->prepare($sql2);
     $stmt->execute();
@@ -94,9 +94,10 @@ if ($result->rowCount() > 0) {
                 <th onclick="sortTable(1)">Ad Soyad <i id="icon-table1" class="fa-solid fa-sort-down"></i></th>
                 <th onclick="sortTable(2)">Telefon Numarası <i id="icon-table2" class="fa-solid fa-sort-down"></i></th>
                 <th onclick="sortTable(3)">Blok / Daire <i id="icon-table3" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(4)">Durum <i id="icon-table5" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(4)">Durum <i id="icon-table4" class="fa-solid fa-sort-down"></i></th>
             </tr>
         </thead>
+
         <tbody>
 
             <?php
@@ -319,7 +320,8 @@ if ($result->rowCount() > 0) {
         <div class="row">
             <div class="col-md-12 col-btn mb-0">
                 <a class="ahref btn-custom-daire w-100" href="index?parametre=TopluHesap">Toplu Kullanıcı Ekleme</a>
-                <a class="ahref btn-custom-daire w-100" href="Controller/excelCreate.php" id="excelDownload" download="KullaniciEkle.xlsx">Excel İndir</a>
+                <a class="ahref btn-custom-daire w-100" href="Controller/excelCreate.php" id="excelDownload"
+                    download="KullaniciEkle.xlsx">Excel İndir</a>
                 <input type="file" id="excel_file" accept=".xlsx">
                 <button id="upload_btn">Gönder</button>
             </div>
@@ -375,30 +377,30 @@ if ($result->rowCount() > 0) {
     </form>
 </div>
 <script>
-        $(document).ready(function(){
-            $('#upload_btn').click(function(){
-                var excel_file = $('#excel_file').prop('files')[0];
-                var form_data = new FormData();
-                form_data.append('excel_file', excel_file);
-                
-                $.ajax({
-                    url: 'Controller/uploadFiles.php',
-                    type: 'POST',
-                    data: form_data,
-                    contentType: false,
-                    processData: false,
-                    success: function(response){
-                        console.log(response);
-                        
-                        alert("dur");
-                    },
-                    error: function(xhr, status, error){
-                        console.error(xhr.responseText);
-                    }
-                });
-            });
+$(document).ready(function() {
+    $('#upload_btn').click(function() {
+        var excel_file = $('#excel_file').prop('files')[0];
+        var form_data = new FormData();
+        form_data.append('excel_file', excel_file);
+
+        $.ajax({
+            url: 'Controller/uploadFiles.php',
+            type: 'POST',
+            data: form_data,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                console.log(response);
+
+                alert("dur");
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
         });
-    </script>
+    });
+});
+</script>
 
 <script>
 //buraya bakılacak fatih bey
@@ -564,53 +566,42 @@ document.addEventListener("click", closeAllSelect);
 <!-- =============================== -->
 
 <script>
-function sortTable(n) {
-    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-    table = document.getElementById("example");
-    switching = true;
-    dir = "asc";
-    while (switching) {
-        switching = false;
-        rows = table.rows;
-        for (i = 1; i < (rows.length - 1); i++) {
-            shouldSwitch = false;
-            x = rows[i].getElementsByTagName("TD")[n];
-            y = rows[i + 1].getElementsByTagName("TD")[n];
+function sortTable(columnIndex) {
+    const table = document.getElementById("example");
+    const rows = Array.from(table.rows).slice(1);
+    const groups = {};
 
-            for (var j = 1; j < 8; j++) {
-                if (n != j) {
-                    $('#icon-table' + j).removeClass("rotate");
-                    $('#icon-table' + j).removeClass("opacity");
-                }
-            }
+    // Grupları ayır ve grupları objeye yerleştir
+    rows.forEach(row => {
+        const groupId = row.getAttribute('data-userid');
+        if (!groups[groupId]) groups[groupId] = [];
+        groups[groupId].push(row);
+    });
 
-            if (dir == "asc") {
-                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-                    shouldSwitch = true;
-                    $('#icon-table' + n).removeClass("rotate");
-                    $('#icon-table' + n).addClass("opacity");
-                    break;
-                }
-            } else if (dir == "desc") {
-                if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-                    shouldSwitch = true;
-                    $('#icon-table' + n).addClass("rotate");
-                    $('#icon-table' + n).addClass("opacity");
-                    break;
-                }
-            }
-        }
-        if (shouldSwitch) {
-            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-            switching = true;
-            switchcount++;
-        } else {
-            if (switchcount == 0 && dir == "asc") {
-                dir = "desc";
-                switching = true;
-            }
-        }
+    let isAscending = table.getAttribute('data-sort-dir') === 'desc';
+    const sortedGroups = Object.values(groups).sort((groupA, groupB) => {
+        const cellA = groupA[0].cells[columnIndex].innerText.toLowerCase();
+        const cellB = groupB[0].cells[columnIndex].innerText.toLowerCase();
+
+        if (cellA < cellB) return isAscending ? -1 : 1;
+        if (cellA > cellB) return isAscending ? 1 : -1;
+        return 0;
+    });
+
+    sortedGroups.forEach(group => {
+        group.forEach(row => table.appendChild(row));
+    });
+
+    table.setAttribute('data-sort-dir', isAscending ? 'asc' : 'desc');
+
+    // Clear all icon states
+    for (let i = 1; i <= 4; i++) {
+        $(`#icon-table${i}`).removeClass("rotate opacity");
     }
+
+    // Update the sorted column's icon state
+    $(`#icon-table${columnIndex}`).toggleClass("rotate", !isAscending);
+    $(`#icon-table${columnIndex}`).addClass("opacity");
 }
 </script>
 

@@ -1,7 +1,8 @@
 <?php
 try {
     
-    $sql2 = "SELECT * FROM tbl_arsive";
+    $sql2 = "SELECT * FROM tbl_arsive 
+    ORDER BY fullName ASC";
     
     $stmt = $conn->prepare($sql2);
     $stmt->execute();
@@ -87,7 +88,7 @@ try {
 
                     <?php echo $row["fullName"]; ?></td>
 
-                <td data-title="Telefon Numarası" class="table_tt table_td" contenteditable="false">
+                <td data-title="Telefon Numarası" class="table_tt table_td phoneNumber" contenteditable="false">
 
                     <?php echo $row["phoneNumber"]; ?></td>
 
@@ -259,7 +260,83 @@ try {
 }
 ?>
 
+<script>
+var rows = document.querySelectorAll('#example tbody tr');
+var userIdArray = {};
+var emptyRowCreated = {}; // Boş satır oluşturulduğunu kontrol etmek için bir nesne
 
+rows.forEach(function(row) {
+    var userID = row.getAttribute('id');
+    var userName = row.querySelector('.table_tt.table_td').textContent;
+    var phoneNumber = row.querySelector('.phoneNumber').textContent;
+    // console.log(phoneNumber);
+    if (userIdArray[userID]) {
+        // Tekrarlanan bir kullanıcı kimliği bulunduğunda tüm satırı gizle
+        document.querySelectorAll('[id^="' + userID + '"]').forEach(function(item) {
+            item.style.display = 'none';
+            item.classList.add('none');
+        });
+
+        if (!emptyRowCreated[userID]) {
+            var newRow = document.createElement('tr');
+            var newCell3 = document.createElement('td');
+            var newCell1 = document.createElement('td');
+            var newCell2 = document.createElement('td');
+            var newCell4 = document.createElement('td');
+            
+            var newTextCell = document.createElement('td'); // Yeni metin hücresi oluştur
+            newTextCell.textContent = "Birden Fazla Daire"; // Metin içeriğini ayarla
+
+            newRow.classList.add('git-ac');
+            newRow.setAttribute('data-userid', userID);
+            newCell3.colSpan = "1"; // Üçüncü hücre 1 sütunu kaplasın
+            newCell1.colSpan = "1"; // İlk hücre 1 sütunu kaplasın
+            newCell2.colSpan = "1"; // İkinci hücre 2 sütunu kaplasın
+            newCell4.colSpan = "1"; // Dördüncü hücre 1 sütunu kaplasın
+
+            newCell1.textContent = userName; // İlk hücreye userName değerini ekle
+            newCell2.textContent = phoneNumber;
+            newCell1.setAttribute('contenteditable', 'false');
+            newCell2.setAttribute('contenteditable', 'false');
+            newCell3.innerHTML = "<i class='fa-solid fa-turn-up tumu-btn'></i>";
+
+            newRow.appendChild(newCell3);
+            newRow.appendChild(newCell1); // Yeni hücreleri yeni satıra ekle
+            newRow.appendChild(newCell2);
+            newRow.appendChild(newTextCell);
+            newRow.appendChild(newCell4);
+
+            // Yeni satırı ekleyeceğimiz referans satırı bul
+            var referenceRow = document.querySelector('[id="' + userID + '"]');
+
+            referenceRow.parentNode.insertBefore(newRow, referenceRow); // Yeni satırı referans satırının üstüne ekle
+            emptyRowCreated[userID] = true; // Boş satır oluşturulduğunu işaretle
+
+            newCell3.querySelector('.tumu-btn').addEventListener('click', function() {
+                // Tıklanan düğmeye ait kullanıcıya ait satırları göster/gizle
+                var rows = document.querySelectorAll('[id^="' + userID + '"]');
+                rows.forEach(function(item) {
+                    if (item.style.display === 'none') {
+                        item.style.display = 'table-row'; // Eğer gizli ise görünür yap
+                        item.classList.add('open-tr');
+                        this.classList.add('active-tumu');
+                        newCell3.parentNode.classList.add('git-ac-active');
+                    } else {
+                        item.style.display = 'none'; // Eğer görünür ise gizle
+                        this.classList.remove('active-tumu');
+                        item.classList.remove('open-tr');
+                        newCell3.parentNode.classList.remove('git-ac-active');
+                    }
+                }, this);
+            });
+        }
+    } else {
+        userIdArray[userID] = true;
+    }
+});
+
+
+</script>
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -333,55 +410,44 @@ document.addEventListener("click", closeAllSelect);
 </script>
 
 <script>
-function sortTable(n) {
-    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-    table = document.getElementById("example");
-    switching = true;
-    dir = "asc";
-    while (switching) {
-        switching = false;
-        rows = table.rows;
-        for (i = 1; i < (rows.length - 1); i++) {
-            shouldSwitch = false;
-            x = rows[i].getElementsByTagName("TD")[n];
-            y = rows[i + 1].getElementsByTagName("TD")[n];
+function sortTable(columnIndex) {
+    const table = document.getElementById("example");
+    const rows = Array.from(table.rows).slice(1);
+    const groups = {};
 
-            for (var j = 1; j < 8; j++) {
-                if (n != j) {
-                    $('#icon-table' + j).removeClass("rotate");
-                    $('#icon-table' + j).removeClass("opacity");
-                }
-            }
+    // Grupları ayır ve grupları objeye yerleştir
+    rows.forEach(row => {
+        const groupId = row.getAttribute('id');
+        if (!groups[groupId]) groups[groupId] = [];
+        groups[groupId].push(row);
+    });
 
-            if (dir == "asc") {
-                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-                    shouldSwitch = true;
-                    $('#icon-table' + n).removeClass("rotate");
-                    $('#icon-table' + n).addClass("opacity");
-                    break;
-                }
-            } else if (dir == "desc") {
-                if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-                    shouldSwitch = true;
-                    $('#icon-table' + n).addClass("rotate");
-                    $('#icon-table' + n).addClass("opacity");
-                    break;
-                }
-            }
-        }
-        if (shouldSwitch) {
-            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-            switching = true;
-            switchcount++;
-        } else {
-            if (switchcount == 0 && dir == "asc") {
-                dir = "desc";
-                switching = true;
-            }
-        }
+    let isAscending = table.getAttribute('data-sort-dir') === 'desc';
+    const sortedGroups = Object.values(groups).sort((groupA, groupB) => {
+        const cellA = groupA[0].cells[columnIndex].innerText.toLowerCase();
+        const cellB = groupB[0].cells[columnIndex].innerText.toLowerCase();
+        if (cellA < cellB) return isAscending ? -1 : 1;
+        if (cellA > cellB) return isAscending ? 1 : -1;
+        return 0;
+    });
+
+    sortedGroups.forEach(group => {
+        group.forEach(row => table.appendChild(row));
+    });
+
+    table.setAttribute('data-sort-dir', isAscending ? 'asc' : 'desc');
+
+    // Clear all icon states
+    for (let i = 1; i <= 4; i++) {
+        $(`#icon-table${i}`).removeClass("rotate opacity");
     }
+
+    // Update the sorted column's icon state
+    $(`#icon-table${columnIndex}`).toggleClass("rotate", !isAscending);
+    $(`#icon-table${columnIndex}`).addClass("opacity");
 }
 </script>
+
 <script type="text/javascript">
 
 function toggleAll(masterCheckbox) {
@@ -397,9 +463,6 @@ function toggleAll(masterCheckbox) {
         $('#silButton').css('display', 'none');
         $('.git-ac').removeClass('git-ac-color');
     }
-
-
-
 }
 
 function toggleCheckbox(id, i) {

@@ -50,7 +50,9 @@ try {
 
 
 try {
-    $sql = "SELECT * FROM tbl_daireler where apartman_id=$idapartman";
+    $sql = "SELECT * FROM tbl_daireler WHERE apartman_id = " . $idapartman . " ORDER BY blok_adi ASC, daire_sayisi ASC";
+
+
     $stmt = $conn->prepare($sql);
     $stmt->execute();
 
@@ -767,58 +769,42 @@ document.addEventListener("click", closeAllSelect);
 <!-- select input end -->
 <!-- =============================== -->
 
-
 <script>
+function sortTable(columnIndex) {
+    const table = document.getElementById("table");
+    const rows = Array.from(table.rows).slice(1);
 
-function sortTable(n) {
-    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-    table = document.getElementById("table");
-    switching = true;
-    dir = "asc";
-    while (switching) {
-        switching = false;
-        rows = table.rows;
-        for (i = 1; i < (rows.length - 1); i++) {
-            shouldSwitch = false;
-            x = rows[i].getElementsByTagName("TD")[n];
-            y = rows[i + 1].getElementsByTagName("TD")[n];
+    let isAscending = table.getAttribute('data-sort-dir') === 'desc';
+    const sortedRows = rows.sort((rowA, rowB) => {
+        const cellA = getCellValue(rowA.cells[columnIndex]);
+        const cellB = getCellValue(rowB.cells[columnIndex]);
 
-            for (var j = 1; j < 8; j++) {
-                if (n != j) {
-                    $('#icon-table' + j).removeClass("rotate");
-                    $('#icon-table' + j).removeClass("opacity");
-                }
-            }
+        if (cellA < cellB) return isAscending ? -1 : 1;
+        if (cellA > cellB) return isAscending ? 1 : -1;
+        return 0;
+    });
 
-            if (dir == "asc") {
-                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-                    shouldSwitch = true;
-                    $('#icon-table' + n).removeClass("rotate");
-                    $('#icon-table' + n).addClass("opacity");
-                    break;
-                }
-            } else if (dir == "desc") {
-                if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-                    shouldSwitch = true;
-                    $('#icon-table' + n).addClass("rotate");
-                    $('#icon-table' + n).addClass("opacity");
-                    break;
-                }
-            }
-        }
-        if (shouldSwitch) {
-            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-            switching = true;
-            switchcount++;
-        } else {
-            if (switchcount == 0 && dir == "asc") {
-                dir = "desc";
-                switching = true;
-            }
-        }
+    sortedRows.forEach(row => table.appendChild(row));
+
+    table.setAttribute('data-sort-dir', isAscending ? 'asc' : 'desc');
+
+    // Clear all icon states
+    for (let i = 1; i <= 4; i++) {
+        $(`#icon-table${i}`).removeClass("rotate opacity");
     }
+
+    // Update the sorted column's icon state
+    $(`#icon-table${columnIndex}`).toggleClass("rotate", !isAscending);
+    $(`#icon-table${columnIndex}`).addClass("opacity");
+}
+
+function getCellValue(cell) {
+    const cellValue = cell.innerText.trim();
+    return isNaN(cellValue) ? cellValue.toLowerCase() : parseFloat(cellValue);
 }
 </script>
+
+
 
 <script>
 closePopup();
