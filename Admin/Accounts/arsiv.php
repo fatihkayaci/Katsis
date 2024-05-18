@@ -273,6 +273,7 @@ rows.forEach(function(row) {
     if (userIdArray[userID]) {
         // Tekrarlanan bir kullanıcı kimliği bulunduğunda tüm satırı gizle
         document.querySelectorAll('[id^="' + userID + '"]').forEach(function(item) {
+            item.setAttribute('data-groupid', userID);
             item.style.display = 'none';
             item.classList.add('none');
         });
@@ -289,6 +290,7 @@ rows.forEach(function(row) {
 
             newRow.classList.add('git-ac');
             newRow.setAttribute('data-userid', userID);
+            newRow.setAttribute('data-groupid', userID); // GroupID olarak userID kullanıyoruz
             newCell3.colSpan = "1"; // Üçüncü hücre 1 sütunu kaplasın
             newCell1.colSpan = "1"; // İlk hücre 1 sütunu kaplasın
             newCell2.colSpan = "1"; // İkinci hücre 2 sütunu kaplasın
@@ -332,6 +334,7 @@ rows.forEach(function(row) {
         }
     } else {
         userIdArray[userID] = true;
+        row.setAttribute('data-groupid', userID); // Benzersiz kullanıcı kimliğine sahip satırlara da groupID ekle
     }
 });
 
@@ -417,7 +420,7 @@ function sortTable(columnIndex) {
 
     // Grupları ayır ve grupları objeye yerleştir
     rows.forEach(row => {
-        const groupId = row.getAttribute('id');
+        const groupId = row.getAttribute('data-groupid');
         if (!groups[groupId]) groups[groupId] = [];
         groups[groupId].push(row);
     });

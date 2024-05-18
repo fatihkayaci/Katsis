@@ -25,13 +25,14 @@ foreach ($newEntries as $entry) {
 }
 
 foreach ($newEntries as $entry) {
-    $userPass = randomPassword();
     $blok = $entry['blok'];
     $userName = $entry['userName'];
     $durum = $entry['durum'];
     $tc = $entry['tc'];
     $telefon = $entry['telefon'];
     $eposta = $entry['eposta'];
+    $plate = $entry['plate'];
+    $gender = $entry['gender'];
     $openingBalance = $entry['openingBalance'];
     $balanceType = $entry['balanceType'];
     $promise = $entry['promise'];
@@ -39,14 +40,14 @@ foreach ($newEntries as $entry) {
     $hashedPassword = base64_encode($userPass);
     $userNO = generateUniqueUserID($conn);
     if (empty($eposta) || trim($eposta) === "") {
-        $sql = "INSERT INTO tbl_users (user_no, userName,userPass, tc, phoneNumber, durum, userEmail, openingBalance, balanceType, promise, userStatus, apartman_id, rol, popup) VALUES 
-            (:user_no, :userName,:userPass, :tc, :phoneNumber, :durum, :userEmail, :openingBalance, :balanceType, :promise, :userStatus, :apartman_id, :rol, :popup)";
+        $sql = "INSERT INTO tbl_users (user_no, userName,userPass, tc, phoneNumber, durum, userEmail, plate, gender, openingBalance, balanceType, promise, userStatus, apartman_id, rol, popup) VALUES 
+            (:user_no, :userName,:userPass, :tc, :phoneNumber, :durum, :userEmail, :plate, :gender, :openingBalance, :balanceType, :promise, :userStatus, :apartman_id, :rol, :popup)";
 
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':userEmail', $eposta, PDO::PARAM_NULL);
     } else {
-        $sql = "INSERT INTO tbl_users (user_no, userName, userPass, tc, phoneNumber, durum, userEmail, openingBalance, balanceType, promise, userStatus, apartman_id, rol, popup) VALUES 
-        (:user_no, :userName,:userPass, :tc, :phoneNumber, :durum, :userEmail, :openingBalance, :balanceType, :promise, :userStatus, :apartman_id, :rol, :popup)";
+        $sql = "INSERT INTO tbl_users (user_no, userName, userPass, tc, phoneNumber, durum, userEmail, plate, gender, openingBalance, balanceType, promise, userStatus, apartman_id, rol, popup) VALUES 
+        (:user_no, :userName,:userPass, :tc, :phoneNumber, :durum, :userEmail, :plate, :gender, :openingBalance, :balanceType, :promise, :userStatus, :apartman_id, :rol, :popup)";
 
 
         $stmt = $conn->prepare($sql);
@@ -56,6 +57,8 @@ foreach ($newEntries as $entry) {
     $stmt->bindParam(':user_no', $userNO);
     $stmt->bindParam(':userName', $userName);
     $stmt->bindParam(':userPass', $userPass);
+    $stmt->bindParam(':plate', $plate);
+    $stmt->bindParam(':gender', $gender);
     $stmt->bindParam(':tc', $tc);
     $stmt->bindParam(':phoneNumber', $telefon);
     $stmt->bindValue(':durum', $durum);

@@ -1,6 +1,6 @@
 <?php
 include ("../../../DB/dbconfig.php");
-
+require_once 'class.func.php';
 try {
     // POST verilerini al
     $userID = $_POST['userID'];
