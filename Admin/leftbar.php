@@ -96,6 +96,39 @@ $idapartman =$_SESSION["apartID"];
         </a>
         
 
+        <button class="dropdown-btn  nav-item">
+          <li class="nav-link">
+            <div class="nav-ico">
+            <i class="fa-solid fa-coins"></i>
+            </div>
+            <span class="nav-link-text">FİNANS</span>
+            <i class="fa-solid fa-angle-right ms-5"></i>
+          </li>
+        </button>
+        <div class="dropdown-container">
+          <a class="nav-item modul"  href="index?parametre=income">
+            <li class="nav-link">
+              <div class="nav-ico"></div>
+              <span class="nav-link-text color-fff">
+              <i class="fa-solid fa-building-user me-2"></i>
+                Gelirler
+              </span>
+            </li>
+          </a>
+          <a class="nav-item modul" href="index?parametre=employee-arsiv">
+            <li class="nav-link">
+              <div class="nav-ico"></div>
+              <span class="nav-link-text color-fff">
+              <i class="fa-solid fa-box-archive me-2"></i>
+                Giderler
+              </span>
+            </li>
+          </a>
+        </div>
+
+
+
+
         <a class="nav-item mt-1 modul" href="index?parametre=profile">
           <li class="nav-link">
             <div class="nav-ico">

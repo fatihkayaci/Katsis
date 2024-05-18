@@ -256,10 +256,11 @@ if ($result->rowCount() > 0) {
                 </div>
             </div>
         </div>
-        <!-- buraya bak yusuf bunlara css atılacak -->
+        
         <div class="row">
-            <div class="col-md-6 col margint">
-                <input class="input" type="checkbox" name="onay" id="onay" onchange="toggleDisplay()" required="">
+            <div class="col-md-6 check-label margint">
+                <input onchange="toggleDisplay()" type="checkbox" id="onay" name="onay" value="bakiye">
+                <label for="onay"> Açılış Bakiyesi Ekleme</label>
             </div>
         </div>
 
@@ -271,16 +272,25 @@ if ($result->rowCount() > 0) {
                 </div>
 
                 <div class="col-md-6 col margint">
-                    <select name="balanceType">
+                    <div class="select-div m-0">
+                        <input class="search-selectx input" type="text" list="Users" id="userInput-bakiye" required="" />
+                        <label class="selectx-label" for="userInput-bakiye" for="gender">Durum :</label>
+                        <ul class="value-listx" id="userInputDrop-bakiye">
+                            <li class="li-select" data-user-id="Borç">Borç</li>
+                            <li class="li-select" data-user-id="Alacak">Alacak</li>
+                        </ul>
+                    </div>
+                    <!-- fatih burdaki selecti iptal ettin yeni select bu yukardaki -->
+                    <!-- <select name="balanceType">
                         <option value=""></option>
                         <option value="Borç">Borç</option>
                         <option value="Alacak">Alacak</option>
-                    </select>
+                    </select> -->
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-md-6 col margint">
+                <div class="col-md-6 col-btn margint">
                     <input class="input" type="date" name="promise" required="">
                 </div>
             </div>
@@ -487,6 +497,7 @@ function setupSearchSelect(inputSelector, dropdownSelector) {
 }
 
 setupSearchSelect('#userInput', '#userInputDrop');
+setupSearchSelect('#userInput-bakiye', '#userInputDrop-bakiye');
 setupSearchSelect('#optionsBlok', '#optionsBlokDrop');
 </script>
 

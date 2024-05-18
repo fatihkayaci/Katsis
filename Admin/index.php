@@ -79,7 +79,13 @@ else if($indexx == 'Sections'){
     echo "<script>
             localStorage.setItem('selectedLink', 'Sections');
          </script>";
-}  
+}  else if($indexx == 'income'){
+    include ("Income/index.php");
+    echo "<script>pagename('Gelirler');</script>";
+    echo "<script>
+            localStorage.setItem('selectedLink', 'income');
+         </script>";
+} 
 else if($indexx == 'dashboard'){
     include ("Dashboard/index.php");
     echo "<script>pagename('Ana Sayfa');</script>";
