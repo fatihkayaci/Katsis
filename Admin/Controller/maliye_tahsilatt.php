@@ -59,7 +59,7 @@ try {
     }
 
     if (!empty($updateIds)) {
-        $sql1 = "UPDATE tbl_maliye SET maliye_turu = 2 WHERE maliye_id IN (" . implode(',', $updateIds) . ")";
+        $sql1 = "UPDATE tbl_maliye SET maliye_turu = 2, borc_miktar = 0 WHERE maliye_id IN (" . implode(',', $updateIds) . ")";
         $conn->query($sql1);
     }
 

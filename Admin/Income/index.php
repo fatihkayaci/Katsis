@@ -1,9 +1,14 @@
 <?php
+require_once "Controller/class.func.php";
 try {
-    $sql2 = "SELECT * 
-    FROM tbl_employed
-    WHERE apartman_id = " . $_SESSION["apartID"] . " AND arsive=0
-    ORDER BY userID ASC";
+    $sql2 = "SELECT 
+    tbl_maliye.*, 
+    tbl_kategori.kategori_adi  
+FROM 
+    tbl_maliye
+JOIN 
+    tbl_kategori ON tbl_maliye.kategori_id = tbl_kategori.kategori_id;";
+    
 
     $stmt = $conn->prepare($sql2);
     $stmt->execute();
@@ -57,10 +62,13 @@ try {
                         </svg>
                     </label>
                 </th>
-                <th onclick="sortTable(1)">Ad Soyad <i id="icon-table1" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(2)">Telefon Numarası <i id="icon-table2" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(3)">Email<i id="icon-table3" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(4)">Görevi<i id="icon-table4" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(1)">Kategori <i id="icon-table1" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(2)">Açıklama <i id="icon-table2" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(3)">Tanımlama Tarihi<i id="icon-table3" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(4)">Ödeme Durumu<i id="icon-table4" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(5)">Toplam Bakiye<i id="icon-table4" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(6)">Kalan Bakiye<i id="icon-table4" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(7)">Fatura<i id="icon-table4" class="fa-solid fa-sort-down"></i></th>
             </tr>
         </thead>
         <tbody>
@@ -70,13 +78,13 @@ try {
                     foreach ($result as $row) {
                         $i++;
                         ?>
-            <tr data-userid="<?php echo $row["userID"]; ?>"
-                id="tr-<?php echo $row["userID"] . '-' . $i; ?>" class="git-ac">
+            <tr data-userid="<?php echo $row["maliye_id"]; ?>"
+                id="tr-<?php echo $row["maliye_id"] . '-' . $i; ?>" class="git-ac">
                 <td data-title="Seç" class="check-style">
                     <!-- Checkbox id'sine $i değerini ekliyoruz -->
-                    <input id="check-<?php echo $row["userID"] . '-' . $i; ?>" class="check1" type="checkbox"
-                        onclick="toggleCheckbox(<?php echo $row['userID']; ?>, <?php echo $i; ?>)" />
-                    <label for="check-<?php echo $row["userID"] . '-' . $i; ?>" class="check">
+                    <input id="check-<?php echo $row["maliye_id"] . '-' . $i; ?>" class="check1" type="checkbox"
+                        onclick="toggleCheckbox(<?php echo $row['maliye_id']; ?>, <?php echo $i; ?>)" />
+                    <label for="check-<?php echo $row["maliye_id"] . '-' . $i; ?>" class="check">
                         <svg width="18px" height="18px" viewBox="0 0 18 18">
                             <path
                                 d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z">
@@ -85,22 +93,38 @@ try {
                         </svg>
                     </label>
                 </td>
-                <td data-title="Ad Soyad" class="table_tt table_td" contenteditable="false">
-                    <?php echo $row["fullName"]; ?>
+                <td data-title="kategori" class="table_tt table_td" contenteditable="false">
+                    <?php echo $row["kategori_adi"]; ?>
                 </td>
 
-                <td data-title="Telefon Numarası" class="table_tt table_td phoneNumberTable" contenteditable="false">
+                <td data-title="Aciklama" class="table_tt table_td phoneNumberTable" contenteditable="false">
 
-                    <?php echo $row["phoneNumber"]; ?>
+                    <?php echo $row["aciklama"]; ?>
                 </td>
 
-                <td data-title="Email" class="table_tt table_td email" contenteditable="false">
-                   <?php echo $row["userEmail"]; ?>
+                <td data-title="tanimlama_tar" class="table_tt table_td email" contenteditable="false">
+                   <?php echo tarihDonustur($row["tanımlama_tar"]) ; ?>
+                </td> 
+                <td data-title="durum" class="table_tt table_td Task" contenteditable="false">
+                  <?php
+                  if($row["maliye_turu"]==2){
+                    echo "Ödendi";
+                  }else{
+                    echo ZamanFarki(date("Y-m-d"), $row["odeme_tar"]);
+                  }
+                  ?>
                 </td> 
 
-                <td data-title="Task" class="table_tt table_td Task" contenteditable="false">
-                   <?php echo $row["task"]; ?>
+                <td data-title="top_borc" class="table_tt table_td Task" contenteditable="false">
+                   <?php echo duzenleSayi($row["top_borc"]) ; ?>
                 </td> 
+
+                <td data-title="kalan_borc" class="table_tt table_td Task" contenteditable="false">
+                   <?php echo duzenleSayi($row["borc_miktar"]); ?>
+                </td> 
+
+
+                
             </tr>
 
             <?php
