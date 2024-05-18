@@ -248,6 +248,7 @@ overflow: auto;
   text-align: left;
   position: relative;
 }
+
 .col-blok {
   display: flex;
   flex-direction: column;
@@ -2523,3 +2524,30 @@ min-width: 0;
   border-bottom: 1px solid #d2d6da;
 }
 
+.check-label {
+  width: 100%;
+  min-width: 200px;
+  margin-top: 0px;
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: start;
+  align-items: center;
+  text-align: left;
+  position: relative;
+}
+
+.check-label label {
+  position: relative;
+  top: auto;
+  left: 10px;
+  padding: 10px 0;
+  font-size: 14px;
+  color: #0d0c22;
+  pointer-events: visible;
+  transition: .5s;
+  font-family: 'poppins-regular';
+  font-weight: 100;
+  margin-bottom: 0;
+}
