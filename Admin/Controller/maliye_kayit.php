@@ -11,8 +11,8 @@ $dateInput2Value = $_POST['dateInput2Value'];
 $kategoriValue = $_POST['kategoriValue'];
 
 try {
-    $sql = "INSERT INTO tbl_maliye (daire_id, user_id, apartman_id, maliye_turu, aciklama, borc_miktar, tanımlama_tar, odeme_tar, kategori_id) 
-    VALUES (:daireId, :userId, :apartmanId, :gelir_turu, :aciklamaValue, :borcTutarValue, :dateInputValue, :dateInput2Value, :kategoriValue)";
+    $sql = "INSERT INTO tbl_maliye (daire_id, user_id, apartman_id, maliye_turu, aciklama, borc_miktar,top_borc, tanımlama_tar, odeme_tar, kategori_id) 
+    VALUES (:daireId, :userId, :apartmanId, :gelir_turu, :aciklamaValue, :borcTutarValue, :borcTutarValue2, :dateInputValue, :dateInput2Value, :kategoriValue)";
 
 // SQL sorgusunu hazırlama
 $stmt = $conn->prepare($sql);
@@ -24,6 +24,7 @@ $stmt->bindParam(':apartmanId', $apartmanId);
 $stmt->bindParam(':gelir_turu', $gelir_turu);
 $stmt->bindParam(':aciklamaValue', $aciklamaValue);
 $stmt->bindParam(':borcTutarValue', $borcTutarValue, PDO::PARAM_STR);
+$stmt->bindParam(':borcTutarValue2', $borcTutarValue, PDO::PARAM_STR);
 $stmt->bindParam(':dateInputValue', $dateInputValue);
 $stmt->bindParam(':dateInput2Value', $dateInput2Value);
 $stmt->bindParam(':kategoriValue', $kategoriValue);

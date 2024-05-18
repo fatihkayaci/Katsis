@@ -745,7 +745,7 @@ function tahsilatAdd(){
             } else {
 
                 $.ajax({
-                    url: 'Controller/maliye_tahsilat.php',
+                    url: 'Controller/maliye_tahsilatt.php',
                     type: 'POST',
                     data: {
                         daireId: daireId,
