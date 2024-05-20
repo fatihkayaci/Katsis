@@ -179,7 +179,7 @@ if ($result->rowCount() > 0) {
             <p class="adet-txt">Adet Veri Gösteriliyor</p>
 
         </div>
-
+        <button id="exportButton">Excel'e Aktar</button>
         <div class="input-group1">
 
             <ul class="pagination">
@@ -386,6 +386,34 @@ if ($result->rowCount() > 0) {
 
     </form>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+
+<script>
+    document.getElementById('exportButton').addEventListener('click', function() {
+      // HTML tablosunu alın
+      var table = document.getElementById('example');
+      
+      // Tabloyu JSON formatına çevir
+      var data = [];
+      var rows = table.querySelectorAll('tr');
+      rows.forEach(function(row, rowIndex) {
+        var rowData = [];
+        row.querySelectorAll('th, td').forEach(function(cell) {
+          rowData.push(cell.innerText);
+        });
+        data.push(rowData);
+      });
+
+      // JSON verisini SheetJS formatına çevir
+      var ws = XLSX.utils.aoa_to_sheet(data);
+      var wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+
+      // Dosyayı oluştur ve indir
+      XLSX.writeFile(wb, 'tablo.xlsx');
+    });
+</script>
+
 <script>
 $(document).ready(function() {
     $('#upload_btn').click(function() {
