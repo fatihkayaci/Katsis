@@ -147,18 +147,22 @@
                             <select class="input-select katMaliki"
                                 <?php echo isset($row["katMalikiName"]) ? 'disabled' : ''; ?>>
                                 <option value=""
-                                    <?php if(isset($row["katMalikiGender"]) && $row["katMalikiGender"] === "") echo "selected"; ?>></option>
+                                    <?php if(isset($row["katMalikiGender"]) && $row["katMalikiGender"] === "") echo "selected"; ?>>
+                                </option>
                                 <option value="Erkek"
-                                    <?php if(isset($row["katMalikiGender"]) && $row["katMalikiGender"] === "Erkek") echo "selected"; ?>>Erkek</option>
+                                    <?php if(isset($row["katMalikiGender"]) && $row["katMalikiGender"] === "Erkek") echo "selected"; ?>>
+                                    Erkek</option>
                                 <option value="Kadın"
-                                    <?php if(isset($row["katMalikiGender"]) && $row["katMalikiGender"] === "Kadın") echo "selected"; ?>>Kadın</option>
+                                    <?php if(isset($row["katMalikiGender"]) && $row["katMalikiGender"] === "Kadın") echo "selected"; ?>>
+                                    Kadın</option>
                             </select>
                         </span>
                         <span>
                             <select class="input-select kiracii"
                                 <?php echo isset($row["kiraciName"]) ? 'disabled' : ''; ?>>
                                 <option value=""
-                                    <?php if(isset($row["kiraciGender"]) && $row["kiraciGender"] === "") echo "selected"; ?>></option>
+                                    <?php if(isset($row["kiraciGender"]) && $row["kiraciGender"] === "") echo "selected"; ?>>
+                                </option>
                                 <option value="Erkek"
                                     <?php if(isset($row["kiraciGender"]) && $row["kiraciGender"] === "Erkek") echo "selected"; ?>>
                                     Erkek</option>
@@ -189,7 +193,8 @@
                             <select class="input-select katMaliki"
                                 <?php echo isset($row["katMalikiName"]) ? 'disabled' : ''; ?>>
                                 <option value=""
-                                    <?php if(isset($row["katMalikiBalanceType"]) && $row["katMalikiBalanceType"] === "") echo "selected"; ?>></option>
+                                    <?php if(isset($row["katMalikiBalanceType"]) && $row["katMalikiBalanceType"] === "") echo "selected"; ?>>
+                                </option>
                                 <option value="TL"
                                     <?php if(isset($row["katMalikiBalanceType"]) && $row["katMalikiBalanceType"] === "TL") echo "selected"; ?>>
                                     TL</option>
@@ -205,7 +210,8 @@
                             <select class="input-select kiracii"
                                 <?php echo isset($row["kiraciName"]) ? 'disabled' : ''; ?>>
                                 <option value=""
-                                    <?php if(isset($row["kiraciBalanceType"]) && $row["kiraciBalanceType"] === "") echo "selected"; ?>></option>
+                                    <?php if(isset($row["kiraciBalanceType"]) && $row["kiraciBalanceType"] === "") echo "selected"; ?>>
+                                </option>
                                 <option value="TL"
                                     <?php if(isset($row["kiraciBalanceType"]) && $row["kiraciBalanceType"] === "TL") echo "selected"; ?>>
                                     TL</option>
@@ -310,7 +316,7 @@
                     if (katMalikiUserName !== "") {
                         initialData.push({
                             userName: katMalikiUserName,
-                            durum: "kat Maliki",
+                            durum: "katmaliki",
                             blok: blokAdiText,
                             tc: katMalikiTC,
                             telefon: katMalikiPhone,
@@ -324,7 +330,7 @@
                     if (kiraciUserName !== "") {
                         initialData.push({
                             userName: kiraciUserName,
-                            durum: "kiracı",
+                            durum: "kiraci",
                             blok: blokAdiText,
                             tc: kiraciTC,
                             telefon: kiraciPhone,
@@ -345,6 +351,7 @@
 
                 var rows = document.querySelectorAll('.git-ac.toplu-td');
                 var newEntries = [];
+                var hasError = false;
 
                 rows.forEach(function(row) {
                     var blokAdi = row.querySelector('[data-title="Blok Adı"]');
@@ -355,8 +362,10 @@
                     var katMalikiEmailInput = row.querySelector('[name="eposta"] .katMaliki');
                     var katMalikiPlateInput = row.querySelector('[name="plate"] .katMaliki');
                     var katMalikiGenderInput = row.querySelector('[name="gender"] .katMaliki');
-                    var katMalikiOpeningBalanceInput = row.querySelector('[name="openingBalance"] .katMaliki');
-                    var katMalikiBalanceTypeInput = row.querySelector('[name="balanceType"] .katMaliki');
+                    var katMalikiOpeningBalanceInput = row.querySelector(
+                        '[name="openingBalance"] .katMaliki');
+                    var katMalikiBalanceTypeInput = row.querySelector(
+                    '[name="balanceType"] .katMaliki');
                     var katMalikiPromiseInput = row.querySelector('[name="promise"] .katMaliki');
 
                     var kiraciUserNameInput = row.querySelector('.kiracii');
@@ -365,18 +374,19 @@
                     var kiraciEmailInput = row.querySelector('[name="eposta"] .kiracii');
                     var kiraciPlateInput = row.querySelector('[name="plate"] .kiracii');
                     var kiraciGenderInput = row.querySelector('[name="gender"] .kiracii');
-                    var kiraciOpeningBalanceInput = row.querySelector('[name="openingBalance"] .kiracii');
+                    var kiraciOpeningBalanceInput = row.querySelector(
+                        '[name="openingBalance"] .kiracii');
                     var kiraciBalanceTypeInput = row.querySelector('[name="balanceType"] .kiracii');
                     var kiraciPromiseInput = row.querySelector('[name="promise"] .kiracii');
-                    
+
                     var blokAdiText = blokAdi.innerText.trim();
                     var katMalikiUserName = katMalikiUserNameInput.value.trim();
                     var katMalikiTC = katMalikiTCInput.value.trim();
                     var katMalikiPhone = katMalikiPhoneInput.value.trim();
-                    var katMalikiEmail = katMalikiEmailInput.value.trim();         
+                    var katMalikiEmail = katMalikiEmailInput.value.trim();
                     var katMalikiPlate = katMalikiPlateInput.value.trim();
                     var katMalikiGender = katMalikiGenderInput.value.trim();
-                    var katMalikiOpeningBalance = katMalikiOpeningBalanceInput.value.trim();   
+                    var katMalikiOpeningBalance = katMalikiOpeningBalanceInput.value.trim();
                     var katMalikiBalanceType = katMalikiBalanceTypeInput.value.trim();
                     var katMalikiPromise = katMalikiPromiseInput.value.trim();
 
@@ -392,11 +402,11 @@
 
                     if ((katMalikiUserName !== "") && !initialData.some(function(item) {
                             return item.userName === katMalikiUserName && item.durum ===
-                                "kat Maliki" && item.blok === blokAdiText;
+                                "katmaliki" && item.blok === blokAdiText;
                         })) {
                         newEntries.push({
                             userName: katMalikiUserName,
-                            durum: "kat Maliki",
+                            durum: "katmaliki",
                             blok: blokAdiText,
                             tc: katMalikiTC,
                             telefon: katMalikiPhone,
@@ -408,22 +418,25 @@
                             promise: katMalikiPromise
                         });
                     } else if (katMalikiUserName == "" && (katMalikiTC !== "" || katMalikiPhone !==
-                            "" || katMalikiEmail !== "" || katMalikiPlate !== "" || katMalikiOpeningBalance !== "") && !initialData.some(function(item) {
+                            "" || katMalikiEmail !== "" || katMalikiPlate !== "" ||
+                            katMalikiOpeningBalance !== "") && !initialData.some(function(item) {
                             return item.userName === katMalikiUserName && item.durum ===
-                                "kat Maliki" && item.blok === blokAdiText;
+                                "katmaliki" && item.blok === blokAdiText;
                         })) {
                         alert(blokAdiText +
                             " daire KatMaliki kullanıcısı ad soyad sütünu boş bırakılmıştır lütfen doldurunuz."
                             );
+                        hasError = true;
+                        return false; // Döngüden çık
                     }
 
                     if (kiraciUserName !== "" && !initialData.some(function(item) {
-                            return item.userName === kiraciUserName && item.durum === "kiracı" &&
+                            return item.userName === kiraciUserName && item.durum === "kiraci" &&
                                 item.blok === blokAdiText;
                         })) {
                         newEntries.push({
                             userName: kiraciUserName,
-                            durum: "kiracı",
+                            durum: "kiraci",
                             blok: blokAdiText,
                             tc: kiraciTC,
                             telefon: kiraciPhone,
@@ -435,16 +448,22 @@
                             promise: kiraciPromise
                         });
                     } else if (kiraciUserName == "" && (kiraciTC !== "" || kiraciPhone !==
-                            "" || kiraciEmail !== "" || kiraciPlate !== "" || kiraciOpeningBalance !== "") && !initialData.some(function(item) {
-                            return item.userName === kiraciUserName && item.durum === "kiracı" &&
+                            "" || kiraciEmail !== "" || kiraciPlate !== "" || kiraciOpeningBalance !==
+                            "") && !initialData.some(function(item) {
+                            return item.userName === kiraciUserName && item.durum === "kiraci" &&
                                 item.blok === blokAdiText;;
                         })) {
-                        alert(blokAdiText +" daire kiracı kullanıcısı ad soyad sütünu boş bırakılmıştır lütfen doldurunuz.");
+                        alert(blokAdiText +
+                            " daire kiracı kullanıcısı ad soyad sütünu boş bırakılmıştır lütfen doldurunuz."
+                            );
+                        hasError = true;
+                        return false; // Döngüden çık
                     }
                 });
-
                 console.log(newEntries);
-
+                if (hasError) {
+                    return; // Eğer bir hata varsa fonksiyondan çık
+                }
                 var hasDuplicateEmail = false;
                 var emailList = newEntries.map(function(entry) {
                     return entry.eposta;
@@ -483,6 +502,7 @@
                                 success: function(secondResponse) {
                                     if (secondResponse == "success") {
                                         console.log("başardı");
+                                        location.reload();
                                     } else {
                                         alert(secondResponse);
                                     }

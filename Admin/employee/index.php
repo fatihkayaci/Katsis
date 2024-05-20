@@ -952,7 +952,6 @@ topluGuncelleButtons.forEach(function(button) {
 // Toplu silme işlemi için butonları seç
 var topluSilButton = document.getElementById('silButton');
 topluSilButton.addEventListener('click', function() {
-    alert("girdimm");
     var silButton = document.getElementById('silButton');
     var checkboxes = document.querySelectorAll('#example tbody input[type="checkbox"]:checked');
 
