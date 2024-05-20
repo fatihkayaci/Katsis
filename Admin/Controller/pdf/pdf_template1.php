@@ -1,3 +1,25 @@
+<?php
+
+   $maliye_id = $_GET["temp"];
+
+   $sql2 = "SELECT 
+   tbl_maliye.*, 
+   tbl_kategori.kategori_adi  
+FROM 
+   tbl_maliye
+JOIN 
+   tbl_kategori ON tbl_maliye.kategori_id = tbl_kategori.kategori_id;";
+   
+
+   $stmt = $conn->prepare($sql2);
+   $stmt->execute();
+   $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    print_r($result);
+
+
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,7 +32,7 @@
     <style type="text/css">
     
     *{
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-family: 'DejaVu Sans' , ;
     }
     body {
         margin-top: 20px;
@@ -180,38 +202,42 @@
                                 <thead>
                                     <tr>
                                         <th class="text-center" style="width:5%">#</th>
-                                        <th class="text-left" style="width:75%">Açıklama</th>
-                                        <th class="text-right" style="width:25%">Fiyat</th>
+                                        <th class="text-left" style="width:60%">Açıklama</th>
+                                        <th class="text-left" style="width:20%">Kategori</th>
+                                        <th class="text-right" style="width:20%">Fiyat</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td class="text-center">1</td>
-                                        <td>Flatter Theme</td>
-                                        <td class="text-right">180 TL</td>
+                                        <td><?php echo $maliye_id ?></td>
+                                        <td>Aidat</td>
+                                        <td class="text-right">18000 TL</td>
                                     </tr>
+                                  
                                     <tr>
                                         <td class="text-center">2</td>
                                         <td>Flat Icons</td>
+                                        <td>Aidat</td>
                                         <td class="text-right">254 TL</td>
                                     </tr>
                                     <tr>
                                         <td class="text-center">3</td>
                                         <td>Wordpress version</td>
+                                        <td>Aidat</td>
                                         <td class="text-right">285 TL</td>
                                     </tr>
                                     <tr class="last-row">
                                         <td class="text-center">4</td>
                                         <td>Server Deployment</td>
+                                        <td>Aidat</td>
                                         <td class="text-right">300 TL</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                         <div class="row">
-                            <div class="col-xs-6 margintop">
-                                <p class="lead marginbottom">Durum : ÖDENDİ</p>
-                            </div>
+                           
                             <div class="col-xs-6 text-right pull-right invoice-total">
                                 
                                 <p>Toplam : $991 </p>
