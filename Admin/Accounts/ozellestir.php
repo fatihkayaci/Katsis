@@ -1,3 +1,4 @@
+<?php require_once "Controller/class.func.php"; ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -404,12 +405,12 @@ WHERE m.user_id = :user_id AND m.apartman_id = :apartman_id AND maliye_turu = :m
                                         <button class="btn-custom-outline bcoc3">Düzenle</button>
                                     </div>
                                 </div>
-                                <input type="hidden" id="topborc" value=<?php echo $toplamBorc; ?> />
+                                <input type="hidden" id="topborc" value=<?php echo  duzenleSayi($toplamBorc); ?> />
                                 <div class="borc-box">
                                         <div class="bakiye-header">
                                             <p class="tarih">BAKİYE : </p>
                                             <p class="borc">
-                                                <?php echo $toplamBorc; ?> <img class="tl-img"
+                                                <?php echo  duzenleSayi($toplamBorc); ?> <img class="tl-img"
                                                     src="../Admin\assets\img\tl.png" alt="">
                                             </p>
                                         </div>
@@ -456,7 +457,7 @@ WHERE m.user_id = :user_id AND m.apartman_id = :apartman_id AND maliye_turu = :m
                                                     <?php echo $row4['kategori_adi']; ?>
                                                 </p>
                                                 <p class="borc">
-                                                    <?php echo $row4['borc_miktar']; ?> <img class="tl-img"
+                                                    <?php echo  duzenleSayi($row4['borc_miktar']); ?> <img class="tl-img"
                                                         src="../Admin\assets\img\tl.png" alt="">
                                                 </p>
                                             </a>

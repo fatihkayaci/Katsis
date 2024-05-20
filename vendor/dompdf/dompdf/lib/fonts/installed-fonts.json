@@ -1,0 +1,24 @@
+{
+    "glyphicons halflings": {
+        "normal": "glyphicons_halflings_normal_3c9523218297e22d7ceded84dbefb792"
+    },
+    "fontawesome": {
+        "normal": "fontawesome_normal_f6b2e9286a2b9f34642c243947f39e1a"
+    },
+    "roboto": {
+        "100": "C:\\xampp\\htdocs\\Katsis\\vendor\\dompdf\\dompdf\/lib\/fonts\/roboto_100_d876775dd3daf87873e6dd250e9c4c9e",
+        "300": "C:\\xampp\\htdocs\\Katsis\\vendor\\dompdf\\dompdf\/lib\/fonts\/roboto_300_21960201651f2ea862182ff34dfd5ead",
+        "normal": "C:\\xampp\\htdocs\\Katsis\\vendor\\dompdf\\dompdf\/lib\/fonts\/roboto_normal_9fa47a070a8b30b595086d70bb7ac78c",
+        "500": "C:\\xampp\\htdocs\\Katsis\\vendor\\dompdf\\dompdf\/lib\/fonts\/roboto_500_d0dcda9e813eb9b854a1cc044831f6fe",
+        "bold": "C:\\xampp\\htdocs\\Katsis\\vendor\\dompdf\\dompdf\/lib\/fonts\/roboto_bold_3d0ad20d45ace845335f9e6c390a09d9",
+        "900": "roboto_900_509a5e5b153550862359e315131088d5"
+    },
+    "lato": {
+        "300_italic": "C:\\xampp\\htdocs\\Katsis\\vendor\\dompdf\\dompdf\/lib\/fonts\/lato_300_italic_a7f1cb102d42f345101334df12206bfe",
+        "italic": "C:\\xampp\\htdocs\\Katsis\\vendor\\dompdf\\dompdf\/lib\/fonts\/lato_italic_ab730068121a06d4cc0851e42a75c724",
+        "bold_italic": "C:\\xampp\\htdocs\\Katsis\\vendor\\dompdf\\dompdf\/lib\/fonts\/lato_bold_italic_927c66fe7adbb42a7c44dea0d028bc69",
+        "300": "C:\\xampp\\htdocs\\Katsis\\vendor\\dompdf\\dompdf\/lib\/fonts\/lato_300_5a1b3affd6853f9ba40d774b7deb384c",
+        "normal": "C:\\xampp\\htdocs\\Katsis\\vendor\\dompdf\\dompdf\/lib\/fonts\/lato_normal_1e76f4095824347c5952fde032e6e608",
+        "bold": "lato_bold_86e1573850012e2276a75106baf0c899"
+    }
+}

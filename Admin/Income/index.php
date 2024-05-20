@@ -119,9 +119,13 @@ JOIN
                    <?php echo duzenleSayi($row["top_borc"]) ; ?>
                 </td> 
 
-                <td data-title="kalan_borc" class="table_tt table_td Task" contenteditable="false">
+                <td data-title="kalan_borc" class="table_tt table_td " contenteditable="false">
                    <?php echo duzenleSayi($row["borc_miktar"]); ?>
                 </td> 
+                <td data-title="fatura" class="table_tt table_td " contenteditable="false">
+                 <a href= "Controller/pdf/Income_pdf"> <button > fatura</button> </a>
+                </td> 
+                
 
 
                 
@@ -367,5 +371,25 @@ function filtrele() {
 
         }
     }
+}
+
+
+
+//Fatura  yönlkendirme
+function fatura(){
+    $.ajax({
+    url: 'Controller/pdf/gelir_pdf.php', // PHP dosyasının URL'si
+    type: 'POST', // İsteğin türü (GET veya POST)
+    success: function(response){
+        alert("Başarılı");
+    },
+    error: function(jqXHR, textStatus, errorThrown){
+        // Ayrıntılı hata mesajı
+        alert('Bir hata oluştu: ' + textStatus + ' - ' + errorThrown);
+        console.log('Hata detayları: ', jqXHR.responseText);
+    }
+});
+
+            
 }
 </script>
