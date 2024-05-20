@@ -767,7 +767,7 @@ box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
 
 .users-table {
   width: 98%;
-  margin-top: 20px;
+  margin-top: 10px;
   text-align: left;
   border-collapse: separate;
   border-spacing: 0;
@@ -1462,6 +1462,11 @@ min-width: 0;
   .input, .col-btn label,.col label , .col {
     width: 100%;
     min-width: 200px;
+  }
+
+  .file_label {
+    width: 50%;
+    min-width: 0 !important;
   }
 
   .ekle-btn {
@@ -2550,4 +2555,57 @@ min-width: 0;
   font-family: 'poppins-regular';
   font-weight: 100;
   margin-bottom: 0;
+}
+
+.upload-box {
+  max-width: 420px;
+  width: 100%;
+  min-height: 40px;
+  transition: 0.3s;
+  border-radius: 4px;
+  outline: none;
+  border: 1px dashed #277CE0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 10px;
+}
+
+.file_label {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: #000;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.file_label:hover {
+  color: #277CE0;
+  transform: translateX(10px);
+}
+
+#upload_btn {
+  padding: 5px 10px;
+  max-width: 420px;
+  transition: 0.3s;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-family: 'poppins-medium';
+  font-weight: 500;
+  background-color: #277CE0;
+  color: #fff;
+  outline: none;
+  border: 1px solid #277CE0;
+}
+
+.text-left {
+  text-align: left;
+  width: 100%;
+  margin-bottom: 0;
+}
+
+.horizontal {
+  height: 1px;
 }

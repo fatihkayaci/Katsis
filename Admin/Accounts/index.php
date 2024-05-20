@@ -280,7 +280,7 @@ if ($result->rowCount() > 0) {
                             <li class="li-select" data-user-id="Alacak">Alacak</li>
                         </ul>
                     </div>
-                    <!-- fatih burdaki selecti iptal ettin yeni select bu yukardaki -->
+                    <!-- fatih burdaki selecti iptal ettim yeni select bu yukardaki -->
                     <!-- <select name="balanceType">
                         <option value=""></option>
                         <option value="Borç">Borç</option>
@@ -332,8 +332,15 @@ if ($result->rowCount() > 0) {
                 <a class="ahref btn-custom-daire w-100" href="index?parametre=TopluHesap">Toplu Kullanıcı Ekleme</a>
                 <a class="ahref btn-custom-daire w-100" href="Controller/excelCreate.php" id="excelDownload"
                     download="KullaniciEkle.xlsx">Excel İndir</a>
-                <input type="file" id="excel_file" accept=".xlsx">
-                <button id="upload_btn">Gönder</button>
+                    <p class="text-left">Excel İle Kullanıcı Ekleme:</p>
+                <div class="upload-box">
+                    <input type="file" id="excel_file" accept=".xlsx" hidden>
+                    <label for="excel_file" class="file_label">Dosya Seçin</label>
+                    <!-- name of file chosen -->
+                    <span id="file-chosen"></span>
+
+                    <button id="upload_btn">Gönder</button>
+                </div>
             </div>
         </div>
 
@@ -1409,4 +1416,14 @@ tableTdElements.forEach(function(element) {
         });
     });
 });
+</script>
+
+<script>
+    const actualBtn = document.getElementById('excel_file');
+
+    const fileChosen = document.getElementById('file-chosen');
+
+    actualBtn.addEventListener('change', function(){
+      fileChosen.textContent = this.files[0].name
+    })
 </script>
