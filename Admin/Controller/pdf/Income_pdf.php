@@ -1,4 +1,5 @@
 <?php
+include ("../../../DB/dbconfig.php");
 require '../../../vendor/autoload.php';
 
 
@@ -14,7 +15,7 @@ $temp =  ob_get_clean();
 $options = new Options();
 $options->set('isRemoteEnabled', true); // Eğer uzaktaki dosyaları kullanacaksanız bunu etkinleştirin
 $dompdf = new Dompdf($options);
-
+$dompdf->set_option('defaultFont', 'DejaVu Sans');
 // HTML içeriğini yükleyin
 $dompdf->loadHtml($temp);
 

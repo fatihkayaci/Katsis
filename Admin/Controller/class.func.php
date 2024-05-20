@@ -1,5 +1,5 @@
 <?php
-include("../../DB/dbconfig.php");
+
 function randomPassword($length = 8) {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $userPass = '';
