@@ -1,5 +1,5 @@
 <?php
-require_once "Controller/class.func.php";
+require_once "Controller/class.func2.php";
 try {
     $sql2 = "SELECT 
     tbl_maliye.*, 
