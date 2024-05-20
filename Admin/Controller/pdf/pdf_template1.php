@@ -15,6 +15,7 @@
     body {
         margin-top: 20px;
         background: #fff;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
     }
 
     /*Invoice*/
