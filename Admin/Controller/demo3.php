@@ -8,7 +8,7 @@ try {
     $durum_listesi = $_SESSION['durum_listesi'];
 
     foreach ($durum_listesi as $i => $durum) {
-        $columnName = ($durum == "kiracı") ? "kiraciID" : "katMalikiID";
+        $columnName = ($durum == "kiraci") ? "kiraciID" : "katMalikiID";
         // Blok ve daireyi ayır
         $parcalanmis = explode("/", $blok_listesi[$i]);
         $blok = $parcalanmis[0];

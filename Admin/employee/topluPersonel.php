@@ -358,6 +358,7 @@
                         console.log(response);
                         if (response == "success") {
                             console.log("Başarılı!");
+                            location.reload();
                         } else {
                             alert(response);
                         }
