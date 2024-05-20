@@ -123,7 +123,7 @@ JOIN
                    <?php echo duzenleSayi($row["borc_miktar"]); ?>
                 </td> 
                 <td data-title="fatura" class="table_tt table_td " contenteditable="false">
-                 <a href= "Controller/pdf/Income_pdf"> <button > fatura</button> </a>
+                 <a href= "Controller/pdf/Income_pdf" target="_blank"> <button > fatura</button> </a>
                 </td> 
                 
 
