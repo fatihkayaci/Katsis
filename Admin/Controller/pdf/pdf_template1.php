@@ -232,10 +232,8 @@
                                 <button class="btn btn-danger"><i class="fa fa-envelope-o"></i> Mail Invoice</button>
                             </div>
                             <div class="col-xs-6 text-right pull-right invoice-total">
-                                <p>Subtotal : $1019</p>
-                                <p>Discount (10%) : $101 </p>
-                                <p>VAT (8%) : $73 </p>
-                                <p>Total : $991 </p>
+                                
+                                <p>Toplam : $991 </p>
                             </div>
                         </div>
                     </div>
