@@ -3,21 +3,28 @@
 
 <head>
     <meta charset="utf-8">
-
-
+    
     <title>Fatura</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     <style type="text/css">
+    
+    *{
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
     body {
         margin-top: 20px;
-        background: #eee;
+        background: #fff;
     }
 
     /*Invoice*/
     .invoice .top-left {
         font-size: 65px;
         color: #3ba0ff;
+    }
+
+    .table {
+        border: 1px solid #ddd;
     }
 
     .invoice .top-right {
@@ -130,55 +137,41 @@
             height: 800px;
         }
     }
+    .panel {
+        border: none;
+    }
     </style>
 </head>
 
 <body>
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
     <div class="container bootstrap snippets bootdeys">
         <div class="row">
             <div class="col-sm-12">
                 <div class="panel panel-default invoice" id="invoice">
                     <div class="panel-body">
                         <div class="invoice-ribbon">
-                            <div class="ribbon-inner">PAID</div>
+                            <div class="ribbon-inner">Ödendi</div>
                         </div>
                         <div class="row">
                             <div class="col-sm-6 top-left">
-                                <i class="fa fa-rocket"></i>
+                                <h1>KATSIS</h1>
                             </div>
                             <div class="col-sm-6 top-right">
-                                <h3 class="marginright">INVOICE-1234578</h3>
-                                <span class="marginright">14 April 2014</span>
+                                <h3 class="marginright">FATURA-1234578</h3>
+                                <span class="marginright">14 Eylül 2014</span>
                             </div>
                         </div>
                         <hr>
                         <div class="row">
                             <div class="col-xs-4 from">
-                                <p class="lead marginbottom">From : Dynofy</p>
-                                <p>350 Rhode Island Street</p>
-                                <p>Suite 240, San Francisco</p>
-                                <p>California, 94103</p>
-                                <p>Phone: 415-767-3600</p>
-                                <p>Email: <a href="/cdn-cgi/l/email-protection" class="__cf_email__"
-                                        data-cfemail="c9aaa6a7bda8aabd89adb0a7a6afb0e7aaa6a4">[email&#160;protected]</a>
-                                </p>
+                                <p class="lead marginbottom">Kimden :</p>
+                                <p>Katsis İşletme A.Ş.</p>
                             </div>
                             <div class="col-xs-4 to">
-                                <p class="lead marginbottom">To : John Doe</p>
-                                <p>425 Market Street</p>
-                                <p>Suite 2200, San Francisco</p>
-                                <p>California, 94105</p>
-                                <p>Phone: 415-676-3600</p>
-                                <p>Email: <a href="/cdn-cgi/l/email-protection" class="__cf_email__"
-                                        data-cfemail="e983868187a98d868cc78a8684">[email&#160;protected]</a></p>
                             </div>
                             <div class="col-xs-4  payment-details">
-                                <p class="lead marginbottom payment-info">Payment details</p>
-                                <p>Date: 14 April 2014</p>
-                                <p>VAT: DK888-777 </p>
-                                <p>Total Amount: $1019</p>
-                                <p>Account Name: Flatter</p>
+                            <p class="lead marginbottom">Kime :</p>
+                                <p>Celal Yılmaz</p>
                             </div>
                         </div>
                         <div class="row table-row">
@@ -186,50 +179,37 @@
                                 <thead>
                                     <tr>
                                         <th class="text-center" style="width:5%">#</th>
-                                        <th style="width:50%">Item</th>
-                                        <th class="text-right" style="width:15%">Quantity</th>
-                                        <th class="text-right" style="width:15%">Unit Price</th>
-                                        <th class="text-right" style="width:15%">Total Price</th>
+                                        <th class="text-left" style="width:75%">Açıklama</th>
+                                        <th class="text-right" style="width:25%">Fiyat</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td class="text-center">1</td>
                                         <td>Flatter Theme</td>
-                                        <td class="text-right">10</td>
-                                        <td class="text-right">$18</td>
-                                        <td class="text-right">$180</td>
+                                        <td class="text-right">180 TL</td>
                                     </tr>
                                     <tr>
                                         <td class="text-center">2</td>
                                         <td>Flat Icons</td>
-                                        <td class="text-right">6</td>
-                                        <td class="text-right">$59</td>
-                                        <td class="text-right">$254</td>
+                                        <td class="text-right">254 TL</td>
                                     </tr>
                                     <tr>
                                         <td class="text-center">3</td>
                                         <td>Wordpress version</td>
-                                        <td class="text-right">4</td>
-                                        <td class="text-right">$95</td>
-                                        <td class="text-right">$285</td>
+                                        <td class="text-right">285 TL</td>
                                     </tr>
                                     <tr class="last-row">
                                         <td class="text-center">4</td>
                                         <td>Server Deployment</td>
-                                        <td class="text-right">1</td>
-                                        <td class="text-right">$300</td>
-                                        <td class="text-right">$300</td>
+                                        <td class="text-right">300 TL</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                         <div class="row">
                             <div class="col-xs-6 margintop">
-                                <p class="lead marginbottom">THANK YOU!</p>
-                                <button class="btn btn-success" id="invoice-print"><i class="fa fa-print"></i> Print
-                                    Invoice</button>
-                                <button class="btn btn-danger"><i class="fa fa-envelope-o"></i> Mail Invoice</button>
+                                <p class="lead marginbottom">Durum : ÖDENDİ</p>
                             </div>
                             <div class="col-xs-6 text-right pull-right invoice-total">
                                 
