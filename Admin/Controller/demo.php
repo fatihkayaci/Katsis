@@ -7,6 +7,7 @@ try {
     $sadeceDaire;
     $lastID = $_SESSION['lastID'];
     $durumArray = json_decode($_POST['durumArray']);
+
     $blokArray = json_decode($_POST['blokArray'], true);
     $updatedStatuses = array();
     $resultsArrayKiraci = array(); // Kiracılar için olanlar
@@ -53,7 +54,7 @@ try {
         $katMalikiBilgileri = $stmtKatMalikiBilgileri->fetch(PDO::FETCH_ASSOC);
 
         foreach ($durumArray as $durum) {
-            if ($durum == "kiraci") {
+            if ($durum == "Kiracı") {
                 $sql = "UPDATE tbl_daireler d
                          INNER JOIN tbl_blok b ON d.blok_adi = b.blok_id
                          SET d.kiraciID = (SELECT userID FROM tbl_users WHERE userID = :lastID),
@@ -80,7 +81,7 @@ try {
                     'tc' => isset($kiraciBilgileri['tc']) ? $kiraciBilgileri['tc'] : null
                 );
                 
-            } else if ($durum == "katmaliki") {
+            } else if ($durum == "Kat Maliki") {
                 $sql = "UPDATE tbl_daireler d
                          INNER JOIN tbl_blok b ON d.blok_adi = b.blok_id
                          SET d.katmalikiID = (SELECT userID FROM tbl_users WHERE userID = :lastID),

@@ -378,11 +378,15 @@ if ($result->rowCount() > 0) {
                 </div>
             </div>
             <div class="col-btn">
-                <select class="input" id="durum">
-                    <option value="katmaliki">kat Maliki</option>
-                    <option value="kiraci">kiraci</option>
-                </select>
-                <label for="durum">Durum :</label>
+            <div class="select-div">
+                    <input class="search-selectx input" type="text" list="Users" id="durum" name="durum"
+                        required="" />
+                    <label class="selectx-label" for="durum">Durum: </label>
+                    <ul class="value-listx" id="durumDrop">
+                        <li class="li-select" data-user-id="">Kat Maliki</li>
+                        <li class="li-select" data-user-id="">Kiracı</li>
+                    </ul>
+                </div>
             </div>
         </div>
 
@@ -393,36 +397,98 @@ if ($result->rowCount() > 0) {
 
     </form>
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
-
 <script>
-    document.getElementById('exportButton').addEventListener('click', function() {
-      // HTML tablosunu alın
-      var table = document.getElementById('example');
-      
-      // Tabloyu JSON formatına çevir
-      var data = [];
-      var rows = table.querySelectorAll('tr');
-      rows.forEach(function(row, rowIndex) {
-        var rowData = [];
-        row.querySelectorAll('th, td').forEach(function(cell) {
-          rowData.push(cell.innerText);
-        });
-        data.push(rowData);
-      });
+    document.addEventListener('DOMContentLoaded', function () {
+        toggleExportButton();
 
-      // JSON verisini SheetJS formatına çevir
-      var ws = XLSX.utils.aoa_to_sheet(data);
-      var wb = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
-
-      // Dosyayı oluştur ve indir
-      XLSX.writeFile(wb, 'tablo.xlsx');
+        // Tablodaki veriler güncellendiğinde butonun durumunu tekrar kontrol edin.
+        // Örneğin, tablo verilerini güncellediğiniz bir fonksiyonunuz varsa, orada da toggleExportButton'u çağırın.
     });
+
+    function toggleExportButton() {
+        var table = document.getElementById('example');
+        var tbody = table.getElementsByTagName('tbody')[0];
+        var exportButton = document.getElementById('exportButton');
+        var rows = tbody.getElementsByTagName('tr').length;
+
+        if (rows === 0) {
+            exportButton.style.display = 'none';
+        } else {
+            exportButton.style.display = 'inline-block'; // Veya 'block' ya da 'inline', tasarımınıza göre
+        }
+    }
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+<script>
+    document.getElementById("exportButton").addEventListener("click", function() {
+        let table = document.getElementById("example");
+        let rows = table.querySelectorAll("tr");
+        let data = [];
+        
+        rows.forEach((row, rowIndex) => {
+            let cols = row.querySelectorAll("td, th");
+            let rowData = [];
+            let skipRow = false;
+
+            cols.forEach((col, colIndex) => {
+                if (colIndex === 3 && col.innerText.trim() === "Birden Fazla Daire") {
+                    skipRow = true; // Bu satırı atla
+                }
+                if (colIndex !== 0 && !skipRow) { // İlk sütunu ve "Birden Fazla Daire" içeren satırları atla
+                    rowData.push(col.innerText.trim());
+                }
+            });
+
+            if (!skipRow) {
+                data.push(rowData);
+            }
+        });
+
+        let wb = XLSX.utils.book_new();
+        let ws = XLSX.utils.aoa_to_sheet(data);
+
+        // Hücre stillerini tanımlama
+        const headerCellStyle = {
+            font: { bold: true, color: { rgb: "FFFFFF" } }, // Beyaz yazı
+            fill: { fgColor: { rgb: "4F81BD" } }, // Mavi arka plan
+            alignment: { horizontal: "center", vertical: "center" }
+        };
+
+        const dataCellStyle = {
+            alignment: { horizontal: "center", vertical: "center" }
+        };
+
+        // Stil uygulama
+        let range = XLSX.utils.decode_range(ws['!ref']);
+        for (let rowNum = range.s.r; rowNum <= range.e.r; rowNum++) {
+            for (let colNum = range.s.c; colNum <= range.e.c; colNum++) {
+                let cellAddress = { c: colNum, r: rowNum };
+                let cellRef = XLSX.utils.encode_cell(cellAddress);
+                if (!ws[cellRef]) continue; // Hücre boşsa geç
+                if (rowNum === 0) { // Başlık satırlarına stil uygula
+                    ws[cellRef].s = headerCellStyle;
+                } else { // Veri satırlarına stil uygula
+                    ws[cellRef].s = dataCellStyle;
+                }
+            }
+        }
+
+        // Sütun genişliklerini ayarlama
+        ws['!cols'] = [
+            { wpx: 150 }, // Ad Soyad
+            { wpx: 150 }, // Telefon Numarası
+            { wpx: 150 }, // Blok / Daire
+            { wpx: 100 }  // Durum
+        ];
+
+        XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+        XLSX.writeFile(wb, "kullaniciTablosu.xlsx");
+    });
+    </script>
+</body>
+</html>
 
 <script>
-$(document).ready(function() {
     $('#upload_btn').click(function() {
         var excel_file = $('#excel_file').prop('files')[0];
         var form_data = new FormData();
@@ -435,16 +501,14 @@ $(document).ready(function() {
             contentType: false,
             processData: false,
             success: function(response) {
-                console.log(response);
-
-                alert("dur");
+                alert(response);
+                location.reload();
             },
             error: function(xhr, status, error) {
                 console.error(xhr.responseText);
             }
         });
     });
-});
 </script>
 
 <script>
@@ -534,6 +598,7 @@ function setupSearchSelect(inputSelector, dropdownSelector) {
 setupSearchSelect('#userInput', '#userInputDrop');
 setupSearchSelect('#userInput-bakiye', '#userInputDrop-bakiye');
 setupSearchSelect('#optionsBlok', '#optionsBlokDrop');
+setupSearchSelect('#durum', '#durumDrop');
 </script>
 
 <!-- =============================== -->
@@ -1182,7 +1247,6 @@ function saveUser() {
             return;
         }
     }
-
 };
 
 function saveUserData(userName, tc, phoneNumber, durumArray, userEmail, plate, gender, apartman_id, blokArray,
@@ -1204,7 +1268,7 @@ function saveUserData(userName, tc, phoneNumber, durumArray, userEmail, plate, g
             promise: promise
         },
         success: function(response) {
-            console.log(response);
+            alert(response);
             if (response == 1) {
                 sendData(blokArray, durumArray);
             }
@@ -1224,6 +1288,7 @@ function sendData(blokArray, durumArray) {
             durumArray: JSON.stringify(durumArray)
         },
         success: function(secondResponse) {
+            alert(secondResponse);
             if (demo == 1) {
                 arsiveUser();
             } else {

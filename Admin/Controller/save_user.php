@@ -80,6 +80,15 @@ try {
                 $hashedPassword = base64_encode($userPass);
                 $userNO = generateUniqueUserID($conn);
                 $t = "Y";
+
+                // Duruma göre uygun değerleri belirle
+                if ($durum == "Kiracı") {
+                    $durumValue = "kiraci";
+                } elseif ($durum == "Kat Maliki") {
+                    $durumValue = "katMaliki";
+                } else {
+                    $durumValue = "belirtilmemis";
+                }
                 $sql = "INSERT INTO tbl_users (userName, user_no, tc, phoneNumber, durum, userEmail, userPass, plate, gender, apartman_id, rol, popup, userStatus, openingBalance, balanceType, promise) VALUES 
                     (:userName, :user_no, :tc, :phoneNumber, :durum, :userEmail, :userPass, :plate, :gender, :apartman_id, :rol, :popup, :userStatus, :openingBalance, :balanceType, :promise)";
 
@@ -88,7 +97,7 @@ try {
                 $stmt->bindParam(':user_no', $userNO);
                 $stmt->bindParam(':tc', $tc);
                 $stmt->bindParam(':phoneNumber', $phoneNumber);
-                $stmt->bindParam(':durum', $durum);
+                $stmt->bindParam(':durum', $durumValue);
                 $stmt->bindParam(':userEmail', $userEmail);
                 $stmt->bindParam(':userPass', $hashedPassword);
                 $stmt->bindParam(':plate', $plate);

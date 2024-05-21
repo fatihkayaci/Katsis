@@ -35,8 +35,7 @@
 
             // Mevcut blok adlarını bir diziye aktarın
             foreach ($blocks as $block) {
-                $existingBlocks[] = $block;   
-                echo $block . "<br>";
+                $existingBlocks[] = $block;
             }
 
             $selectNoSql = "SELECT b.blok_adi, d.daire_sayisi 
