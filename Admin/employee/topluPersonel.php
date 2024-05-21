@@ -35,12 +35,12 @@
             ?>
     <table id="table" class="users-table">
         <thead>
-            <tr class="users-table-info toplu-th">
+            <tr class="users-table-info">
                 <th onclick="sortTable(0)">İsim Soyisim<i id="icon-table1" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(1)">TC Numarası<i id="icon-table5" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(2)">Cinsiyet<i id="icon-table4" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(3)">Email<i id="icon-table2" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(4)">Telefon Numarası<i id="icon-table3" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(1)">TC Numarası<i id="icon-table2" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(2)">Cinsiyet<i id="icon-table3" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(3)">Email<i id="icon-table4" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(4)">Telefon Numarası<i id="icon-table5" class="fa-solid fa-sort-down"></i></th>
                 <th onclick="sortTable(5)">Öğrenim Durumu<i id="icon-table6" class="fa-solid fa-sort-down"></i></th>
                 <th onclick="sortTable(6)">Iban<i id="icon-table7" class="fa-solid fa-sort-down"></i></th>
                 <th onclick="sortTable(7)">İşe Başlangıç Tarihi<i id="icon-table8" class="fa-solid fa-sort-down"></i>
@@ -48,167 +48,107 @@
                 <th onclick="sortTable(8)">Görevi<i id="icon-table9" class="fa-solid fa-sort-down"></i></th>
                 <th onclick="sortTable(9)">Sigorta Numarası<i id="icon-table10" class="fa-solid fa-sort-down"></i></th>
                 <th onclick="sortTable(10)">Maaş<i id="icon-table11" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(11)">Birim<i id="icon-table9" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(12)">Açılış Bakiyesi<i id="icon-table10" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(13)">Bakiye Türü<i id="icon-table11" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(14)">Ödeme Tarihi<i id="icon-table11" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(11)">Birim<i id="icon-table12" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(12)">Açılış Bakiyesi<i id="icon-table13" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(13)">Bakiye Türü<i id="icon-table14" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(14)">Ödeme Tarihi<i id="icon-table15" class="fa-solid fa-sort-down"></i></th>
             </tr>
         </thead>
         <tbody>
             <?php
             foreach ($result as $row) {
                 ?>
-            <tr data-userid="" class="git-ac toplu-td <?php echo $i ?>">
+            <tr data-userid="" class="git-ac<?php echo $i ?>">
 
-                <td data-title="Ad Soyad" name="fullName" class="p-0">
-                    <div class="toplu-td-div">
-                        <span class="border-1">
-                            <input type="text" class="input-select" value="<?php echo $row["fullName"] ?? ''; ?>"
-                                <?php echo isset($row["fullName"]) ? 'readonly' : ''; ?> />
-                        </span>
-                    </div>
+                <td data-title="Ad Soyad" name="fullName" class="table_tt table_td">
+                    <input type="text" class="input-select" value="<?php echo $row["fullName"] ?? ''; ?>"
+                        <?php echo isset($row["fullName"]) ? 'readonly' : ''; ?> />
                 </td>
-                <td data-title="TC No" name="TC" class="p-0">
-                    <div class="toplu-td-div">
-                        <span class="border-1">
-                            <input type="text" class="input-select" oninput="checkTCNumberLength(this)"
-                                value="<?php echo $row["TC"] ?? ''; ?>"
-                                <?php echo isset($row["fullName"]) ? 'readonly' : ''; ?> />
-                        </span>
-                    </div>
+                <td data-title="TC No" name="TC" class="table_tt table_td">
+                    <input type="text" class="input-select" oninput="checkTCNumberLength(this)"
+                        value="<?php echo $row["TC"] ?? ''; ?>"
+                        <?php echo isset($row["fullName"]) ? 'readonly' : ''; ?> />
                 </td>
-                <td data-title="gender" name="gender" class="p-0 br-end">
-                    <div class="toplu-td-div">
-                        <span class="border-1">
-                            <select class="input-select" <?php echo isset($row["fullName"]) ? 'disabled' : ''; ?>>
-                                <option value="Erkek"
-                                    <?php if(isset($row["gender"]) && $row["gender"] === "Erkek") echo "selected"; ?>>
-                                    Erkek</option>
-                                <option value="Kadın"
-                                    <?php if(isset($row["gender"]) && $row["gender"] === "Kadın") echo "selected"; ?>>
-                                    Kadın</option>
-                            </select>
-                        </span>
-                    </div>
+                <td data-title="gender" name="gender" class="table_tt table_td">
+                    <select class="input-select" <?php echo isset($row["fullName"]) ? 'disabled' : ''; ?>>
+                        <option value="Erkek"
+                            <?php if(isset($row["gender"]) && $row["gender"] === "Erkek") echo "selected"; ?>>
+                            Erkek</option>
+                        <option value="Kadın"
+                            <?php if(isset($row["gender"]) && $row["gender"] === "Kadın") echo "selected"; ?>>
+                            Kadın</option>
+                    </select>
                 </td>
-                <td data-title="E-Posta" name="eposta" class="p-0 br-end">
-                    <div class="toplu-td-div">
-                        <span class="border-1">
-                            <input type="text" class="input-select" value="<?php echo $row["userEmail"] ?? ''; ?>"
-                                <?php echo isset($row["fullName"]) ? 'readonly' : ''; ?> />
-                        </span>
-                    </div>
+                <td data-title="E-Posta" name="eposta" class="table_tt table_td">
+                    <input type="text" class="input-select" value="<?php echo $row["userEmail"] ?? ''; ?>"
+                        <?php echo isset($row["fullName"]) ? 'readonly' : ''; ?> />
                 </td>
 
-                <td data-title="Telefon" name="telefon" class="p-0">
-                    <div class="toplu-td-div">
-                        <span class="border-1">
-                            <input type="text" class="input-select" oninput="checkPhoneNumberLength(this)"
-                                value="<?php echo $row["phoneNumber"] ?? ''; ?>"
-                                <?php echo isset($row["fullName"]) ? 'readonly' : ''; ?> />
-                        </span>
-                    </div>
+                <td data-title="Telefon" name="telefon" class="table_tt table_td">
+                    <input type="text" class="input-select" oninput="checkPhoneNumberLength(this)"
+                        value="<?php echo $row["phoneNumber"] ?? ''; ?>"
+                        <?php echo isset($row["fullName"]) ? 'readonly' : ''; ?> />
                 </td>
-                <td data-title="educationStatus" name="educationStatus" class="p-0 br-end">
-                    <div class="toplu-td-div">
-                        <span class="border-1">
-                            <select class="input-select" <?php echo isset($row["fullName"]) ? 'disabled' : ''; ?>>
-                                <option value="ilkOkul"
-                                    <?php if(isset($row["educationStatus"]) && $row["educationStatus"] === "ilkOkul") echo "selected"; ?>>
-                                    İlk Okul</option>
-                                <option value="ortaOkul"
-                                    <?php if(isset($row["educationStatus"]) && $row["educationStatus"] === "ortaOkul") echo "selected"; ?>>
-                                    Orta Okul</option>
-                                <option value="lise"
-                                    <?php if(isset($row["educationStatus"]) && $row["educationStatus"] === "lise") echo "selected"; ?>>
-                                    Lise</option>
-                                <option value="universite"
-                                    <?php if(isset($row["educationStatus"]) && $row["educationStatus"] === "universite") echo "selected"; ?>>
-                                    Üniversite</option>
-                            </select>
-                        </span>
-                    </div>
+                <td data-title="educationStatus" name="educationStatus" class="table_tt table_td">
+                    <select class="input-select" <?php echo isset($row["fullName"]) ? 'disabled' : ''; ?>>
+                        <option value="ilkOkul"
+                            <?php if(isset($row["educationStatus"]) && $row["educationStatus"] === "ilkOkul") echo "selected"; ?>>
+                            İlk Okul</option>
+                        <option value="ortaOkul"
+                            <?php if(isset($row["educationStatus"]) && $row["educationStatus"] === "ortaOkul") echo "selected"; ?>>
+                            Orta Okul</option>
+                        <option value="lise"
+                            <?php if(isset($row["educationStatus"]) && $row["educationStatus"] === "lise") echo "selected"; ?>>
+                            Lise</option>
+                        <option value="universite"
+                            <?php if(isset($row["educationStatus"]) && $row["educationStatus"] === "universite") echo "selected"; ?>>
+                            Üniversite</option>
+                    </select>
                 </td>
-                <td data-title="Iban" name="Iban" class="p-0 br-end">
-                    <div class="toplu-td-div">
-                        <span class="border-1">
-                            <input type="text" class="input-select" value="<?php echo $row["Iban"] ?? ''; ?>"
-                                <?php echo isset($row["fullName"]) ? 'readonly' : ''; ?> />
-                        </span>
-                    </div>
+                <td data-title="Iban" name="Iban" class="table_tt table_td">
+                    <input type="text" class="input-select" value="<?php echo $row["Iban"] ?? ''; ?>"
+                        <?php echo isset($row["fullName"]) ? 'readonly' : ''; ?> />
                 </td>
-                <td data-title="startingWorking" name="startingWorking" class="p-0 br-end">
-                    <div class="toplu-td-div">
-                        <span class="border-1">
-                            <input type="date" class="input-select" value="<?php echo $row["startingWorking"] ?? ''; ?>"
-                                <?php echo isset($row["fullName"]) ? 'readonly' : ''; ?> />
-                        </span>
-                    </div>
+                <td data-title="startingWorking" name="startingWorking" class="table_tt table_td">
+                    <input type="date" class="input-select" value="<?php echo $row["startingWorking"] ?? ''; ?>"
+                        <?php echo isset($row["fullName"]) ? 'readonly' : ''; ?> />
                 </td>
-                <td data-title="task" name="task" class="p-0 br-end">
-                    <div class="toplu-td-div">
-                        <span class="border-1">
-                            <input type="text" class="input-select" value="<?php echo $row["task"] ?? ''; ?>"
-                                <?php echo isset($row["fullName"]) ? 'readonly' : ''; ?> />
-                        </span>
-                    </div>
+                <td data-title="task" name="task" class="table_tt table_td">
+                    <input type="text" class="input-select" value="<?php echo $row["task"] ?? ''; ?>"
+                        <?php echo isset($row["fullName"]) ? 'readonly' : ''; ?> />
                 </td>
-                <td data-title="sigorta" name="sigorta" class="p-0 br-end">
-                    <div class="toplu-td-div">
-                        <span class="border-1">
-                            <input type="text" class="input-select" value="<?php echo $row["sigortaNo"] ?? ''; ?>"
-                                <?php echo isset($row["fullName"]) ? 'readonly' : ''; ?> />
-                        </span>
-                    </div>
+                <td data-title="sigorta" name="sigorta" class="table_tt table_td">
+                    <input type="text" class="input-select" value="<?php echo $row["sigortaNo"] ?? ''; ?>"
+                        <?php echo isset($row["fullName"]) ? 'readonly' : ''; ?> />
                 </td>
-                <td data-title="salary" name="salary" class="p-0 br-end">
-                    <div class="toplu-td-div">
-                        <span class="border-1">
-                            <input type="text" class="input-select" value="<?php echo $row["salary"] ?? ''; ?>"
-                                <?php echo isset($row["fullName"]) ? 'readonly' : ''; ?> />
-                        </span>
-                    </div>
+                <td data-title="salary" name="salary" class="table_tt table_td">
+                    <input type="text" class="input-select" value="<?php echo $row["salary"] ?? ''; ?>"
+                        <?php echo isset($row["fullName"]) ? 'readonly' : ''; ?> />
                 </td>
-                <td data-title="unit" name="unit" class="p-0 br-end">
-                    <div class="toplu-td-div">
-                        <span class="border-1">
-                            <input type="text" class="input-select" value="<?php echo $row["unit"] ?? ''; ?>"
-                                <?php echo isset($row["fullName"]) ? 'readonly' : ''; ?> />
-                        </span>
-                    </div>
+                <td data-title="unit" name="unit" class="table_tt table_td">
+                    <input type="text" class="input-select" value="<?php echo $row["unit"] ?? ''; ?>"
+                        <?php echo isset($row["fullName"]) ? 'readonly' : ''; ?> />
                 </td>
-                <td data-title="openingBalance" name="openingBalance" class="p-0 br-end">
-                    <div class="toplu-td-div">
-                        <span class="border-1">
-                            <input type="text" class="input-select" value="<?php echo $row["openingBalance"] ?? ''; ?>"
-                                <?php echo isset($row["fullName"]) ? 'readonly' : ''; ?> />
-                        </span>
-                    </div>
+                <td data-title="openingBalance" name="openingBalance" class="table_tt table_td">
+                    <input type="text" class="input-select" value="<?php echo $row["openingBalance"] ?? ''; ?>"
+                        <?php echo isset($row["fullName"]) ? 'readonly' : ''; ?> />
                 </td>
-                <td data-title="balanceType" name="balanceType" class="p-0 br-end">
-                    <div class="toplu-td-div">
-                        <span class="border-1">
-                            <select class="input-select" <?php echo isset($row["balanceType"]) ? 'disabled' : ''; ?>>
-                                <option value="TL"
-                                    <?php if(isset($row["balanceType"]) && $row["balanceType"] === "TL") echo "selected"; ?>>
-                                    TL</option>
-                                <option value="Euro"
-                                    <?php if(isset($row["balanceType"]) && $row["balanceType"] === "Euro") echo "selected"; ?>>
-                                    Euro</option>
-                                <option value="Dolar"
-                                    <?php if(isset($row["balanceType"]) && $row["balanceType"] === "Dolar") echo "selected"; ?>>
-                                    Dolar</option>
-                            </select>
-                        </span>
-                    </div>
+                <td data-title="balanceType" name="balanceType" class="table_tt table_td">
+                    <select class="input-select" <?php echo isset($row["balanceType"]) ? 'disabled' : ''; ?>>
+                        <option value="TL"
+                            <?php if(isset($row["balanceType"]) && $row["balanceType"] === "TL") echo "selected"; ?>>
+                            TL</option>
+                        <option value="Euro"
+                            <?php if(isset($row["balanceType"]) && $row["balanceType"] === "Euro") echo "selected"; ?>>
+                            Euro</option>
+                        <option value="Dolar"
+                            <?php if(isset($row["balanceType"]) && $row["balanceType"] === "Dolar") echo "selected"; ?>>
+                            Dolar</option>
+                    </select>
                 </td>
-                <td data-title="promise" name="promise" class="p-0 br-end">
-                    <div class="toplu-td-div">
-                        <span class="border-1">
-                            <input type="Date" class="input-select" value="<?php echo $row["promise"] ?? ''; ?>"
-                                <?php echo isset($row["fullName"]) ? 'readonly' : ''; ?> />
-                        </span>
-                    </div>
+                <td data-title="promise" name="promise" class="table_tt table_td">
+                    <input type="Date" class="input-select" value="<?php echo $row["promise"] ?? ''; ?>"
+                        <?php echo isset($row["fullName"]) ? 'readonly' : ''; ?> />
                 </td>
             </tr>
             <?php

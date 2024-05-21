@@ -199,8 +199,8 @@ try {
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6 col margint">
-                <div class="select-div m-0">
+            <div class="col-md-6 col margint mt-0">
+                <div class="select-div">
                     <input class="search-selectx input" type="text" list="Users" id="userInput" required="" />
                     <label class="selectx-label" for="userInput" for="gender">Cinsiyet :</label>
                     <ul class="value-listx" id="userInputDrop">
@@ -209,31 +209,30 @@ try {
                     </ul>
                 </div>
             </div>
- <!--   yusufum bunlar eklenecek öğrenim durumu altına
-                <ul class="value-listx">
-                    <li class="li-select" data-user-id="Erkek">ilkokul</li>
-                    <li class="li-select" data-user-id="Kadin">ortaokul</li>
-                    <li class="li-select" data-user-id="Kadin">lise</li>
-                    <li class="li-select" data-user-id="Kadin">üniversite</li>
-                </ul>-->
-            <div class="col-md-6 col margint">
-                <input class="input" type="text" name="educationStatus" required="">
-                <label for="educationStatus">Öğrenim Durumu</label>
+
+            <div class="col-md-6 col margint mt-0">
+                <div class="select-div">
+                    <input class="search-selectx input" type="text" list="Users" id="educationStatus" name="educationStatus" required="" />
+                    <label class="selectx-label" for="educationStatus" for="gender">Öğrenim Durumu :</label>
+                    <ul class="value-listx" id="educationStatusDrop">
+                    <li class="li-select" data-user-id="ilkokul">ilkokul</li>
+                    <li class="li-select" data-user-id="ortaokul">ortaokul</li>
+                    <li class="li-select" data-user-id="lise">lise</li>
+                    <li class="li-select" data-user-id="üniversite">üniversite</li>
+                    </ul>
+                </div>
             </div>
         </div>
 
         <div class="row">
-            <!-- ibana satırına bakılacak
-                    yusuf burada oninputdan dolayı bir bozulma mevcut bakarsın.
-            -->
             <div class="col-md-6 col margint">
-                <input class="input" type="text" id="iban" name="iban" maxlength="28" oninput="addTRPrefix(this)">
+                <input class="input" type="text" id="iban" name="iban" maxlength="28" oninput="addTRPrefix(this)" required="" />
                 <label for="iban">Iban</label>
             </div>
-            <!-- labela da bir baks -->
+            <!-- labela Bakilicak Kutuphane ile Yapilicak -->
             <div class="col-md-6 col margint">
                 <input class="input" type="date" name="startingWorking" required="">
-                <!-- <label for="startingWorking">İşe Giriş Tarihi</label> -->
+                <label for="startingWorking">İşe Giriş Tarihi</label>
             </div>
         </div>
 
@@ -254,18 +253,23 @@ try {
                 <input class="input" type="text" name="salary" required="">
                 <label for="salary">Maaş</label>
             </div>
-            <!-- buraya da liler eklesene yusuf bee 
-                    t'le euro gibi şeyler koyarız
-            -->
-            <div class="col-md-6 col margint">
-                <input class="input" type="text" name="unit" required="">
-                <label for="unit">Brim</label>
+            <div class="col-md-6 col margint mt-0">
+                <div class="select-div">
+                    <input class="search-selectx input" type="text" list="Users" id="unit" required="" />
+                    <label class="selectx-label" for="unit" for="gender">Brim :</label>
+                    <ul class="value-listx" id="unitDrop">
+                        <li class="li-select" data-user-id="tl">TL</li>
+                        <li class="li-select" data-user-id="euro">EURO</li>
+                        <li class="li-select" data-user-id="dolar">DOLAR</li>
+                    </ul>
+                </div>
             </div>
         </div>
         <!-- buraya bak yusuf bunlara css atılacak -->
         <div class="row">
-            <div class="col-md-6 col margint">
-                <input class="input" type="checkbox" name="onay" id="onay" onchange="toggleDisplay()" required="">
+            <div class="col-md-6 check-label margint">
+                <input onchange="toggleDisplay()" type="checkbox" id="onay" name="onay" value="bakiye">
+                <label for="onay"> Açılış Bakiyesi Ekleme</label>
             </div>
         </div>
 
@@ -277,16 +281,25 @@ try {
                 </div>
 
                 <div class="col-md-6 col margint">
-                    <select name="balanceType">
+                    <div class="select-div m-0">
+                        <input class="search-selectx input" type="text" list="Users" id="userInput-bakiye" required="" />
+                        <label class="selectx-label" for="userInput-bakiye" for="gender">Durum :</label>
+                        <ul class="value-listx" id="userInputDrop-bakiye">
+                            <li class="li-select" data-user-id="Borç">Borç</li>
+                            <li class="li-select" data-user-id="Alacak">Alacak</li>
+                        </ul>
+                    </div>
+                    <!-- fatih burdaki selecti iptal ettim yeni select bu yukardaki -->
+                    <!-- <select name="balanceType">
                         <option value=""></option>
                         <option value="Borç">Borç</option>
                         <option value="Alacak">Alacak</option>
-                    </select>
+                    </select> -->
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-md-6 col margint">
+                <div class="col-md-6 col-btn margint">
                     <input class="input" type="date" name="promise" required="">
                 </div>
             </div>
@@ -315,8 +328,15 @@ try {
             <div class="col-md-12 col-btn mb-0">
                 <a class="ahref btn-custom-daire w-100" href="index?parametre=TopluPersonel">Toplu Personel Ekleme</a>
                 <a class="ahref btn-custom-daire w-100" href="Controller/Employeed/excelCreate.php" id="excelDownload" download="PersonelEkle.xlsx">Excel İndir</a>
-                <input type="file" id="excel_file" accept=".xlsx">
-                <button id="upload_btn">Gönder</button>
+                <p class="text-left">Excel İle Kullanıcı Ekleme:</p>
+                <div class="upload-box">
+                    <input type="file" id="excel_file" accept=".xlsx" hidden>
+                    <label for="excel_file" class="file_label">Dosya Seçin</label>
+                    <!-- name of file chosen -->
+                    <span id="file-chosen"></span>
+
+                    <button id="upload_btn">Gönder</button>
+                </div>
                 <!--bakılacak excel-->
             </div>
         </div>
@@ -432,19 +452,15 @@ function toggleDisplay() {
 <!-- custom gender input start -->
 <script>
 function setupSearchSelect(inputSelector, dropdownSelector) {
-    const table = document.getElementById('example');
-    const rowCount = table.rows.length;
     const inputField = document.querySelector(inputSelector);
     const dropdown = document.querySelector(dropdownSelector);
     const dropdownArray = [...dropdown.querySelectorAll('.li-select')];
     let valueArray = [];
+
     dropdown.classList.add('open');
     inputField.focus();
-    if (rowCount === 0) {
-        console.log("Tablo boş!");
-    }else{
 
-        dropdownArray.forEach(item => {
+    dropdownArray.forEach(item => {
         valueArray.push(item.textContent);
     });
 
@@ -503,9 +519,8 @@ function setupSearchSelect(inputSelector, dropdownSelector) {
 }
 
 setupSearchSelect('#userInput', '#userInputDrop');
-setupSearchSelect('#optionsBlok', '#optionsBlokDrop');
-    }
-
+setupSearchSelect('#educationStatus', '#educationStatusDrop');
+setupSearchSelect('#unit', '#unitDrop');
 </script>
 
 <!-- =============================== -->
@@ -876,7 +891,7 @@ function saveUser() {
     var tc = $('input[name="tc"]').val();
     var phoneNumber = $('input[name="phoneNumber"]').val();
     var userEmail = $('input[name="userEmail"]').val() || null;
-    var gender = $('input#userInput').val();
+    var gender = $('input#userInputgender').val();
     var educationStatus = $('input[name="educationStatus"]').val();
     var iban =  $('input[name="iban"]').val();
     var startingWorking = $('input[name="startingWorking"]').val();
