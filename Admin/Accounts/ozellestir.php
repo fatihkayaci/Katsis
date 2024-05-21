@@ -1,5 +1,4 @@
 <?php require_once "Controller/class.func.php"; ?>
-<?php require_once "Controller/class.func2.php"; ?>
 <!DOCTYPE html>
 <html lang="en">
 

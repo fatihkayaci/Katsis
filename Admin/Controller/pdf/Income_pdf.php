@@ -1,7 +1,7 @@
 <?php
 include ("../../../DB/dbconfig.php");
 require '../../../vendor/autoload.php';
-
+require_once "../class.func.php";
 
 // Dompdf ad alanını referans edin
 use Dompdf\Dompdf;
