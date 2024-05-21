@@ -123,10 +123,18 @@ JOIN
                    <?php echo duzenleSayi($row["borc_miktar"]); ?>
                 </td> 
                 <td data-title="fatura" class="table_tt table_td " contenteditable="false">
+                  <?php 
+                  if($row["maliye_turu"] == 2){
+                  
+                  ?>
+
                 <a href="Controller/pdf/Income_pdf?temp=<?php echo $row["maliye_id"]; ?>" target="_blank">
     <button>fatura</button>
 </a>
-
+<?php 
+                }
+                  
+                  ?>
                 </td> 
                 
 
