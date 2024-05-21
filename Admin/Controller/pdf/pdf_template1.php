@@ -6,15 +6,17 @@
    tbl_maliye.*, 
    tbl_kategori.kategori_adi  
 FROM 
-   tbl_maliye
+   tbl_maliye 
 JOIN 
-   tbl_kategori ON tbl_maliye.kategori_id = tbl_kategori.kategori_id;";
-   
+   tbl_kategori ON tbl_maliye.kategori_id = tbl_kategori.kategori_id
+WHERE 
+   tbl_maliye.maliye_id = $maliye_id;";
+
 
    $stmt = $conn->prepare($sql2);
    $stmt->execute();
    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    print_r($result);
+    
 
 
 
