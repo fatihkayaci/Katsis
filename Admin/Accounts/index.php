@@ -490,6 +490,7 @@ if ($result->rowCount() > 0) {
 
 <script>
     $('#upload_btn').click(function() {
+        event.preventDefault(); 
         var excel_file = $('#excel_file').prop('files')[0];
         var form_data = new FormData();
         form_data.append('excel_file', excel_file);
@@ -501,8 +502,15 @@ if ($result->rowCount() > 0) {
             contentType: false,
             processData: false,
             success: function(response) {
-                alert(response);
-                location.reload();
+                if(response === "Geçersiz dosya yapısı. Lütfen doğru dosyayı yükleyin."){
+                    alert(response);
+                }else if("Kullanıcılar başarıyla yüklendi!"){
+                    alert(response); 
+                    location.reload();
+                }else{
+                    alert(response);
+                }
+                
             },
             error: function(xhr, status, error) {
                 console.error(xhr.responseText);
