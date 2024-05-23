@@ -1219,7 +1219,7 @@ function SaveDaire() {
     var dairePay = document.getElementById("dairePay").value;
     var id = document.getElementById("DaireSaveID").value;
     var f = true;
-
+alert(daireBlok);
     if (daireNo == "") {
         $('#daireNo').css('border-color', '#ff0000');
         $('#daireNoLabel').css('color', '#ff0000');
