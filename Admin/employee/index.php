@@ -258,9 +258,9 @@ try {
                     <input class="search-selectx input" type="text" list="Users" id="unit" required="" />
                     <label class="selectx-label" for="unit" for="gender">Brim :</label>
                     <ul class="value-listx" id="unitDrop">
-                        <li class="li-select" data-user-id="tl">TL</li>
-                        <li class="li-select" data-user-id="euro">EURO</li>
-                        <li class="li-select" data-user-id="dolar">DOLAR</li>
+                        <li class="li-select" data-user-id="tl">TL (₺)</li>
+                        <li class="li-select" data-user-id="euro">EURO (€)</li>
+                        <li class="li-select" data-user-id="dolar">DOLAR ($)</li>
                     </ul>
                 </div>
             </div>
@@ -506,7 +506,6 @@ function setupSearchSelect(inputSelector, dropdownSelector) {
     const dropdownArray = [...dropdown.querySelectorAll('.li-select')];
     let valueArray = [];
 
-    dropdown.classList.add('open');
     inputField.focus();
 
     dropdownArray.forEach(item => {
@@ -514,62 +513,74 @@ function setupSearchSelect(inputSelector, dropdownSelector) {
     });
 
     const closeDropdown = () => {
-        dropdown.classList.remove('open');
+        setTimeout(() => {
+            dropdown.classList.remove('open');
+        }, 100);
     }
 
     inputField.addEventListener('input', () => {
-        dropdown.classList.add('open');
-        let inputValue = inputField.value.toLowerCase();
-        let valueSubstring;
-        if (inputValue.length > 0) {
-            for (let j = 0; j < valueArray.length; j++) {
-                if (!(inputValue.substring(0, inputValue.length) === valueArray[j].substring(0, inputValue
-                        .length).toLowerCase())) {
-                    dropdownArray[j].classList.add('closed');
-                } else {
-                    dropdownArray[j].classList.remove('closed');
-                }
+        setTimeout(() => {
+            dropdown.classList.add('open');
+            let inputValue = inputField.value.toLowerCase();
+            if (inputValue.length > 0) {
+                dropdownArray.forEach((item, j) => {
+                    if (!(inputValue.substring(0, inputValue.length) === valueArray[j].substring(0, inputValue.length).toLowerCase())) {
+                        dropdownArray[j].classList.add('closed');
+                    } else {
+                        dropdownArray[j].classList.remove('closed');
+                    }
+                });
+            } else {
+                dropdownArray.forEach(item => {
+                    item.classList.remove('closed');
+                });
             }
-        } else {
-            dropdownArray.forEach(item => {
-                item.classList.remove('closed');
-            });
-        }
+        }, 100);
     });
 
     dropdownArray.forEach(item => {
         item.addEventListener('click', (evt) => {
-            selectedUserID = evt.target.dataset.userId;
-            inputField.value = item.textContent;
-            dropdownArray.forEach(dropdown => {
-                dropdown.classList.add('closed');
-            });
+            setTimeout(() => {
+                const selectedUserID = evt.target.dataset.userId;
+                inputField.value = item.textContent;
+                dropdownArray.forEach(dropdown => {
+                    dropdown.classList.add('closed');
+                });
+            }, 100);
         });
     });
 
     inputField.addEventListener('focus', () => {
-        dropdown.classList.add('open');
-        dropdownArray.forEach(dropdown => {
-            dropdown.classList.remove('closed');
-        });
+        setTimeout(() => {
+            dropdown.classList.add('open');
+            dropdownArray.forEach(dropdown => {
+                dropdown.classList.remove('closed');
+            });
+        }, 100);
     });
 
     inputField.addEventListener('blur', () => {
-        dropdown.classList.remove('open');
+        setTimeout(() => {
+            dropdown.classList.remove('open');
+        }, 100);
     });
 
     document.addEventListener('click', (evt) => {
-        const isDropdown = dropdown.contains(evt.target);
-        const isInput = inputField.contains(evt.target);
-        if (!isDropdown && !isInput) {
-            dropdown.classList.remove('open');
-        }
+        setTimeout(() => {
+            const isDropdown = dropdown.contains(evt.target);
+            const isInput = inputField.contains(evt.target);
+            if (!isDropdown && !isInput) {
+                dropdown.classList.remove('open');
+            }
+        }, 100);
     });
 }
 
 setupSearchSelect('#userInput', '#userInputDrop');
 setupSearchSelect('#educationStatus', '#educationStatusDrop');
 setupSearchSelect('#unit', '#unitDrop');
+setupSearchSelect('#userInput-bakiye', '#userInputDrop-bakiye');
+
 </script>
 
 <!-- =============================== -->

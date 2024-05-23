@@ -108,7 +108,7 @@ JOIN
                 <td data-title="durum" class="table_tt table_td Task" contenteditable="false">
                   <?php
                   if($row["maliye_turu"]==2){
-                    echo "Ödendi";
+                    echo "<p class='main-durum odendi'>Ödendi</p>";
                   }else{
                     echo ZamanFarki(date("Y-m-d"), $row["odeme_tar"]);
                   }
@@ -129,9 +129,9 @@ JOIN
                   ?>
 
                 <a href="Controller/pdf/Income_pdf?temp=<?php echo $row["maliye_id"]; ?>" target="_blank">
-    <button>fatura</button>
-</a>
-<?php 
+                    <button class="fatura_btn"><i class="fa-solid fa-file-export"></i> Fatura</button>
+                </a>
+                <?php 
                 }
                   
                   ?>
