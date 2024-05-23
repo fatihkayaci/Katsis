@@ -179,7 +179,7 @@ if ($result->rowCount() > 0) {
             <p class="adet-txt">Adet Veri Gösteriliyor</p>
 
         </div>
-        <button id="exportButton">Excel'e Aktar</button>
+        <button class="export-btn" id="exportButton">Excel'e Aktar</button>
         <div class="input-group1">
 
             <ul class="pagination">

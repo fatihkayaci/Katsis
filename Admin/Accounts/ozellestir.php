@@ -944,73 +944,79 @@ $('#label_tarih3').css('color', '#0d0c22');
 
 <script>
 function setupSearchSelect(inputSelector, dropdownSelector) {
-  const inputField = document.querySelector(inputSelector);
-  const dropdown = document.querySelector(dropdownSelector);
-  
-  const dropdownArray = [...dropdown.querySelectorAll('.li-select')];
-  let valueArray = [];
+    const inputField = document.querySelector(inputSelector);
+    const dropdown = document.querySelector(dropdownSelector);
+    const dropdownArray = [...dropdown.querySelectorAll('.li-select')];
+    let valueArray = [];
 
-  dropdown.classList.add('open');
-  inputField.focus();
+    inputField.focus();
 
-  dropdownArray.forEach(item => {
- 
-    valueArray.push(item.textContent);
-  });
-
-  const closeDropdown = () => {
-    dropdown.classList.remove('open');
-  }
-
-  inputField.addEventListener('input', () => {
-    inputField.setAttribute("data-user-id", "");
-    dropdown.classList.add('open');
-    let inputValue = inputField.value.toLowerCase();
-    let valueSubstring;
-    if (inputValue.length > 0) {
-      for (let j = 0; j < valueArray.length; j++) {
-        if (!(inputValue.substring(0, inputValue.length) === valueArray[j].substring(0, inputValue.length).toLowerCase())) {
-          dropdownArray[j].classList.add('closed'); 
-        } else {
-          dropdownArray[j].classList.remove('closed');
-        }
-      }
-    } else {
-      dropdownArray.forEach(item => {
-        item.classList.remove('closed');
-      });
-    }
-  });
-
-  dropdownArray.forEach(item => {
-    item.addEventListener('click', (evt) => {
-      selectedUserID = evt.target.dataset.userId;
-      inputField.setAttribute("data-user-id", selectedUserID);
-      inputField.value = item.textContent;
-      dropdownArray.forEach(dropdown => {
-        dropdown.classList.add('closed');
-      });
+    dropdownArray.forEach(item => {
+        valueArray.push(item.textContent);
     });
-  });
 
-  inputField.addEventListener('focus', () => {
-    dropdown.classList.add('open');
-    dropdownArray.forEach(dropdown => {
-      dropdown.classList.remove('closed');
-    });
-  });
-
-  inputField.addEventListener('blur', () => {
-    dropdown.classList.remove('open');
-  });
-
-  document.addEventListener('click', (evt) => {
-    const isDropdown = dropdown.contains(evt.target);
-    const isInput = inputField.contains(evt.target);
-    if (!isDropdown && !isInput) {
-      dropdown.classList.remove('open');
+    const closeDropdown = () => {
+        setTimeout(() => {
+            dropdown.classList.remove('open');
+        }, 100);
     }
-  });
+
+    inputField.addEventListener('input', () => {
+        setTimeout(() => {
+            dropdown.classList.add('open');
+            let inputValue = inputField.value.toLowerCase();
+            if (inputValue.length > 0) {
+                dropdownArray.forEach((item, j) => {
+                    if (!(inputValue.substring(0, inputValue.length) === valueArray[j].substring(0, inputValue.length).toLowerCase())) {
+                        dropdownArray[j].classList.add('closed');
+                    } else {
+                        dropdownArray[j].classList.remove('closed');
+                    }
+                });
+            } else {
+                dropdownArray.forEach(item => {
+                    item.classList.remove('closed');
+                });
+            }
+        }, 100);
+    });
+
+    dropdownArray.forEach(item => {
+        item.addEventListener('click', (evt) => {
+            setTimeout(() => {
+                const selectedUserID = evt.target.dataset.userId;
+                inputField.value = item.textContent;
+                dropdownArray.forEach(dropdown => {
+                    dropdown.classList.add('closed');
+                });
+            }, 100);
+        });
+    });
+
+    inputField.addEventListener('focus', () => {
+        setTimeout(() => {
+            dropdown.classList.add('open');
+            dropdownArray.forEach(dropdown => {
+                dropdown.classList.remove('closed');
+            });
+        }, 100);
+    });
+
+    inputField.addEventListener('blur', () => {
+        setTimeout(() => {
+            dropdown.classList.remove('open');
+        }, 100);
+    });
+
+    document.addEventListener('click', (evt) => {
+        setTimeout(() => {
+            const isDropdown = dropdown.contains(evt.target);
+            const isInput = inputField.contains(evt.target);
+            if (!isDropdown && !isInput) {
+                dropdown.classList.remove('open');
+            }
+        }, 100);
+    });
 }
 
 setupSearchSelect('#kategori', '#kategoriDrop');
