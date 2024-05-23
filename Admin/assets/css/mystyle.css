@@ -1700,7 +1700,8 @@ min-width: 0;
   list-style: none;
   margin-top: 33px;
   max-height: 0;
-  transition: .3s ease-in-out;
+  transition: opacity .3s ease-in-out;
+  opacity: 0;
   z-index: 9999;
   overflow: hidden;
   background-color: #fff;
@@ -1710,6 +1711,7 @@ min-width: 0;
    overflow: auto;
    border: 1px solid #cccccc;
    border-radius: 4px;
+   opacity: 1;
   }
   
   .li-select {
@@ -1729,9 +1731,7 @@ min-width: 0;
     }
     
     &.closed {
-      max-height: 0;
       overflow: hidden;
-      padding: 0;
       opacity: 0;
     }
   }
@@ -2608,4 +2608,33 @@ min-width: 0;
 
 .horizontal {
   height: 1px;
+}
+
+.fatura_btn {
+  padding: 5px 10px;
+  max-width: 420px;
+  transition: 0.3s;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-family: 'poppins-medium';
+  font-weight: 500;
+  background-color: #277CE0;
+  color: #fff;
+  outline: none;
+  border: 1px solid #277CE0;
+  vertical-align: bottom;
+}
+
+.fatura_btn:hover {
+  background-color: #1c5aa1;
+}
+
+.odendi {
+  border: 1px solid #4BB543;
+  background-color: #4BB543;
+  color: #fff;
+  cursor: initial;
+  margin-left: 0;
+  margin-bottom: 0;
 }

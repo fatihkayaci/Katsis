@@ -513,7 +513,7 @@ try {
                 <div class="select-div">
                     <input class="search-selectx input" type="text" list="Users" id="userInput" required="" />
                     <label class="selectx-label" for="userInput">Kullanıcılar :</label>
-                    <ul class="value-listx">
+                    <ul class="value-listx" id="userDrop">
                         <?php 
                             foreach($UserList as $user){
                              echo '                                        
@@ -562,31 +562,33 @@ try {
                 <label for="daireKat">Kat :</label>
             </div>
             <div class="col-md-6 col">
-                <select class="input select-ayar" id="daireBlok" required="">
-                    <option style="display: none;" value="" disabled selected></option>
-                    <?php
-
-                foreach ($blokList as $s ){
-                    echo "  <option value='".$s['blok_id']."'>".$s['blok_adi']."</option>";
-
-                }
-                  ?>
-                </select>
-                <label id="daireBlokLabel" for="daireBlok">Blok: *</label>
+                <div class="select-div">
+                    <input class="search-selectx input" type="text" list="blok" id="daireBlok" required="" />
+                    <label class="selectx-label" for="daireBlok">Blok: *</label>
+                    <ul class="value-listx" id="daireBlokDrop">
+                        <?php 
+                            foreach($blokList as $s){
+                             echo '                                        
+                                <li class="li-select" data-user-id="' . $s['blok_id'] . '">' . $s['blok_adi'] . '</li>';
+                            }
+                        ?>
+                    </ul>
+                </div>
             </div>
 
             <div class="col-md-6 col">
-                <select class="input select-ayar" id="daireGrup" required="">
-                    <option style="display: none;" value="" disabled selected></option>
-                    <?php
-
-                        foreach ($grupList as $s ){
-                            echo "  <option value='".$s['grup_id']."'>".$s['grup_adi']."</option>";
-
-                        }
-                    ?>
-                </select>
-                <label for="daireGrup">Daire Grubu :</label>
+                <div class="select-div">
+                    <input class="search-selectx input" type="text" list="dairegrup" id="daireGrup" required="" />
+                    <label class="selectx-label" for="daireGrup">Blok: *</label>
+                    <ul class="value-listx" id="daireGrupDrop">
+                        <?php 
+                            foreach($grupList as $s){
+                             echo '                                        
+                                <li class="li-select" data-user-id="' . $s['grup_id'] . '">' . $s['grup_adi'] . '</li>';
+                            }
+                        ?>
+                    </ul>
+                </div>
             </div>
             <div class="col-md-6 col">
                 <input class="input" type="text" id="daireBrut" onkeypress="onlyNumberKey(event)" required="" />
@@ -1287,75 +1289,85 @@ $('#daireBlok').focus(function() {
 });
 
 
-const inputField = document.querySelector('.search-selectx');
-const dropdown = document.querySelector('.value-listx');
-const dropdownArray = [...document.querySelectorAll('.li-select')];
-console.log(typeof dropdownArray)
-dropdown.classList.add('open');
-inputField.focus();
-let valueArray = [];
-var newUser = false;
-dropdownArray.forEach(item => {
-    valueArray.push(item.textContent);
-});
+function setupSearchSelect(inputSelector, dropdownSelector) {
+    const inputField = document.querySelector(inputSelector);
+    const dropdown = document.querySelector(dropdownSelector);
+    const dropdownArray = [...dropdown.querySelectorAll('.li-select')];
+    let valueArray = [];
 
-const closeDropdown = () => {
-    dropdown.classList.remove('open');
-}
+    inputField.focus();
 
-inputField.addEventListener('input', () => {
-    selectedUserID ="";
-    dropdown.classList.add('open');
-    let inputValue = inputField.value.toLowerCase();
-    let valueSubstring;
-    if (inputValue.length > 0) {
-        for (let j = 0; j < valueArray.length; j++) {
-            if (!(inputValue.substring(0, inputValue.length) === valueArray[j].substring(0, inputValue.length)
-                    .toLowerCase())) {
-                dropdownArray[j].classList.add('closed'); /* yeni ibaresi gelicek */
-                newUser = true;
-            } else {
-                dropdownArray[j].classList.remove('closed');
-                newUser = false;
-            }
-        }
-    } else {
-        for (let i = 0; i < dropdownArray.length; i++) {
-            dropdownArray[i].classList.remove('closed');
-        }
+    dropdownArray.forEach(item => {
+        valueArray.push(item.textContent);
+    });
+
+    const closeDropdown = () => {
+        setTimeout(() => {
+            dropdown.classList.remove('open');
+        }, 100);
     }
-});
 
-dropdownArray.forEach(item => {
-    item.addEventListener('click', (evt) => {
-        selectedUserID = evt.target.dataset.userId;
-        inputField.value = item.textContent;
-        dropdownArray.forEach(dropdown => {
-            dropdown.classList.add('closed');
+    inputField.addEventListener('input', () => {
+        setTimeout(() => {
+            dropdown.classList.add('open');
+            let inputValue = inputField.value.toLowerCase();
+            if (inputValue.length > 0) {
+                dropdownArray.forEach((item, j) => {
+                    if (!(inputValue.substring(0, inputValue.length) === valueArray[j].substring(0, inputValue.length).toLowerCase())) {
+                        dropdownArray[j].classList.add('closed');
+                    } else {
+                        dropdownArray[j].classList.remove('closed');
+                    }
+                });
+            } else {
+                dropdownArray.forEach(item => {
+                    item.classList.remove('closed');
+                });
+            }
+        }, 100);
+    });
+
+    dropdownArray.forEach(item => {
+        item.addEventListener('click', (evt) => {
+            setTimeout(() => {
+                const selectedUserID = evt.target.dataset.userId;
+                inputField.value = item.textContent;
+                dropdownArray.forEach(dropdown => {
+                    dropdown.classList.add('closed');
+                });
+            }, 100);
         });
     });
-})
 
-inputField.addEventListener('focus', () => {
-
-    dropdown.classList.add('open');
-    dropdownArray.forEach(dropdown => {
-        dropdown.classList.remove('closed');
+    inputField.addEventListener('focus', () => {
+        setTimeout(() => {
+            dropdown.classList.add('open');
+            dropdownArray.forEach(dropdown => {
+                dropdown.classList.remove('closed');
+            });
+        }, 100);
     });
-});
 
-inputField.addEventListener('blur', () => {
-    
-    dropdown.classList.remove('open');
-});
+    inputField.addEventListener('blur', () => {
+        setTimeout(() => {
+            dropdown.classList.remove('open');
+        }, 100);
+    });
 
-document.addEventListener('click', (evt) => {
-    const isDropdown = dropdown.contains(evt.target);
-    const isInput = inputField.contains(evt.target);
-    if (!isDropdown && !isInput) {
-        dropdown.classList.remove('open');
-    }
-});
+    document.addEventListener('click', (evt) => {
+        setTimeout(() => {
+            const isDropdown = dropdown.contains(evt.target);
+            const isInput = inputField.contains(evt.target);
+            if (!isDropdown && !isInput) {
+                dropdown.classList.remove('open');
+            }
+        }, 100);
+    });
+}
+
+setupSearchSelect('#userInput', '#userDrop');
+setupSearchSelect('#daireBlok', '#daireBlokDrop');
+setupSearchSelect('#daireGrup', '#daireGrupDrop');
 
 
 
