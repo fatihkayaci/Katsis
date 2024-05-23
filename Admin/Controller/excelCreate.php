@@ -54,76 +54,35 @@ $sheet->getColumnDimension('L')->setWidth(20);
 
 /*kısıtlamalar başlangıç*/
 
-// // 'Blok Adi' sütununa verileri veritabanından çek
-// $blokAdiValues = []; // Veritabanından alınacak Blok Adi verilerinin saklanacağı dizi
-// $sql = "SELECT DISTINCT b.*
-// FROM tbl_daireler AS d
-// INNER JOIN tbl_blok AS b ON d.blok_adi = b.blok_id
-// WHERE d.apartman_id = " . $_SESSION["apartID"];
 
-// $stmt = $conn->query($sql); // PDOStatement nesnesi oluştur
+// TC Kimlik No uzunluğunu kontrol etmek için veri doğrulama ekleyin
+for ($row = 2; $row <= 1000; $row++) {
+    $tcValidation = $sheet->getCell('E'.$row)->getDataValidation();
+    $tcValidation->setType(DataValidation::TYPE_CUSTOM)
+        ->setErrorStyle(DataValidation::STYLE_STOP)
+        ->setAllowBlank(true)
+        ->setShowInputMessage(true)
+        ->setShowErrorMessage(true)
+        ->setShowDropDown(true)
+        ->setErrorTitle('Hatalı Giriş')
+        ->setError('TC Kimlik No 11 haneli olmalıdır.')
+        ->setFormula1('=LEN(E'.$row.')=11'); // İlgili hücrenin uzunluğunu kontrol eder
+}
 
-// if ($stmt) {
-//     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-//         $blokAdiValues[] = $row['blok_adi'];
-//     }
-// } else {
-//     // Veritabanı sorgusunda bir hata oluştuğunda burada işlem yapabilirsiniz
-//     echo "Veritabanı hatası: " . $conn->errorInfo()[2];
-// }
-// // 'Blok Adi' sütununa veri doğrulamasını uygula
-// for ($row = 2; $row <= 1000; $row++) {
-//     $validation = $sheet->getCell('A' . $row)->getDataValidation();
-//     $validation->setType(DataValidation::TYPE_LIST)
-//         ->setErrorStyle(DataValidation::STYLE_INFORMATION)
-//         ->setAllowBlank(true)
-//         ->setShowInputMessage(true)
-//         ->setShowErrorMessage(true)
-//         ->setShowDropDown(true)
-//         ->setErrorTitle('Hatalı Giriş')
-//         ->setError('Lütfen geçerli bir blok adı seçin.')
-//         ->setPromptTitle('Blok Adi')
-//         ->setPrompt('Blok Adi seçiniz.')
-//         ->setFormula1('"'.implode(',', $blokAdiValues).'"');
-// }
+for ($row = 2; $row <= 1000; $row++) { 
+    $phoneValidation = $sheet->getCell('F'.$row)->getDataValidation();
+    $phoneValidation->setType(DataValidation::TYPE_CUSTOM)
+        ->setErrorStyle(DataValidation::STYLE_STOP)
+        ->setAllowBlank(true)
+        ->setShowInputMessage(true)
+        ->setShowErrorMessage(true)
+        ->setShowDropDown(true)
+        ->setErrorTitle('Hatalı Giriş')
+        ->setError('Telefon Numarası 10 haneli olmalıdır.')
+        ->setFormula1('=LEN(F'.$row.')=10'); // İlgili hücrenin uzunluğunu kontrol eder
+}
 
-// $daireAdiValues = []; // Veritabanından alınacak Blok Adi verilerinin saklanacağı dizi
-// $sqlDaire = "SELECT DISTINCT daire_sayisi
-// FROM tbl_daireler 
-// WHERE apartman_id = " . $_SESSION["apartID"];
-// $stmt2 = $conn->query($sqlDaire); // PDOStatement nesnesi oluştur
-
-// if ($stmt2) {
-//     $daireAdiValues = array();
-//     while ($row = $stmt2->fetch(PDO::FETCH_ASSOC)) {
-//         $daireAdiValues[] = $row['daire_sayisi'];
-//     }
-//     // Her bir değeri yalnızca bir kere gösteren bir dizi elde etmek için array_unique kullan
-//     $uniqueDaireAdiValues = array_unique($daireAdiValues);
-// } else {
-//     // Veritabanı sorgusunda bir hata oluştuğunda burada işlem yapabilirsiniz
-//     echo "Veritabanı hatası: " . $conn->errorInfo()[2];
-// }
-
-// // 'Blok Adi' sütununa veri doğrulamasını uygula
-// for ($row = 2; $row <= 1000; $row++) {
-//     $validation = $sheet->getCell('B' . $row)->getDataValidation();
-//     $validation->setType(DataValidation::TYPE_LIST)
-//         ->setErrorStyle(DataValidation::STYLE_INFORMATION)
-//         ->setAllowBlank(true)
-//         ->setShowInputMessage(true)
-//         ->setShowErrorMessage(true)
-//         ->setShowDropDown(true)
-//         ->setErrorTitle('Hatalı Giriş')
-//         ->setError('Lütfen geçerli bir blok adı seçin.')
-//         ->setPromptTitle('Blok Adi')
-//         ->setPrompt('Blok Adi seçiniz.')
-//         ->setFormula1('"'.implode(',', $uniqueDaireAdiValues).'"');
-// }
-
-// 'Durum' sütununda geçerli değerleri tanımlayın
 $validStatusValues = ['Katmaliki', 'Kiracı'];
-// 'Durum' sütununun veri doğrulamasını tüm 'Durum' sütununa uygulayın
 for ($row = 2; $row <= 1000; $row++) { // Sütunun kaç satıra kadar devam edeceğini belirtmek için 1000 kullanıldı, gerektiği kadar değiştirilebilir.
     $validation = $sheet->getCell('C' . $row)->getDataValidation();
     $validation->setType(DataValidation::TYPE_LIST)

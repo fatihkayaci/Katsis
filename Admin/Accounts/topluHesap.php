@@ -402,11 +402,11 @@
 
                     if ((katMalikiUserName !== "") && !initialData.some(function(item) {
                             return item.userName === katMalikiUserName && item.durum ===
-                                "katmaliki" && item.blok === blokAdiText;
+                                "katMaliki" && item.blok === blokAdiText;
                         })) {
                         newEntries.push({
                             userName: katMalikiUserName,
-                            durum: "katmaliki",
+                            durum: "katMaliki",
                             blok: blokAdiText,
                             tc: katMalikiTC,
                             telefon: katMalikiPhone,
@@ -421,10 +421,10 @@
                             "" || katMalikiEmail !== "" || katMalikiPlate !== "" ||
                             katMalikiOpeningBalance !== "") && !initialData.some(function(item) {
                             return item.userName === katMalikiUserName && item.durum ===
-                                "katmaliki" && item.blok === blokAdiText;
+                                "katMaliki" && item.blok === blokAdiText;
                         })) {
                         alert(blokAdiText +
-                            " daire KatMaliki kullanıcısı ad soyad sütünu boş bırakılmıştır lütfen doldurunuz."
+                            " daire Kat Maliki kullanıcısı ad soyad sütünu boş bırakılmıştır lütfen doldurunuz."
                             );
                         hasError = true;
                         return false; // Döngüden çık

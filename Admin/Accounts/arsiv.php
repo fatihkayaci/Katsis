@@ -140,7 +140,8 @@ try {
             <p class="adet-txt">Adet Veri Gösteriliyor</p>
 
         </div>
-
+        
+        <button id="exportButton">Excel'e Aktar</button>
         <div class="input-group1">
 
             <ul class="pagination">
@@ -260,6 +261,73 @@ try {
 }
 ?>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+<script>
+    document.getElementById("exportButton").addEventListener("click", function() {
+        let table = document.getElementById("example");
+        let rows = table.querySelectorAll("tr");
+        let data = [];
+        
+        rows.forEach((row, rowIndex) => {
+            let cols = row.querySelectorAll("td, th");
+            let rowData = [];
+            let skipRow = false;
+
+            cols.forEach((col, colIndex) => {
+                if (colIndex === 3 && col.innerText.trim() === "Birden Fazla Daire") {
+                    skipRow = true; // Bu satırı atla
+                }
+                if (colIndex !== 0 && !skipRow) { // İlk sütunu ve "Birden Fazla Daire" içeren satırları atla
+                    rowData.push(col.innerText.trim());
+                }
+            });
+
+            if (!skipRow) {
+                data.push(rowData);
+            }
+        });
+
+        let wb = XLSX.utils.book_new();
+        let ws = XLSX.utils.aoa_to_sheet(data);
+
+        // Hücre stillerini tanımlama
+        const headerCellStyle = {
+            font: { bold: true, color: { rgb: "FFFFFF" } }, // Beyaz yazı
+            fill: { fgColor: { rgb: "4F81BD" } }, // Mavi arka plan
+            alignment: { horizontal: "center", vertical: "center" }
+        };
+
+        const dataCellStyle = {
+            alignment: { horizontal: "center", vertical: "center" }
+        };
+
+        // Stil uygulama
+        let range = XLSX.utils.decode_range(ws['!ref']);
+        for (let rowNum = range.s.r; rowNum <= range.e.r; rowNum++) {
+            for (let colNum = range.s.c; colNum <= range.e.c; colNum++) {
+                let cellAddress = { c: colNum, r: rowNum };
+                let cellRef = XLSX.utils.encode_cell(cellAddress);
+                if (!ws[cellRef]) continue; // Hücre boşsa geç
+                if (rowNum === 0) { // Başlık satırlarına stil uygula
+                    ws[cellRef].s = headerCellStyle;
+                } else { // Veri satırlarına stil uygula
+                    ws[cellRef].s = dataCellStyle;
+                }
+            }
+        }
+
+        // Sütun genişliklerini ayarlama
+        ws['!cols'] = [
+            { wpx: 150 }, // Ad Soyad
+            { wpx: 150 }, // Telefon Numarası
+            { wpx: 150 }, // Blok / Daire
+            { wpx: 100 }  // Durum
+        ];
+
+        XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+        XLSX.writeFile(wb, "kullaniciArsivTablosu.xlsx");
+    });
+    </script>
 <script>
 var rows = document.querySelectorAll('#example tbody tr');
 var userIdArray = {};

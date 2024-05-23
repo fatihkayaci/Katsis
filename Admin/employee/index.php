@@ -351,33 +351,82 @@ try {
 
     </form>
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
-
 <script>
-    document.getElementById('exportButton').addEventListener('click', function() {
-      // HTML tablosunu alın
-      var table = document.getElementById('example');
-      
-      // Tabloyu JSON formatına çevir
-      var data = [];
-      var rows = table.querySelectorAll('tr');
-      rows.forEach(function(row, rowIndex) {
-        var rowData = [];
-        row.querySelectorAll('th, td').forEach(function(cell) {
-          rowData.push(cell.innerText);
-        });
-        data.push(rowData);
-      });
-
-      // JSON verisini SheetJS formatına çevir
-      var ws = XLSX.utils.aoa_to_sheet(data);
-      var wb = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
-
-      // Dosyayı oluştur ve indir
-      XLSX.writeFile(wb, 'tablo.xlsx');
+    document.addEventListener('DOMContentLoaded', function () {
+        toggleExportButton();
     });
+
+    function toggleExportButton() {
+        var table = document.getElementById('example');
+        var tbody = table.getElementsByTagName('tbody')[0];
+        var exportButton = document.getElementById('exportButton');
+        var rows = tbody.getElementsByTagName('tr').length;
+
+        if (rows === 0) {
+            exportButton.style.display = 'none';
+        } else {
+            exportButton.style.display = 'inline-block'; // Veya 'block' ya da 'inline', tasarımınıza göre
+        }
+    }
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+<script>
+    document.getElementById("exportButton").addEventListener("click", function() {
+        let table = document.getElementById("example");
+        let rows = table.querySelectorAll("tr");
+        let data = [];
+        rows.forEach((row, rowIndex) => {
+            let cols = row.querySelectorAll("td, th");
+            let rowData = [];
+            cols.forEach((col, colIndex) => {
+                if (colIndex !== 0) { // İlk sütunu atla
+                    rowData.push(col.innerText.trim());
+                }
+            });
+            data.push(rowData);
+        });
+
+        let wb = XLSX.utils.book_new();
+        let ws = XLSX.utils.aoa_to_sheet(data);
+
+        // Hücre stillerini tanımlama
+        const headerCellStyle = {
+            font: { bold: true, color: { rgb: "FFFFFF" } },
+            fill: { fgColor: { rgb: "000000" } },
+            alignment: { horizontal: "center", vertical: "center" }
+        };
+
+        const dataCellStyle = {
+            alignment: { horizontal: "center", vertical: "center" }
+        };
+
+        // Stil uygulama
+        let range = XLSX.utils.decode_range(ws['!ref']);
+        for (let rowNum = range.s.r; rowNum <= range.e.r; rowNum++) {
+            for (let colNum = range.s.c; colNum <= range.e.c; colNum++) {
+                let cellAddress = { c: colNum, r: rowNum };
+                let cellRef = XLSX.utils.encode_cell(cellAddress);
+                if (!ws[cellRef]) continue; // hücre boşsa geç
+                if (rowNum === 0) { // Başlık satırlarına stil uygula
+                    ws[cellRef].s = headerCellStyle;
+                } else { // Veri satırlarına stil uygula
+                    ws[cellRef].s = dataCellStyle;
+                }
+            }
+        }
+
+        // Sütun genişliklerini ayarlama
+        ws['!cols'] = [
+            { wpx: 150 }, 
+            { wpx: 150 }, 
+            { wpx: 150 }, 
+            { wpx: 100 }  
+        ];
+
+        XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+        XLSX.writeFile(wb, "exported_table.xlsx");
+    });
+    </script>
 
 <script>
     $(document).ready(function(){
