@@ -502,6 +502,7 @@ if ($result->rowCount() > 0) {
             contentType: false,
             processData: false,
             success: function(response) {
+                alert(response);
                 if(response === "Geçersiz dosya yapısı. Lütfen doğru dosyayı yükleyin."){
                     alert(response);
                 }else if("Kullanıcılar başarıyla yüklendi!"){
