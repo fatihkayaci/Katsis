@@ -561,8 +561,16 @@ try {
                 <input class="input" type="text" id="daireKat" onkeypress="onlyNumberKey(event)" required="" />
                 <label for="daireKat">Kat :</label>
             </div>
+
+
+
             <div class="col-md-6 col">
                 <div class="select-div">
+
+                
+
+
+                
                     <input class="search-selectx input" type="text" list="blok" id="daireBlok" required="" />
                     <label class="selectx-label" for="daireBlok">Blok: *</label>
                     <ul class="value-listx" id="daireBlokDrop">
@@ -573,8 +581,24 @@ try {
                             }
                         ?>
                     </ul>
+
+
+
+
+
+
+
                 </div>
             </div>
+
+
+
+
+
+
+
+
+
 
             <div class="col-md-6 col">
                 <div class="select-div">
