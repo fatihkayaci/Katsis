@@ -1,7 +1,7 @@
-function dropDownn(inputID, dropdownCont) {
+function dropDownn(inputID, dropdownCont, searchinput) {
     var neredenInput = document.getElementById(inputID);
     var dropdownContent = document.getElementById(dropdownCont);
-   
+
     // NeredenInput'a tıklanınca dropdown'u aç
     neredenInput.addEventListener('click', function() {
         dropdownContent.style.display = 'flex';
@@ -15,7 +15,7 @@ function dropDownn(inputID, dropdownCont) {
     });
 
     // Arama fonksiyonu
-    document.getElementById('searchInput').addEventListener('input', function() {
+    document.getElementById(searchinput).addEventListener('input', function() {
         var searchValue = this.value.toLowerCase();
         var buttons = dropdownContent.querySelectorAll('button');
         buttons.forEach(function(button) {
@@ -26,6 +26,10 @@ function dropDownn(inputID, dropdownCont) {
                 button.style.display = 'none';
             }
         });
+        neredenInput.setAttribute('data-user-id', '');
+        
+        // Search input değerini neredenInput'a yaz
+        neredenInput.value = this.value;
     });
 
     // Butonlardan birine tıklandığında
@@ -33,16 +37,16 @@ function dropDownn(inputID, dropdownCont) {
         if (e.target.tagName === 'BUTTON') {
             e.preventDefault(); // Varsayılan form gönderme davranışını engelle
             var buttonText = e.target.textContent;
-            id = e.target.getAttribute('data-user-id');
-           console.log(id);
-           var inputElement = document.getElementById(inputID);
+            var id = e.target.getAttribute('data-user-id');
+            console.log(id);
+            var inputElement = document.getElementById(inputID);
 
             if (inputElement) {
-                inputElement.setAttribute('data-user-id',id );
+                inputElement.setAttribute('data-user-id', id);
             }
+
             neredenInput.value = buttonText.trim();
             dropdownContent.style.display = 'none';
         }
     });
-
 };
