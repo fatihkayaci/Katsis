@@ -1,13 +1,7 @@
-<?php
+<?php 
+ require_once "Controller/class.func.php"; 
 $idapartman =$_SESSION["apartID"];
-
-
 ?>
-
-
-
-
-
 <input type="hidden" id="hiddenDaireID2" value=<?php echo $idapartman?> />
 
 <?php
@@ -50,7 +44,30 @@ try {
 
 
 try {
-    $sql = "SELECT * FROM tbl_daireler WHERE apartman_id = " . $idapartman . " ORDER BY blok_adi ASC, daire_sayisi ASC";
+    $sql = "SELECT d.*, 
+    COALESCE(SUM(CASE WHEN mk.maliye_turu = 1 THEN mk.borc_miktar ELSE 0 END), 0) AS toplam_kira_borcu,
+    COALESCE(SUM(CASE WHEN mm.maliye_turu = 1 THEN mm.borc_miktar ELSE 0 END), 0) AS toplam_mal_borcu
+FROM tbl_daireler AS d
+LEFT JOIN (SELECT daire_id, user_id, apartman_id, SUM(borc_miktar) AS borc_miktar, maliye_turu
+        FROM tbl_maliye
+        WHERE maliye_turu = 1
+        GROUP BY daire_id, user_id, apartman_id, maliye_turu) AS mk ON d.daire_id = mk.daire_id AND d.kiraciID = mk.user_id AND d.apartman_id = mk.apartman_id
+LEFT JOIN (SELECT daire_id, user_id, apartman_id, SUM(borc_miktar) AS borc_miktar, maliye_turu
+        FROM tbl_maliye
+        WHERE maliye_turu = 1
+        GROUP BY daire_id, user_id, apartman_id, maliye_turu) AS mm ON d.daire_id = mm.daire_id AND d.katMalikiID = mm.user_id AND d.apartman_id = mm.apartman_id
+WHERE d.apartman_id = " . $idapartman . " 
+GROUP BY d.daire_id
+ORDER BY d.blok_adi ASC, d.daire_sayisi ASC";
+
+
+
+
+
+
+
+
+
 
 
     $stmt = $conn->prepare($sql);
@@ -220,9 +237,7 @@ try {
                    }else{
                     echo ' <td data-title="0"  class="table_td">'.$listt[$row["kiraciID"]].' </td>  '; 
                    }
-                   
-                   echo ' <td data-title="Bakiye"  class="table_td">00,0 ₺</td> ';
-
+                   echo ' <td data-title="Bakiye"  class="table_td">'.duzenleSayi($row["toplam_kira_borcu"]).' ₺</td> ';
                    if($row["katMalikiID"]==null) {
                     echo '<td data-title="1"  ><button type="button" class="table-a tca2" onclick="openPopup('.$row["daire_id"].',1)">Kat Maliki Ekle + </button></td>
                     ';
@@ -230,10 +245,10 @@ try {
                     }else{
                      echo ' <td data-title="1"  class="table_td">'.$listt[$row["katMalikiID"]].' </td>  '; 
                     }
-
+                    echo ' <td data-title="Bakiye"  class="table_td">'.duzenleSayi($row["toplam_mal_borcu"]).' ₺</td> ';
                 ?>
 
-                <td data-title="Bakiye" class="table_td">00,0 ₺</td>
+
 
                 <td data-title="Seçenekler">
                     <li class="nav-item dropdown pe-1 d-flex settings">
@@ -511,8 +526,39 @@ try {
         <div class="row">
             <div class="col-md-12 col-btn">
                 <div class="select-div">
-                    <input class="search-selectx input" type="text" list="Users" id="userInput" required="" />
-                    <label class="selectx-label" for="userInput">Kullanıcılar :</label>
+
+
+                    <div class="dropdown-nereden">
+                        <div class="group">
+                            <input class="search-selectx input" data-user-id="" type="text" list="Users" id="userInput"
+                                required="" />
+                            <label class="selectx-label" for="userInput">Kullanıcılar :</label>
+                        </div>
+
+                        <div class="dropdown-content-nereden searchInput-btn" id="userInputDP">
+                            <div class="dropdown-content-inside-nereden">
+                                <input type="text" id="searchInput3" placeholder="Ara...">
+
+                                <?php 
+                            foreach($UserList as $user){
+                             echo '                                        
+                                <button  data-user-id="' . $user['userID'] . '">' . $user['userName'] . '</button>';
+                            }
+                        ?>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+
+
+
+
+
+
                     <ul class="value-listx" id="userDrop">
                         <?php 
                             foreach($UserList as $user){
@@ -521,6 +567,16 @@ try {
                             }
                         ?>
                     </ul>
+
+
+
+
+
+
+
+
+
+
                 </div>
             </div>
             <div class="col-md-12 col-btn">
@@ -561,33 +617,69 @@ try {
                 <input class="input" type="text" id="daireKat" onkeypress="onlyNumberKey(event)" required="" />
                 <label for="daireKat">Kat :</label>
             </div>
-            <div class="col-md-6 col">
-                <div class="select-div">
-                    <input class="search-selectx input" type="text" list="blok" id="daireBlok" required="" />
-                    <label class="selectx-label" for="daireBlok">Blok: *</label>
-                    <ul class="value-listx" id="daireBlokDrop">
-                        <?php 
-                            foreach($blokList as $s){
-                             echo '                                        
-                                <li class="li-select" data-user-id="' . $s['blok_id'] . '">' . $s['blok_adi'] . '</li>';
-                            }
-                        ?>
-                    </ul>
-                </div>
-            </div>
+
+
 
             <div class="col-md-6 col">
                 <div class="select-div">
-                    <input class="search-selectx input" type="text" list="dairegrup" id="daireGrup" required="" />
-                    <label class="selectx-label" for="daireGrup">Blok: *</label>
-                    <ul class="value-listx" id="daireGrupDrop">
-                        <?php 
-                            foreach($grupList as $s){
+                    <div class="dropdown-nereden">
+                        <div class="group">
+                            <input class="search-selectx input" data-user-id="" type="text" list="blok" id="daireBlok"
+                                required="" />
+                            <label class="selectx-label" for="daireBlok">Blok: *</label>
+                        </div>
+
+                        <div class="dropdown-content-nereden searchInput-btn" id="daireBlokDP">
+                            <div class="dropdown-content-inside-nereden">
+                                <input type="text" id="searchInput" placeholder="Ara...">
+
+                                <?php 
+                            foreach($blokList as $s){
                              echo '                                        
-                                <li class="li-select" data-user-id="' . $s['grup_id'] . '">' . $s['grup_adi'] . '</li>';
+                                <button data-user-id="' . $s['blok_id'] . '">' . $s['blok_adi'] . '</button>';
                             }
                         ?>
-                    </ul>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+            <div class="col-md-6 col">
+                <div class="select-div">
+                    <div class="dropdown-nereden">
+                        <div class="group">
+                            <input class="search-selectx input" data-user-id="" type="text" list="dairegrup"
+                                id="daireGrup" required="" />
+                            <label class="selectx-label" for="daireGrup">Daire Grubu: *</label>
+                        </div>
+
+                        <div class="dropdown-content-nereden searchInput-btn" id="daireGrupDP">
+                            <div class="dropdown-content-inside-nereden">
+                                <input type="text" id="searchInput2" placeholder="Ara...">
+
+                                <?php 
+                            foreach($grupList as $s){
+                             echo '                                        
+                                <button data-user-id="' . $s['grup_id'] . '">' . $s['grup_adi'] . '</button>';
+                            }
+                        ?>
+                            </div>
+
+                        </div>
+
+                    </div>
                 </div>
             </div>
             <div class="col-md-6 col">
@@ -693,7 +785,7 @@ try {
 
 
 
-<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+
 
 
 <!-- =============================== -->
@@ -908,6 +1000,7 @@ $('#blokInput').focus(function() {
     $(this).css('border-color', '#3BB4D7');
 });
 var degisim = false;
+
 function closePopupBlok() {
     $('#blokInput').css('border-color', '#000000');
 
@@ -919,10 +1012,10 @@ function closePopupBlok() {
         });
         next();
     });
-    if(degisim){
+    if (degisim) {
         location.reload();
     }
-   
+
 }
 
 function closePopupDaire() {
@@ -935,7 +1028,7 @@ function closePopupDaire() {
         });
         next();
     });
-    
+
 }
 
 function closePopupToplu() {
@@ -961,8 +1054,6 @@ document.getElementById('userInput').addEventListener('input', function() {
 
 
 <script>
-var selectedUserID;
-
 function getSelectedOption(inputElement) {
     var value = inputElement.value.toLowerCase();
     var options = inputElement.list.options;
@@ -983,11 +1074,11 @@ function save() {
     var kTarih = document.getElementById("dateInput").value;
     var daireID = document.getElementById("hiddenDaireID").value;
     var apartId = document.getElementById('hiddenDaireID2').value;
-
+    var selectedUserID = document.getElementById('userInput').dataset.userId;
     if (userr === null || userr === "") {
         $('#userInput').css('border-color', 'red');
     } else {
-      
+
         $.ajax({
 
             url: 'Controller/user_assignment.php',
@@ -1003,7 +1094,7 @@ function save() {
 
             },
             success: function(response) {
-                
+
                 closePopup();
                 var trElement = document.getElementById(daireID);
 
@@ -1018,7 +1109,7 @@ function save() {
                     tdElements[5].innerText = response.userName;
                 }
 
-                if(response.refres){
+                if (response.refres) {
                     location.reload();
                 }
 
@@ -1072,10 +1163,12 @@ function saveBlok() {
                         td1.textContent = blokInput;
                         td2.textContent = "0";
                         // td3'e bir buton ekleyelim
-                        td3.innerHTML = "<span class='blok-ico color-red' onclick=\"deleteBlok('" + response.blok_id + "')\" ><i class='fa-solid fa-trash'></i></span>";
+                        td3.innerHTML = "<span class='blok-ico color-red' onclick=\"deleteBlok('" + response
+                            .blok_id + "')\" ><i class='fa-solid fa-trash'></i></span>";
 
                         // td4'e bir buton ekleyelim
-                        td4.innerHTML = "<span  class='blok-ico' onclick=\"editBlok('" + response.blok_id + "')\" ><i class='fa-solid fa-pen'></i></span>";
+                        td4.innerHTML = "<span  class='blok-ico' onclick=\"editBlok('" + response.blok_id +
+                            "')\" ><i class='fa-solid fa-pen'></i></span>";
 
                         // Yeni td elemanlarını tr içine ekleyin
                         var newTr = document.createElement("tr");
@@ -1089,7 +1182,7 @@ function saveBlok() {
                         // Tabloya yeni tr'yi en sona ekle
                         mainTr.parentNode.appendChild(newTr);
                         document.getElementById('blokInput').value = "";
-                        degisim =true;
+                        degisim = true;
                     }
                 },
                 error: function(error) {
@@ -1119,7 +1212,7 @@ function deleteBlok(id) {
                 if (response.sts == 1) {
                     var trr = document.getElementById('blk-' + id);
                     trr.remove();
-                    degisim =true;
+                    degisim = true;
                 }
                 alert(response.msg);
 
@@ -1176,11 +1269,11 @@ function editBlok(id) {
                 temp1: temp1,
             },
             success: function(response) {
-                degisim =true;
+                degisim = true;
 
             },
             error: function(error) {
-                degisim =true;
+                degisim = true;
             }
 
         });
@@ -1212,8 +1305,8 @@ function reeditBlok(id) {
 function SaveDaire() {
     var daireNo = document.getElementById("daireNo").value;
     var daireKat = document.getElementById("daireKat").value;
-    var daireBlok = document.getElementById("daireBlok").value;
-    var daireGrup = document.getElementById("daireGrup").value;
+    var daireBlok = document.getElementById("daireBlok").dataset.userId;
+    var daireGrup = document.getElementById("daireGrup").dataset.userId;
     var daireBrut = document.getElementById("daireBrut").value;
     var daireNet = document.getElementById("daireNet").value;
     var dairePay = document.getElementById("dairePay").value;
@@ -1257,7 +1350,7 @@ function SaveDaire() {
 
             },
             error: function(error) {
-                
+
             }
         });
 
@@ -1289,85 +1382,6 @@ $('#daireBlok').focus(function() {
 });
 
 
-function setupSearchSelect(inputSelector, dropdownSelector) {
-    const inputField = document.querySelector(inputSelector);
-    const dropdown = document.querySelector(dropdownSelector);
-    const dropdownArray = [...dropdown.querySelectorAll('.li-select')];
-    let valueArray = [];
-
-    inputField.focus();
-
-    dropdownArray.forEach(item => {
-        valueArray.push(item.textContent);
-    });
-
-    const closeDropdown = () => {
-        setTimeout(() => {
-            dropdown.classList.remove('open');
-        }, 100);
-    }
-
-    inputField.addEventListener('input', () => {
-        setTimeout(() => {
-            dropdown.classList.add('open');
-            let inputValue = inputField.value.toLowerCase();
-            if (inputValue.length > 0) {
-                dropdownArray.forEach((item, j) => {
-                    if (!(inputValue.substring(0, inputValue.length) === valueArray[j].substring(0, inputValue.length).toLowerCase())) {
-                        dropdownArray[j].classList.add('closed');
-                    } else {
-                        dropdownArray[j].classList.remove('closed');
-                    }
-                });
-            } else {
-                dropdownArray.forEach(item => {
-                    item.classList.remove('closed');
-                });
-            }
-        }, 100);
-    });
-
-    dropdownArray.forEach(item => {
-        item.addEventListener('click', (evt) => {
-            setTimeout(() => {
-                const selectedUserID = evt.target.dataset.userId;
-                inputField.value = item.textContent;
-                dropdownArray.forEach(dropdown => {
-                    dropdown.classList.add('closed');
-                });
-            }, 100);
-        });
-    });
-
-    inputField.addEventListener('focus', () => {
-        setTimeout(() => {
-            dropdown.classList.add('open');
-            dropdownArray.forEach(dropdown => {
-                dropdown.classList.remove('closed');
-            });
-        }, 100);
-    });
-
-    inputField.addEventListener('blur', () => {
-        setTimeout(() => {
-            dropdown.classList.remove('open');
-        }, 100);
-    });
-
-    document.addEventListener('click', (evt) => {
-        setTimeout(() => {
-            const isDropdown = dropdown.contains(evt.target);
-            const isInput = inputField.contains(evt.target);
-            if (!isDropdown && !isInput) {
-                dropdown.classList.remove('open');
-            }
-        }, 100);
-    });
-}
-
-setupSearchSelect('#userInput', '#userDrop');
-setupSearchSelect('#daireBlok', '#daireBlokDrop');
-setupSearchSelect('#daireGrup', '#daireGrupDrop');
 
 
 
@@ -1405,7 +1419,7 @@ function toggleMainCheckbox(id) {
             enAzBirSecili = true;
         }
     });
-   
+
     if (enAzBirSecili) {
         guncelleButton.style.display = 'inline-block';
         silButton.style.display = 'inline-block';
@@ -1681,4 +1695,12 @@ tableTdElements.forEach(function(element) {
 
     });
 });
+</script>
+
+
+<script src="assets/js/mycode/dropdown.js"></script>
+<script>
+dropDownn('daireBlok', 'daireBlokDP', 'searchInput');
+dropDownn('daireGrup', 'daireGrupDP', 'searchInput2');
+dropDownn('userInput', 'userInputDP', 'searchInput3');
 </script>

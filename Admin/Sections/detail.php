@@ -216,16 +216,28 @@ AND tbl_daireler.daire_id = " . $_SESSION['daireSayfa'];
         <div class="row">
             <div class="col-md-12 col-btn">
                 <div class="select-div">
-                    <input class="search-selectx input" type="text" list="Users" id="userInput" required="" />
-                    <label class="selectx-label" for="userInput">Kullanıcılar :</label>
-                    <ul class="value-listx">
-                        <?php 
+                <div class="dropdown-nereden">
+                        <div class="group">
+                            <input class="search-selectx input" data-user-id="" type="text" list="Users" id="userInput"
+                                required="" />
+                            <label class="selectx-label" for="userInput">Kullanıcılar :</label>
+                        </div>
+
+                        <div class="dropdown-content-nereden searchInput-btn" id="userInputDP">
+                            <div class="dropdown-content-inside-nereden">
+                                <input type="text" id="searchInput3" placeholder="Ara...">
+
+                                <?php 
                             foreach($UserList as $user){
                              echo '                                        
-                                <li class="li-select" data-user-id="' . $user['userID'] . '">' . $user['userName'] . '</li>';
+                                <button  data-user-id="' . $user['userID'] . '">' . $user['userName'] . '</button>';
                             }
                         ?>
-                    </ul>
+                            </div>
+
+                        </div>
+
+                    </div>
                 </div>
             </div>
             <div class="col-md-12 col-btn">
@@ -463,3 +475,7 @@ function userGo(id,dId){
 
 
         </script>
+        <script src="assets/js/mycode/dropdown.js"></script>
+<script>
+dropDownn('userInput', 'userInputDP', 'searchInput3');
+</script>
