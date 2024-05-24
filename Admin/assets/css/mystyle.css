@@ -2711,3 +2711,32 @@ min-width: 0;
 #searchInputt:focus {
   border-bottom: 1px solid var(--orange);
 }
+
+.export-btn {
+  min-height: 40px;
+  padding: 0px 20px;
+  transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  text-decoration: none;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-family: 'poppins-medium';
+  margin-right: 10px;
+}
+
+.export-btn i {
+  font-size: 20px;
+}
+
+.excel-btn {
+  border: 1px solid #d2d6da;
+  background-color: #4BB543;
+  color: #fff;
+}
+
+.excel-btn:hover {
+  border: 1px solid #d2d6da;
+  background-color: #186625;
+  color: #fff;
+}
