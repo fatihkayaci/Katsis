@@ -162,16 +162,32 @@ WHERE m.user_id = :user_id AND m.apartman_id = :apartman_id AND maliye_turu = :m
                                 <label id="kategoriLabel" for="kategori">Kategoriler *</label> -->
 
                                 <div class="select-div">
-                                    <input class="search-selectx input" data-user-id="" type="text" list="Users" id="kategori" name="options" required="" />
+
+                                <div class="dropdown-nereden">
+                                <div class="group">      
+                                <input class="search-selectx input" data-user-id="" type="text" list="Users" id="kategori" name="options" required="" />
                                     <label id="kategoriLabel" class="selectx-label" for="kategori">Kategoriler : *</label>
-                                    <ul class="value-listx" id="kategoriDrop">
+                                </div>
+
+                                <div class="dropdown-content-nereden searchInput-btn" id="kategoriDP">
+                                    <div class="dropdown-content-inside-nereden">
+                                        <input type="text" id="searchInput" placeholder="Ara...">
+
                                         <?php 
                                             foreach($kategori_listesi as $kategori_id => $kategori_adi){
                                                 echo '                                        
-                                                   <li class="li-select" data-user-id="' . $kategori_id . '">' . $kategori_adi . '</li>';
+                                                   <button  data-user-id="' . $kategori_id . '">' . $kategori_adi . '</button>';
                                             }
-                                        ?>                                        
-                                    </ul>
+                                        ?> 
+                                    </div>
+                                    
+                                </div>
+
+                            </div>
+
+
+                                    
+                                  
                                 </div>
                             </div>
 
@@ -468,6 +484,7 @@ WHERE m.user_id = :user_id AND m.apartman_id = :apartman_id AND maliye_turu = :m
 
                             </div>
                         </div>
+                        <?php   } ?>
                         <div class="borc-area overflow-borc">
                                 <div class="account-settings">
 
@@ -513,7 +530,7 @@ WHERE m.user_id = :user_id AND m.apartman_id = :apartman_id AND maliye_turu = :m
                     
 
                 <?php
-                                        }
+                                      
             }
         }
     } catch (PDOException $e) {
@@ -941,77 +958,7 @@ $('#label_tarih3').css('color', '#0d0c22');
 
     <!-- =============================== -->
 <!-- custom gender input start -->
-
-<script>
-function setupSearchSelect(inputSelector, dropdownSelector) {
-  const inputField = document.querySelector(inputSelector);
-  const dropdown = document.querySelector(dropdownSelector);
-  
-  const dropdownArray = [...dropdown.querySelectorAll('.li-select')];
-  let valueArray = [];
-
-  dropdown.classList.add('open');
-  inputField.focus();
-
-  dropdownArray.forEach(item => {
- 
-    valueArray.push(item.textContent);
-  });
-
-  const closeDropdown = () => {
-    dropdown.classList.remove('open');
-  }
-
-  inputField.addEventListener('input', () => {
-    inputField.setAttribute("data-user-id", "");
-    dropdown.classList.add('open');
-    let inputValue = inputField.value.toLowerCase();
-    let valueSubstring;
-    if (inputValue.length > 0) {
-      for (let j = 0; j < valueArray.length; j++) {
-        if (!(inputValue.substring(0, inputValue.length) === valueArray[j].substring(0, inputValue.length).toLowerCase())) {
-          dropdownArray[j].classList.add('closed'); 
-        } else {
-          dropdownArray[j].classList.remove('closed');
-        }
-      }
-    } else {
-      dropdownArray.forEach(item => {
-        item.classList.remove('closed');
-      });
-    }
-  });
-
-  dropdownArray.forEach(item => {
-    item.addEventListener('click', (evt) => {
-      selectedUserID = evt.target.dataset.userId;
-      inputField.setAttribute("data-user-id", selectedUserID);
-      inputField.value = item.textContent;
-      dropdownArray.forEach(dropdown => {
-        dropdown.classList.add('closed');
-      });
-    });
-  });
-
-  inputField.addEventListener('focus', () => {
-    dropdown.classList.add('open');
-    dropdownArray.forEach(dropdown => {
-      dropdown.classList.remove('closed');
-    });
-  });
-
-  inputField.addEventListener('blur', () => {
-    dropdown.classList.remove('open');
-  });
-
-  document.addEventListener('click', (evt) => {
-    const isDropdown = dropdown.contains(evt.target);
-    const isInput = inputField.contains(evt.target);
-    if (!isDropdown && !isInput) {
-      dropdown.classList.remove('open');
-    }
-  });
-}
-
-setupSearchSelect('#kategori', '#kategoriDrop');
+<script  src="assets/js/mycode/dropdown.js"></script>
+<script >
+dropDownn('kategori', 'kategoriDP');
 </script>
