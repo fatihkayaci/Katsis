@@ -561,8 +561,8 @@ try {
                 <input class="input" type="text" id="daireKat" onkeypress="onlyNumberKey(event)" required="" />
                 <label for="daireKat">Kat :</label>
             </div>
-            <div class="col-md-6 col margint">
-                <div class="select-div m-0">
+            <div class="col-md-6 col">
+                <div class="select-div">
                     <input class="search-selectx input" type="text" list="blok" id="daireBlok" required="" />
                     <label class="selectx-label" for="daireBlok">Blok: *</label>
                     <ul class="value-listx" id="daireBlokDrop">
@@ -576,10 +576,10 @@ try {
                 </div>
             </div>
 
-            <div class="col-md-6 col margint">
-                <div class="select-div m-0">
+            <div class="col-md-6 col">
+                <div class="select-div">
                     <input class="search-selectx input" type="text" list="dairegrup" id="daireGrup" required="" />
-                    <label class="selectx-label" for="daireGrup">Daire Grubu: *</label>
+                    <label class="selectx-label" for="daireGrup">Blok: *</label>
                     <ul class="value-listx" id="daireGrupDrop">
                         <?php 
                             foreach($grupList as $s){
@@ -633,34 +633,32 @@ try {
                 <input class="input" type="text" id="daireKat1" onkeypress="onlyNumberKey(event)" required="" />
                 <label for="daireKat1">Kat :</label>
             </div>
-            <div class="col-md-6 col margint">
-                <div class="select-div m-0">
-                    <input class="search-selectx input" type="text" list="daireBlok1" id="daireBlok1" required="" />
-                    <label class="selectx-label" for="daireBlok1">Blok:</label>
-                    <ul class="value-listx" id="daireBlok1Drop">
-                        <?php 
-                            foreach($blokList as $s){
-                             echo '                                        
-                                <li class="li-select" data-user-id="' . $s['blok_id'] . '">' . $s['blok_adi'] . '</li>';
-                            }
-                        ?>
-                    </ul>
-                </div>
+            <div class="col-md-6 col">
+                <select class="input" id="daireBlok1" required="">
+                    <option style="display: none;" value="" disabled selected></option>
+                    <?php
+
+                foreach ($blokList as $s ){
+                    echo "  <option value='".$s['blok_id']."'>".$s['blok_adi']."</option>";
+
+                }
+                  ?>
+                </select>
+                <label id="daireBlokLabel" for="daireBlok1">Blok: </label>
             </div>
 
-            <div class="col-md-6 col margint">
-                <div class="select-div m-0">
-                    <input class="search-selectx input" type="text" list="daireGrup1" id="daireGrup1" required="" />
-                    <label class="selectx-label" for="daireGrup1">Daire Grubu:</label>
-                    <ul class="value-listx" id="daireGrup1Drop">
-                        <?php 
-                            foreach($grupList as $s){
-                             echo '                                        
-                                <li class="li-select" data-user-id="' . $s['grup_id'] . '">' . $s['grup_adi'] . '</li>';
-                            }
-                        ?>
-                    </ul>
-                </div>
+            <div class="col-md-6 col">
+                <select class="input" id="daireGrup1" required="">
+                    <option style="display: none;" value="" disabled selected></option>
+                    <?php
+
+                        foreach ($grupList as $s ){
+                            echo "  <option value='".$s['grup_id']."'>".$s['grup_adi']."</option>";
+
+                        }
+                    ?>
+                </select>
+                <label for="daireGrup1">Daire Grubu :</label>
             </div>
             <div class="col-md-6 col">
                 <input class="input" type="text" id="daireBrut1" onkeypress="onlyNumberKey(event)" required="" />
@@ -1221,7 +1219,7 @@ function SaveDaire() {
     var dairePay = document.getElementById("dairePay").value;
     var id = document.getElementById("DaireSaveID").value;
     var f = true;
-alert(daireBlok);
+
     if (daireNo == "") {
         $('#daireNo').css('border-color', '#ff0000');
         $('#daireNoLabel').css('color', '#ff0000');
@@ -1370,8 +1368,6 @@ function setupSearchSelect(inputSelector, dropdownSelector) {
 setupSearchSelect('#userInput', '#userDrop');
 setupSearchSelect('#daireBlok', '#daireBlokDrop');
 setupSearchSelect('#daireGrup', '#daireGrupDrop');
-setupSearchSelect('#daireBlok1', '#daireBlok1Drop');
-setupSearchSelect('#daireGrup1', '#daireGrup1Drop');
 
 
 

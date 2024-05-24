@@ -7,7 +7,7 @@ require_once 'class.func.php';
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
 // tbl_user tablosundan ad ve tc verilerini çekin
-$sql = "SELECT userName, tc FROM tbl_users WHERE apartman_id = " . $_SESSION["apartID"];
+$sql = "SELECT userID, userName, tc FROM tbl_users WHERE apartman_id = " . $_SESSION["apartID"];
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -189,17 +189,29 @@ if (isset($_FILES['excel_file']['name'])) {
 
                 // Son eklenen kullanıcının ID'sini alın
                 $lastUserId = $conn->lastInsertId();
+            } else {
+                // Kullanıcı mevcut, ID'sini al
+                $selectSql = "SELECT userID FROM tbl_users WHERE tc = :tc AND userName = :userName";
+                $selectStmt = $conn->prepare($selectSql);
+                $selectStmt->bindParam(':tc', $tc);
+                $selectStmt->bindParam(':userName', $userName);
+                $selectStmt->execute();
+
+                if ($selectStmt->rowCount() > 0) {
+                    $userRow = $selectStmt->fetch(PDO::FETCH_ASSOC);
+                    $lastUserId = $userRow['userID'];
+                }
             }
             // Önce diğer tabloyu güncelleyin
             $columnName = (strtolower(trim($durum)) == "kiraci") ? "kiraciID" : "katMalikiID";
 
             $updateSql = "UPDATE tbl_daireler AS d
-                INNER JOIN tbl_blok AS b ON d.blok_adi = b.blok_id
-                SET d.$columnName = :userID
-                WHERE d.daire_sayisi = :daire 
-                  AND b.blok_adi = :blok
-                  AND d.apartman_id = :apartID
-                  AND d.$columnName IS NULL";
+            INNER JOIN tbl_blok AS b ON d.blok_adi = b.blok_id
+            SET d.$columnName = :userID
+            WHERE d.daire_sayisi = :daire 
+              AND b.blok_adi = :blok
+              AND d.apartman_id = :apartID
+              AND d.$columnName IS NULL";
 
             $updateStmt = $conn->prepare($updateSql);
             $updateStmt->bindParam(':daire', $daireNo);

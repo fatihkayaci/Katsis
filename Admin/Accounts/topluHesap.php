@@ -423,9 +423,7 @@
                             return item.userName === katMalikiUserName && item.durum ===
                                 "katMaliki" && item.blok === blokAdiText;
                         })) {
-                        alert(blokAdiText +
-                            " daire Kat Maliki kullanıcısı ad soyad sütünu boş bırakılmıştır lütfen doldurunuz."
-                            );
+                        alert(blokAdiText +" daire Kat Maliki kullanıcısı ad soyad sütünu boş bırakılmıştır lütfen doldurunuz.");
                         hasError = true;
                         return false; // Döngüden çık
                     }
@@ -494,26 +492,7 @@
                         newEntries: JSON.stringify(newEntries)
                     },
                     success: function(response) {
-                        if (response == "success") {
-                            $.ajax({
-                                url: 'Controller/demo3.php',
-                                type: 'POST',
-                                data: {},
-                                success: function(secondResponse) {
-                                    if (secondResponse == "success") {
-                                        console.log("başardı");
-                                        location.reload();
-                                    } else {
-                                        alert(secondResponse);
-                                    }
-                                },
-                                error: function(error) {
-                                    console.error(error);
-                                }
-                            });
-                        } else {
-                            alert(response);
-                        }
+                        console.log(response);
                     },
                     error: function(error) {
                         console.error(error);
