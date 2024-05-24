@@ -273,7 +273,6 @@
             // Sayfa yüklendiğinde mevcut input değerlerini bir diziye kaydetme
             var initialData = [];
 
-
             window.onload = function() {
                 var rows = document.querySelectorAll('.git-ac.toplu-td');
 
@@ -301,7 +300,7 @@
                     var katMalikiTC = katMalikiTCInput.value.trim();
                     var katMalikiPhone = katMalikiPhoneInput.value.trim();
                     var katMalikiEmail = katMalikiEmailInput.value.trim();
-                    var katMalikiOpeningBalance = katMalikiOpeningBalanceInput.value.trim(); // Düzeltildi
+                    var katMalikiOpeningBalance = katMalikiOpeningBalanceInput.value.trim();
                     var katMalikiBalanceType = katMalikiBalanceTypeInput.value.trim();
                     var katMalikiPromise = katMalikiPromiseInput.value.trim();
 
@@ -309,7 +308,7 @@
                     var kiraciTC = kiraciTCInput.value.trim();
                     var kiraciPhone = kiraciPhoneInput.value.trim();
                     var kiraciEmail = kiraciEmailInput.value.trim();
-                    var kiraciOpeningBalance = kiraciOpeningBalanceInput.value.trim(); // Düzeltildi
+                    var kiraciOpeningBalance = kiraciOpeningBalanceInput.value.trim();
                     var kiraciBalanceType = kiraciBalanceTypeInput.value.trim();
                     var kiraciPromise = kiraciPromiseInput.value.trim();
 
@@ -321,7 +320,7 @@
                             tc: katMalikiTC,
                             telefon: katMalikiPhone,
                             eposta: katMalikiEmail,
-                            openingBalance: katMalikiOpeningBalance, // Düzeltildi
+                            openingBalance: katMalikiOpeningBalance,
                             balanceType: katMalikiBalanceType,
                             promise: katMalikiPromise
                         });
@@ -335,20 +334,18 @@
                             tc: kiraciTC,
                             telefon: kiraciPhone,
                             eposta: kiraciEmail,
-                            openingBalance: kiraciOpeningBalance, // Düzeltildi
+                            openingBalance: kiraciOpeningBalance,
                             balanceType: kiraciBalanceType,
                             promise: kiraciPromise
                         });
                     }
 
                     // console.log("initialData = ", JSON.stringify(initialData, null, 2));
-
                 });
             };
 
             // Kaydet butonuna tıklandığında yeni girdileri işle
-            saveButton.addEventListener('click', function() {
-
+            document.getElementById('saveButton').addEventListener('click', function() {
                 var rows = document.querySelectorAll('.git-ac.toplu-td');
                 var newEntries = [];
                 var hasError = false;
@@ -358,7 +355,6 @@
                     var katMalikiUserNameInput = row.querySelector('.katMaliki');
                     var katMalikiTCInput = row.querySelector('[name="tcKatMaliki"] .katMaliki');
                     var katMalikiPhoneInput = row.querySelector('[name="telefon"] .katMaliki');
-                    var katMalikiEmailInput = row.querySelector('[name="eposta"] .katMaliki');
                     var katMalikiEmailInput = row.querySelector('[name="eposta"] .katMaliki');
                     var katMalikiPlateInput = row.querySelector('[name="plate"] .katMaliki');
                     var katMalikiGenderInput = row.querySelector('[name="gender"] .katMaliki');
@@ -400,30 +396,32 @@
                     var kiraciBalanceType = kiraciBalanceTypeInput.value.trim();
                     var kiraciPromise = kiraciPromiseInput.value.trim();
 
-                    if ((katMalikiUserName !== "") && !initialData.some(function(item) {
+                    if (katMalikiUserName !== "" && !initialData.some(function(item) {
                             return item.userName === katMalikiUserName && item.durum ===
-                                "katMaliki" && item.blok === blokAdiText;
+                                "katmaliki" && item.blok === blokAdiText;
                         })) {
                         newEntries.push({
                             userName: katMalikiUserName,
-                            durum: "katMaliki",
+                            durum: "katmaliki",
                             blok: blokAdiText,
                             tc: katMalikiTC,
                             telefon: katMalikiPhone,
                             eposta: katMalikiEmail,
                             plate: katMalikiPlate,
                             gender: katMalikiGender,
-                            openingBalance: katMalikiOpeningBalance, // Düzeltildi
+                            openingBalance: katMalikiOpeningBalance,
                             balanceType: katMalikiBalanceType,
                             promise: katMalikiPromise
                         });
-                    } else if (katMalikiUserName == "" && (katMalikiTC !== "" || katMalikiPhone !==
+                    } else if (katMalikiUserName === "" && (katMalikiTC !== "" || katMalikiPhone !==
                             "" || katMalikiEmail !== "" || katMalikiPlate !== "" ||
                             katMalikiOpeningBalance !== "") && !initialData.some(function(item) {
                             return item.userName === katMalikiUserName && item.durum ===
-                                "katMaliki" && item.blok === blokAdiText;
+                                "katmaliki" && item.blok === blokAdiText;
                         })) {
-                        alert(blokAdiText +" daire Kat Maliki kullanıcısı ad soyad sütünu boş bırakılmıştır lütfen doldurunuz.");
+                        alert(blokAdiText +
+                            " daire Kat Maliki kullanıcısı ad soyad sütünu boş bırakılmıştır lütfen doldurunuz."
+                            );
                         hasError = true;
                         return false; // Döngüden çık
                     }
@@ -441,15 +439,15 @@
                             eposta: kiraciEmail,
                             plate: kiraciPlate,
                             gender: kiraciGender,
-                            openingBalance: kiraciOpeningBalance, // Düzeltildi
+                            openingBalance: kiraciOpeningBalance,
                             balanceType: kiraciBalanceType,
                             promise: kiraciPromise
                         });
-                    } else if (kiraciUserName == "" && (kiraciTC !== "" || kiraciPhone !==
-                            "" || kiraciEmail !== "" || kiraciPlate !== "" || kiraciOpeningBalance !==
-                            "") && !initialData.some(function(item) {
+                    } else if (kiraciUserName === "" && (kiraciTC !== "" || kiraciPhone !== "" ||
+                            kiraciEmail !== "" || kiraciPlate !== "" || kiraciOpeningBalance !== "") &&
+                        !initialData.some(function(item) {
                             return item.userName === kiraciUserName && item.durum === "kiraci" &&
-                                item.blok === blokAdiText;;
+                                item.blok === blokAdiText;
                         })) {
                         alert(blokAdiText +
                             " daire kiracı kullanıcısı ad soyad sütünu boş bırakılmıştır lütfen doldurunuz."
@@ -458,10 +456,11 @@
                         return false; // Döngüden çık
                     }
                 });
-                console.log(newEntries);
+
                 if (hasError) {
                     return; // Eğer bir hata varsa fonksiyondan çık
                 }
+
                 var hasDuplicateEmail = false;
                 var emailList = newEntries.map(function(entry) {
                     return entry.eposta;

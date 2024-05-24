@@ -6,6 +6,7 @@ session_start();
 try {
     $newEntriesJSON = $_POST['newEntries'];
     $newEntries = json_decode($newEntriesJSON, true);
+    print_r($newEntries);
     $apartman_id = $_SESSION["apartID"];
     $userStatus = "Y";
 
@@ -14,10 +15,10 @@ try {
     $userIds = array();
     $existingUserIds = array();
 
-    $emailCheckSQL = "SELECT COUNT(*) FROM tbl_users WHERE userEmail = :userEmail";
+    $emailCheckSQL = "SELECT COUNT(*) FROM tbl_users WHERE userEmail = :userEmail AND apartman_id = " . $_SESSION["apartID"];
     $emailCheckStmt = $conn->prepare($emailCheckSQL);
 
-    $userCheckSQL = "SELECT userID FROM tbl_users WHERE userName = :userName AND tc = :tc";
+    $userCheckSQL = "SELECT userID FROM tbl_users WHERE userName = :userName AND tc = :tc AND apartman_id = " . $_SESSION["apartID"];
     $userCheckStmt = $conn->prepare($userCheckSQL);
 
     foreach ($newEntries as $entry) {
@@ -33,7 +34,6 @@ try {
 
     foreach ($newEntries as $entry) {
         $blok = $entry['blok'];
-        echo $blok;
         $userName = $entry['userName'];
         $durum = $entry['durum'];
         $tc = $entry['tc'];
@@ -47,27 +47,32 @@ try {
         $userPass = randomPassword();
         $hashedPassword = base64_encode($userPass);
         $userNO = generateUniqueUserID($conn);
-
+       
+        if (!empty($tc)) {
         $userCheckStmt->bindParam(':userName', $userName);
         $userCheckStmt->bindParam(':tc', $tc);
         $userCheckStmt->execute();
         $existingUserId = $userCheckStmt->fetchColumn();
+    } else {
+        $existingUserId = false;
+    }
 
-        if ($existingUserId) {
-            $columnName = ($durum == "kiraci") ? "kiraciID" : "katMalikiID";
-            $parcalanmis = explode("/", $blok);
-            $parcalanmisIlk = $parcalanmis[0];
-            $parcalanmisSon= $parcalanmis[1];
-            updateUserDaire($conn, $columnName, $existingUserId, $parcalanmisSon, $parcalanmisIlk, $apartman_id);
-        } else {
-            // Kullanıcı ekleme işlemini fonksiyon içine al
-            $lastInsertedId = addUser($conn, $userName, $userPass, $tc, $telefon, $durum, $eposta, $plate, $gender, $openingBalance, $balanceType, $promise, $apartman_id, $userStatus);
-            $columnName = ($durum == "kiraci") ? "kiraciID" : "katMalikiID";
-            $parcalanmis = explode("/", $blok);
-            $parcalanmisIlk = $parcalanmis[0];
-            $parcalanmisSon= $parcalanmis[1];
-            updateUserDaire($conn, $columnName, $existingUserId, $parcalanmisSon, $parcalanmisIlk, $apartman_id);
-        }
+    if ($existingUserId) {
+        $columnName = ($durum == "kiraci") ? "kiraciID" : "katMalikiID";
+        $parcalanmis = explode("/", $blok);
+        $parcalanmisIlk = $parcalanmis[0];
+        $parcalanmisSon= $parcalanmis[1];
+        updateUserDaire($conn, $columnName, $existingUserId, $parcalanmisSon, $parcalanmisIlk, $apartman_id);
+    } else {
+        // Kullanıcı ekleme işlemini fonksiyon içine al
+        $lastInsertedId = addUser($conn, $userName, $userPass, $tc, $telefon, $durum, $eposta, $plate, $gender, $openingBalance, $balanceType, $promise, $apartman_id, $userStatus);
+        echo "lastuserID = " . $lastInsertedId . "---";
+        $columnName = ($durum == "kiraci") ? "kiraciID" : "katMalikiID";
+        $parcalanmis = explode("/", $blok);
+        $parcalanmisIlk = $parcalanmis[0];
+        $parcalanmisSon= $parcalanmis[1];
+        updateUserDaire($conn, $columnName, $lastInsertedId, $parcalanmisSon, $parcalanmisIlk, $apartman_id);
+    }
     }
 
     echo "success";
@@ -120,6 +125,7 @@ function addUser($conn, $userName, $userPass, $tc, $telefon, $durum, $eposta, $p
 
 function updateUserDaire($conn, $columnName, $userId, $daire, $blok, $apartman_id)
 {
+    echo "USERID = " . $userId. "---";
     $sql = "UPDATE tbl_daireler AS d
             INNER JOIN tbl_blok AS b ON d.blok_adi = b.blok_id
             SET d.$columnName = :userID";

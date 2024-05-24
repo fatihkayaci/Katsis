@@ -161,7 +161,7 @@ if (isset($_FILES['excel_file']['name'])) {
                 }
             }
             $userIdentity = array('userName' => $userName, 'tc' => $tc);
-            if (!in_array($userIdentity, $userIds) && !array_search($userIdentity, array_column($userArray, null, 'tc'))) {
+            if (!in_array($userIdentity, $userIds) && !array_search($userIdentity, array_column($userArray, null, 'tc')) || empty($tc) ) {
                 $userIds[] = $userIdentity;
                 if ($durum === "kiracı") {
                     $durum = "kiraci";
