@@ -47,7 +47,7 @@ if (isset($_FILES['excel_file']['name'])) {
 
         $isValid = true;
         foreach ($expectedHeaders as $column => $header) {
-            if ($sheetData[1][$column] !== $header) {
+            if ($sheetData[11][$column] !== $header) {
                 $isValid = false;
                 break;
             }
@@ -59,7 +59,6 @@ if (isset($_FILES['excel_file']['name'])) {
         }
 
         // Dosya yapısı doğruysa veritabanına kaydetme işlemi
-        array_shift($sheetData);
         $userIds = [];
         $lastUserId = 0;
         $blok_id = 0;
@@ -95,9 +94,13 @@ if (isset($_FILES['excel_file']['name'])) {
             );
         }
 
-        foreach ($sheetData as $row) {
+        // Loop starting from the 12th row
+        foreach ($sheetData as $index => $row) {
+            if ($index < 12) {
+                continue; // Skip first 11 rows
+            }
             if (empty($row['D'])) {
-                continue;
+                continue; // Skip empty rows
             }
             $t = "Y";
             $rol = 3;
@@ -143,25 +146,36 @@ if (isset($_FILES['excel_file']['name'])) {
 
             if (!in_array(array('blok_adi' => $blok_adi, 'daire_sayisi' => $daireNo), $existingNumber)) {
                 if ($blok_id > 0) {
-                    $insertDaireSql = "INSERT INTO tbl_daireler (apartman_id, blok_adi, daire_sayisi) VALUES (:apartman_id, :blok_adi, :daire_sayisi)";
-                    $insertDaireStmt = $conn->prepare($insertDaireSql);
-                    $insertDaireStmt->bindParam(':blok_adi', $blok_id);
-                    $insertDaireStmt->bindParam(':daire_sayisi', $daireNo);
-                    $insertDaireStmt->bindParam(':apartman_id', $_SESSION["apartID"], PDO::PARAM_INT);
-                    $insertDaireStmt->execute();
+                    try {
+                        $insertDaireSql = "INSERT INTO tbl_daireler (apartman_id, blok_adi, daire_sayisi) VALUES (:apartman_id, :blok_adi, :daire_sayisi)";
+                        $insertDaireStmt = $conn->prepare($insertDaireSql);
+                        $insertDaireStmt->bindParam(':blok_adi', $blok_id);
+                        $insertDaireStmt->bindParam(':daire_sayisi', $daireNo);
+                        $insertDaireStmt->bindParam(':apartman_id', $_SESSION["apartID"], PDO::PARAM_INT);
+                        $insertDaireStmt->execute();
+
+                    } catch (PDOException $e) {
+                        echo "Hata: daire kısmı boş olduğu için kaydetme işlemi gerçekleştirilemedi.";
+                        exit();
+                    }
                 } else if ($updatedId > 0) {
-                    $insertDaireSql = "INSERT INTO tbl_daireler (apartman_id, blok_adi, daire_sayisi) VALUES (:apartman_id, :blok_adi, :daire_sayisi)";
-                    $insertDaireStmt = $conn->prepare($insertDaireSql);
-                    $insertDaireStmt->bindParam(':blok_adi', $updatedId);
-                    $insertDaireStmt->bindParam(':daire_sayisi', $daireNo);
-                    $insertDaireStmt->bindParam(':apartman_id', $_SESSION["apartID"], PDO::PARAM_INT);
-                    $insertDaireStmt->execute();
+                    try {
+                        $insertDaireSql = "INSERT INTO tbl_daireler (apartman_id, blok_adi, daire_sayisi) VALUES (:apartman_id, :blok_adi, :daire_sayisi)";
+                        $insertDaireStmt = $conn->prepare($insertDaireSql);
+                        $insertDaireStmt->bindParam(':blok_adi', $updatedId);
+                        $insertDaireStmt->bindParam(':daire_sayisi', $daireNo);
+                        $insertDaireStmt->bindParam(':apartman_id', $_SESSION["apartID"], PDO::PARAM_INT);
+                        $insertDaireStmt->execute();
+                    } catch (PDOException $e) {
+                        echo "Hata: daire kısmı boş olduğu için kaydetme işlemi gerçekleştirilemedi.";
+                        exit();
+                    }
                 } else {
                     echo "Hatalı giriş yapılmıştır.";
                 }
             }
             $userIdentity = array('userName' => $userName, 'tc' => $tc);
-            if (!in_array($userIdentity, $userIds) && !array_search($userIdentity, array_column($userArray, null, 'tc')) || empty($tc) ) {
+            if (!in_array($userIdentity, $userIds) && !array_search($userIdentity, array_column($userArray, null, 'tc')) || empty($tc)) {
                 $userIds[] = $userIdentity;
                 if ($durum === "kiracı") {
                     $durum = "kiraci";

@@ -352,6 +352,35 @@ try {
     </form>
 </div>
 <script>
+     window.onload = function() {
+        var tcInput = document.getElementsByName('tc')[0];
+        var phoneInput = document.getElementsByName('phoneNumber')[0];
+
+        // TC için 11 karakter sınırlaması ve sadece rakam girişine izin verme
+        tcInput.addEventListener('input', function() {
+            this.value = this.value.replace(/\D/g, '').slice(0, 11);
+        });
+
+        // Telefon numarası için 10 karakter sınırlaması ve sadece rakam girişine izin verme
+        phoneInput.addEventListener('input', function() {
+            this.value = this.value.replace(/\D/g, '').slice(0, 10);
+        });
+
+        var userPopup = document.getElementById('popup');
+        var topluPopup = document.getElementById('topluPopup');
+        // ESC tuşuna basıldığında popup'ı kapat
+        window.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") {
+                if(userPopup.style.display === 'flex'){
+                    closePopup();
+                }else if(topluPopup.style.display === 'flex'){
+                    closeToplu();
+                }
+            }
+        });
+    };
+</script>
+<script>
     document.addEventListener('DOMContentLoaded', function () {
         toggleExportButton();
     });

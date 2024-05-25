@@ -22,7 +22,7 @@
     try {
         // SQL sorgusu
         $sql = "SELECT * from tbl_employed
-        WHERE apartman_ID = :apartmanID";
+        WHERE apartman_ID = :apartmanID AND arsive = 0";
         
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':apartmanID', $_SESSION["apartID"]);
@@ -152,8 +152,6 @@
                 </td>
             </tr>
             <?php
-                ?>
-            <?php
             }
             echo '
             </tbody>
@@ -161,8 +159,38 @@
                 <button id="addRowBtn" onclick="addRow()" class="btn-custom-outline bcoc1">+</button>
                 </div>';
         } else {
-            echo "0 results";
-        }
+            
+            ?>
+            <table id="table" class="users-table">
+                <thead>
+                    <tr class="users-table-info">
+                        <th onclick="sortTable(0)">İsim Soyisim<i id="icon-table1" class="fa-solid fa-sort-down"></i></th>
+                        <th onclick="sortTable(1)">TC Numarası<i id="icon-table2" class="fa-solid fa-sort-down"></i></th>
+                        <th onclick="sortTable(2)">Cinsiyet<i id="icon-table3" class="fa-solid fa-sort-down"></i></th>
+                        <th onclick="sortTable(3)">Email<i id="icon-table4" class="fa-solid fa-sort-down"></i></th>
+                        <th onclick="sortTable(4)">Telefon Numarası<i id="icon-table5" class="fa-solid fa-sort-down"></i></th>
+                        <th onclick="sortTable(5)">Öğrenim Durumu<i id="icon-table6" class="fa-solid fa-sort-down"></i></th>
+                        <th onclick="sortTable(6)">Iban<i id="icon-table7" class="fa-solid fa-sort-down"></i></th>
+                        <th onclick="sortTable(7)">İşe Başlangıç Tarihi<i id="icon-table8" class="fa-solid fa-sort-down"></i>
+                        </th>
+                        <th onclick="sortTable(8)">Görevi<i id="icon-table9" class="fa-solid fa-sort-down"></i></th>
+                        <th onclick="sortTable(9)">Sigorta Numarası<i id="icon-table10" class="fa-solid fa-sort-down"></i></th>
+                        <th onclick="sortTable(10)">Maaş<i id="icon-table11" class="fa-solid fa-sort-down"></i></th>
+                        <th onclick="sortTable(11)">Birim<i id="icon-table12" class="fa-solid fa-sort-down"></i></th>
+                        <th onclick="sortTable(12)">Açılış Bakiyesi<i id="icon-table13" class="fa-solid fa-sort-down"></i></th>
+                        <th onclick="sortTable(13)">Bakiye Türü<i id="icon-table14" class="fa-solid fa-sort-down"></i></th>
+                        <th onclick="sortTable(14)">Ödeme Tarihi<i id="icon-table15" class="fa-solid fa-sort-down"></i></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    }
+                    echo '
+                    </tbody>
+                            </table>
+                        <button id="addRowBtn" onclick="addRow()" class="btn-custom-outline bcoc1">+</button>
+                        </div>';
+        
     } catch (PDOException $e) {
         echo "Bağlantı hatası: " . $e->getMessage();
     }

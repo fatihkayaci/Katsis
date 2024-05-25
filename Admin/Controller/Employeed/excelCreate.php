@@ -12,23 +12,49 @@ use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 $spreadsheet = new Spreadsheet();
 $sheet = $spreadsheet->getActiveSheet();
 
-$sheet->setCellValue('A1', 'Ad Soyad');
-$sheet->setCellValue('B1', 'Tc Kimlik');
-$sheet->setCellValue('C1', 'Telefon Numarası');
-$sheet->setCellValue('D1', 'Eposta');
-$sheet->setCellValue('E1', 'Cinsiyet');
-$sheet->setCellValue('F1', 'Öğrenim Durumu');
-$sheet->setCellValue('G1', 'Iban');
-$sheet->setCellValue('H1', 'İşe Başlama Tarihi');
-$sheet->setCellValue('I1', 'Görevi');
-$sheet->setCellValue('J1', 'Sigorta Numarası');
-$sheet->setCellValue('K1', 'Maaş');
-$sheet->setCellValue('L1', 'Birim');
-$sheet->setCellValue('M1', 'Açılış Bakiyesi');
-$sheet->setCellValue('N1', 'Bakiye tipi');
-$sheet->setCellValue('O1', 'Ödeme Tarihi');
+$sheet->setCellValue('E1', 'PERSONEL EKLEME DOSYASI');
+$sheet->setCellValue('A2', 'Açıklamalar');
+$sheet->setCellValue('A3', 'Personel Kaydı yapabilmeniz için gerekli olan bazı bilgiler.');
+$sheet->setCellValue('A4', 'Herhangi bir kayıt işlemi için lütfen AD Soyad sütununu doldurunuz. Ad Soyad sütunu dolu olmayan satırlar için bir kayıt oluşturulmayacaktır.');
+$sheet->setCellValue('A5', 'Sütun isimleri ve sütun yerlerini lütfen değiştirmeyiniz. Sistem kabul etmez ve hata verir.');
+$sheet->setCellValue('A6', "Geri bildirimleriniz bizim için çok önemlidir. Geri bildirim ve şikayetler için lütfen demo@hotmail.com adresimizi kullanabilirsiniz.");
 
-$header_style = $sheet->getStyle('A1:O1');
+// Başlık css
+$titleStyle = $sheet->getStyle('E1');
+$titleFont = $titleStyle->getFont();
+$titleFont->setSize(18); // Yazı tipi boyutunu ayarla
+$titleFont->getColor()->setARGB('FF2c3b8f'); // Yazı rengini belirle (örneğin kırmızı)
+
+//altBaşlık
+$subHeaderStyle = $sheet->getStyle('A2');
+$subHeaderFont = $subHeaderStyle->getFont();
+$titleFont->setBold(true); // Kalınlaştırma
+$subHeaderFont->setSize(15); // Yazı tipi boyutunu ayarla
+$subHeaderFont->getColor()->setARGB('FF2c3b8f'); // Yazı rengini belirle (başlık ile aynı)
+$subHeaderFont->setUnderline(true); // Altı çizili yap
+
+//açıklamalar background style
+$bgStyle = $sheet->getStyle('C1:I1');
+$bgStyle->getFill()->setFillType(Fill::FILL_SOLID);
+
+$sheet->freezePane('A10');
+$sheet->setCellValue('A9', 'Ad Soyad');
+$sheet->setCellValue('B9', 'Tc Kimlik');
+$sheet->setCellValue('C9', 'Telefon Numarası');
+$sheet->setCellValue('D9', 'Eposta');
+$sheet->setCellValue('E9', 'Cinsiyet');
+$sheet->setCellValue('F9', 'Öğrenim Durumu');
+$sheet->setCellValue('G9', 'Iban');
+$sheet->setCellValue('H9', 'İşe Başlama Tarihi');
+$sheet->setCellValue('I9', 'Görevi');
+$sheet->setCellValue('J9', 'Sigorta Numarası');
+$sheet->setCellValue('K9', 'Maaş');
+$sheet->setCellValue('L9', 'Birim');
+$sheet->setCellValue('M9', 'Açılış Bakiyesi');
+$sheet->setCellValue('N9', 'Bakiye tipi');
+$sheet->setCellValue('O9', 'Ödeme Tarihi');
+
+$header_style = $sheet->getStyle('A9:O9');
 $header_style->getFont()->getColor()->setARGB('ffffff');
 $header_style->getFont()->setBold(true);
 $header_style->getFill()->setFillType(Fill::FILL_SOLID);
@@ -55,7 +81,7 @@ $sheet->getColumnDimension('O')->setWidth(17);
 
 $validGenderValues = ['Erkek', 'Kadın'];
 // 'Durum' sütununun veri doğrulamasını tüm 'Durum' sütununa uygulayın
-for ($row = 2; $row <= 1000; $row++) { // Sütunun kaç satıra kadar devam edeceğini belirtmek için 1000 kullanıldı, gerektiği kadar değiştirilebilir.
+for ($row = 10; $row <= 1000; $row++) { // Sütunun kaç satıra kadar devam edeceğini belirtmek için 1000 kullanıldı, gerektiği kadar değiştirilebilir.
     $validation = $sheet->getCell('E' . $row)->getDataValidation();
     $validation->setType(DataValidation::TYPE_LIST)
         ->setErrorStyle(DataValidation::STYLE_INFORMATION)

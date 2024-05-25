@@ -21,7 +21,9 @@ $sheet->setCellValue('A4', 'Uygulamaya excel dosyasını yüklerken eğer ki sü
 $sheet->setCellValue('A5', 'öncelikle kullanıcı kayıt için mavi sütünlardan Ad SoyAd kısmı zorunluluğu vardır. Sarı sütunlarda ise hiçbir zorunluluk yoktur. Ama sarı sütunları doldurduğunuzda kolaylıkla daire atamasıda yapmış olacaksınızdır.');
 $sheet->setCellValue('A6', 'Durum ve Cinsiyet için lütfen belirttiğimiz kelimeleri kullanınız. Sütuna geldiğiniz zaman açılır menüyü açıp oradan seçim yapabilir veya direkt olarak yazabilirsiniz.');
 $sheet->setCellValue('A7', "Eğer ki bir kullanıcı için birden fazla daire ataması yapmak istersenizde o zaman Ad SoyAd ve Tc Kimlik sütunları dikkate alınacaktır. Eğer farklı olarak yazarsanız her birerini farklı kullanıcı olarak algılayacaktır. Eğer tc'sini bilmediğiniz ve vermek istemeyen kullanıcılar içinde herhangi bir sayı yazabilirsiniz ");
-$sheet->setCellValue('A8', "Geri bildirimleriniz bizim için çok önemlidir. Geri bildirim ve şikayetler için lütfen demo@hotmail.com adresimizi kullanabilirsiniz.");
+$sheet->setCellValue('A8', "Sarı sütunlarda Blok Adi doldurulur ise Daire No sütunu doldurulması zorunludur yoksa hata alıp sisteme yükleme sıkıntısı yaşayabilirsiniz.");
+$sheet->setCellValue('A9', "Blok Adi ve Daire No sütunları doldurulur ise Duruma bir şey yazılmadığı takdirde otomatik olarak Katmaliki olarak atanır.");
+$sheet->setCellValue('A10', "Geri bildirimleriniz bizim için çok önemlidir. Geri bildirim ve şikayetler için lütfen demo@hotmail.com adresimizi kullanabilirsiniz.");
 
 // Başlık css
 $titleStyle = $sheet->getStyle('E1');

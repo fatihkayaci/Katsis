@@ -1,4 +1,8 @@
 <?php
+require_once 'Controller/class.func.php';
+$userPass = randomPassword();
+$hashedPassword = base64_encode($userPass);
+
 $optionsBlok = array();
 $optionsDurum = '';
 try {
@@ -256,7 +260,12 @@ if ($result->rowCount() > 0) {
                 </div>
             </div>
         </div>
-        
+        <div class="row">
+            <div class="col-md-6 col margint">
+                <input class="input" type="text" id="hashedPassword" name="password" value="<?= $hashedPassword ?>" required="">
+                <label for="sifre">Şifre</label>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-6 check-label margint">
                 <input onchange="toggleDisplay()" type="checkbox" id="onay" name="onay" value="bakiye">
@@ -398,6 +407,39 @@ if ($result->rowCount() > 0) {
     </form>
 </div>
 <script>
+    window.onload = function() {
+        var tcInput = document.getElementsByName('tc')[0];
+        var phoneInput = document.getElementsByName('phoneNumber')[0];
+
+        // TC için 11 karakter sınırlaması ve sadece rakam girişine izin verme
+        tcInput.addEventListener('input', function() {
+            this.value = this.value.replace(/\D/g, '').slice(0, 11);
+        });
+
+        // Telefon numarası için 10 karakter sınırlaması ve sadece rakam girişine izin verme
+        phoneInput.addEventListener('input', function() {
+            this.value = this.value.replace(/\D/g, '').slice(0, 10);
+        });
+
+        var userPopup = document.getElementById('popup');
+        var dairePopup = document.getElementById('dairePopup');
+        var topluPopup = document.getElementById('topluPopup');
+        // ESC tuşuna basıldığında popup'ı kapat
+        window.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") {
+                if (dairePopup.style.display === 'flex') {
+                    closeDaire();
+                } else if(userPopup.style.display === 'flex'){
+                    closePopup();
+                }else if(topluPopup.style.display === 'flex'){
+                    closeToplu();
+                }
+            }
+        });
+    };
+</script>
+
+<script>
     document.addEventListener('DOMContentLoaded', function () {
         toggleExportButton();
 
@@ -502,7 +544,6 @@ if ($result->rowCount() > 0) {
             contentType: false,
             processData: false,
             success: function(response) {
-                alert(response);
                 if(response === "Geçersiz dosya yapısı. Lütfen doğru dosyayı yükleyin."){
                     alert(response);
                 }else if("Kullanıcılar başarıyla yüklendi!"){
@@ -1179,6 +1220,7 @@ function saveUser() {
     var gender = $('input#userInput').val();
     var apartman_id = $('input[name="apartman_id"]').val();
     var optionsBlok = $('select#optionsBlok').val();
+    var password = $('#hashedPassword').val();
     var blokArray = [];
     var durumArray = [];
     var openingBalance = $('input[name="openingBalance"]').val() || null;
@@ -1187,7 +1229,13 @@ function saveUser() {
     // alert("openingBalance "+ openingBalance+ " promise "+ promise);
     var isConflict = false; // Çakışma durumunu kontrol etmek için bir bayrak
     //console.log(userName + "," + tc + "," + phoneNumber + "," + userEmail + "," + plate + "," + gender);
-
+    if (!password) {
+        alert("şifre kısmı boş bırakılamaz");
+        return;
+    }else if(password.length < 6){
+        alert("şifre kısmı 6 karakterden az olamaz.");
+        return;
+    }
     for (var i = 0; i < selectedDurumArray.length; i++) {
         var durumParcalari = selectedDurumArray[i].split(',');
 
@@ -1249,7 +1297,7 @@ function saveUser() {
                 status + " bu dairede oturan kullanıcıyı silmek ister misin?")) {
             if (kisitlamalar(userName /* tc, phoneNumber, userEmail, plate*/ )) {
                 demo = 1;
-                saveUserData(userName, tc, phoneNumber, durumArray, userEmail, plate, gender, apartman_id, blokArray,
+                saveUserData(userName, tc, phoneNumber, durumArray, userEmail, plate, gender, password, apartman_id, blokArray,
                     openingBalance, balanceType, promise);
             } else {
                 return;
@@ -1259,7 +1307,7 @@ function saveUser() {
         }
     } else {
         if (kisitlamalar(userName /* tc, phoneNumber, userEmail, plate*/ )) {
-            saveUserData(userName, tc, phoneNumber, durumArray, userEmail, plate, gender, apartman_id, blokArray,
+            saveUserData(userName, tc, phoneNumber, durumArray, userEmail, plate, gender, password, apartman_id, blokArray,
                 openingBalance, balanceType, promise);
         } else {
             return;
@@ -1267,7 +1315,7 @@ function saveUser() {
     }
 };
 
-function saveUserData(userName, tc, phoneNumber, durumArray, userEmail, plate, gender, apartman_id, blokArray,
+function saveUserData(userName, tc, phoneNumber, durumArray, userEmail, plate, gender, password, apartman_id, blokArray,
     openingBalance, balanceType, promise) {
     $.ajax({
         url: 'Controller/save_user.php',
@@ -1280,6 +1328,7 @@ function saveUserData(userName, tc, phoneNumber, durumArray, userEmail, plate, g
             userEmail: userEmail,
             plate: plate,
             gender: gender,
+            password: password,
             apartman_id: apartman_id,
             openingBalance: openingBalance,
             balanceType: balanceType,

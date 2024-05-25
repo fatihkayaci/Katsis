@@ -16,11 +16,12 @@ try {
     $apartman_id = $_POST['apartman_id'];
     $plate = $_POST['plate'];
     $gender = $_POST['gender'];
+    $password = $_POST['password'];
     $openingBalance = !empty($_POST['openingBalance']) ? $_POST['openingBalance'] : null;
     $balanceType = !empty($_POST['balanceType']) ? $_POST['balanceType'] : null;
     $promise = !empty($_POST['promise']) ? $_POST['promise'] : null;
-
     $elemanSayisi = count($durumArray);
+
     // DurumArray boşsa kayıt yapmayı dene
     if (empty($durumArray)) {
         $emailCheckSQL = "SELECT COUNT(*) FROM tbl_users WHERE userEmail = :userEmail";
@@ -31,8 +32,7 @@ try {
         if ($emailCheckStmt->fetchColumn() > 0) {
             echo "Bu e-posta adresi zaten var. Lütfen farklı bir e-posta adresi seçiniz.";
         } else {
-            $userPass = randomPassword();
-            $hashedPassword = base64_encode($userPass);
+
             $userNO = generateUniqueUserID($conn);
             $t = "Y";
 
@@ -42,7 +42,7 @@ try {
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(':userName', $userName);
             $stmt->bindParam(':user_no', $userNO);
-            $stmt->bindParam(':userPass', $hashedPassword);
+            $stmt->bindParam(':userPass', $password);
             $stmt->bindParam(':tc', $tc);
             $stmt->bindParam(':phoneNumber', $phoneNumber);
             $stmt->bindValue(':durum', null, PDO::PARAM_NULL); // DurumArray boş olduğunda null atar
@@ -76,8 +76,6 @@ try {
                 echo "Bu e-posta adresi zaten var. Lütfen farklı bir e-posta adresi seçiniz.";
             } else {
                 // E-posta adresi benzersiz, kaydetmeye devam et
-                $userPass = randomPassword();
-                $hashedPassword = base64_encode($userPass);
                 $userNO = generateUniqueUserID($conn);
                 $t = "Y";
 
@@ -99,7 +97,7 @@ try {
                 $stmt->bindParam(':phoneNumber', $phoneNumber);
                 $stmt->bindParam(':durum', $durumValue);
                 $stmt->bindParam(':userEmail', $userEmail);
-                $stmt->bindParam(':userPass', $hashedPassword);
+                $stmt->bindParam(':userPass', $password);
                 $stmt->bindParam(':plate', $plate);
                 $stmt->bindParam(':gender', $gender);
                 $stmt->bindParam(':userStatus', $t);
