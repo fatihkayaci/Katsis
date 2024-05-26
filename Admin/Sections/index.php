@@ -620,8 +620,8 @@ ORDER BY d.blok_adi ASC, d.daire_sayisi ASC";
 
 
 
-            <div class="col-md-6 col">
-                <div class="select-div">
+            <div class="col-md-6 col margint">
+                <div class="select-div m-0">
                     <div class="dropdown-nereden">
                         <div class="group">
                             <input class="search-selectx input" data-user-id="" type="text" list="blok" id="daireBlok"
@@ -656,8 +656,8 @@ ORDER BY d.blok_adi ASC, d.daire_sayisi ASC";
 
 
 
-            <div class="col-md-6 col">
-                <div class="select-div">
+            <div class="col-md-6 col margint">
+                <div class="select-div m-0">
                     <div class="dropdown-nereden">
                         <div class="group">
                             <input class="search-selectx input" data-user-id="" type="text" list="dairegrup"

@@ -1314,3 +1314,15 @@ tableTdElements.forEach(function(element) {
     });
 });
 </script>
+
+<!-- Excel Icin Dosya Secme Script i -->
+
+<script>
+    const actualBtn = document.getElementById('excel_file');
+
+    const fileChosen = document.getElementById('file-chosen');
+
+    actualBtn.addEventListener('change', function(){
+      fileChosen.textContent = this.files[0].name
+    })
+</script>

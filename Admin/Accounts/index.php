@@ -1550,6 +1550,8 @@ tableTdElements.forEach(function(element) {
 });
 </script>
 
+<!-- Excel Icin Dosya Secme Script i -->
+
 <script>
     const actualBtn = document.getElementById('excel_file');
 

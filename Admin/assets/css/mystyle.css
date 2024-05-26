@@ -2649,14 +2649,14 @@ min-width: 0;
 .dropdown-content-nereden {
   display: none;
   position: absolute;
-  top: 100%;
+  top: 40px;
   left: 0;
   background-color: #f9f9f9;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  padding: 15px 20px;
   z-index: 1;
-  border-radius: 8px;
+  border-radius: 4px;
   overflow-x: auto;
+  border: 1px solid #cccccc;
 }
 
 .dropdown-nereden.open .dropdown-content-nereden {
@@ -2670,13 +2670,13 @@ min-width: 0;
 .dropdown-content-inside-nereden {
   min-width: max-content;
   max-height: 300px;
-  padding: 5px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
   justify-content: start;
   align-items: start;
+  margin: 5px 0px;
 }
 
 .dropdown-content-inside-nereden button {
@@ -2684,32 +2684,32 @@ min-width: 0;
   outline: none;
   border: none;
   cursor: pointer;
-  margin-bottom: 5px;
   transition: 0.3s;
   font-size: 16px;
   font-weight: 500;
   text-align: left;
+  padding: 5px 10px;
+  width: 100%;
 }
 
 .dropdown-content-inside-nereden button:hover {
-  color: #F84822;
-  transform: translateX(5px);
+  color: #277CE0;
+  padding-left: 15px;
+  background-color: #ececec;
 }
 
-#searchInput,
-#searchInputt {
-  margin-bottom: 10px;
+.dropdown-content-inside-nereden input {
   width: 100%;
   outline: none;
   border: none;
   background: none;
-  border-bottom: 1px solid var(--gray);
-  padding: 5px 0px;
+  border-bottom: 1px solid #ececec;
+  padding: 5px 10px;
+  margin: 0px 0px 5px 0px;
 }
 
-#searchInput:focus,
-#searchInputt:focus {
-  border-bottom: 1px solid var(--orange);
+.dropdown-content-inside-nereden input:focus {
+  border-bottom: 1px solid #277CE0;
 }
 
 .export-btn {
