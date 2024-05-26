@@ -2740,3 +2740,58 @@ min-width: 0;
   background-color: #186625;
   color: #fff;
 }
+
+/* Toplu Personel Ekleme Sayfasi */
+
+.employee-main {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: baseline;
+  width: 98%;
+  margin: 20px 0px;
+}
+
+.toplu-islem {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  width: 100%;
+  transition: all 0.3s ease;
+  padding: 5px 0px;
+}
+.toplu-islem:hover {
+  background-color: #f1f1f1;
+}
+
+.toplu-islem-inside {
+  flex-grow: 1;
+  flex-basis: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+  min-width: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin: 5px 0px;
+}
+
+.input-toplu {
+  width: 100%;
+  height: 32px;
+  background-color: transparent;
+  color: #0d0c22;
+  border: 1px solid #b6b6b6;
+  border-radius: 4px;
+  padding: 5px 10px;
+  transition: 0.5s;
+  outline: none;
+  font-size: 13px;
+  font-family: 'poppins-regular';
+}
+
+.input-toplu:focus {
+  border-color: #0d0c22;
+  box-shadow: 0 0 10px 4px #0000001a; 
+}
