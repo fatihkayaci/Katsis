@@ -170,7 +170,6 @@
             echo '
                 </div>
             </div>
-                    <button id="addRowBtn" onclick="addRow()" class="btn-custom-outline bcoc1">+</button>
         </div>';
         } else {
             
@@ -185,8 +184,7 @@
                         <th onclick="sortTable(4)">Telefon Numarası<i id="icon-table5" class="fa-solid fa-sort-down"></i></th>
                         <th onclick="sortTable(5)">Öğrenim Durumu<i id="icon-table6" class="fa-solid fa-sort-down"></i></th>
                         <th onclick="sortTable(6)">Iban<i id="icon-table7" class="fa-solid fa-sort-down"></i></th>
-                        <th onclick="sortTable(7)">İşe Başlangıç Tarihi<i id="icon-table8" class="fa-solid fa-sort-down"></i>
-                        </th>
+                        <th onclick="sortTable(7)">İşe Başlangıç Tarihi<i id="icon-table8" class="fa-solid fa-sort-down"></i></th>
                         <th onclick="sortTable(8)">Görevi<i id="icon-table9" class="fa-solid fa-sort-down"></i></th>
                         <th onclick="sortTable(9)">Sigorta Numarası<i id="icon-table10" class="fa-solid fa-sort-down"></i></th>
                         <th onclick="sortTable(10)">Maaş<i id="icon-table11" class="fa-solid fa-sort-down"></i></th>
@@ -224,83 +222,92 @@
             </script>
             <script>
             function addRow() {
-                var table = document.getElementById("table").getElementsByTagName('tbody')[0];
-                var newRow = table.insertRow(table.rows.length);
+    var table = document.getElementById("table");
+    var tbody;
 
-                // İsim Soyisim
-                var cell1 = newRow.insertCell(0);
-                cell1.innerHTML = '<input type="text" class="input-toplu" name="fullName" value="">';
+    // Eğer tbody yoksa, bir tane oluştur
+    if (table.getElementsByTagName('tbody').length === 0) {
+        tbody = document.createElement('tbody');
+        table.appendChild(tbody);
+    } else {
+        tbody = table.getElementsByTagName('tbody')[0];
+    }
 
-                // TC Numarası
-                var cell2 = newRow.insertCell(1);
-                cell2.innerHTML =
-                    '<input type="text" class="input-toplu" name="TC" oninput="checkTCNumberLength(this)" value="">';
+    var newRow = tbody.insertRow(tbody.rows.length);
 
-                // Cinsiyet
-                var cell3 = newRow.insertCell(2);
-                cell3.innerHTML = '<select class="input-toplu" name="gender">' +
-                    '<option value="Erkek">Erkek</option>' +
-                    '<option value="Kadın">Kadın</option>' +
-                    '</select>';
+    // İsim Soyisim
+    var cell1 = newRow.insertCell(0);
+    cell1.innerHTML = '<input type="text" class="input-select" name="fullName" value="">';
 
-                // Email
-                var cell4 = newRow.insertCell(3);
-                cell4.innerHTML = '<input type="text" class="input-toplu" name="eposta" value="">';
+    // TC Numarası
+    var cell2 = newRow.insertCell(1);
+    cell2.innerHTML = '<input type="text" class="input-select" name="TC" oninput="checkTCNumberLength(this)" value="">';
 
-                // Telefon Numarası
-                var cell5 = newRow.insertCell(4);
-                cell5.innerHTML =
-                    '<input type="text" class="input-toplu" name="telefon" oninput="checkPhoneNumberLength(this)" value="">';
+    // Cinsiyet
+    var cell3 = newRow.insertCell(2);
+    cell3.innerHTML = '<select class="input-select" name="gender">' +
+        '<option value="Erkek">Erkek</option>' +
+        '<option value="Kadın">Kadın</option>' +
+        '</select>';
 
-                // Öğrenim Durumu
-                var cell6 = newRow.insertCell(5);
-                cell6.innerHTML = '<select class="input-toplu" name="educationStatus">' +
-                    '<option value="ilkOkul">İlk Okul</option>' +
-                    '<option value="ortaOkul">Orta Okul</option>' +
-                    '<option value="lise">Lise</option>' +
-                    '<option value="universite">Üniversite</option>' +
-                    '</select>';
+    // Email
+    var cell4 = newRow.insertCell(3);
+    cell4.innerHTML = '<input type="text" class="input-select" name="eposta" value="">';
 
-                // Iban
-                var cell7 = newRow.insertCell(6);
-                cell7.innerHTML = '<input type="text" class="input-toplu" name="Iban" value="">';
+    // Telefon Numarası
+    var cell5 = newRow.insertCell(4);
+    cell5.innerHTML = '<input type="text" class="input-select" name="telefon" oninput="checkPhoneNumberLength(this)" value="">';
 
-                // İşe Başlangıç Tarihi
-                var cell8 = newRow.insertCell(7);
-                cell8.innerHTML = '<input type="date" class="input-toplu" name="startingWorking" value="">';
+    // Öğrenim Durumu
+    var cell6 = newRow.insertCell(5);
+    cell6.innerHTML = '<select class="input-select" name="educationStatus">' +
+        '<option value="ilkOkul">İlk Okul</option>' +
+        '<option value="ortaOkul">Orta Okul</option>' +
+        '<option value="lise">Lise</option>' +
+        '<option value="universite">Üniversite</option>' +
+        '</select>';
 
-                // Görevi
-                var cell9 = newRow.insertCell(8);
-                cell9.innerHTML = '<input type="text" class="input-toplu" name="task" value="">';
+    // Iban
+    var cell7 = newRow.insertCell(6);
+    cell7.innerHTML = '<input type="text" class="input-select" name="Iban" value="">';
 
-                // Sigorta Numarası
-                var cell10 = newRow.insertCell(9);
-                cell10.innerHTML = '<input type="text" class="input-toplu" name="sigorta" value="">';
+    // İşe Başlangıç Tarihi
+    var cell8 = newRow.insertCell(7);
+    cell8.innerHTML = '<input type="date" class="input-select" name="startingWorking" value="">';
 
-                // Maaş
-                var cell11 = newRow.insertCell(10);
-                cell11.innerHTML = '<input type="text" class="input-toplu" name="salary" value="">';
+    // Görevi
+    var cell9 = newRow.insertCell(8);
+    cell9.innerHTML = '<input type="text" class="input-select" name="task" value="">';
 
-                // Birim
-                var cell12 = newRow.insertCell(11);
-                cell12.innerHTML = '<input type="text" class="input-toplu" name="unit" value="">';
+    // Sigorta Numarası
+    var cell10 = newRow.insertCell(9);
+    cell10.innerHTML = '<input type="text" class="input-select" name="sigorta" value="">';
 
-                // Açılış Bakiyesi
-                var cell13 = newRow.insertCell(12);
-                cell13.innerHTML = '<input type="text" class="input-toplu" name="openingBalance" value="">';
+    // Maaş
+    var cell11 = newRow.insertCell(10);
+    cell11.innerHTML = '<input type="text" class="input-select" name="salary" value="">';
 
-                // Bakiye Türü
-                var cell14 = newRow.insertCell(13);
-                cell14.innerHTML = '<select class="input-toplu" name="balanceType">' +
-                    '<option value="TL">TL</option>' +
-                    '<option value="Euro">Euro</option>' +
-                    '<option value="Dolar">Dolar</option>' +
-                    '</select>';
+    // Birim
+    var cell12 = newRow.insertCell(11);
+    cell12.innerHTML = '<input type="text" class="input-select" name="unit" value="">';
 
-                // Ödeme Tarihi
-                var cell15 = newRow.insertCell(14);
-                cell15.innerHTML = '<input type="date" class="input-toplu" name="promise" value="">';
-            }
+    // Açılış Bakiyesi
+    var cell13 = newRow.insertCell(12);
+    cell13.innerHTML = '<input type="text" class="input-select" name="openingBalance" value="">';
+
+    // Bakiye Türü
+    var cell14 = newRow.insertCell(13);
+    cell14.innerHTML = '<select class="input-select" name="balanceType">' +
+        '<option value="TL">TL</option>' +
+        '<option value="Euro">Euro</option>' +
+        '<option value="Dolar">Dolar</option>' +
+        '</select>';
+
+    // Ödeme Tarihi
+    var cell15 = newRow.insertCell(14);
+    cell15.innerHTML = '<input type="date" class="input-select" name="promise" value="">';
+}
+
             </script>
 
             <script type="text/javascript">
