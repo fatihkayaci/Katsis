@@ -1,5 +1,6 @@
 <?php
 require_once "Controller/class.func.php";
+$idapartman =$_SESSION["apartID"];
 try {
     $sql2 = "SELECT 
     tbl_maliye.*, 
@@ -14,21 +15,61 @@ JOIN
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    //contenteditable="true"
-        ?>
+    
+    $kategori_listesi = array();
+    $sql2 = "SELECT * FROM tbl_kategori where apartman_id=" . $_SESSION["apartID"];
+    $stmt2 = $conn->prepare($sql2);
+    $stmt2->execute();
+    $result2 = $stmt2->fetchAll(PDO::FETCH_ASSOC);
+    foreach ($result2 as $row2) {
+        $kategori_listesi[$row2['kategori_id']] = $row2['kategori_adi'];
+    }
+
+    $sql = "
+    SELECT 
+    u1.userID AS katMalikiID, 
+        
+        u1.userName AS katMalikiName,
+        u2.userID AS kiraciID,  
+        u2.userName AS kiraciName, 
+        b.blok_adi AS blokAdi,
+        d.daire_sayisi AS dNO,
+        d.daire_id,
+        d.katMalikiID,
+        d.KiraciID
+    FROM tbl_daireler d
+    LEFT JOIN tbl_users u1 ON d.katMalikiID = u1.userID
+    LEFT JOIN tbl_users u2 ON d.KiraciID = u2.userID
+    LEFT JOIN tbl_blok b ON d.blok_adi = b.blok_id  WHERE d.apartman_id=".$idapartman ;
+
+    // Sorguyu hazırlama ve çalıştırma
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+
+    $daireler = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+  
+
+   
+
+ 
+
+?>
 <style>
 .hidden {
     display: none;
 }
 </style>
+<input type="hidden" id="apartmanId" value=<?php echo $_SESSION["apartID"] ?> />
 <div class="cener-table">
 
     <div class="input-group-div">
 
         <div class="input-group1">
 
-            <button class="adduser btn-custom-outline bcoc1">Kullanıcı Ekle</button>
-            <button class="toplu btn-custom-outline bcoc2">Toplu İşlemler</button>
+            <button class="adduser btn-custom-outline bcoc1"
+                onclick=" popupOpenControl('popupBorcEkle','borcEkleForm')">Borç Tanımla</button>
+            <button class="toplu btn-custom-outline bcoc2">Toplu Borç Tanımla</button>
 
         </div>
 
@@ -78,8 +119,8 @@ JOIN
                     foreach ($result as $row) {
                         $i++;
                         ?>
-            <tr data-userid="<?php echo $row["maliye_id"]; ?>"
-                id="tr-<?php echo $row["maliye_id"] . '-' . $i; ?>" class="git-ac">
+            <tr data-userid="<?php echo $row["maliye_id"]; ?>" id="tr-<?php echo $row["maliye_id"] . '-' . $i; ?>"
+                class="git-ac">
                 <td data-title="Seç" class="check-style">
                     <!-- Checkbox id'sine $i değerini ekliyoruz -->
                     <input id="check-<?php echo $row["maliye_id"] . '-' . $i; ?>" class="check1" type="checkbox"
@@ -103,43 +144,43 @@ JOIN
                 </td>
 
                 <td data-title="tanimlama_tar" class="table_tt table_td email" contenteditable="false">
-                   <?php echo tarihDonustur($row["tanımlama_tar"]) ; ?>
-                </td> 
+                    <?php echo tarihDonustur($row["tanımlama_tar"]) ; ?>
+                </td>
                 <td data-title="durum" class="table_tt table_td Task" contenteditable="false">
-                  <?php
+                    <?php
                   if($row["maliye_turu"]==2){
                     echo "<p class='main-durum odendi'>Ödendi</p>";
                   }else{
                     echo ZamanFarki(date("Y-m-d"), $row["odeme_tar"]);
                   }
                   ?>
-                </td> 
+                </td>
 
                 <td data-title="top_borc" class="table_tt table_td Task" contenteditable="false">
-                   <?php echo duzenleSayi($row["top_borc"]) ; ?>
-                </td> 
+                    <?php echo duzenleSayi($row["top_borc"]) ; ?>
+                </td>
 
                 <td data-title="kalan_borc" class="table_tt table_td " contenteditable="false">
-                   <?php echo duzenleSayi($row["borc_miktar"]); ?>
-                </td> 
+                    <?php echo duzenleSayi($row["borc_miktar"]); ?>
+                </td>
                 <td data-title="fatura" class="table_tt table_td " contenteditable="false">
-                  <?php 
+                    <?php 
                   if($row["maliye_turu"] == 2){
                   
                   ?>
 
-                <a href="Controller/pdf/Income_pdf?temp=<?php echo $row["maliye_id"]; ?>" target="_blank">
-                    <button class="fatura_btn"><i class="fa-solid fa-file-export"></i> Fatura</button>
-                </a>
-                <?php 
+                    <a href="Controller/pdf/Income_pdf?temp=<?php echo $row["maliye_id"]; ?>" target="_blank">
+                        <button class="fatura_btn"><i class="fa-solid fa-file-export"></i> Fatura</button>
+                    </a>
+                    <?php 
                 }
                   
                   ?>
-                </td> 
-                
+                </td>
 
 
-                
+
+
             </tr>
 
             <?php
@@ -198,6 +239,145 @@ JOIN
 
 
 <!-- =============================== -->
+
+<!-- Borç Ekleme Popup-->
+<div id="popupBorcEkle" class="form-popup">
+
+    <form id="borcEkleForm" class="login-form">
+
+        <h2 class="form-signin-heading">Borç Ekle</h2>
+
+
+        <div class="row">
+
+            <div class="col-md-6 col-btn">
+                <input class="input" type="text" id="aciklama" required="" />
+                <label id="aciklamaLabel" for="aciklama">Açıklama *: </label>
+            </div>
+
+            <div class="col-md-12 col-btn">
+                <input class="input" type="text" id="borcTutar" placeholder="0,00" step="0.01"
+                    onclick="selectInput(this)" onkeypress="return onlyNumberKey(event)" />
+                <label id="borcLabel" for="borcTutar">Borç Tutarı *:</label>
+            </div>
+
+            <div class="col-md-6 col">
+                <input class="input" type="date" value="<?php echo date('Y-m-d'); ?>" id="dateInput" required="" />
+                <label id="label_tarih" for="dateInput">Borç Tanımlama Tarihi :</label>
+            </div>
+
+            <div class="col-md-6 col">
+                <input class="input" type="date" value="<?php echo date('Y-m-d', strtotime('+7 days')); ?>"
+                    id="dateInput2" required="" />
+                <label id="label_tarih2" for="dateInput2">Son Ödeme Tarihi :</label>
+            </div>
+
+            <div class="col-md-6 col-btn">
+
+                <div class="select-div">
+
+                    <div class="dropdown-nereden">
+                        <div class="group">
+                            <input class="search-selectx input" data-user-id="" type="text" list="Users" id="kategori"
+                                name="options" required="" />
+                            <label id="kategoriLabel" class="selectx-label" for="kategori">Kategoriler : *</label>
+                        </div>
+
+                        <div class="dropdown-content-nereden searchInput-btn" id="kategoriDP">
+                            <div class="dropdown-content-inside-nereden">
+                                <input type="text" id="searchInput" placeholder="Ara...">
+
+                                <?php 
+                                    foreach($kategori_listesi as $kategori_id => $kategori_adi){
+                                        echo '                                        
+                                           <button  data-user-id="' . $kategori_id . '">' . $kategori_adi . '</button>';
+                                    }
+                                ?>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-6 col-btn">
+
+                <div class="select-div">
+
+                    <div class="dropdown-nereden">
+                        <div class="group">
+                            <input class="search-selectx input" data-user-id="" type="text" list="Users" id="kategori2"
+                                name="options" required="" />
+                            <label id="kategoriLabel" class="selectx-label" for="kategori">Kullanıcılar: *</label>
+                        </div>
+
+                        <div class="dropdown-content-nereden searchInput-btn" id="kategoriDP2">
+                            <div class="dropdown-content-inside-nereden">
+                                <input type="text" id="searchInput2" placeholder="Ara...">
+
+                                <?php 
+
+foreach ($daireler as $daire) {
+    if (!empty($daire['katMalikiName'])) {
+        echo '<button  data-user-id="' . $daire['daire_id'] ."-". $daire['katMalikiID'] . '">' . $daire['katMalikiName'] . ' ' . $daire['blokAdi'] . ' ' . $daire['dNO'] . ' (Katmaliki)</button>';
+    }
+    if (!empty($daire['kiraciName'])) {
+        echo '                                        
+        <button  data-user-id="' . $daire['daire_id'] ."-". $daire['kiraciID'] . '">' . $daire['kiraciName'] . ' ' . $daire['blokAdi'] . ' ' . $daire['dNO'] . ' (Kiraci) </button>';
+    }
+}
+                                   
+                                ?>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+        <hr class="horizontal dark w-100">
+
+        <div class="row row-btn">
+            <button type="button" class="btn-custom-close"
+                onclick="popupCloseControl('popupBorcEkle','borcEkleForm')">Kapat</button>
+            <button type="button" class="btn-custom" id="saveButton" onclick="borcAdd()">Kaydet</button>
+        </div>
+
+    </form>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!-- select input start -->
 
 <script>
@@ -326,7 +506,6 @@ function sortTable(n) {
 <!-- ============================== -->
 
 <script type="text/javascript">
-
 // Herhangi bir alt checkbox işaret kaldırıldığında, "Hepsini Seç" kutusunu kaldırır
 var checkboxes = document.getElementsByClassName('check1');
 for (var i = 0; i < checkboxes.length; i++) {
@@ -387,20 +566,203 @@ function filtrele() {
 
 
 //Fatura  yönlkendirme
-function fatura(){
+function fatura() {
     $.ajax({
-    url: 'Controller/pdf/gelir_pdf.php', // PHP dosyasının URL'si
-    type: 'POST', // İsteğin türü (GET veya POST)
-    success: function(response){
-        alert("Başarılı");
-    },
-    error: function(jqXHR, textStatus, errorThrown){
-        // Ayrıntılı hata mesajı
-        alert('Bir hata oluştu: ' + textStatus + ' - ' + errorThrown);
-        console.log('Hata detayları: ', jqXHR.responseText);
-    }
-});
+        url: 'Controller/pdf/gelir_pdf.php', // PHP dosyasının URL'si
+        type: 'POST', // İsteğin türü (GET veya POST)
+        success: function(response) {
+            alert("Başarılı");
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            // Ayrıntılı hata mesajı
+            alert('Bir hata oluştu: ' + textStatus + ' - ' + errorThrown);
+            console.log('Hata detayları: ', jqXHR.responseText);
+        }
+    });
 
-            
+
 }
+
+
+
+
+
+// -------------- popup controller ----------------
+function popupCloseControl(popupName, popupForm) {
+
+    $('#' + popupForm).css('opacity', '0').css('transform', 'translateY(-180px)').delay(100).queue(function(next) {
+        $('#' + popupName).css('opacity', '0').delay(300).queue(function(nextInner) {
+            $(this).hide().css('display', 'none');
+            nextInner();
+            $('body').css('overflow', 'auto');
+        });
+        next();
+    });
+
+}
+
+
+
+function popupOpenControl(popupName, popupForm) {
+
+    $('body').css('overflow', 'hidden');
+
+    $('#' + popupName).show().css('display', 'flex').delay(100).queue(function(next) {
+        $('#' + popupName).css('opacity', '1');
+        $('#' + popupForm).css('opacity', '1');
+        $('#' + popupForm).css('transform', 'translateY(0)');
+        next();
+    });
+}
+
+
+//-----------  AJAX İŞLEMLERİ BORÇ EKLE  ---------------
+
+
+function borcAdd() {
+    var temp = document.getElementById('kategori2').dataset.userId;
+    var t = temp.split("-");
+    var apartmanId = document.getElementById('apartmanId').value;
+    var userId = t[1];
+    var daireId = t[0];;
+    var gelir_turu = 1;
+    var aciklamaValue = document.getElementById('aciklama').value;
+    var borcTutarValue = document.getElementById('borcTutar').value;
+    var dateInputValue = document.getElementById('dateInput').value;
+    var dateInput2Value = document.getElementById('dateInput2').value;
+    var kategoriAd = document.getElementById('kategori').value;
+
+    if (kategoriAd == "" || kategoriAd == null) {
+        var kategoriValue = "";
+    } else {
+        var kategoriValue = document.getElementById('kategori').dataset.userId;
+    }
+
+    alert(kategoriValue);
+
+    var a1 = true,
+        a2 = true,
+        a3 = true,
+        a4 = true,
+        a5 = true,
+        a6 = true;
+
+
+    if (aciklamaValue.trim() === '') {
+        $('#aciklama').css('border-color', 'red');
+        $('#aciklamaLabel').css('color', 'red');
+        a1 = false;
+    }
+
+    if (borcTutarValue.trim() === '' || borcTutarValue <= 0) {
+        $('#borcTutar').css('border-color', 'red');
+        $('#borcLabel').css('color', 'red');
+        a2 = false;
+    }
+
+    if (dateInputValue.trim() === '') {
+        $('#dateInput').css('border-color', 'red');
+        $('#label_tarih').css('color', 'red');
+        a3 = false;
+    }
+
+    if (dateInput2Value.trim() === '') {
+        $('#dateInput2').css('border-color', 'red');
+        $('#label_tarih2').css('color', 'red');
+        a4 = false;
+    }
+
+
+    if (kategoriValue.trim() === '') {
+        $('#kategori').css('border-color', 'red');
+        $('#kategoriLabel').css('color', 'red');
+        a5 = false;
+    }
+
+    if (!a5 || !a4 || !a1 || !a3 || !a2) {
+        alert("İlgili Alanlar Boş Olamaz");
+
+    } else {
+
+        $.ajax({
+            url: 'Controller/maliye_kayit.php',
+            type: 'POST',
+            data: {
+                daireId: daireId,
+                userId: userId,
+                apartmanId: apartmanId,
+                gelir_turu: gelir_turu,
+                aciklamaValue: aciklamaValue,
+                borcTutarValue: borcTutarValue,
+                dateInputValue: dateInputValue,
+                dateInput2Value: dateInput2Value,
+                kategoriValue: kategoriValue,
+
+            },
+            success: function(response) {
+                if (response) {
+                    document.getElementById('aciklama').value = "";
+                    document.getElementById('borcTutar').value = "";
+                    document.getElementById('kategori').value = "";
+                    popupCloseControl('popupBorcEkle', 'borcEkleForm');
+                    location.reload();
+                }
+
+
+            },
+            error: function(xhr, status, error) {
+                var errorMessage = xhr.status + ': ' + xhr.statusText;
+                alert('Hata alındı: ' + errorMessage);
+            }
+        });
+
+
+
+
+    }
+
+
+
+
+
+}
+
+
+
+
+function onlyNumberKey(evt) {
+        // Prevents the default action of the key pressed
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+
+        // Allows only digits, comma, and backspace keys
+        if (charCode > 31 && (charCode != 44) && (charCode < 48 || charCode > 57))
+            return false;
+
+        // Ensures only one decimal point
+        if (charCode == 44) {
+            if (evt.target.value.indexOf(',') !== -1 || evt.target.value.indexOf('.') !== -1)
+                return false;
+        }
+
+        // Limits to two decimal places after comma or dot
+        if (evt.target.value.indexOf(',') !== -1 || evt.target.value.indexOf('.') !== -1) {
+            var dotIndex = evt.target.value.indexOf(',') !== -1 ? evt.target.value.indexOf(',') : evt.target.value
+                .indexOf('.');
+            var afterDotLength = evt.target.value.length - dotIndex;
+            if (afterDotLength > 2)
+                return false;
+        }
+
+        return true;
+    }
+    function selectInput(input) {
+        input.select();
+
+    }
+</script>
+<script src="assets/js/mycode/dropdown.js"></script>
+<script>
+dropDownn('kategori', 'kategoriDP', 'searchInput');
+dropDownn('kategori2', 'kategoriDP2', 'searchInput2');
 </script>

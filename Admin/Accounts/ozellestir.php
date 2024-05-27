@@ -564,6 +564,7 @@ WHERE m.user_id = :user_id AND m.apartman_id = :apartman_id AND maliye_turu = :m
         var dateInputValue = document.getElementById('dateInput').value;
         var dateInput2Value = document.getElementById('dateInput2').value;
         var kategoriAd = document.getElementById('kategori').value;
+        
         if (kategoriAd == "" || kategoriAd == null) {
             var kategoriValue = "";
         } else {
