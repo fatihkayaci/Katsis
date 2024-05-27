@@ -22,7 +22,7 @@
     try {
         // SQL sorgusu
         $sql = "SELECT * from tbl_employed
-        WHERE apartman_ID = :apartmanID";
+        WHERE apartman_ID = :apartmanID AND arsive = 0";
         
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':apartmanID', $_SESSION["apartID"]);
@@ -33,44 +33,31 @@
     
         if ($result) {
             ?>
-    <table id="table" class="users-table">
-        <thead>
-            <tr class="users-table-info">
-                <th onclick="sortTable(0)">İsim Soyisim<i id="icon-table1" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(1)">TC Numarası<i id="icon-table2" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(2)">Cinsiyet<i id="icon-table3" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(3)">Email<i id="icon-table4" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(4)">Telefon Numarası<i id="icon-table5" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(5)">Öğrenim Durumu<i id="icon-table6" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(6)">Iban<i id="icon-table7" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(7)">İşe Başlangıç Tarihi<i id="icon-table8" class="fa-solid fa-sort-down"></i>
-                </th>
-                <th onclick="sortTable(8)">Görevi<i id="icon-table9" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(9)">Sigorta Numarası<i id="icon-table10" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(10)">Maaş<i id="icon-table11" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(11)">Birim<i id="icon-table12" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(12)">Açılış Bakiyesi<i id="icon-table13" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(13)">Bakiye Türü<i id="icon-table14" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(14)">Ödeme Tarihi<i id="icon-table15" class="fa-solid fa-sort-down"></i></th>
-            </tr>
-        </thead>
-        <tbody>
+        <div id="table" class="employee-main">
+
+        <hr class="horizontal dark mt-0 w-100">
+
             <?php
             foreach ($result as $row) {
                 ?>
-            <tr data-userid="" class="git-ac<?php echo $i ?>">
+            <div data-userid="" class="toplu-islem">
 
-                <td data-title="Ad Soyad" name="fullName" class="table_tt table_td">
-                    <input type="text" class="input-select" value="<?php echo $row["fullName"] ?? ''; ?>"
+                <div data-title="Ad Soyad" name="fullName" class="toplu-islem-inside">
+                    <label for="ad">İsim Soyisim:</label>
+                    <input id="ad" type="text" class="input-toplu" value="<?php echo $row["fullName"] ?? ''; ?>"
                         <?php echo isset($row["fullName"]) ? 'readonly' : ''; ?> />
-                </td>
-                <td data-title="TC No" name="TC" class="table_tt table_td">
-                    <input type="text" class="input-select" oninput="checkTCNumberLength(this)"
+                </div>
+
+                <div data-title="TC No" name="TC" class="toplu-islem-inside">
+                    <label for="tc">TC Numarası:</label>
+                    <input id="tc" type="text" class="input-toplu" oninput="checkTCNumberLength(this)"
                         value="<?php echo $row["TC"] ?? ''; ?>"
                         <?php echo isset($row["fullName"]) ? 'readonly' : ''; ?> />
-                </td>
-                <td data-title="gender" name="gender" class="table_tt table_td">
-                    <select class="input-select" <?php echo isset($row["fullName"]) ? 'disabled' : ''; ?>>
+                </div>
+
+                <div data-title="gender" name="gender" class="toplu-islem-inside">
+                    <label for="gender">Cinsiyet:</label>
+                    <select id="gender" class="input-toplu" <?php echo isset($row["fullName"]) ? 'disabled' : ''; ?>>
                         <option value="Erkek"
                             <?php if(isset($row["gender"]) && $row["gender"] === "Erkek") echo "selected"; ?>>
                             Erkek</option>
@@ -78,19 +65,24 @@
                             <?php if(isset($row["gender"]) && $row["gender"] === "Kadın") echo "selected"; ?>>
                             Kadın</option>
                     </select>
-                </td>
-                <td data-title="E-Posta" name="eposta" class="table_tt table_td">
-                    <input type="text" class="input-select" value="<?php echo $row["userEmail"] ?? ''; ?>"
-                        <?php echo isset($row["fullName"]) ? 'readonly' : ''; ?> />
-                </td>
+                </div>
 
-                <td data-title="Telefon" name="telefon" class="table_tt table_td">
-                    <input type="text" class="input-select" oninput="checkPhoneNumberLength(this)"
+                <div data-title="E-Posta" name="eposta" class="toplu-islem-inside">
+                    <label for="mail">Email:</label>
+                    <input id="mail" type="text" class="input-toplu" value="<?php echo $row["userEmail"] ?? ''; ?>"
+                        <?php echo isset($row["fullName"]) ? 'readonly' : ''; ?> />
+                </div>
+
+                <div data-title="Telefon" name="telefon" class="toplu-islem-inside">
+                    <label for="phone">Telefon Numarası:</label>
+                    <input id="phone" type="text" class="input-toplu" oninput="checkPhoneNumberLength(this)"
                         value="<?php echo $row["phoneNumber"] ?? ''; ?>"
                         <?php echo isset($row["fullName"]) ? 'readonly' : ''; ?> />
-                </td>
-                <td data-title="educationStatus" name="educationStatus" class="table_tt table_td">
-                    <select class="input-select" <?php echo isset($row["fullName"]) ? 'disabled' : ''; ?>>
+                </div>
+
+                <div data-title="educationStatus" name="educationStatus" class="toplu-islem-inside">
+                    <label for="education">Öğrenim Durumu:</label>
+                    <select id="education" class="input-toplu" <?php echo isset($row["fullName"]) ? 'disabled' : ''; ?>>
                         <option value="ilkOkul"
                             <?php if(isset($row["educationStatus"]) && $row["educationStatus"] === "ilkOkul") echo "selected"; ?>>
                             İlk Okul</option>
@@ -104,37 +96,53 @@
                             <?php if(isset($row["educationStatus"]) && $row["educationStatus"] === "universite") echo "selected"; ?>>
                             Üniversite</option>
                     </select>
-                </td>
-                <td data-title="Iban" name="Iban" class="table_tt table_td">
-                    <input type="text" class="input-select" value="<?php echo $row["Iban"] ?? ''; ?>"
+                </div>
+
+                <div data-title="Iban" name="Iban" class="toplu-islem-inside">
+                    <label for="iban">Iban:</label>
+                    <input id="iban" type="text" class="input-toplu" value="<?php echo $row["Iban"] ?? ''; ?>"
                         <?php echo isset($row["fullName"]) ? 'readonly' : ''; ?> />
-                </td>
-                <td data-title="startingWorking" name="startingWorking" class="table_tt table_td">
-                    <input type="date" class="input-select" value="<?php echo $row["startingWorking"] ?? ''; ?>"
+                </div>
+
+                <div data-title="startingWorking" name="startingWorking" class="toplu-islem-inside">
+                    <label for="start-date">İşe Başlangıç Tarihi:</label>
+                    <input id="start-date" type="date" class="input-toplu" value="<?php echo $row["startingWorking"] ?? ''; ?>"
                         <?php echo isset($row["fullName"]) ? 'readonly' : ''; ?> />
-                </td>
-                <td data-title="task" name="task" class="table_tt table_td">
-                    <input type="text" class="input-select" value="<?php echo $row["task"] ?? ''; ?>"
+                </div>
+
+                <div data-title="task" name="task" class="toplu-islem-inside">
+                    <label for="task">Görevi:</label>
+                    <input id="task" type="text" class="input-toplu" value="<?php echo $row["task"] ?? ''; ?>"
                         <?php echo isset($row["fullName"]) ? 'readonly' : ''; ?> />
-                </td>
-                <td data-title="sigorta" name="sigorta" class="table_tt table_td">
-                    <input type="text" class="input-select" value="<?php echo $row["sigortaNo"] ?? ''; ?>"
+                </div>
+
+                <div data-title="sigorta" name="sigorta" class="toplu-islem-inside">
+                    <label for="sigortaNo">Sigorta Numarası:</label>
+                    <input id="sigortaNo" type="text" class="input-toplu" value="<?php echo $row["sigortaNo"] ?? ''; ?>"
                         <?php echo isset($row["fullName"]) ? 'readonly' : ''; ?> />
-                </td>
-                <td data-title="salary" name="salary" class="table_tt table_td">
-                    <input type="text" class="input-select" value="<?php echo $row["salary"] ?? ''; ?>"
+                </div>
+
+                <div data-title="salary" name="salary" class="toplu-islem-inside">
+                    <label for="salary">Maaş:</label>
+                    <input id="salary" type="text" class="input-toplu" value="<?php echo $row["salary"] ?? ''; ?>"
                         <?php echo isset($row["fullName"]) ? 'readonly' : ''; ?> />
-                </td>
-                <td data-title="unit" name="unit" class="table_tt table_td">
-                    <input type="text" class="input-select" value="<?php echo $row["unit"] ?? ''; ?>"
+                </div>
+
+                <div data-title="unit" name="unit" class="toplu-islem-inside">
+                    <label for="unit">Birim:</label>
+                    <input id="unit" type="text" class="input-toplu" value="<?php echo $row["unit"] ?? ''; ?>"
                         <?php echo isset($row["fullName"]) ? 'readonly' : ''; ?> />
-                </td>
-                <td data-title="openingBalance" name="openingBalance" class="table_tt table_td">
-                    <input type="text" class="input-select" value="<?php echo $row["openingBalance"] ?? ''; ?>"
+                </div>
+
+                <div data-title="openingBalance" name="openingBalance" class="toplu-islem-inside">
+                    <label for="openingBalance">Açılış Bakiyesi:</label>
+                    <input id="openingBalance" type="text" class="input-toplu" value="<?php echo $row["openingBalance"] ?? ''; ?>"
                         <?php echo isset($row["fullName"]) ? 'readonly' : ''; ?> />
-                </td>
-                <td data-title="balanceType" name="balanceType" class="table_tt table_td">
-                    <select class="input-select" <?php echo isset($row["balanceType"]) ? 'disabled' : ''; ?>>
+                </div>
+
+                <div data-title="balanceType" name="balanceType" class="toplu-islem-inside">
+                    <label for="balanceType">Bakiye Türü:</label>
+                    <select id="balanceType" class="input-toplu" <?php echo isset($row["balanceType"]) ? 'disabled' : ''; ?>>
                         <option value="TL"
                             <?php if(isset($row["balanceType"]) && $row["balanceType"] === "TL") echo "selected"; ?>>
                             TL</option>
@@ -145,24 +153,54 @@
                             <?php if(isset($row["balanceType"]) && $row["balanceType"] === "Dolar") echo "selected"; ?>>
                             Dolar</option>
                     </select>
-                </td>
-                <td data-title="promise" name="promise" class="table_tt table_td">
-                    <input type="Date" class="input-select" value="<?php echo $row["promise"] ?? ''; ?>"
+                </div>
+
+                <div data-title="promise" name="promise" class="toplu-islem-inside">
+                    <label for="promise">Ödeme Tarihi:</label>
+                    <input id="promise" type="Date" class="input-toplu" value="<?php echo $row["promise"] ?? ''; ?>"
                         <?php echo isset($row["fullName"]) ? 'readonly' : ''; ?> />
-                </td>
-            </tr>
-            <?php
-                ?>
+                </div>
+            </div>
+
+            <hr class="horizontal dark w-100">
+
+            
             <?php
             }
             echo '
-            </tbody>
-                    </table>
-                <button id="addRowBtn" onclick="addRow()" class="btn-custom-outline bcoc1">+</button>
-                </div>';
+                </div>
+            </div>
+        </div>';
         } else {
-            echo "0 results";
-        }
+            
+            ?>
+            <table id="table" class="users-table">
+                <thead>
+                    <tr class="users-table-info">
+                        <th onclick="sortTable(0)">İsim Soyisim<i id="icon-table1" class="fa-solid fa-sort-down"></i></th>
+                        <th onclick="sortTable(1)">TC Numarası<i id="icon-table2" class="fa-solid fa-sort-down"></i></th>
+                        <th onclick="sortTable(2)">Cinsiyet<i id="icon-table3" class="fa-solid fa-sort-down"></i></th>
+                        <th onclick="sortTable(3)">Email<i id="icon-table4" class="fa-solid fa-sort-down"></i></th>
+                        <th onclick="sortTable(4)">Telefon Numarası<i id="icon-table5" class="fa-solid fa-sort-down"></i></th>
+                        <th onclick="sortTable(5)">Öğrenim Durumu<i id="icon-table6" class="fa-solid fa-sort-down"></i></th>
+                        <th onclick="sortTable(6)">Iban<i id="icon-table7" class="fa-solid fa-sort-down"></i></th>
+                        <th onclick="sortTable(7)">İşe Başlangıç Tarihi<i id="icon-table8" class="fa-solid fa-sort-down"></i></th>
+                        <th onclick="sortTable(8)">Görevi<i id="icon-table9" class="fa-solid fa-sort-down"></i></th>
+                        <th onclick="sortTable(9)">Sigorta Numarası<i id="icon-table10" class="fa-solid fa-sort-down"></i></th>
+                        <th onclick="sortTable(10)">Maaş<i id="icon-table11" class="fa-solid fa-sort-down"></i></th>
+                        <th onclick="sortTable(11)">Birim<i id="icon-table12" class="fa-solid fa-sort-down"></i></th>
+                        <th onclick="sortTable(12)">Açılış Bakiyesi<i id="icon-table13" class="fa-solid fa-sort-down"></i></th>
+                        <th onclick="sortTable(13)">Bakiye Türü<i id="icon-table14" class="fa-solid fa-sort-down"></i></th>
+                        <th onclick="sortTable(14)">Ödeme Tarihi<i id="icon-table15" class="fa-solid fa-sort-down"></i></th>
+                    </tr>
+                </thead>
+                    <?php
+                    }
+                    echo '
+                            </div>
+                        <button id="addRowBtn" onclick="addRow()" class="btn-custom-outline bcoc1">+</button>
+                        </div>';
+        
     } catch (PDOException $e) {
         echo "Bağlantı hatası: " . $e->getMessage();
     }
@@ -184,83 +222,92 @@
             </script>
             <script>
             function addRow() {
-                var table = document.getElementById("table").getElementsByTagName('tbody')[0];
-                var newRow = table.insertRow(table.rows.length);
+    var table = document.getElementById("table");
+    var tbody;
 
-                // İsim Soyisim
-                var cell1 = newRow.insertCell(0);
-                cell1.innerHTML = '<input type="text" class="input-select" name="fullName" value="">';
+    // Eğer tbody yoksa, bir tane oluştur
+    if (table.getElementsByTagName('tbody').length === 0) {
+        tbody = document.createElement('tbody');
+        table.appendChild(tbody);
+    } else {
+        tbody = table.getElementsByTagName('tbody')[0];
+    }
 
-                // TC Numarası
-                var cell2 = newRow.insertCell(1);
-                cell2.innerHTML =
-                    '<input type="text" class="input-select" name="TC" oninput="checkTCNumberLength(this)" value="">';
+    var newRow = tbody.insertRow(tbody.rows.length);
 
-                // Cinsiyet
-                var cell3 = newRow.insertCell(2);
-                cell3.innerHTML = '<select class="input-select" name="gender">' +
-                    '<option value="Erkek">Erkek</option>' +
-                    '<option value="Kadın">Kadın</option>' +
-                    '</select>';
+    // İsim Soyisim
+    var cell1 = newRow.insertCell(0);
+    cell1.innerHTML = '<input type="text" class="input-select" name="fullName" value="">';
 
-                // Email
-                var cell4 = newRow.insertCell(3);
-                cell4.innerHTML = '<input type="text" class="input-select" name="eposta" value="">';
+    // TC Numarası
+    var cell2 = newRow.insertCell(1);
+    cell2.innerHTML = '<input type="text" class="input-select" name="TC" oninput="checkTCNumberLength(this)" value="">';
 
-                // Telefon Numarası
-                var cell5 = newRow.insertCell(4);
-                cell5.innerHTML =
-                    '<input type="text" class="input-select" name="telefon" oninput="checkPhoneNumberLength(this)" value="">';
+    // Cinsiyet
+    var cell3 = newRow.insertCell(2);
+    cell3.innerHTML = '<select class="input-select" name="gender">' +
+        '<option value="Erkek">Erkek</option>' +
+        '<option value="Kadın">Kadın</option>' +
+        '</select>';
 
-                // Öğrenim Durumu
-                var cell6 = newRow.insertCell(5);
-                cell6.innerHTML = '<select class="input-select" name="educationStatus">' +
-                    '<option value="ilkOkul">İlk Okul</option>' +
-                    '<option value="ortaOkul">Orta Okul</option>' +
-                    '<option value="lise">Lise</option>' +
-                    '<option value="universite">Üniversite</option>' +
-                    '</select>';
+    // Email
+    var cell4 = newRow.insertCell(3);
+    cell4.innerHTML = '<input type="text" class="input-select" name="eposta" value="">';
 
-                // Iban
-                var cell7 = newRow.insertCell(6);
-                cell7.innerHTML = '<input type="text" class="input-select" name="Iban" value="">';
+    // Telefon Numarası
+    var cell5 = newRow.insertCell(4);
+    cell5.innerHTML = '<input type="text" class="input-select" name="telefon" oninput="checkPhoneNumberLength(this)" value="">';
 
-                // İşe Başlangıç Tarihi
-                var cell8 = newRow.insertCell(7);
-                cell8.innerHTML = '<input type="date" class="input-select" name="startingWorking" value="">';
+    // Öğrenim Durumu
+    var cell6 = newRow.insertCell(5);
+    cell6.innerHTML = '<select class="input-select" name="educationStatus">' +
+        '<option value="ilkOkul">İlk Okul</option>' +
+        '<option value="ortaOkul">Orta Okul</option>' +
+        '<option value="lise">Lise</option>' +
+        '<option value="universite">Üniversite</option>' +
+        '</select>';
 
-                // Görevi
-                var cell9 = newRow.insertCell(8);
-                cell9.innerHTML = '<input type="text" class="input-select" name="task" value="">';
+    // Iban
+    var cell7 = newRow.insertCell(6);
+    cell7.innerHTML = '<input type="text" class="input-select" name="Iban" value="">';
 
-                // Sigorta Numarası
-                var cell10 = newRow.insertCell(9);
-                cell10.innerHTML = '<input type="text" class="input-select" name="sigorta" value="">';
+    // İşe Başlangıç Tarihi
+    var cell8 = newRow.insertCell(7);
+    cell8.innerHTML = '<input type="date" class="input-select" name="startingWorking" value="">';
 
-                // Maaş
-                var cell11 = newRow.insertCell(10);
-                cell11.innerHTML = '<input type="text" class="input-select" name="salary" value="">';
+    // Görevi
+    var cell9 = newRow.insertCell(8);
+    cell9.innerHTML = '<input type="text" class="input-select" name="task" value="">';
 
-                // Birim
-                var cell12 = newRow.insertCell(11);
-                cell12.innerHTML = '<input type="text" class="input-select" name="unit" value="">';
+    // Sigorta Numarası
+    var cell10 = newRow.insertCell(9);
+    cell10.innerHTML = '<input type="text" class="input-select" name="sigorta" value="">';
 
-                // Açılış Bakiyesi
-                var cell13 = newRow.insertCell(12);
-                cell13.innerHTML = '<input type="text" class="input-select" name="openingBalance" value="">';
+    // Maaş
+    var cell11 = newRow.insertCell(10);
+    cell11.innerHTML = '<input type="text" class="input-select" name="salary" value="">';
 
-                // Bakiye Türü
-                var cell14 = newRow.insertCell(13);
-                cell14.innerHTML = '<select class="input-select" name="balanceType">' +
-                    '<option value="TL">TL</option>' +
-                    '<option value="Euro">Euro</option>' +
-                    '<option value="Dolar">Dolar</option>' +
-                    '</select>';
+    // Birim
+    var cell12 = newRow.insertCell(11);
+    cell12.innerHTML = '<input type="text" class="input-select" name="unit" value="">';
 
-                // Ödeme Tarihi
-                var cell15 = newRow.insertCell(14);
-                cell15.innerHTML = '<input type="date" class="input-select" name="promise" value="">';
-            }
+    // Açılış Bakiyesi
+    var cell13 = newRow.insertCell(12);
+    cell13.innerHTML = '<input type="text" class="input-select" name="openingBalance" value="">';
+
+    // Bakiye Türü
+    var cell14 = newRow.insertCell(13);
+    cell14.innerHTML = '<select class="input-select" name="balanceType">' +
+        '<option value="TL">TL</option>' +
+        '<option value="Euro">Euro</option>' +
+        '<option value="Dolar">Dolar</option>' +
+        '</select>';
+
+    // Ödeme Tarihi
+    var cell15 = newRow.insertCell(14);
+    cell15.innerHTML = '<input type="date" class="input-select" name="promise" value="">';
+}
+
             </script>
 
             <script type="text/javascript">
@@ -310,57 +357,6 @@
             });
             </script>
 
-            <script>
-            function sortTable(n) {
-                var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-                table = document.getElementById("table");
-                switching = true;
-                dir = "asc";
-                while (switching) {
-                    switching = false;
-                    rows = table.rows;
-                    for (i = 1; i < (rows.length - 1); i++) {
-                        shouldSwitch = false;
-                        x = rows[i].getElementsByTagName("TD")[n];
-                        y = rows[i + 1].getElementsByTagName("TD")[n];
-
-                        for (var j = 1; j < 8; j++) {
-                            if (n != j) {
-                                $('#icon-table' + j).removeClass("rotate");
-                                $('#icon-table' + j).removeClass("opacity");
-                            }
-                        }
-
-                        if (dir == "asc") {
-                            if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-                                shouldSwitch = true;
-                                $('#icon-table' + n).removeClass("rotate");
-                                $('#icon-table' + n).addClass("opacity");
-                                break;
-                            }
-                        } else if (dir == "desc") {
-                            if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-                                shouldSwitch = true;
-                                $('#icon-table' + n).addClass("rotate");
-                                $('#icon-table' + n).addClass("opacity");
-                                break;
-                            }
-                        }
-                    }
-                    if (shouldSwitch) {
-                        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-                        switching = true;
-                        switchcount++;
-                    } else {
-                        if (switchcount == 0 && dir == "asc") {
-                            dir = "desc";
-                            switching = true;
-                        }
-                    }
-                }
-                // Döngü tamamlandığında 'i' değeri burada kapanır
-            }
-            </script>
 
 
             <script type="text/javascript">

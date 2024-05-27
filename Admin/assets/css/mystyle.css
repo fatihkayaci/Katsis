@@ -2649,14 +2649,14 @@ min-width: 0;
 .dropdown-content-nereden {
   display: none;
   position: absolute;
-  top: 100%;
+  top: 40px;
   left: 0;
   background-color: #f9f9f9;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  padding: 15px 20px;
   z-index: 1;
-  border-radius: 8px;
+  border-radius: 4px;
   overflow-x: auto;
+  border: 1px solid #cccccc;
 }
 
 .dropdown-nereden.open .dropdown-content-nereden {
@@ -2670,13 +2670,13 @@ min-width: 0;
 .dropdown-content-inside-nereden {
   min-width: max-content;
   max-height: 300px;
-  padding: 5px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
   justify-content: start;
   align-items: start;
+  margin: 5px 0px;
 }
 
 .dropdown-content-inside-nereden button {
@@ -2684,32 +2684,32 @@ min-width: 0;
   outline: none;
   border: none;
   cursor: pointer;
-  margin-bottom: 5px;
   transition: 0.3s;
   font-size: 16px;
   font-weight: 500;
   text-align: left;
+  padding: 5px 10px;
+  width: 100%;
 }
 
 .dropdown-content-inside-nereden button:hover {
-  color: #F84822;
-  transform: translateX(5px);
+  color: #277CE0;
+  padding-left: 15px;
+  background-color: #ececec;
 }
 
-#searchInput,
-#searchInputt {
-  margin-bottom: 10px;
+.dropdown-content-inside-nereden input {
   width: 100%;
   outline: none;
   border: none;
   background: none;
-  border-bottom: 1px solid var(--gray);
-  padding: 5px 0px;
+  border-bottom: 1px solid #ececec;
+  padding: 5px 10px;
+  margin: 0px 0px 5px 0px;
 }
 
-#searchInput:focus,
-#searchInputt:focus {
-  border-bottom: 1px solid var(--orange);
+.dropdown-content-inside-nereden input:focus {
+  border-bottom: 1px solid #277CE0;
 }
 
 .export-btn {
@@ -2739,4 +2739,59 @@ min-width: 0;
   border: 1px solid #d2d6da;
   background-color: #186625;
   color: #fff;
+}
+
+/* Toplu Personel Ekleme Sayfasi */
+
+.employee-main {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: baseline;
+  width: 98%;
+  margin: 20px 0px;
+}
+
+.toplu-islem {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  width: 100%;
+  transition: all 0.3s ease;
+  padding: 5px 0px;
+}
+.toplu-islem:hover {
+  background-color: #f1f1f1;
+}
+
+.toplu-islem-inside {
+  flex-grow: 1;
+  flex-basis: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+  min-width: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin: 5px 0px;
+}
+
+.input-toplu {
+  width: 100%;
+  height: 32px;
+  background-color: transparent;
+  color: #0d0c22;
+  border: 1px solid #b6b6b6;
+  border-radius: 4px;
+  padding: 5px 10px;
+  transition: 0.5s;
+  outline: none;
+  font-size: 13px;
+  font-family: 'poppins-regular';
+}
+
+.input-toplu:focus {
+  border-color: #0d0c22;
+  box-shadow: 0 0 10px 4px #0000001a; 
 }

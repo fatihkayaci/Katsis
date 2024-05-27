@@ -620,8 +620,8 @@ ORDER BY d.blok_adi ASC, d.daire_sayisi ASC";
 
 
 
-            <div class="col-md-6 col">
-                <div class="select-div">
+            <div class="col-md-6 col margint">
+                <div class="select-div m-0">
                     <div class="dropdown-nereden">
                         <div class="group">
                             <input class="search-selectx input" data-user-id="" type="text" list="blok" id="daireBlok"
@@ -656,8 +656,8 @@ ORDER BY d.blok_adi ASC, d.daire_sayisi ASC";
 
 
 
-            <div class="col-md-6 col">
-                <div class="select-div">
+            <div class="col-md-6 col margint">
+                <div class="select-div m-0">
                     <div class="dropdown-nereden">
                         <div class="group">
                             <input class="search-selectx input" data-user-id="" type="text" list="dairegrup"
@@ -789,6 +789,23 @@ ORDER BY d.blok_adi ASC, d.daire_sayisi ASC";
 
 
 <!-- =============================== -->
+<script>
+    window.onload = function() {
+        var popupBlokEkle = document.getElementById('popupBlokEkle');
+        var popupDaireEkle = document.getElementById('popupDaireEkle');
+        // ESC tuşuna basıldığında popup'ı kapat
+        window.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") {
+                if (popupBlokEkle.style.display === 'flex') {
+                    closePopupBlok();
+                } else if(popupDaireEkle.style.display === 'flex'){
+                    closePopupDaire();
+                }
+            }
+        });
+    };
+</script>
+
 <!-- select input start -->
 
 <script>
