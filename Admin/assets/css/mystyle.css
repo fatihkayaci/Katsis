@@ -2743,13 +2743,19 @@ min-width: 0;
 
 /* Toplu Personel Ekleme Sayfasi */
 
-.employee-main {
+.employee-main,
+.employee-main-yeniveri {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: baseline;
   width: 98%;
   margin: 20px 0px;
+}
+
+.employee-main-yeniveri {
+  margin: 0;
+  width: 100%;
 }
 
 .toplu-islem {
