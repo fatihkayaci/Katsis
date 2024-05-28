@@ -52,7 +52,7 @@
         $turu=1;
         //////////////////////////////////
         $sql4 = "SELECT m.aciklama, m.odeme_tar, m.borc_miktar, 
-(SELECT SUM(borc_miktar) FROM tbl_maliye 
+(SELECT   ROUND(SUM(borc_miktar),2) FROM tbl_maliye 
  WHERE user_id = :user_id AND apartman_id = :apartman_id AND maliye_turu = :maliyeturu";
 
         if (!empty($_SESSION['dId'])) {

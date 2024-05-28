@@ -2743,13 +2743,19 @@ min-width: 0;
 
 /* Toplu Personel Ekleme Sayfasi */
 
-.employee-main {
+.employee-main,
+.employee-main-yeniveri {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: baseline;
   width: 98%;
   margin: 20px 0px;
+}
+
+.employee-main-yeniveri {
+  margin: 0;
+  width: 100%;
 }
 
 .toplu-islem {
@@ -2794,4 +2800,13 @@ min-width: 0;
 .input-toplu:focus {
   border-color: #0d0c22;
   box-shadow: 0 0 10px 4px #0000001a; 
+}
+.red-class{
+  font-weight: bold;
+  color:red;
+}
+
+.green-class{
+  font-weight: bold;
+  color:#4BB543;
 }

@@ -134,19 +134,23 @@ JOIN
                         </svg>
                     </label>
                 </td>
-                <td data-title="kategori" class="table_tt table_td" contenteditable="false">
+                <td data-title="kategori" class="table_tt table_td <?php echo $row["maliye_turu"] == 2 ? 'green-class' : (ZamanControl(date("Y-m-d"), $row["odeme_tar"]) == 1 ? 'red-class' : '');
+ ?>" contenteditable="false">
                     <?php echo $row["kategori_adi"]; ?>
                 </td>
 
-                <td data-title="Aciklama" class="table_tt table_td phoneNumberTable" contenteditable="false">
+                <td data-title="Aciklama" class="table_tt table_td <?php echo $row["maliye_turu"] == 2 ? 'green-class' : (ZamanControl(date("Y-m-d"), $row["odeme_tar"]) == 1 ? 'red-class' : '');
+ ?> phoneNumberTable" contenteditable="false">
 
                     <?php echo $row["aciklama"]; ?>
                 </td>
 
-                <td data-title="tanimlama_tar" class="table_tt table_td email" contenteditable="false">
+                <td data-title="tanimlama_tar" class="table_tt table_td <?php echo $row["maliye_turu"] == 2 ? 'green-class' : (ZamanControl(date("Y-m-d"), $row["odeme_tar"]) == 1 ? 'red-class' : '');
+ ?> email" contenteditable="false">
                     <?php echo tarihDonustur($row["tanımlama_tar"]) ; ?>
                 </td>
-                <td data-title="durum" class="table_tt table_td Task" contenteditable="false">
+                <td data-title="durum" class="table_tt table_td <?php echo $row["maliye_turu"] == 2 ? 'green-class' : (ZamanControl(date("Y-m-d"), $row["odeme_tar"]) == 1 ? 'red-class' : '');
+ ?> Task" contenteditable="false">
                     <?php
                   if($row["maliye_turu"]==2){
                     echo "<p class='main-durum odendi'>Ödendi</p>";
@@ -156,14 +160,17 @@ JOIN
                   ?>
                 </td>
 
-                <td data-title="top_borc" class="table_tt table_td Task" contenteditable="false">
+                <td data-title="top_borc" class="table_tt table_td Task <?php echo $row["maliye_turu"] == 2 ? 'green-class' : (ZamanControl(date("Y-m-d"), $row["odeme_tar"]) == 1 ? 'red-class' : '');
+ ?>" contenteditable="false">
                     <?php echo duzenleSayi($row["top_borc"]) ; ?>
                 </td>
 
-                <td data-title="kalan_borc" class="table_tt table_td " contenteditable="false">
+                <td data-title="kalan_borc" class="table_tt table_td  <?php echo $row["maliye_turu"] == 2 ? 'green-class' : (ZamanControl(date("Y-m-d"), $row["odeme_tar"]) == 1 ? 'red-class' : '');
+ ?>" contenteditable="false">
                     <?php echo duzenleSayi($row["borc_miktar"]); ?>
                 </td>
-                <td data-title="fatura" class="table_tt table_td " contenteditable="false">
+                <td data-title="fatura" class="table_tt table_td <?php echo $row["maliye_turu"] == 2 ? 'green-class' : (ZamanControl(date("Y-m-d"), $row["odeme_tar"]) == 1 ? 'red-class' : '');
+ ?>" contenteditable="false">
                     <?php 
                   if($row["maliye_turu"] == 2){
                   

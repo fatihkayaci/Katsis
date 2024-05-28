@@ -95,4 +95,26 @@ function ZamanFarki($bugun, $hedefTarih) {
 
 
 
+function ZamanControl($bugun, $hedefTarih) {
+    $bugunTarih = new DateTime($bugun);
+    $hedefTarih = new DateTime($hedefTarih);
+    
+    // İki tarih arasındaki farkı hesapla
+    $fark = $bugunTarih->diff($hedefTarih);
+    
+    // Hedef tarih bugünden önce ise
+    if ($hedefTarih < $bugunTarih) {
+        return 1;
+    }
+    // Hedef tarih bugünden sonra ise
+    elseif ($hedefTarih > $bugunTarih) {
+        return  0;
+    }
+    // Hedef tarih bugünse
+    else {
+        return 0;
+    }
+}
+
+
 ?>
