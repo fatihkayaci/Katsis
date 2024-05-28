@@ -2795,3 +2795,12 @@ min-width: 0;
   border-color: #0d0c22;
   box-shadow: 0 0 10px 4px #0000001a; 
 }
+.red-class{
+  font-weight: bold;
+  color:red;
+}
+
+.green-class{
+  font-weight: bold;
+  color:#4BB543;
+}

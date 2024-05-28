@@ -45,8 +45,8 @@ try {
 
 try {
     $sql = "SELECT d.*, 
-    COALESCE(SUM(CASE WHEN mk.maliye_turu = 1 THEN mk.borc_miktar ELSE 0 END), 0) AS toplam_kira_borcu,
-    COALESCE(SUM(CASE WHEN mm.maliye_turu = 1 THEN mm.borc_miktar ELSE 0 END), 0) AS toplam_mal_borcu
+    ROUND(COALESCE(SUM(CASE WHEN mk.maliye_turu = 1 THEN mk.borc_miktar ELSE 0 END), 0), 2) AS toplam_kira_borcu,
+    ROUND(COALESCE(SUM(CASE WHEN mm.maliye_turu = 1 THEN mm.borc_miktar ELSE 0 END), 0), 2) AS toplam_mal_borcu
 FROM tbl_daireler AS d
 LEFT JOIN (SELECT daire_id, user_id, apartman_id, SUM(borc_miktar) AS borc_miktar, maliye_turu
         FROM tbl_maliye
