@@ -1,8 +1,8 @@
 <?php
 session_start();
-include ("../../DB/dbconfig.php");
-require '../../vendor/autoload.php'; // PhpSpreadsheet kütüphanesi
-require_once 'class.func.php';
+include ("../../../DB/dbconfig.php");
+require '../../../vendor/autoload.php'; // PhpSpreadsheet kütüphanesi
+require_once '../class.func.php';
 
 use PhpOffice\PhpSpreadsheet\IOFactory;
 

@@ -4,8 +4,8 @@ durum boş ise email kontrolü yapmıyor.
 
 */
 session_start();
-include ("../../DB/dbconfig.php");
-require_once 'class.func.php';
+include ("../../../DB/dbconfig.php");
+require_once '../class.func.php';
 try {
     // POST verilerini al
     $userName = $_POST['userName'];

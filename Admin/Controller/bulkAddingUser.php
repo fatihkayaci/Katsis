@@ -10,20 +10,16 @@ try {
     $apartman_id = $_SESSION["apartID"];
     $userStatus = "Y";
 
-    $blok_listesi = array();
-    $durum_listesi = array();
-    $userIds = array();
-    $existingUserIds = array();
-
-    $emailCheckSQL = "SELECT COUNT(*) FROM tbl_users WHERE userEmail = :userEmail AND apartman_id = " . $_SESSION["apartID"];
+    $emailCheckSQL = "SELECT COUNT(*) FROM tbl_users WHERE userEmail = :userEmail AND apartman_id = :apartID";
     $emailCheckStmt = $conn->prepare($emailCheckSQL);
 
-    $userCheckSQL = "SELECT userID FROM tbl_users WHERE userName = :userName AND tc = :tc AND apartman_id = " . $_SESSION["apartID"];
+    $userCheckSQL = "SELECT userID FROM tbl_users WHERE userName = :userName AND tc = :tc AND apartman_id = :apartID";
     $userCheckStmt = $conn->prepare($userCheckSQL);
 
     foreach ($newEntries as $entry) {
         $eposta = $entry['eposta'];
         $emailCheckStmt->bindParam(':userEmail', $eposta);
+        $emailCheckStmt->bindParam(':apartID', $apartman_id);
         $emailCheckStmt->execute();
 
         if ($emailCheckStmt->fetchColumn() > 0) {
@@ -47,32 +43,32 @@ try {
         $userPass = randomPassword();
         $hashedPassword = base64_encode($userPass);
         $userNO = generateUniqueUserID($conn);
-       
-        if (!empty($tc)) {
-        $userCheckStmt->bindParam(':userName', $userName);
-        $userCheckStmt->bindParam(':tc', $tc);
-        $userCheckStmt->execute();
-        $existingUserId = $userCheckStmt->fetchColumn();
-    } else {
-        $existingUserId = false;
-    }
 
-    if ($existingUserId) {
-        $columnName = ($durum == "kiraci") ? "kiraciID" : "katMalikiID";
-        $parcalanmis = explode("/", $blok);
-        $parcalanmisIlk = $parcalanmis[0];
-        $parcalanmisSon= $parcalanmis[1];
-        updateUserDaire($conn, $columnName, $existingUserId, $parcalanmisSon, $parcalanmisIlk, $apartman_id);
-    } else {
-        // Kullanıcı ekleme işlemini fonksiyon içine al
-        $lastInsertedId = addUser($conn, $userName, $userPass, $tc, $telefon, $durum, $eposta, $plate, $gender, $openingBalance, $balanceType, $promise, $apartman_id, $userStatus);
-        echo "lastuserID = " . $lastInsertedId . "---";
-        $columnName = ($durum == "kiraci") ? "kiraciID" : "katMalikiID";
-        $parcalanmis = explode("/", $blok);
-        $parcalanmisIlk = $parcalanmis[0];
-        $parcalanmisSon= $parcalanmis[1];
-        updateUserDaire($conn, $columnName, $lastInsertedId, $parcalanmisSon, $parcalanmisIlk, $apartman_id);
-    }
+        if (!empty($tc)) {
+            $userCheckStmt->bindParam(':userName', $userName);
+            $userCheckStmt->bindParam(':tc', $tc);
+            $userCheckStmt->bindParam(':apartID', $apartman_id);
+            $userCheckStmt->execute();
+            $existingUserId = $userCheckStmt->fetchColumn();
+        } else {
+            $existingUserId = false;
+        }
+
+        if ($existingUserId) {
+            $columnName = ($durum == "kiraci") ? "kiraciID" : "katMalikiID";
+            $parcalanmis = explode("/", $blok);
+            $parcalanmisIlk = $parcalanmis[0];
+            $parcalanmisSon = $parcalanmis[1];
+            updateUserDaire($conn, $columnName, $existingUserId, $parcalanmisSon, $parcalanmisIlk, $apartman_id);
+        } else {
+            $lastInsertedId = addUser($conn, $userNO, $userName, $hashedPassword, $tc, $telefon, $durum, $eposta, $plate, $gender, $openingBalance, $balanceType, $promise, $apartman_id, $userStatus);
+            echo "lastuserID = " . $lastInsertedId . "---";
+            $columnName = ($durum == "kiraci") ? "kiraciID" : "katMalikiID";
+            $parcalanmis = explode("/", $blok);
+            $parcalanmisIlk = $parcalanmis[0];
+            $parcalanmisSon = $parcalanmis[1];
+            updateUserDaire($conn, $columnName, $lastInsertedId, $parcalanmisSon, $parcalanmisIlk, $apartman_id);
+        }
     }
 
     echo "success";
@@ -80,39 +76,34 @@ try {
     echo "Hata oluştu: " . $e->getMessage();
 }
 
-function addUser($conn, $userName, $userPass, $tc, $telefon, $durum, $eposta, $plate, $gender, $openingBalance, $balanceType, $promise, $apartman_id, $userStatus)
+function addUser($conn, $userNO, $userName, $userPass, $tc, $telefon, $durum, $eposta, $plate, $gender, $openingBalance, $balanceType, $promise, $apartman_id, $userStatus)
 {
     if (empty($eposta) || trim($eposta) === "") {
         $sql = "INSERT INTO tbl_users (user_no, userName, userPass, tc, phoneNumber, durum, userEmail, plate, gender, openingBalance, balanceType, promise, userStatus, apartman_id, rol, popup) VALUES 
-            (:user_no, :userName, :userPass, :tc, :phoneNumber, :durum, NULL, :plate, :gender, :openingBalance, :balanceType, :promise, :userStatus, :apartman_id, :rol, :popup)";
-
-        $stmt = $conn->prepare($sql);
+                (:user_no, :userName, :userPass, :tc, :phoneNumber, :durum, NULL, :plate, :gender, :openingBalance, :balanceType, :promise, :userStatus, :apartman_id, :rol, :popup)";
     } else {
         $sql = "INSERT INTO tbl_users (user_no, userName, userPass, tc, phoneNumber, durum, userEmail, plate, gender, openingBalance, balanceType, promise, userStatus, apartman_id, rol, popup) VALUES 
-        (:user_no, :userName, :userPass, :tc, :phoneNumber, :durum, :userEmail, :plate, :gender, :openingBalance, :balanceType, :promise, :userStatus, :apartman_id, :rol, :popup)";
-
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':userEmail', $eposta);
+                (:user_no, :userName, :userPass, :tc, :phoneNumber, :durum, :userEmail, :plate, :gender, :openingBalance, :balanceType, :promise, :userStatus, :apartman_id, :rol, :popup)";
     }
 
     $stmt = $conn->prepare($sql);
-    $userPass = randomPassword();
-    $hashedPassword = base64_encode($userPass);
-    $userNO = generateUniqueUserID($conn);
 
     $stmt->bindParam(':user_no', $userNO);
     $stmt->bindParam(':userName', $userName);
-    $stmt->bindParam(':userPass', $hashedPassword);
-    $stmt->bindParam(':plate', $plate);
-    $stmt->bindParam(':gender', $gender);
+    $stmt->bindParam(':userPass', $userPass);
     $stmt->bindParam(':tc', $tc);
     $stmt->bindParam(':phoneNumber', $telefon);
     $stmt->bindValue(':durum', $durum);
+    $stmt->bindParam(':plate', $plate);
+    $stmt->bindParam(':gender', $gender);
     $stmt->bindParam(':openingBalance', $openingBalance);
     $stmt->bindParam(':balanceType', $balanceType);
     $stmt->bindParam(':promise', $promise);
-    $stmt->bindParam(':apartman_id', $apartman_id);
     $stmt->bindParam(':userStatus', $userStatus);
+    $stmt->bindParam(':apartman_id', $apartman_id);
+    if (!empty($eposta) && trim($eposta) !== "") {
+        $stmt->bindParam(':userEmail', $eposta);
+    }
     $rol = 3;
     $popup = 0;
     $stmt->bindParam(':rol', $rol);
@@ -125,7 +116,7 @@ function addUser($conn, $userName, $userPass, $tc, $telefon, $durum, $eposta, $p
 
 function updateUserDaire($conn, $columnName, $userId, $daire, $blok, $apartman_id)
 {
-    echo "USERID = " . $userId. "---";
+    echo "USERID = " . $userId . "---";
     $sql = "UPDATE tbl_daireler AS d
             INNER JOIN tbl_blok AS b ON d.blok_adi = b.blok_id
             SET d.$columnName = :userID";

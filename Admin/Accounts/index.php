@@ -20,7 +20,7 @@ if ($result->rowCount() > 0) {
         $optionsBlok[] = '<option name="optionsBlok" value="' . $row['blok_adi'] . " Blok - Daire " . $row['daire_sayisi'] . '">' . $row['blok_adi'] . " Blok - Daire " . $row['daire_sayisi'] . '</option>';
     }
 }
-    $sql2 = "SELECT u.userID, u.userName, u.phoneNumber,d.daire_id, b.blok_adi AS blok_adi, d.daire_sayisi,
+    $sql2 = "SELECT u.userID, u.userName, u.tc, u.phoneNumber,d.daire_id, b.blok_adi AS blok_adi, d.daire_sayisi,
     CASE
         WHEN d.katMalikiID = u.userID THEN 'Kat Maliki'
         WHEN d.kiraciID = u.userID THEN 'kiraci'
@@ -96,9 +96,10 @@ if ($result->rowCount() > 0) {
                     </label>
                 </th>
                 <th onclick="sortTable(1)">Ad Soyad <i id="icon-table1" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(2)">Telefon Numarası <i id="icon-table2" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(3)">Blok / Daire <i id="icon-table3" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(4)">Durum <i id="icon-table4" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(2)">TC <i id="icon-table2" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(3)">Telefon Numarası <i id="icon-table3" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(4)">Blok / Daire <i id="icon-table4" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(5)">Durum <i id="icon-table5" class="fa-solid fa-sort-down"></i></th>
             </tr>
         </thead>
 
@@ -128,8 +129,12 @@ if ($result->rowCount() > 0) {
 
                     <?php echo $row["userName"]; ?>
                 </td>
+                <td data-title="TC" class="table_tt table_td" oninput="checkTCNumberLength(this)" contenteditable="false">
 
-                <td data-title="Telefon Numarası" class="table_tt table_td phoneNumberTable" contenteditable="false">
+                    <?php echo $row["tc"]; ?>
+                </td>
+                
+                <td data-title="Telefon Numarası" class="table_tt table_td phoneNumberTable"  oninput="checkPhoneNumberLength(this)"contenteditable="false">
 
                     <?php echo $row["phoneNumber"]; ?>
                 </td>
@@ -407,6 +412,26 @@ if ($result->rowCount() > 0) {
     </form>
 </div>
 <script>
+    function checkTCNumberLength(input) {
+    // Yalnızca sayı karakterlerine izin ver
+    input.innerText = input.innerText.replace(/[^0-9]/g, '');
+    
+    // 11 karakter sınırı
+    if (input.innerText.length > 11) {
+        input.innerText = input.innerText.slice(0, 11);
+    }
+}
+
+function checkPhoneNumberLength(input) {
+    // Yalnızca sayı karakterlerine izin ver
+    input.innerText = input.innerText.replace(/[^0-9]/g, '');
+    
+    // 10 karakter sınırı
+    if (input.innerText.length > 10) {
+        input.innerText = input.innerText.slice(0, 10);
+    }
+}
+
     window.onload = function() {
         var tcInput = document.getElementsByName('tc')[0];
         var phoneInput = document.getElementsByName('phoneNumber')[0];
@@ -463,69 +488,71 @@ if ($result->rowCount() > 0) {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
 <script>
     document.getElementById("exportButton").addEventListener("click", function() {
-        let table = document.getElementById("example");
-        let rows = table.querySelectorAll("tr");
-        let data = [];
-        
-        rows.forEach((row, rowIndex) => {
-            let cols = row.querySelectorAll("td, th");
-            let rowData = [];
-            let skipRow = false;
+    let table = document.getElementById("example");
+    let rows = table.querySelectorAll("tr");
+    let data = [];
+    
+    rows.forEach((row, rowIndex) => {
+        let cols = row.querySelectorAll("td, th");
+        let rowData = [];
+        let skipRow = false;
 
-            cols.forEach((col, colIndex) => {
-                if (colIndex === 3 && col.innerText.trim() === "Birden Fazla Daire") {
-                    skipRow = true; // Bu satırı atla
-                }
-                if (colIndex !== 0 && !skipRow) { // İlk sütunu ve "Birden Fazla Daire" içeren satırları atla
-                    rowData.push(col.innerText.trim());
-                }
-            });
-
-            if (!skipRow) {
-                data.push(rowData);
+        cols.forEach((col, colIndex) => {
+            if (colIndex === 3 && col.innerText.trim() === "Birden Fazla Daire") {
+                skipRow = true; // Bu satırı atla
+            }
+            if (colIndex !== 0 && !skipRow) { // İlk sütunu ve "Birden Fazla Daire" içeren satırları atla
+                rowData.push(col.innerText.trim());
             }
         });
 
-        let wb = XLSX.utils.book_new();
-        let ws = XLSX.utils.aoa_to_sheet(data);
+        if (!skipRow) {
+            data.push(rowData);
+        }
+    });
 
-        // Hücre stillerini tanımlama
-        const headerCellStyle = {
-            font: { bold: true, color: { rgb: "FFFFFF" } }, // Beyaz yazı
-            fill: { fgColor: { rgb: "4F81BD" } }, // Mavi arka plan
-            alignment: { horizontal: "center", vertical: "center" }
-        };
+    let wb = XLSX.utils.book_new();
+    let ws = XLSX.utils.aoa_to_sheet(data);
 
-        const dataCellStyle = {
-            alignment: { horizontal: "center", vertical: "center" }
-        };
+    // Hücre stillerini tanımlama
+    const headerCellStyle = {
+        font: { bold: true, color: { rgb: "FFFFFF" } }, // Beyaz yazı
+        fill: { fgColor: { rgb: "4F81BD" } }, // Mavi arka plan
+        alignment: { horizontal: "center", vertical: "center" }
+    };
 
-        // Stil uygulama
-        let range = XLSX.utils.decode_range(ws['!ref']);
-        for (let rowNum = range.s.r; rowNum <= range.e.r; rowNum++) {
-            for (let colNum = range.s.c; colNum <= range.e.c; colNum++) {
-                let cellAddress = { c: colNum, r: rowNum };
-                let cellRef = XLSX.utils.encode_cell(cellAddress);
-                if (!ws[cellRef]) continue; // Hücre boşsa geç
-                if (rowNum === 0) { // Başlık satırlarına stil uygula
-                    ws[cellRef].s = headerCellStyle;
-                } else { // Veri satırlarına stil uygula
-                    ws[cellRef].s = dataCellStyle;
-                }
+    const dataCellStyle = {
+        alignment: { horizontal: "center", vertical: "center" }
+    };
+
+    // Stil uygulama
+    let range = XLSX.utils.decode_range(ws['!ref']);
+    for (let rowNum = range.s.r; rowNum <= range.e.r; rowNum++) {
+        for (let colNum = range.s.c; colNum <= range.e.c; colNum++) {
+            let cellAddress = { c: colNum, r: rowNum };
+            let cellRef = XLSX.utils.encode_cell(cellAddress);
+            if (!ws[cellRef]) continue; // Hücre boşsa geç
+            if (rowNum === 0) { // Başlık satırlarına stil uygula
+                ws[cellRef].s = headerCellStyle;
+            } else { // Veri satırlarına stil uygula
+                ws[cellRef].s = dataCellStyle;
             }
         }
+    }
 
-        // Sütun genişliklerini ayarlama
-        ws['!cols'] = [
-            { wpx: 150 }, // Ad Soyad
-            { wpx: 150 }, // Telefon Numarası
-            { wpx: 150 }, // Blok / Daire
-            { wpx: 100 }  // Durum
-        ];
+    // Sütun genişliklerini ayarlama
+    ws['!cols'] = [
+        { wpx: 150 }, // Ad Soyad
+        { wpx: 100 }, // TC
+        { wpx: 150 }, // Telefon Numarası
+        { wpx: 150 }, // Blok / Daire
+        { wpx: 100 }  // Durum
+    ];
 
-        XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
-        XLSX.writeFile(wb, "kullaniciTablosu.xlsx");
-    });
+    XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+    XLSX.writeFile(wb, "kullaniciTablosu.xlsx");
+});
+
     </script>
 </body>
 </html>
@@ -538,7 +565,7 @@ if ($result->rowCount() > 0) {
         form_data.append('excel_file', excel_file);
 
         $.ajax({
-            url: 'Controller/uploadFiles.php',
+            url: 'Controller/Accounts/uploadFiles.php',
             type: 'POST',
             data: form_data,
             contentType: false,
@@ -1080,13 +1107,15 @@ topluGuncelleButtons.forEach(function(button) {
         rows.forEach(function(row) {
             var userID = row.getAttribute('data-userid');
             var userName = row.querySelector('td:nth-child(2)').textContent.trim();
-            var phoneNumber = row.querySelector('td:nth-child(3)').textContent.trim();
+            var tc = row.querySelector('td:nth-child(3)').textContent.trim();
+            var phoneNumber = row.querySelector('td:nth-child(4)').textContent.trim();
             $.ajax({
-                url: 'Controller/update_user.php',
+                url: 'Controller/Accounts/update_user.php',
                 type: 'POST',
                 data: {
                     userID: userID,
                     userName: userName,
+                    tc : tc,
                     phoneNumber: phoneNumber
                 },
                 success: function(response) {
@@ -1130,7 +1159,7 @@ topluSilButton.addEventListener('click', function() {
 
         // Sunucuya silme isteği gönder
         $.ajax({
-            url: 'Controller/batchupdate.php',
+            url: 'Controller/Accounts/batchupdate.php',
             type: 'POST',
             data: {
                 userID: userID,
@@ -1143,7 +1172,7 @@ topluSilButton.addEventListener('click', function() {
                     row.remove();
                     if (document.querySelector('[id^="tr-' + userID + '"]') == null) {
                         $.ajax({
-                            url: 'Controller/delete_user.php',
+                            url: 'Controller/Accounts/delete_user.php',
                             type: 'POST',
                             data: {
                                 userID: userID
@@ -1318,7 +1347,7 @@ function saveUser() {
 function saveUserData(userName, tc, phoneNumber, durumArray, userEmail, plate, gender, password, apartman_id, blokArray,
     openingBalance, balanceType, promise) {
     $.ajax({
-        url: 'Controller/save_user.php',
+        url: 'Controller/Accounts/save_user.php',
         type: 'POST',
         data: {
             userName: userName,
@@ -1335,7 +1364,6 @@ function saveUserData(userName, tc, phoneNumber, durumArray, userEmail, plate, g
             promise: promise
         },
         success: function(response) {
-            alert(response);
             if (response == 1) {
                 sendData(blokArray, durumArray);
             }
@@ -1348,14 +1376,13 @@ function saveUserData(userName, tc, phoneNumber, durumArray, userEmail, plate, g
 
 function sendData(blokArray, durumArray) {
     $.ajax({
-        url: 'Controller/demo.php',
+        url: 'Controller/Accounts/demo.php',
         type: 'POST',
         data: {
             blokArray: JSON.stringify(blokArray),
             durumArray: JSON.stringify(durumArray)
         },
         success: function(secondResponse) {
-            alert(secondResponse);
             if (demo == 1) {
                 arsiveUser();
             } else {
@@ -1371,7 +1398,7 @@ function sendData(blokArray, durumArray) {
 function arsiveUser() {
     demo = 0;
     $.ajax({
-        url: 'Controller/arsiveUser.php',
+        url: 'Controller/Accounts/arsiveUser.php',
         type: 'POST',
         data: {},
         success: function(arsiveResponse) {
