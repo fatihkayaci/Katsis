@@ -88,12 +88,12 @@
                 <td data-title="T.C. Kat Maliki" name="tcKatMaliki" class="p-0">
                     <div class="toplu-td-div">
                         <span class="border-1">
-                            <input type="text" class="input-select katMaliki" oninput="checkTCNumberLength(this)"
+                            <input type="text" class="input-select katMaliki"  oninput="checkTCNumberLength(this)"
                                 value="<?php echo $row["katMalikiTC"] ?? ''; ?>"
                                 <?php echo isset($row["katMalikiName"]) ? 'readonly' : ''; ?> />
                         </span>
                         <span>
-                            <input type="text" class="input-select kiracii" oninput="checkTCNumberLength(this)"
+                            <input type="text" class="input-select kiracii"  oninput="checkTCNumberLength(this)"
                                 value="<?php echo $row["kiraciTC"] ?? ''; ?>"
                                 <?php echo isset($row["kiraciName"]) ? 'readonly' : ''; ?> />
                         </span>
@@ -130,12 +130,12 @@
                 <td data-title="plate" name="plate" class="p-0 br-end">
                     <div class="toplu-td-div">
                         <span class="border-1">
-                            <input type="text" class="input-select katMaliki"
+                            <input type="text" class="input-select katMaliki" 
                                 value="<?php echo $row["katMalikiPlate"] ?? ''; ?>"
                                 <?php echo isset($row["katMalikiName"]) ? 'readonly' : ''; ?> />
                         </span>
                         <span>
-                            <input type="text" class="input-select kiracii"
+                            <input type="text" class="input-select kiracii" 
                                 value="<?php echo $row["kiraciPlate"] ?? ''; ?>"
                                 <?php echo isset($row["kiraciName"]) ? 'readonly' : ''; ?> />
                         </span>
@@ -255,19 +255,26 @@
     }
     ?>
             <script>
-            // TC kimlik numarasının uzunluğunu kontrol eden fonksiyon
             function checkTCNumberLength(input) {
-                if (input.value.length > 11) {
-                    input.value = input.value.slice(0, 11); // Input değerini 11 karaktere kırp
-                }
-            }
+    // Yalnızca sayı karakterlerine izin ver
+    input.value = input.value.replace(/[^0-9]/g, '');
+    
+    // 11 karakter sınırı
+    if (input.value.length > 11) {
+        input.value = input.value.slice(0, 11);
+    }
+}
 
-            // Telefon numarasının uzunluğunu kontrol eden fonksiyon
-            function checkPhoneNumberLength(input) {
-                if (input.value.length > 10) {
-                    input.value = input.value.slice(0, 10); // Input değerini 10 karaktere kırp
-                }
-            }
+function checkPhoneNumberLength(input) {
+    // Yalnızca sayı karakterlerine izin ver
+    input.value = input.value.replace(/[^0-9]/g, '');
+    
+    // 10 karakter sınırı
+    if (input.value.length > 10) {
+        input.value = input.value.slice(0, 10);
+    }
+}
+
             </script>
             <script type="text/javascript">
             // Sayfa yüklendiğinde mevcut input değerlerini bir diziye kaydetme

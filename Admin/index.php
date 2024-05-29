@@ -126,8 +126,6 @@ else if($indexx == 'profile'){
 
 }
 
-include('footer.php');
-
 $sql = "SELECT * FROM tbl_users WHERE userEmail = :userEmail";
 $stmt = $conn->prepare($sql);
 $stmt->bindParam(":userEmail", $_SESSION["mail"]);
