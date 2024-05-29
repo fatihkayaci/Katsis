@@ -85,6 +85,12 @@ else if($indexx == 'Sections'){
     echo "<script>
             localStorage.setItem('selectedLink', 'income');
          </script>";
+} else if($indexx == 'meters'){
+    include ("Meters/index.php");
+    echo "<script>pagename('Sayaçlar');</script>";
+    echo "<script>
+            localStorage.setItem('selectedLink', 'meters');
+         </script>";
 } 
 else if($indexx == 'dashboard'){
     include ("Dashboard/index.php");

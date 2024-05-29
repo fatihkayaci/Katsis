@@ -126,7 +126,14 @@ $idapartman =$_SESSION["apartID"];
           </a>
         </div>
 
-
+        <a class="nav-item mt-1 modul" href="index?parametre=meters">
+          <li class="nav-link">
+            <div class="nav-ico">
+              <i class="fa-solid fa-tachometer-alt"></i>
+            </div>
+            <span class="nav-link-text">Sayaçlar</span>
+          </li>
+        </a>
 
 
         <a class="nav-item mt-1 modul" href="index?parametre=profile">
