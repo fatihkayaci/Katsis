@@ -57,9 +57,10 @@ try {
                     </label>
                 </th>
                 <th onclick="sortTable(1)">Ad Soyad <i id="icon-table1" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(2)">Telefon Numarası <i id="icon-table2" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(3)">Blok / Daire <i id="icon-table3" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(4)">Durum <i id="icon-table5" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(2)">TC <i id="icon-table2" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(3)">Telefon Numarası <i id="icon-table3" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(4)">Blok / Daire <i id="icon-table4" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(5)">Durum <i id="icon-table5" class="fa-solid fa-sort-down"></i></th>
             </tr>
         </thead>
         <tbody>
@@ -87,6 +88,10 @@ try {
                 <td data-title="Ad Soyad" class="table_tt table_td" contenteditable="false">
 
                     <?php echo $row["fullName"]; ?></td>
+
+                    <td data-title="TC" class="table_tt table_td" contenteditable="false">
+
+                    <?php echo $row["TC"]; ?></td>
 
                 <td data-title="Telefon Numarası" class="table_tt table_td phoneNumber" contenteditable="false">
 
@@ -201,9 +206,10 @@ try {
                 <th class="check-style">
                 </th>
                 <th onclick="sortTable(1)">Ad Soyad <i id="icon-table1" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(2)">Telefon Numarası <i id="icon-table2" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(3)">Blok / Daire <i id="icon-table3" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(4)">Durum <i id="icon-table5" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(2)">TC <i id="icon-table2" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(3)">Telefon Numarası <i id="icon-table3" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(4)">Blok / Daire <i id="icon-table4" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(5)">Durum <i id="icon-table5" class="fa-solid fa-sort-down"></i></th>
             </tr>
         </thead>
         <tbody>
