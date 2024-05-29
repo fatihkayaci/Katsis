@@ -168,42 +168,28 @@
 
             </div>
 
-            <button id="addRowBtn" onclick="addRow()" class="btn-custom-outline bcoc1"><i class="fa-solid fa-user-plus"></i> Personel Ekle</button>
+           
             
             <?php
             }
             echo '
+            <button id="addRowBtn" onclick="addRow()" class="btn-custom-outline bcoc1"><i class="fa-solid fa-user-plus"></i> Personel Ekle</button>
                 </div>
             </div>
-        </div>';
+        </div>
+        
+       ';
         } else {
             
             ?>
-            <table id="table" class="users-table">
-                <thead>
-                    <tr class="users-table-info">
-                        <th onclick="sortTable(0)">İsim Soyisim<i id="icon-table1" class="fa-solid fa-sort-down"></i></th>
-                        <th onclick="sortTable(1)">TC Numarası<i id="icon-table2" class="fa-solid fa-sort-down"></i></th>
-                        <th onclick="sortTable(2)">Cinsiyet<i id="icon-table3" class="fa-solid fa-sort-down"></i></th>
-                        <th onclick="sortTable(3)">Email<i id="icon-table4" class="fa-solid fa-sort-down"></i></th>
-                        <th onclick="sortTable(4)">Telefon Numarası<i id="icon-table5" class="fa-solid fa-sort-down"></i></th>
-                        <th onclick="sortTable(5)">Öğrenim Durumu<i id="icon-table6" class="fa-solid fa-sort-down"></i></th>
-                        <th onclick="sortTable(6)">Iban<i id="icon-table7" class="fa-solid fa-sort-down"></i></th>
-                        <th onclick="sortTable(7)">İşe Başlangıç Tarihi<i id="icon-table8" class="fa-solid fa-sort-down"></i></th>
-                        <th onclick="sortTable(8)">Görevi<i id="icon-table9" class="fa-solid fa-sort-down"></i></th>
-                        <th onclick="sortTable(9)">Sigorta Numarası<i id="icon-table10" class="fa-solid fa-sort-down"></i></th>
-                        <th onclick="sortTable(10)">Maaş<i id="icon-table11" class="fa-solid fa-sort-down"></i></th>
-                        <th onclick="sortTable(11)">Birim<i id="icon-table12" class="fa-solid fa-sort-down"></i></th>
-                        <th onclick="sortTable(12)">Açılış Bakiyesi<i id="icon-table13" class="fa-solid fa-sort-down"></i></th>
-                        <th onclick="sortTable(13)">Bakiye Türü<i id="icon-table14" class="fa-solid fa-sort-down"></i></th>
-                        <th onclick="sortTable(14)">Ödeme Tarihi<i id="icon-table15" class="fa-solid fa-sort-down"></i></th>
-                    </tr>
-                </thead>
+              <div id="employee-main" class="employee-main-yeniveri"></div>
+
+        <button id="addRowBtn" onclick="addRow()" class="btn-custom-outline bcoc1">
+            <i class="fa-solid fa-user-plus"></i> Personel Ekle
+        </button>
+
                     <?php
                     }
-                    echo '
-                            </div>
-                        </div>';
         
     } catch (PDOException $e) {
         echo "Bağlantı hatası: " . $e->getMessage();
@@ -293,49 +279,50 @@ function addRow() {
 
             <script type="text/javascript">
             saveButton.addEventListener('click', function() {
-                var tableRows = document.querySelectorAll("#table tbody tr");
-                var dataToSend = [];
+    var tableRows = document.querySelectorAll("#employee-main .toplu-islem");
+    var dataToSend = [];
 
-                // Tüm satırları döngüye al
-                tableRows.forEach(function(row) {
-                    var rowData = {};
+    // Tüm satırları döngüye al
+    tableRows.forEach(function(row) {
+        var rowData = {};
 
-                    // Satır içindeki input ve select elementlerini seç
-                    var inputs = row.querySelectorAll("input, select");
+        // Satır içindeki input ve select elementlerini seç
+        var inputs = row.querySelectorAll("input, select");
 
-                    // Her bir input/select için değeri rowData objesine ekle
-                    inputs.forEach(function(input) {
-                        var name = input.getAttribute("name");
-                        var value = input.value;
-                        rowData[name] = value;
-                    });
+        // Her bir input/select için değeri rowData objesine ekle
+        inputs.forEach(function(input) {
+            var name = input.getAttribute("name");
+            var value = input.value;
+            rowData[name] = value;
+        });
 
-                    // rowData objesini gönderilecek veriler dizisine ekle
-                    dataToSend.push(rowData);
-                });
+        // rowData objesini gönderilecek veriler dizisine ekle
+        dataToSend.push(rowData);
+    });
 
-                console.log(dataToSend);
-                // AJAX isteği oluştur
-                $.ajax({
-                    url: 'Controller/Employeed/bulkAddingEmployed.php',
-                    type: 'POST',
-                    data: {
-                        dataToSend: JSON.stringify(dataToSend)
-                    },
-                    success: function(response) {
-                        console.log(response);
-                        if (response == "success") {
-                            console.log("Başarılı!");
-                            location.reload();
-                        } else {
-                            alert(response);
-                        }
-                    },
-                    error: function(error) {
-                        console.error(error);
-                    }
-                });
-            });
+    console.log(dataToSend);
+    // AJAX isteği oluştur
+    $.ajax({
+        url: 'Controller/Employeed/bulkAddingEmployed.php',
+        type: 'POST',
+        data: {
+            dataToSend: JSON.stringify(dataToSend)
+        },
+        success: function(response) {
+            console.log(response);
+            if (response == "success") {
+                console.log("Başarılı!");
+                location.reload();
+            } else {
+                alert(response);
+            }
+        },
+        error: function(error) {
+            console.error(error);
+        }
+    });
+});
+
             </script>
 
 
