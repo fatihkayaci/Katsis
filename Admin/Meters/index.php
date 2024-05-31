@@ -1,8 +1,43 @@
+    <!-- Popup Form -->
+<div id="popup">
+
+<form class="login-form" id="userForm">
+
+    <h2 class="form-signin-heading">Okuma Ekleme</h2>
+
+    <table class="users-table table-blok">
+        <tr class="users-table-info">
+            <th>No </th>
+            <th>İlk Endeks </th>
+            <th><button class="aktar-btn"><i class="fa-solid fa-left-long"></i></button></th>
+            <th>Son Endeks</th>
+        </tr>
+        
+        <tr class="git-ac">
+            <td>01 </td>
+            <td><input class="sayac-input" type="number" name="" id=""></td>
+            <td>kWH</td>
+            <td><input class="sayac-input" type="number" name="" id=""></td>
+        </tr>
+
+    </table>
+
+    <hr class="horizontal dark mt-0 w-100">
+
+    <div class="row row-btn">
+        <button type="button" class="btn-custom-close" onclick="closePopup()">Kapat</button>
+        <button type="button" class="btn-custom" onclick="saveUser()" id="saveButton">Kaydet</button>
+    </div>
+
+
+</form>
+</div>
+    
     <div class="cener-table">
         <div class="input-group-div">
 
             <div class="input-group1">
-                <button type="button" class="btn-custom-outline bcoc1" id="saveButton">Kaydet</button>
+                <button class="adduser btn-custom-outline bcoc1">Pop-up</button>
             </div>
             <div class="input-group1">
                 <div class="search-box">
@@ -184,6 +219,43 @@
 </script>
 <!-- Sayi secme script end -->
 <!-- ================================================ -->
+
+<script>
+    var userPopup = document.getElementById('popup');
+    // ESC tuşuna basıldığında popup'ı kapat
+    window.addEventListener('keydown', function (event) {
+        if (event.key === "Escape") {
+            if (dairePopup.style.display === 'flex') {
+                closeDaire();
+            } else if (userPopup.style.display === 'flex') {
+                closePopup();
+            } else if (topluPopup.style.display === 'flex') {
+                closeToplu();
+            }
+        }
+    });
+
+    $('.adduser').click(function () {
+        $('#popup').show().css('display', 'flex').delay(100).queue(function (next) {
+            $('body').css('overflow', 'hidden');
+            $('#popup').css('opacity', '1');
+            $('#userForm').css('opacity', '1');
+            $('#userForm').css('transform', 'translateY(0)');
+            next();
+        });
+    });
+
+    function closePopup() {
+        $('#userForm').css('opacity', '0').css('transform', 'translateY(-180px)').delay(100).queue(function (next) {
+            $('#popup').css('opacity', '0').delay(300).queue(function (nextInner) {
+                $(this).hide().css('display', 'none');
+                nextInner();
+                $('body').css('overflow', 'auto');
+            });
+            next();
+        });
+    }
+</script>
 
 </body>
 </html>
