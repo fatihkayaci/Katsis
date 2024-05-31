@@ -1,37 +1,25 @@
-    <!-- Popup Form -->
-<div id="popup">
+   <?php
+  $sql = '
+  SELECT d.*, b.blok_adi
+  FROM tbl_daireler d
+  JOIN tbl_blok b ON d.blok_adi = b.blok_id
+  WHERE d.apartman_id = :apartman_id
+';
 
-<form class="login-form" id="userForm">
+// Hazırlanan ifadeyi oluştur
+$stmt = $conn->prepare($sql);
 
-    <h2 class="form-signin-heading">Okuma Ekleme</h2>
+// Parametreyi bağla ve sorguyu çalıştır
+$stmt->execute(['apartman_id' => $idapartman]);
 
-    <table class="users-table table-blok">
-        <tr class="users-table-info">
-            <th>No </th>
-            <th>İlk Endeks </th>
-            <th><button class="aktar-btn"><i class="fa-solid fa-left-long"></i></button></th>
-            <th>Son Endeks</th>
-        </tr>
-        
-        <tr class="git-ac">
-            <td>01 </td>
-            <td><input class="sayac-input" type="number" name="" id=""></td>
-            <td>kWH</td>
-            <td><input class="sayac-input" type="number" name="" id=""></td>
-        </tr>
+// Sonuçları çek
+$daireler = $stmt->fetchAll();
+   
+   ?> 
+    
+    
+    
 
-    </table>
-
-    <hr class="horizontal dark mt-0 w-100">
-
-    <div class="row row-btn">
-        <button type="button" class="btn-custom-close" onclick="closePopup()">Kapat</button>
-        <button type="button" class="btn-custom" onclick="saveUser()" id="saveButton">Kaydet</button>
-    </div>
-
-
-</form>
-</div>
     
     <div class="cener-table">
         <div class="input-group-div">
@@ -74,6 +62,8 @@
                 </thead>
 
                 <tbody>
+
+                <?php foreach($daireler as $daire ){   ?>
                     <tr data-userid="" data-d="" id="" class="git-ac">
 
                         <td data-title="Seç" class="check-style">
@@ -89,9 +79,9 @@
                             </label>
                         </td>
 
-                        <td class="table_tt table_td">1</td>
+                        <td class="table_tt table_td"><?php echo $daire["blok_adi"] ?></td>
 
-                        <td class="table_tt table_td">A Blok - Daire 2</td>
+                        <td class="table_tt table_td"><?php echo $daire["daire_sayisi"] ?></td>
 
                         <td class="table_tt table_td">0</td>
 
@@ -100,6 +90,8 @@
                         <td class="table_tt table_td">2</td>
 
                     </tr>
+            <?php } ?>
+
                 </tbody>
             </table>
         </div>
@@ -220,42 +212,7 @@
 <!-- Sayi secme script end -->
 <!-- ================================================ -->
 
-<script>
-    var userPopup = document.getElementById('popup');
-    // ESC tuşuna basıldığında popup'ı kapat
-    window.addEventListener('keydown', function (event) {
-        if (event.key === "Escape") {
-            if (dairePopup.style.display === 'flex') {
-                closeDaire();
-            } else if (userPopup.style.display === 'flex') {
-                closePopup();
-            } else if (topluPopup.style.display === 'flex') {
-                closeToplu();
-            }
-        }
-    });
 
-    $('.adduser').click(function () {
-        $('#popup').show().css('display', 'flex').delay(100).queue(function (next) {
-            $('body').css('overflow', 'hidden');
-            $('#popup').css('opacity', '1');
-            $('#userForm').css('opacity', '1');
-            $('#userForm').css('transform', 'translateY(0)');
-            next();
-        });
-    });
-
-    function closePopup() {
-        $('#userForm').css('opacity', '0').css('transform', 'translateY(-180px)').delay(100).queue(function (next) {
-            $('#popup').css('opacity', '0').delay(300).queue(function (nextInner) {
-                $(this).hide().css('display', 'none');
-                nextInner();
-                $('body').css('overflow', 'auto');
-            });
-            next();
-        });
-    }
-</script>
 
 </body>
 </html>
