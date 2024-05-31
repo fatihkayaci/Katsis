@@ -41,6 +41,8 @@
     
         if ($result) {
             ?>
+
+<div class="table-overflow">
     <table id="table" class="users-table">
         <thead>
             <tr class="users-table-info toplu-th">
@@ -246,6 +248,7 @@
             }
             echo '</tbody>
                     </table>
+                    </div>
                 </div>';
         } else {
             echo "0 results";

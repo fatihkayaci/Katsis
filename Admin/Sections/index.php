@@ -178,7 +178,7 @@ ORDER BY d.blok_adi ASC, d.daire_sayisi ASC";
 
 
     <hr class="horizontal dark mb-1 w-100">
-
+<div class="table-overflow">
     <table id="table" class="users-table">
         <thead>
             <tr class="users-table-info">
@@ -295,6 +295,7 @@ ORDER BY d.blok_adi ASC, d.daire_sayisi ASC";
         ?>
         </tbody>
     </table>
+</div>
 
     <hr class="horizontal dark mb-0 w-100">
 
@@ -439,7 +440,7 @@ ORDER BY d.blok_adi ASC, d.daire_sayisi ASC";
 
 
     <hr class="horizontal dark mb-1 w-100">
-
+<div class="table-overflow">
     <table id="table" class="users-table">
         <thead>
             <tr class="users-table-info">
@@ -463,7 +464,7 @@ ORDER BY d.blok_adi ASC, d.daire_sayisi ASC";
             </tr>
         </tbody>
     </table>
-
+</div>
     <hr class="horizontal dark mb-0 w-100">
 
     <div class="input-group-div">

@@ -82,6 +82,7 @@ try {
 
         <hr class="horizontal dark mb-1 w-100">
 
+<div class="table-overflow">
         <table id="example" class="users-table">
             <thead>
                 <tr class="users-table-info">
@@ -179,6 +180,7 @@ try {
 
             </tbody>
         </table>
+</div>
 
         <hr class="horizontal dark mb-0 w-100">
 
