@@ -16,7 +16,7 @@ $stmt->execute(['apartman_id' => $idapartman]);
 $daireler = $stmt->fetchAll();
    
    ?> 
-    
+    <input type="hidden" id="hiddenApartman" value=<?php echo $idapartman?> />
     
     
 
@@ -25,7 +25,7 @@ $daireler = $stmt->fetchAll();
         <div class="input-group-div">
 
             <div class="input-group1">
-                <button class="adduser btn-custom-outline bcoc1">Pop-up</button>
+                <button class="adduser btn-custom-outline bcoc1"  onclick="indexSave()">Pop-up</button>
             </div>
             <div class="input-group1">
                 <div class="search-box">
@@ -211,7 +211,36 @@ $daireler = $stmt->fetchAll();
 </script>
 <!-- Sayi secme script end -->
 <!-- ================================================ -->
+<!-- =========== iNDEX DEĞERLERİNİN KAYDI AJAX ============= -->
 
+<script>
+
+function indexSave(){
+
+    var apartman_id = document.getElementById("hiddenApartman").value;
+
+
+    
+    var apartman_id = document.getElementById("hiddenApartman").value;
+
+$.ajax({
+    url: 'Controller/Meters/indexSave.php',
+    type: 'POST',
+    data: { apartman_id: apartman_id }, 
+    success: function(response) {
+        alert(response);
+    },
+    error: function(xhr, status, error) {
+        console.error("Error: " + error); 
+    }
+});
+
+
+}
+
+
+
+</script>
 
 
 </body>
