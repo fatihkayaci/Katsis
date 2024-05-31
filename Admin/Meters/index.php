@@ -164,13 +164,20 @@ function okuma(){
     btn.textContent = "İptal";
     btnSave.style.display = "block";
     btnAktar.style.display = "inline";
-// Her bir elemanın classList'ine "active" sınıfını ekle
-elements.forEach(element => {
-  element.classList.add('active');
-});
 
+    // Tüm .sayac-input öğelerine "active" sınıfını ekle
+    elements.forEach(element => {
+        element.classList.add('active');
+    });
 
+    // Tüm tablo satırlarına "active" sınıfını ekle
+    const allRows = document.querySelectorAll('.users-table tbody tr');
+    allRows.forEach(row => {
+        row.classList.add('active');
+    });
 }
+
+
 
 function iptal(){
     const elements = document.querySelectorAll('.sayac-input');
@@ -191,10 +198,14 @@ location.reload();
 
 function aktar() {
     var rows = document.querySelectorAll('.git-ac'); // Tablodaki her satırı seç
+    
     rows.forEach(function(row, index) { // Her bir satır için işlem yap
         var sonindexInput = document.getElementById('sonindex-' + index);
         var ilkindexInput = document.getElementById('ilkindex-' + index);
         var sonindex = parseFloat(sonindexInput.value); // sonindex değerini al
+        
+
+        
         ilkindexInput.value = sonindex; // ilkindex alanına yaz
 
         // Tüketim hesabı yap
@@ -249,7 +260,6 @@ inputs.forEach(input => {
 
 
 function indexSave(){
-
     var apartman_id = document.getElementById("hiddenApartman").value;
 
 
@@ -285,15 +295,20 @@ $.ajax({
     let rowsPerPage = parseInt(rowsPerPageSelect.value);
 
     function displayPage(page) {
-      tbody.innerHTML = '';
-      let start = (page - 1) * rowsPerPage;
-      let end = start + rowsPerPage;
-      for (let i = start; i < end && i < rows.length; i++) {
-        tbody.appendChild(rows[i]);
-      }
-      currentPage = page;
-      updatePagination();
+  let start = (page - 1) * rowsPerPage;
+  let end = start + rowsPerPage;
+  for (let i = 0; i < rows.length; i++) {
+    if (i >= start && i < end) {
+      rows[i].removeAttribute('hidden');
+    } else {
+      rows[i].setAttribute('hidden', 'true');
     }
+  }
+  currentPage = page;
+
+  updatePagination();
+}
+   
 
     function updatePagination() {
       const pagination = document.querySelector('.pagination');
