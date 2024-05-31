@@ -36,7 +36,7 @@
         <div id="table" class="employee-main">
 
         <hr class="horizontal dark mt-0 w-100">
-
+        <div class="table-overflow">
             <?php
             foreach ($result as $row) {
                 ?>
@@ -176,6 +176,7 @@
             <button id="addRowBtn" onclick="addRow()" class="btn-custom-outline bcoc1"><i class="fa-solid fa-user-plus"></i> Personel Ekle</button>
                 </div>
             </div>
+        </div>
         </div>
         
        ';
