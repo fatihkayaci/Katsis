@@ -79,7 +79,7 @@ else if($indexx == 'Sections'){
     echo "<script>
             localStorage.setItem('selectedLink', 'Sections');
          </script>";
-}  else if($indexx == 'income'){
+}  else if($indexx == 'income'){ 
     include ("Income/index.php");
     echo "<script>pagename('Gelirler');</script>";
     echo "<script>
