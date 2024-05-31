@@ -3,11 +3,11 @@ require_once 'Controller/class.func.php';
 $userPass = randomPassword();
 $hashedPassword = base64_encode($userPass);
 
-$optionsBlok = [];
+$optionsBlok = array();
 $optionsDurum = '';
 try {
     //burada yeni eklendi css eklenmesi lazım.
-    $sql = "SELECT d.daire_id, d.blok_adi, d.daire_sayisi, b.blok_adi
+    $sql = "SELECT d.blok_adi, d.daire_sayisi, b.blok_adi
     FROM tbl_daireler d
     INNER JOIN tbl_blok b ON d.blok_adi = b.blok_id
     WHERE d.apartman_id = " . $_SESSION["apartID"];
@@ -17,10 +17,9 @@ try {
     if ($result->rowCount() > 0) {
         while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
             // Diziye değerleri ekle
-            $optionsBlok[] = '<option name="optionsBlok" data-user-id="' . $row['daire_id'] . '" value="' . $row['blok_adi'] . " Blok - Daire " . $row['daire_sayisi'] . '">' . $row['blok_adi'] . " Blok - Daire " . $row['daire_sayisi'] . '</option>';
+            $optionsBlok[] = '<option name="optionsBlok" value="' . $row['blok_adi'] . " Blok - Daire " . $row['daire_sayisi'] . '">' . $row['blok_adi'] . " Blok - Daire " . $row['daire_sayisi'] . '</option>';
         }
     }
-
     $sql2 = "SELECT u.userID, u.userName, u.tc, u.phoneNumber,d.daire_id, b.blok_adi AS blok_adi, d.daire_sayisi,
     CASE
         WHEN d.katMalikiID = u.userID THEN 'Kat Maliki'
@@ -396,7 +395,7 @@ try {
 </div>
 <!--buraya daire için popup eklendi içeriğinin düzenlenmesi lazım-->
 <div id="dairePopup">
-    <form class="login-form-daire" id="userForm1" >
+    <form class="login-form-daire" id="userForm1" action="">
 
         <h2 class="form-signin-heading">Daire Atama</h2>
 
@@ -405,8 +404,8 @@ try {
                 <div class="select-div">
                     <div class="dropdown-nereden">
                         <div class="group">
-                            <input class="search-selectx input" data-user-id="" type="text" list="dairegrup" id="daireGrup" name="daireGrup" required="" />
-
+                            <input class="search-selectx input" data-user-id="" type="text" list="dairegrup"
+                                id="daireGrup" required="" />
                             <label class="selectx-label" for="daireGrup">Daire: </label>
                         </div>
 
@@ -414,20 +413,12 @@ try {
                             <div class="dropdown-content-inside-nereden">
                                 <input type="text" id="daireSearchInput" placeholder="Ara...">
 
-                               
-<?php 
-foreach ($optionsBlok as $bloks) {
-    // Buton oluşturma, seçenek içindeki data-user-id özelliğini butona aktarıyorum
-    preg_match('/data-user-id="(\d+)"/', $bloks, $matches);
-    $userId = isset($matches[1]) ? $matches[1] : ''; // Eşleşen user id
-
-    // Value değerini çıkartma
-    preg_match('/value="([^"]+)"/', $bloks, $valueMatches);
-    $value = isset($valueMatches[1]) ? $valueMatches[1] : ''; // Eşleşen value
-
-    echo '<button value="'.htmlspecialchars($value).'" data-user-id="' . $userId . '">' . strip_tags($bloks) . '</button>';
-}
-?>
+                                <?php 
+                           foreach ($optionsBlok as $bloks) {
+                             echo '                                        
+                                <button>' . $bloks  . '</button>';
+                            }
+                        ?>
                             </div>
 
                         </div>
@@ -447,8 +438,8 @@ foreach ($optionsBlok as $bloks) {
                         <div class="dropdown-content-nereden searchInput-btn" id="durumDP">
                             <div class="dropdown-content-inside-nereden">
                                 <input type="text" id="durumSearch" placeholder="Ara...">
-                                <button data-user-id="0">Kat Maliki</button>
-                                <button data-user-id="1">Kiracı</button>
+                                <button>Kat Maliki</button>
+                                <button>Kiracı</button>
                             </div>
                         </div>
                     </div>
@@ -861,13 +852,14 @@ foreach ($optionsBlok as $bloks) {
 
 
     function newDaire() {
-            // Seçilen değeri al
-            var optionsElement = document.getElementById("optionsBlok");
-            var selectedValue = optionsElement ? optionsElement.value : null;
+        // Seçilen değeri al
+
+        var optionsElement = document.getElementById("optionsBlok");
+        var selectedValue = optionsElement.value;
 
         var optionsDurum = document.getElementById("durum");
-        var selectedDurum = optionsDurum ? optionsDurum.value : null;
-        
+        var selectedDurum = optionsDurum.value;
+
         selectedValuesArray.push(selectedValue);
         selectedDurumArray.push(selectedDurum);
 
