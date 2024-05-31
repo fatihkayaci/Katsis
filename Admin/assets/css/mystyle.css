@@ -2879,6 +2879,7 @@ min-width: 0;
   color: #fff;
   outline: none;
   border: 1px solid #d2d6da;
+  display: none;
 }
 
 .aktar-btn i {
@@ -2902,3 +2903,33 @@ min-width: 0;
 .center-txt td {
   text-align: center;
 }
+
+
+.saveindesbtn{
+  display:none;
+}
+
+/* ----------------------------*/
+
+.pagination {
+  display: flex;
+  list-style: none;
+  padding: 0;
+}
+.pagination a {
+  padding: 8px 16px;
+  margin: 4px;
+  border: 1px solid #ddd;
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+.pagination a.current-number {
+  background-color: #007bff;
+  color: white;
+  border: 1px solid #007bff;
+}
+.pagination a:hover {
+  background-color: #ddd;
+}
+
