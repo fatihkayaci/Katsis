@@ -39,7 +39,7 @@ $daireler = $stmt->fetchAll();
         <hr class="horizontal dark mb-1 w-100">
 
         <div class="table-overflow">
-            <table id="example" class="users-table">
+            <table id="example" class="users-table center-txt">
                 <thead>
                     <tr class="users-table-info">
                         <th class="check-style">
@@ -56,8 +56,9 @@ $daireler = $stmt->fetchAll();
                         <th onclick="sortTable(1)">No <i id="icon-table1" class="fa-solid fa-sort-down"></i></th>
                         <th onclick="sortTable(2)">Daire <i id="icon-table2" class="fa-solid fa-sort-down"></i></th>
                         <th onclick="sortTable(3)">İlk Endeks <i id="icon-table3" class="fa-solid fa-sort-down"></i></th>
-                        <th onclick="sortTable(4)">Son Endeks <i id="icon-table4" class="fa-solid fa-sort-down"></i></th>
-                        <th onclick="sortTable(5)">Tüketim <i id="icon-table5" class="fa-solid fa-sort-down"></i></th>
+                        <th onclick="sortTable(4)"><button class="aktar-btn"><i class="fa-solid fa-left-long"></i></button></th>
+                        <th onclick="sortTable(5)">Son Endeks <i id="icon-table5" class="fa-solid fa-sort-down"></i></th>
+                        <th onclick="sortTable(6)">Tüketim <i id="icon-table6" class="fa-solid fa-sort-down"></i></th>
                     </tr>
                 </thead>
 
@@ -66,7 +67,7 @@ $daireler = $stmt->fetchAll();
                 <?php foreach($daireler as $daire ){   ?>
                     <tr data-userid="" data-d="" id="" class="git-ac">
 
-                        <td data-title="Seç" class="check-style">
+                        <td data-title="Seç" class="check-style check-ayar1">
                             <!-- Checkbox id'sine $i değerini ekliyoruz -->
                             <input id="" class="check1" type="checkbox" onclick="toggleCheckbox()" />
                             <label for="" class="check">
@@ -83,9 +84,11 @@ $daireler = $stmt->fetchAll();
 
                         <td class="table_tt table_td"><?php echo $daire["daire_sayisi"] ?></td>
 
-                        <td class="table_tt table_td">0</td>
+                        <td class="table_tt table_td aktarTd"><input class="sayac-input" type="number" value="5"></td>
 
-                        <td class="table_tt table_td">5</td>
+                        <td class="table_tt table_td aktarTd1"><p>kWH</p></td>
+
+                        <td class="table_tt table_td aktarTd"><input class="sayac-input active" type="number" value="5"></td>
 
                         <td class="table_tt table_td">2</td>
 

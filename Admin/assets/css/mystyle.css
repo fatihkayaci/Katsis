@@ -2826,9 +2826,42 @@ min-width: 0;
 }
 
 .sayac-input {
-  width: 100%;
+  width: 70%;
+  min-width: 120px;
+  border-radius: 4px;
+  border: none;
+  outline: none;
+  background: none;
+  padding: 5px;
+  text-align: center;
+  pointer-events: none;
+  user-select: none;
+}
+
+.sayac-input::-webkit-outer-spin-button,
+.sayac-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Hide increment buttons in Firefox */
+.sayac-input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.sayac-input.active {
+  width: 70%;
+  min-width: 120px;
   border-radius: 4px;
   border: 1px solid #b6b6b6;
+  padding: 5px;
+  text-align: center;
+  background-color: #fff;
+  pointer-events: visible;
+  user-select: text;
+  transition: 0.3s;
+}
+.sayac-input.active:focus {
+  border: 1px solid #277CE0;
 }
 
 .aktar-btn {
@@ -2858,4 +2891,14 @@ min-width: 0;
   border: 1px solid #d2d6da;
   background-color: #186625;
   color: #fff;
+}
+
+
+.check-style, .table_tt {
+  width: 5%; /* Eşit genişlikte kalmalarını sağlar */
+}
+
+.center-txt th,
+.center-txt td {
+  text-align: center;
 }
