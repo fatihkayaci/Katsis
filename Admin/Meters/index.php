@@ -45,7 +45,7 @@ try {
 </div>
     <div class="input-group1"></div>
     <div class="input-group1">
-      <button class="btnAddindex btn-custom-outline bcoc1" onclick="okuma()">Okuma Ekle</button>
+      <button class="btnAddindex btn-custom-outline bcoc1" onclick="okuma()">Sayaç Oku</button>
       <button class="saveindesbtn btn-custom-outline bcoc1" onclick="indexSave('<?php echo $tur_php; ?>')">Kaydet</button>
     </div>
   </div>
@@ -107,7 +107,10 @@ try {
                </select>
                <p class="adet-txt">Adet Veri Gösteriliyor</p>
            </div>
-           <div class="input-group1"><p class="adet-txt"><?php echo formatDatetime($daireler[0]["okuma_tarih"]);?> Tarihinde Sayaçlar Okundu.</p></div>
+           <div class="input-group1">
+    <p class="adet-txt" style="color: black;"><?php echo formatDatetime($daireler[0]["okuma_tarih"]);?> Tarihinde Sayaçlar Okundu.</p>
+</div>
+
            <button class="export-btn excel-btn" id="exportButton"><i class="fa-solid fa-file-excel"></i> Excel'e
                Aktar</button>
            <div class="input-group1">
@@ -161,7 +164,7 @@ function iptal() {
     const btnAktar = document.querySelector('.aktar-btn');
     btn.setAttribute("onclick", "okuma()");
     btn.style.backgroundColor = "#277CE0";
-    btn.textContent = "Okuma Ekle";
+    btn.textContent = "Sayaç Oku";
     btnSave.style.display = "none";
     btnAktar.style.display = "none";
     // Her bir elemanın classList'ine "active" sınıfını ekle
