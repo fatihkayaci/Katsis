@@ -19,7 +19,36 @@ function generateUniqueUserID( $conn) {
     $maxUserID = $maxUserID + 25384500;
     return  $maxUserID;
 }
-
+function formatDatetime($datetime_str) {
+    // Verilen tarihi DateTime nesnesine dönüştür
+    $datetime = new DateTime($datetime_str);
+    
+    // İstenen formata dönüştür
+    $formatted_date = $datetime->format('d F Y, H:i');
+    
+    // Ay ismini Türkçe'ye çevir
+    $turkish_months = [
+        'January' => 'Ocak',
+        'February' => 'Şubat',
+        'March' => 'Mart',
+        'April' => 'Nisan',
+        'May' => 'Mayıs',
+        'June' => 'Haziran',
+        'July' => 'Temmuz',
+        'August' => 'Ağustos',
+        'September' => 'Eylül',
+        'October' => 'Ekim',
+        'November' => 'Kasım',
+        'December' => 'Aralık'
+    ];
+    
+    // İngilizce ay ismini Türkçe'ye çevir
+    foreach ($turkish_months as $english => $turkish) {
+        $formatted_date = str_replace($english, $turkish, $formatted_date);
+    }
+    
+    return $formatted_date;
+}
 function tarihDonustur($tarih) {
     // Tarihi DateTime nesnesi olarak oluştur
     $date = DateTime::createFromFormat('Y-m-d', $tarih);
