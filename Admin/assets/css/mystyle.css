@@ -3044,6 +3044,7 @@ min-width: 0;
 
 .esit-veri {
   display: flex;
+  flex-direction: column;
   flex-basis: 0;
   flex-grow: 1;
   justify-content: flex-start;
@@ -3108,6 +3109,11 @@ min-width: 0;
 .esit-input label {
   margin: 0;
   font-size: 16px;
+}
+
+.toplu-info {
+  font-weight: lighter !important;
+  font-size: 13px;
 }
 
 /* toplu borclandirma sayfasi */

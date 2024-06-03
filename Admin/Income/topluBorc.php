@@ -40,6 +40,7 @@
                                             <div class="bilgi-p b-old">
                                                 <div class="esit-veri">
         	                                    	<p>Açıklama :</p>
+                                                    <p class="toplu-info">Tüm borçlara yazılacak borç açıklamasıdır.</p>
                                                 </div>
                                                 <div class="esit-input">
                                                     <input class="toplu-input" type="text">
@@ -50,7 +51,8 @@
 
                                             <div class="bilgi-p b-old">
                                                 <div class="esit-veri">
-                                                    <p>Kategori :</p> 
+                                                    <p>Kategori :</p>
+                                                    <p class="toplu-info">işleminize uygun kategoriyi seçiniz.</p>
                                                 </div>
                                                 <div class="esit-input">
                                                     <div class="dropToplu-div w-100">
@@ -76,6 +78,7 @@
                                             <div class="bilgi-p b-old">
                                                 <div class="esit-veri">
                                                     <p>Hesaplar :</p> 
+                                                    <p class="toplu-info">Borçlandırmak istediğiniz kişiyi seçiniz</p>
                                                 </div>
                                                 <div class="esit-input">
                                                     <div class="dropToplu-div w-100">
@@ -101,6 +104,7 @@
                                             <div class="bilgi-p b-old">
                                                 <div class="esit-veri">
                                                     <p>Tutar :</p>
+                                                    <p class="toplu-info">Gelişmiş hesaplama seçenekleri ile daire tipi, arsa payı veya sayaçlara göre borçlandırma yapabilirsiniz</p>
                                                 </div>
                                                 <div class="esit-input">
                                                     <input class="toplu-input" type="text">
@@ -117,6 +121,7 @@
                                             <div class="tutar-ayar mt-3 bilgi-p b-old" id="tutar-ayar">
                                                 <div class="esit-veri">
                                                     <p>Hesaplama Şekli :</p>
+                                                    <p class="toplu-info">Tutarı daire parametrelerine veya sayaç endekslerine göre dağıtabilir yada birim fiyat olarak kullanarak sağlanan parametrelerle çarpabilirsiniz</p>
                                                 </div>
                                                 <div class="esit-input">
                                                     <div class="dropToplu-div w-100">
