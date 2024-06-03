@@ -85,6 +85,12 @@ else if($indexx == 'Sections'){
     echo "<script>
             localStorage.setItem('selectedLink', 'income');
          </script>";
+} else if($indexx == 'topluborc'){ 
+    include ("Income/topluBorc.php");
+    echo "<script>pagename('Toplu Borçlandırma');</script>";
+    echo "<script>
+            localStorage.setItem('selectedLink', 'topluborc');
+         </script>";
 } else if($indexx == 'meters'){
     include ("Meters/index.php");
     echo "<script>pagename('Sayaçlar');</script>";

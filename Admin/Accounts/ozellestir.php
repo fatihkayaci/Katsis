@@ -480,13 +480,12 @@ WHERE m.user_id = :user_id AND m.apartman_id = :apartman_id AND maliye_turu = :m
                                 </p>
                         </a>
 
-                        <?php } ?>
-
+                        <?php }
+                    } ?>
                     </div>
-
                 </div>
             </div>
-            <?php   } ?>
+
             <div class="borc-area overflow-borc">
                 <div class="account-settings">
 
@@ -564,7 +563,7 @@ WHERE m.user_id = :user_id AND m.apartman_id = :apartman_id AND maliye_turu = :m
         var dateInputValue = document.getElementById('dateInput').value;
         var dateInput2Value = document.getElementById('dateInput2').value;
         var kategoriAd = document.getElementById('kategori').value;
-        
+
         if (kategoriAd == "" || kategoriAd == null) {
             var kategoriValue = "";
         } else {
@@ -963,5 +962,5 @@ WHERE m.user_id = :user_id AND m.apartman_id = :apartman_id AND maliye_turu = :m
     <!-- custom gender input start -->
     <script src="assets/js/mycode/dropdown.js"></script>
     <script>
-    dropDownn('kategori', 'kategoriDP','searchInput');
+    dropDownn('kategori', 'kategoriDP', 'searchInput');
     </script>

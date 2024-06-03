@@ -1392,7 +1392,7 @@ foreach ($optionsBlok as $bloks) {
             var trElements = document.querySelectorAll('.git-ac');
             $('#guncelleButton').css('display', 'inline-block');
             trElements.forEach(function (trElement) {
-                var tdElements = trElement.querySelectorAll('td:nth-child(2), td:nth-child(3)');
+                var tdElements = trElement.querySelectorAll('td:nth-child(3), td:nth-child(4), td:nth-child(2)');
                 tdElements.forEach(function (tdElement) {
                     tdElement.classList.add('color-new');
                 });
@@ -1405,7 +1405,7 @@ foreach ($optionsBlok as $bloks) {
             var trElements = document.querySelectorAll('.git-ac');
             $('#guncelleButton').css('display', 'none');
             trElements.forEach(function (trElement) {
-                var tdElements = trElement.querySelectorAll('td:nth-child(2), td:nth-child(3)');
+                var tdElements = trElement.querySelectorAll('td:nth-child(3), td:nth-child(4), td:nth-child(2)');
                 tdElements.forEach(function (tdElement) {
                     tdElement.classList.remove('color-new');
                 });
