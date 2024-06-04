@@ -772,17 +772,16 @@ box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
 }
 
 .table-overflow {
-  padding: 10px 0px;
+  padding: 10px;
   overflow: auto;
   background-color: #fff;
   border-radius: 15px;
-  margin: 1rem;
   margin-top: 0;
   width: 100%;
 }
 
 .users-table {
-  width: 98%;
+  width: 100%;
   margin-top: 10px;
   text-align: left;
   border-collapse: separate;
@@ -3060,12 +3059,42 @@ min-width: 0;
   flex-basis: 0;
   flex-grow: 1;
   justify-content: flex-end;
+  align-items: center;
   width: 100%;
   gap: 10px;
 }
 
+.gelismis-checkbox {
+  text-align: end;
+}
+
+.group {
+  position: relative;
+}
+
+.absolute-input {
+  position: absolute;
+  top: 11.45px;
+  right: 20px;
+  transition: 0.3s;
+}
+
+.absolute-tl {
+  position: absolute;
+  top: 7px;
+  right: 20px;
+  transition: 0.3s;
+}
+
+
+.i-kontrol:focus ~ .absolute-input {
+  transform: rotate(-180deg);
+  color: #277CE0;
+}
+
 .tutar-ayar,
-.tekrar-tarih {
+.tekrar-tarih,
+.gelismis-ayar {
   display: none;
   background-color: #f3f3f3;
   box-shadow: inset 0px 0px 5px #e0e0e0;
@@ -3075,12 +3104,12 @@ min-width: 0;
 }
 
 .active-tekrar {
-  background-color: #007bff;
+  background-color: #555555;
   color: white;
 }
 .active-tekrar:hover {
-  border: 1px solid #1c5aa1;
-  background-color: #1c5aa1;
+  border: 1px solid #3a3a3a;
+  background-color: #3a3a3a;
 }
 
 .toplu-input {
@@ -3115,5 +3144,165 @@ min-width: 0;
   font-weight: lighter !important;
   font-size: 13px;
 }
+
+.toplu-p {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.toplu-p .main-durum {
+  padding: 0px 15px;
+}
+
+.toplu-p p {
+  margin: 0;
+}
+
+.new-chck {
+  max-width: 550px;
+}
+
+.new-chck label {
+  padding: 0px !important;
+  left: 0px !important;
+  top: 0;
+}
+
+.yeni-check * {
+  box-sizing: border-box;
+}
+.yeni-check .yenichk-label {
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 6px;
+  overflow: hidden;
+  transition: all 0.2s ease;
+  display: inline-block;
+}
+.yeni-check .yenichk-label:hover {
+  background: rgba(0,119,255,0.06);
+}
+.yeni-check .yenichk-label span {
+  float: left;
+  vertical-align: middle;
+  transform: translate3d(0, 0, 0);
+}
+.yeni-check .yenichk-label span:first-child {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  transform: scale(1);
+  border: 1px solid #cccfdb;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 1px rgba(0,16,75,0.05);
+}
+.yeni-check .yenichk-label span:first-child svg {
+  position: absolute;
+  top: 3px;
+  left: 2px;
+  fill: none;
+  stroke: #fff;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 16px;
+  stroke-dashoffset: 16px;
+  transition: all 0.3s ease;
+  transition-delay: 0.1s;
+  transform: translate3d(0, 0, 0);
+}
+.yeni-check .yenichk-label span:last-child {
+  padding-left: 8px;
+  line-height: 18px;
+}
+.yeni-check .yenichk-label:hover span:first-child {
+  border-color: #07f;
+}
+.yeni-check .yenichk-inpt {
+  position: absolute;
+  visibility: hidden;
+}
+.yeni-check .yenichk-inpt:checked + .yenichk-label span:first-child {
+  background: #07f;
+  border-color: #07f;
+  animation: wave-4 0.4s ease;
+}
+.yeni-check .yenichk-inpt:checked + .yenichk-label span:first-child svg {
+  stroke-dashoffset: 0;
+}
+.yeni-check .inline-svg {
+  position: absolute;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  user-select: none;
+}
+@media screen and (max-width: 640px) {
+  .yeni-check .yenichk-label {
+    width: 100%;
+    display: inline-block;
+  }
+}
+@-moz-keyframes wave-4 {
+  50% {
+    transform: scale(0.9);
+  }
+}
+@-webkit-keyframes wave-4 {
+  50% {
+    transform: scale(0.9);
+  }
+}
+@-o-keyframes wave-4 {
+  50% {
+    transform: scale(0.9);
+  }
+}
+@keyframes wave-4 {
+  50% {
+    transform: scale(0.9);
+  }
+}
+
+
+/* Toplu borc responsive */
+
+@media (max-width: 1439px) {
+  .toplu-borc-area {
+    width: 85%;
+  }
+}
+@media (max-width: 765px) {
+  .toplu-borc-area {
+    width: 100%;
+  }
+}
+@media (max-width: 479px) {
+  .toplu-p {
+    flex-direction: column;
+  }
+  .respense-btn {
+    width: 100%;
+  }
+}
+@media (max-width: 424px) {
+  .esit-input {
+    flex-direction: column;
+  }
+}
+@media (max-width: 380px) {
+  .cener-table {
+    padding: 5px;
+  }
+}
+
 
 /* toplu borclandirma sayfasi */

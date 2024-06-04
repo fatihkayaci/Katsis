@@ -51,7 +51,7 @@ try {
             <div class="input-group1">
 
                 <button class="adduser btn-custom-outline bcoc1">Kullanıcı Ekle</button>
-                <button class="toplu btn-custom-outline bcoc2">Toplu İşlemler</button>
+                <button class="toplu btn-custom-outline bcoc1">Toplu İşlemler</button>
 
 
                 <div class="check-box">
@@ -238,35 +238,36 @@ try {
         <h2 class="form-signin-heading">Kullanıcı Ekleme</h2>
 
         <div class="row mb-1">
-            <div class="col-md-6 col">
+            <div class="col-md-6 col-btn">
                 <input class="input" type="text" name="userName" required="">
                 <label for="userName">Ad Soyad :</label>
             </div>
+        </div>
 
+        <div class="row">
             <div class="col-md-6 col">
                 <input class="input" type="text" name="tc" required="" require>
                 <label for="tc">T.C. Kimlik No :</label>
             </div>
-        </div>
-
-        <div class="row">
             <div class="col-md-6 col">
                 <input class="input tel" type="number" name="phoneNumber" required="">
                 <label for="phoneNumber">Telefon Numarası :</label>
             </div>
+        </div>
 
+        <div class="row">
             <div class="col-md-6 col">
                 <input class="input" type="text" name="userEmail" required="">
                 <label for="userEmail">E-Posta :</label>
             </div>
-        </div>
 
-        <div class="row">
             <div class="col-md-6 col margint">
                 <input class="input" type="text" name="plate" required="">
                 <label for="plate">Araç Plakası</label>
             </div>
+        </div>
 
+        <div class="row">
             <div class="col-md-6 col margint">
                 <div class="select-div m-0">
                     <div class="dropdown-nereden">
@@ -287,14 +288,13 @@ try {
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
             <div class="col-md-6 col margint">
                 <input class="input" type="text" id="hashedPassword" name="password" value="<?= $hashedPassword ?>"
                     required="">
                 <label for="sifre">Şifre</label>
             </div>
         </div>
+        
         <div class="row">
             <div class="col-md-6 check-label margint">
                 <input onchange="toggleDisplay()" type="checkbox" id="onay" name="onay" value="bakiye">

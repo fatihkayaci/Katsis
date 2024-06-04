@@ -85,7 +85,7 @@ ORDER BY d.blok_adi ASC, d.daire_sayisi ASC";
 
         <div class="input-group1">
             <button class="btn-custom-outline bcoc1" onclick="openPopupBlok()">Bloklar</button>
-            <button class="btn-custom-outline bcoc2" onclick="openPopupDaire()">Daire Ekle</button>
+            <button class="btn-custom-outline bcoc1" onclick="openPopupDaire()">Daire Ekle</button>
 
         </div>
 
@@ -347,7 +347,7 @@ ORDER BY d.blok_adi ASC, d.daire_sayisi ASC";
 
         <div class="input-group1">
             <button class="btn-custom-outline bcoc1" onclick="openPopupBlok()">Bloklar</button>
-            <button class="btn-custom-outline bcoc2" onclick="openPopupDaire()">Daire Ekle</button>
+            <button class="btn-custom-outline bcoc1" onclick="openPopupDaire()">Daire Ekle</button>
 
         </div>
 

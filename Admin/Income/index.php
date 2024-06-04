@@ -69,7 +69,7 @@ JOIN
 
             <button class="adduser btn-custom-outline bcoc1"
                 onclick=" popupOpenControl('popupBorcEkle','borcEkleForm')">Borç Tanımla</button>
-            <a href="index?parametre=topluborc" class="toplu btn-custom-outline a-btn bcoc2">Toplu Borç Tanımla</a>
+            <a href="index?parametre=topluborc" class="toplu btn-custom-outline a-btn bcoc1">Toplu Borç Tanımla</a>
 
         </div>
 

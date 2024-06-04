@@ -23,7 +23,7 @@ try {
         <div class="input-group1">
 
             <button class="adduser btn-custom-outline bcoc1">Kullanıcı Ekle</button>
-            <button class="toplu btn-custom-outline bcoc2">Toplu İşlemler</button>
+            <button class="toplu btn-custom-outline bcoc1">Toplu İşlemler</button>
 
 
             <div class="check-box">
