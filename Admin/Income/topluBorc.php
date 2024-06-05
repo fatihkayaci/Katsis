@@ -115,7 +115,7 @@
                                                             </div>
                                                             <div class="dropdown-content-nereden searchInput-btn" id="kategoriDP">
                                                                 <div class="dropdown-content-inside-nereden">
-                                                                    <input type="text" id="searchInput-kategori" placeholder="Ara...">
+                                                                    <input type="hidden" id="searchInput-kategori" placeholder="Ara...">
 
                                                                     <button data-user-id="">Kategori 1</button>
                                                                     <button data-user-id="">Kategori 2</button>
@@ -154,10 +154,10 @@
                                                             </div>
                                                             <div class="dropdown-content-nereden searchInput-btn" id="hesaplarDP">
                                                                 <div class="dropdown-content-inside-nereden">
-                                                                    <input type="text" id="searchInput" placeholder="Ara...">
+                                                                    <input type="hidden"  id="searchInput">
 
-                                                                    <button data-user-id="">Kiracılar, Yoksa kat malikleri</button>
-                                                                    <button data-user-id="">Kat Malikleri</button>
+                                                                    <button data-user-id="1" id="btn-select" autofocus>Kiracılar, Yoksa kat malikleri</button>
+                                                                    <button data-user-id="2">Kat Malikleri</button>
                                                                 </div>
                                                             </div>
                                                         </div>    
@@ -275,7 +275,7 @@
                                                     <p>İlk Tekrar Tarihi :</p>
                                                 </div>
                                                 <div class="esit-input">
-                                                    <input class="toplu-input" type="text">
+                                                    <input class="toplu-input" id="datepickerSecim" type="text">
                                                 </div>
                                             </div>
                                             
@@ -284,7 +284,7 @@
                                                     <p>Tarihine Kadar Tekrarla :</p>
                                                 </div>
                                                 <div class="esit-input">
-                                                    <input class="toplu-input" type="text">
+                                                    <input class="toplu-input" id="datepickerSecim2" type="text">
                                                 </div>
                                             </div>
                                             
@@ -293,7 +293,7 @@
                                                     <p>Son Ödeme Tarihi :</p>
                                                 </div>
                                                 <div class="esit-input">
-                                                    <input class="toplu-input" type="text">
+                                                    <input class="toplu-input" id="datepickerSecim3" type="text">
                                                 </div>
                                             </div>
 
@@ -383,8 +383,8 @@
                                                                 <div class="dropdown-content-inside-nereden">
                                                                     <input type="text" id="searchInput1" placeholder="Ara...">
 
-                                                                    <button data-user-id="">Kiracılar, Yoksa kat malikleri</button>
-                                                                    <button data-user-id="">Kat Malikleri</button>
+                                                                    <button data-user-id="1">Kiracılar, Yoksa kat malikleri</button>
+                                                                    <button data-user-id="2">Kat Malikleri</button>
                                                                 </div>
                                                             </div>
                                                         </div>    
@@ -594,9 +594,39 @@
 </div>
 </div>
 
+<!-- secme Tarihi -->
+    <script src="assets/js/mycode/moment.min.js"></script>
+    <script src="assets/js/mycode/moment.js"></script>
+    <script src="assets/js/mycode/lightpick.js"></script>
+
+<script>
+    
+        var picker = new Lightpick({
+            field: document.getElementById('datepickerSecim'),
+            singleDate: true,
+            selectForward: true,
+            selectBackward: false,
+            startDate: moment().startOf().add(10, 'day'),
+            lang: 'tr',
+            minDate: moment(),
+            maxDate: moment().add(3, 'months'),
+            repick: true,
+            onSelect: function(date){
+                document.getElementById('datepickerSecim').value = date.format('DD MMMM YYYY');
+            }
+        });
+    
+   
+
+   
+    </script>
 <!-- Istisna Ekle Popup -->
 
 <script>
+
+
+  
+
     $('.adduser').click(function () {
         $('#popup').show().css('display', 'flex').delay(100).queue(function (next) {
             $('body').css('overflow', 'hidden');
@@ -826,6 +856,11 @@ dropDownn('hesaplar1', 'hesaplar1DP', 'searchInput1');
 dropDownn('kategori1', 'kategori1DP', 'searchInput-kategori1');
 dropDownn('tutar1', 'tutar1DP', 'searchInput-tutar1');
 dropDownn('pay1', 'pay1DP', 'searchInput-pay1');
+
+
+  document.getElementById("btn-select").click();
+
+
 </script>
 
 <body>
