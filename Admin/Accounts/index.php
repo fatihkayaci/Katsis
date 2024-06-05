@@ -754,6 +754,7 @@ function validatePhoneNumber(element) {
                 var newCell2 = document.createElement('td');
                 var newCell3 = document.createElement('td');
                 var newCell4 = document.createElement('td');
+                var newCell5 = document.createElement('td');
 
                 var newTextCell = document.createElement('td'); // Yeni metin hücresi oluştur
                 newTextCell.textContent = "Birden Fazla Daire"; // Metin içeriğini ayarla
@@ -781,6 +782,7 @@ function validatePhoneNumber(element) {
                 newRow.appendChild(newCell2);
                 newRow.appendChild(newCell4);
                 newRow.appendChild(newTextCell);
+                newRow.appendChild(newCell5);
 
                 // Yeni satırı ekleyeceğimiz referans satırı bul
                 var referenceRow = document.querySelector('[data-userid="' + userID + '"]');
