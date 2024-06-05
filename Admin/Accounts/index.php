@@ -131,15 +131,12 @@ try {
 
                             <?php echo $row["userName"]; ?>
                         </td>
-                        <td data-title="TC" class="table_tt table_td" oninput="checkTCNumberLength(this)"
-                            contenteditable="false">
+                        <td data-title="TC" class="table_tt table_td tc"  contenteditable="false" oninput="validateTC(this)">
 
                             <?php echo $row["tc"]; ?>
                         </td>
 
-                        <td data-title="Telefon Numarası" class="table_tt table_td phoneNumberTable"
-                            oninput="checkPhoneNumberLength(this)" contenteditable="false">
-
+                        <td data-title="Telefon Numarası" class="table_tt table_td phoneNumberTable" contenteditable="false" oninput="validatePhoneNumber(this)">
                             <?php echo $row["phoneNumber"]; ?>
                         </td>
 
@@ -200,8 +197,7 @@ try {
                 <p class="adet-txt">Adet Veri Gösteriliyor</p>
 
             </div>
-            <button class="export-btn excel-btn" id="exportButton"><i class="fa-solid fa-file-excel"></i> Excel'e
-                Aktar</button>
+            <button class="export-btn excel-btn" id="exportButton"><i class="fa-solid fa-file-excel"></i> Excel'e Aktar</button>
             <div class="input-group1">
 
                 <ul class="pagination">
@@ -467,25 +463,25 @@ foreach ($optionsBlok as $bloks) {
     </form>
 </div>
 <script>
-    function checkTCNumberLength(input) {
-        // Yalnızca sayı karakterlerine izin ver
-        input.innerText = input.innerText.replace(/[^0-9]/g, '');
+function validateTC(element) {
+    let tc = element.innerText;
 
-        // 11 karakter sınırı
-        if (input.innerText.length > 11) {
-            input.innerText = input.innerText.slice(0, 11);
-        }
+    // Sadece sayılara izin ver ve uzunluğu 11 karakterle sınırla
+    if (!/^\d*$/.test(tc) || tc.length > 11) {
+        element.innerText = tc.slice(0, 11).replace(/\D/g, '');
+        alert("TC numarası sadece sayılardan oluşmalı ve 11 karakter uzunluğunda olmalıdır.");
     }
+}
 
-    function checkPhoneNumberLength(input) {
-        // Yalnızca sayı karakterlerine izin ver
-        input.innerText = input.innerText.replace(/[^0-9]/g, '');
+function validatePhoneNumber(element) {
+    let phoneNumber = element.innerText;
 
-        // 10 karakter sınırı
-        if (input.innerText.length > 10) {
-            input.innerText = input.innerText.slice(0, 10);
-        }
+    // Sadece sayılara izin ver ve uzunluğu 10 karakterle sınırla
+    if (!/^\d*$/.test(phoneNumber) || phoneNumber.length > 10) {
+        element.innerText = phoneNumber.slice(0, 10).replace(/\D/g, '');
+        alert("Telefon numarası sadece sayılardan oluşmalı ve 10 karakter uzunluğunda olmalıdır.");
     }
+}
 
     window.onload = function () {
         var tcInput = document.getElementsByName('tc')[0];
@@ -542,71 +538,28 @@ foreach ($optionsBlok as $bloks) {
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
 <script>
-    document.getElementById("exportButton").addEventListener("click", function () {
-        let table = document.getElementById("example");
-        let rows = table.querySelectorAll("tr");
-        let data = [];
-
-        rows.forEach((row, rowIndex) => {
-            let cols = row.querySelectorAll("td, th");
-            let rowData = [];
-            let skipRow = false;
-
-            cols.forEach((col, colIndex) => {
-                if (colIndex === 3 && col.innerText.trim() === "Birden Fazla Daire") {
-                    skipRow = true; // Bu satırı atla
-                }
-                if (colIndex !== 0 && !skipRow) { // İlk sütunu ve "Birden Fazla Daire" içeren satırları atla
-                    rowData.push(col.innerText.trim());
-                }
-            });
-
-            if (!skipRow) {
-                data.push(rowData);
-            }
-        });
-
-        let wb = XLSX.utils.book_new();
-        let ws = XLSX.utils.aoa_to_sheet(data);
-
-        // Hücre stillerini tanımlama
-        const headerCellStyle = {
-            font: { bold: true, color: { rgb: "FFFFFF" } }, // Beyaz yazı
-            fill: { fgColor: { rgb: "4F81BD" } }, // Mavi arka plan
-            alignment: { horizontal: "center", vertical: "center" }
-        };
-
-        const dataCellStyle = {
-            alignment: { horizontal: "center", vertical: "center" }
-        };
-
-        // Stil uygulama
-        let range = XLSX.utils.decode_range(ws['!ref']);
-        for (let rowNum = range.s.r; rowNum <= range.e.r; rowNum++) {
-            for (let colNum = range.s.c; colNum <= range.e.c; colNum++) {
-                let cellAddress = { c: colNum, r: rowNum };
-                let cellRef = XLSX.utils.encode_cell(cellAddress);
-                if (!ws[cellRef]) continue; // Hücre boşsa geç
-                if (rowNum === 0) { // Başlık satırlarına stil uygula
-                    ws[cellRef].s = headerCellStyle;
-                } else { // Veri satırlarına stil uygula
-                    ws[cellRef].s = dataCellStyle;
-                }
-            }
+   $('#exportButton').click(function () {
+    event.preventDefault();
+    
+    $.ajax({
+        url: 'Controller/Accounts/exportExcel.php',
+        type: 'POST',
+        contentType: 'application/json',
+        success: function (response) {
+            var blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+            var url = window.URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = 'tablo_verileri.xlsx';
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+        },
+        error: function (xhr, status, error) {
+            console.error(xhr.responseText);
         }
-
-        // Sütun genişliklerini ayarlama
-        ws['!cols'] = [
-            { wpx: 150 }, // Ad Soyad
-            { wpx: 100 }, // TC
-            { wpx: 150 }, // Telefon Numarası
-            { wpx: 150 }, // Blok / Daire
-            { wpx: 150 }  // Durum
-        ];
-
-        XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
-        XLSX.writeFile(wb, "kullaniciTablosu.xlsx");
     });
+});
 
 </script>
 </body>
@@ -785,6 +738,7 @@ foreach ($optionsBlok as $bloks) {
     rows.forEach(function (row) {
         var userID = row.getAttribute('data-userid');
         var userName = row.querySelector('.table_tt.table_td').textContent;
+        var tc = row.querySelector('.tc').textContent;
         var phoneNumber = row.querySelector('.phoneNumberTable').textContent;
         if (userIdArray[userID]) {
             // Tekrarlanan bir kullanıcı kimliği bulunduğunda tüm satırı gizle
@@ -795,9 +749,10 @@ foreach ($optionsBlok as $bloks) {
 
             if (!emptyRowCreated[userID]) {
                 var newRow = document.createElement('tr');
-                var newCell3 = document.createElement('td');
+                
                 var newCell1 = document.createElement('td');
                 var newCell2 = document.createElement('td');
+                var newCell3 = document.createElement('td');
                 var newCell4 = document.createElement('td');
 
                 var newTextCell = document.createElement('td'); // Yeni metin hücresi oluştur
@@ -811,22 +766,26 @@ foreach ($optionsBlok as $bloks) {
                 newCell4.colSpan = "1"; // Dördüncü hücre 1 sütunu kaplasın
 
                 newCell1.textContent = userName; // İlk hücreye userName değerini ekle
-                newCell2.textContent = phoneNumber;
+                newCell2.textContent = tc;
+                newCell4.textContent = phoneNumber;
+                
+                newCell2.setAttribute('oninput', 'validateTC(this)');
+                newCell4.setAttribute('oninput', 'validatePhoneNumber(this)');
                 newCell1.setAttribute('contenteditable', 'false');
                 newCell2.setAttribute('contenteditable', 'false');
+                newCell4.setAttribute('contenteditable', 'false');
                 newCell3.innerHTML = "<i class='fa-solid fa-turn-up tumu-btn'></i>";
 
                 newRow.appendChild(newCell3);
                 newRow.appendChild(newCell1); // Yeni hücreleri yeni satıra ekle
                 newRow.appendChild(newCell2);
-                newRow.appendChild(newTextCell);
                 newRow.appendChild(newCell4);
+                newRow.appendChild(newTextCell);
 
                 // Yeni satırı ekleyeceğimiz referans satırı bul
                 var referenceRow = document.querySelector('[data-userid="' + userID + '"]');
 
-                referenceRow.parentNode.insertBefore(newRow,
-                    referenceRow); // Yeni satırı referans satırının üstüne ekle
+                referenceRow.parentNode.insertBefore(newRow, referenceRow); // Yeni satırı referans satırının üstüne ekle
                 emptyRowCreated[userID] = true; // Boş satır oluşturulduğunu işaretle
 
                 newCell3.querySelector('.tumu-btn').addEventListener('click', function () {
@@ -864,7 +823,7 @@ foreach ($optionsBlok as $bloks) {
 
     function newDaire() {
             // Seçilen değeri al
-            var optionsElement = document.getElementById("optionsBlok");
+            var optionsElement = document.getElementById("daireGrup");
             var selectedValue = optionsElement ? optionsElement.value : null;
 
         var optionsDurum = document.getElementById("durum");
@@ -917,7 +876,6 @@ foreach ($optionsBlok as $bloks) {
         closeDaire();
 
         sayac++;
-
     }
 
     function toggleAll(masterCheckbox) {
@@ -1211,111 +1169,83 @@ foreach ($optionsBlok as $bloks) {
     //bakılacak
     //var saveButton = document.getElementById('saveButton');
     function saveUser() {
-        var userName = $('input[name="userName"]').val();
-        var tc = $('input[name="tc"]').val();
-        var phoneNumber = $('input[name="phoneNumber"]').val();
-        var userEmail = $('input[name="userEmail"]').val() || null;
-        var plate = $('input[name="plate"]').val();
-        var gender = $('input#userInput').val();
-        var apartman_id = $('input[name="apartman_id"]').val();
-        var optionsBlok = $('select#optionsBlok').val();
-        var password = $('#hashedPassword').val();
-        var blokArray = [];
-        var durumArray = [];
-        var openingBalance = $('input[name="openingBalance"]').val() || null;
-        var balanceType = $('select[name="balanceType"]').val() || null;
-        var promise = $('input[name="promise"]').val() || null;
-        // alert("openingBalance "+ openingBalance+ " promise "+ promise);
-        var isConflict = false; // Çakışma durumunu kontrol etmek için bir bayrak
-        //console.log(userName + "," + tc + "," + phoneNumber + "," + userEmail + "," + plate + "," + gender);
-        if (!password) {
-            alert("şifre kısmı boş bırakılamaz");
-            return;
-        } else if (password.length < 6) {
-            alert("şifre kısmı 6 karakterden az olamaz.");
-            return;
-        }
-        for (var i = 0; i < selectedDurumArray.length; i++) {
-            var durumParcalari = selectedDurumArray[i].split(',');
+    // Form alanlarını topla
+    var userName = $('input[name="userName"]').val();
+    var tc = $('input[name="tc"]').val();
+    var phoneNumber = $('input[name="phoneNumber"]').val();
+    var userEmail = $('input[name="userEmail"]').val() || null;
+    var plate = $('input[name="plate"]').val();
+    var gender = $('input#userInput').val();
+    var apartman_id = $('input[name="apartman_id"]').val();
+    var password = $('#hashedPassword').val();
+    var openingBalance = $('input[name="openingBalance"]').val() || null;
+    var balanceType = $('select[name="balanceType"]').val() || null;
+    var promise = $('input[name="promise"]').val() || null;
+    
+    // Blok ve durum dizilerini tanımla
+    var blokArray = [];
+    var durumArray = [];
+    var isConflict = false;
 
-            for (var j = 0; j < durumParcalari.length; j++) {
-                durumArray.push(durumParcalari[j]);
-            }
-        }
+    // Şifre kontrolleri
+    if (!password) {
+        alert("Şifre kısmı boş bırakılamaz");
+        return;
+    } else if (password.length < 6) {
+        alert("Şifre kısmı 6 karakterden az olamaz.");
+        return;
+    }
 
+    // Durum dizisini doldur
+    selectedDurumArray.forEach(function(durum) {
+        durum.split(',').forEach(function(d) {
+            durumArray.push(d);
+        });
+    });
 
-        for (var i = 0; i < selectedValuesArray.length; i++) {
-            var element = selectedValuesArray[i];
-            var match = element.match(/\d+/);
-            var letterPart = element.charAt(0);
-            var numberPart = match ? match[0] : null;
+    // Blok dizisini doldur
+    selectedValuesArray.forEach(function(element) {
+        var match = element.match(/\d+/);
+        var letterPart = element.charAt(0);
+        var numberPart = match ? match[0] : null;
 
-            /*console.log("element = " + element + ", letterpart = " + letterPart + ", numberpart = " +
-                numberPart);*/
+        console.log(`Element: ${element}, Letter: ${letterPart}, Number: ${numberPart}`);
 
-            var blokElement = {
-                letter: letterPart,
-                number: numberPart
-            };
+        blokArray.push({ letter: letterPart, number: numberPart });
+    });
+    // Çakışma kontrolü
+    rowData.forEach(function(row) {
+        var block = row.block;
+        var flatCount = row.flatCount;
+        var status = row.status;
 
-            blokArray.push(blokElement);
-        }
-
-        for (var i = 0; i < rowData.length; i++) {
-            var row = rowData[i];
-            var block = row.block;
-            var flatCount = row.flatCount;
-            var status = row.status;
-
-            // blokArray içindeki blok elementlerini dolaş ve karşılaştır
-            for (var j = 0; j < blokArray.length; j++) {
-                var blokElement = blokArray[j];
-                var letterPart = blokElement.letter;
-                var numberPart = blokElement.number;
-                // Blok adı ve daire numarası eşleşirse
-                if (block == letterPart && flatCount == numberPart) {
-                    // DurumArray içindeki durumları dolaş ve karşılaştır
-                    for (var k = 0; k < durumArray.length; k++) {
-                        var durum = durumArray[k];
-
-                        // Eğer durum eşleşiyorsa 
-                        if (status == durum) {
-                            // Çakışma durumu olduğunda bayrağı ayarla ve döngüyü kır
-                            isConflict = true;
-                            break;
-                        }
+        blokArray.forEach(function(blokElement) {
+            if (block === blokElement.letter && flatCount === blokElement.number) {
+                durumArray.forEach(function(durum) {
+                    if (status === durum) {
+                        isConflict = true;
                     }
-                }
+                });
             }
-            // Çakışma durumu varsa uyarı ver
-        }
-        alert(isConflict);
-        if (isConflict) {
-            alert("Çakışma durumu bulundu: Blok ismi: " + block + ", Daire sayısı: " + flatCount + ", Durum: " + status);
-            if (confirm("Çakışma durumu bulundu: Blok ismi: " + block + ", Daire sayısı: " + flatCount + ", Durum: " +
-                status + " bu dairede oturan kullanıcıyı silmek ister misin?")) {
-                if (kisitlamalar(userName /* tc, phoneNumber, userEmail, plate*/)) {
-                    demo = 1;
-                    saveUserData(userName, tc, phoneNumber, durumArray, userEmail, plate, gender, password, apartman_id, blokArray,
-                        openingBalance, balanceType, promise);
-                } else {
-                    return;
-                }
-            } else {
-                return;
-            }
-        } else {
-            if (kisitlamalar(userName /* tc, phoneNumber, userEmail, plate*/)) {
-                saveUserData(userName, tc, phoneNumber, durumArray, userEmail, plate, gender, password, apartman_id, blokArray,
-                    openingBalance, balanceType, promise);
-            } else {
-                return;
-            }
-        }
-    };
+        });
+    });
 
-    function saveUserData(userName, tc, phoneNumber, durumArray, userEmail, plate, gender, password, apartman_id, blokArray,
-        openingBalance, balanceType, promise) {
+    // Çakışma durumu varsa uyarı ver ve işlem yap
+    if (isConflict) {
+        alert(`Çakışma durumu bulundu: Blok ismi: ${block}, Daire sayısı: ${flatCount}, Durum: ${status}`);
+        if (confirm(`Çakışma durumu bulundu: Blok ismi: ${block}, Daire sayısı: ${flatCount}, Durum: ${status}. Bu dairede oturan kullanıcıyı silmek ister misiniz?`)) {
+            if (kisitlamalar(userName /* tc, phoneNumber, userEmail, plate*/)) {
+                demo = 1;
+                saveUserData(userName, tc, phoneNumber, durumArray, userEmail, plate, gender, password, apartman_id, blokArray, openingBalance, balanceType, promise);
+            }
+        }
+    } else {
+        if (kisitlamalar(userName /* tc, phoneNumber, userEmail, plate*/)) {
+            saveUserData(userName, tc, phoneNumber, durumArray, userEmail, plate, gender, password, apartman_id, blokArray, openingBalance, balanceType, promise);
+        }
+    }
+}
+    function saveUserData(userName, tc, phoneNumber, durumArray, userEmail, plate, gender, password, apartman_id, blokArray, openingBalance, balanceType, promise) {
         $.ajax({
             url: 'Controller/Accounts/save_user.php',
             type: 'POST',
@@ -1334,9 +1264,8 @@ foreach ($optionsBlok as $bloks) {
                 promise: promise
             },
             success: function (response) {
-                if (response == 1) {
-                    sendData(blokArray, durumArray);
-                }
+                
+                sendData(blokArray, durumArray);
             },
             error: function (error) {
                 console.error(error);
@@ -1353,6 +1282,7 @@ foreach ($optionsBlok as $bloks) {
                 durumArray: JSON.stringify(durumArray)
             },
             success: function (secondResponse) {
+                alert("attt");
                 if (demo == 1) {
                     arsiveUser();
                 } else {

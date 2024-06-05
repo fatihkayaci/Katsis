@@ -9,6 +9,7 @@ try {
     $durumArray = json_decode($_POST['durumArray']);
 
     $blokArray = json_decode($_POST['blokArray'], true);
+    print_r($blokArray);
     $updatedStatuses = array();
     $resultsArrayKiraci = array(); // Kiracılar için olanlar
     $resultsArrayKatMaliki = array(); // Kat malikleri için olanlar
