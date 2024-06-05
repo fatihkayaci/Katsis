@@ -1,3 +1,65 @@
+<?php 
+require_once "Controller/class.func.php";
+try {
+    // $apartman_id değişkeninin tanımlandığını varsayıyoruz
+    $idapartman =$_SESSION["apartID"];
+
+    $sql = "
+    SELECT 
+    u1.userID AS katMalikiID, 
+        
+        u1.userName AS katMalikiName,
+        u2.userID AS kiraciID,  
+        u2.userName AS kiraciName, 
+        b.blok_adi AS blokAdi,
+        d.daire_sayisi AS dNO,
+        d.daire_id,
+        d.katMalikiID,
+        d.KiraciID
+    FROM tbl_daireler d
+    LEFT JOIN tbl_users u1 ON d.katMalikiID = u1.userID
+    LEFT JOIN tbl_users u2 ON d.KiraciID = u2.userID
+    LEFT JOIN tbl_blok b ON d.blok_adi = b.blok_id  WHERE d.apartman_id=".$idapartman ;
+
+    // Sorguyu hazırlama ve çalıştırma
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+
+    $daireler = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // tbl_kategori tablosundan verileri çekme
+    $sql_kategori = "
+        SELECT *
+        FROM tbl_kategori
+        WHERE apartman_id = :apartman_id
+    ";
+
+    $stmt_kategori = $conn->prepare($sql_kategori);
+    $stmt_kategori->execute(['apartman_id' => $idapartman]);
+    $results_kategori = $stmt_kategori->fetchAll();
+
+    // Sonuçları birleştirerek işlemek için
+    $results = [
+        'kategori' => $results_kategori
+        
+    ];
+
+   
+
+ 
+} catch (PDOException $e) {
+    // Hata oluştuğunda yakalanacak blok
+    echo "Veritabanı hatası: " . $e->getMessage();
+} catch (Exception $e) {
+    // Genel bir hata oluştuğunda yakalanacak blok
+    echo "Bir hata oluştu: " . $e->getMessage();
+}
+?>
+
+
+
+
+
 <body>
 
 <!-- Popup Form -->
@@ -25,11 +87,12 @@
                     <th>Kat Maliki</th>
                     <th>Kiracı</th>
                 </tr>
+                <?php foreach ($daireler as $daire) { ?>
                 <tr id="mainTr">
                     <td data-title="Seç" class="check-style">
-                        <input id="check-" data-userid=""
-                            class="check1" type="checkbox" onclick="toggleMainCheckbox()" />
-                        <label for="check-" class="check">
+                        <input id="check-<?php echo  $daire['daire_id'] ?>" data-userid="<?php echo  $daire['daire_id'] ?>"
+                            class="check1" type="checkbox" onclick="toggleMainCheckbox('<?php echo  $daire['daire_id'] ?>')" />
+                        <label for="check-<?php echo  $daire['daire_id'] ?>" class="check">
                             <svg width="18px" height="18px" viewBox="0 0 18 18">
                                 <path
                                     d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z">
@@ -38,11 +101,19 @@
                             </svg>
                         </label>
                     </td>
-                    <td>01</td>
-                    <td>Kat Maliki</td> 
-                    <td>Kiracı</td>
-                </tr>
 
+                    
+                    <td><?php echo $daire['blokAdi'] . ' Blok - No: ' . $daire['dNO']?></td>
+                    <td><?php if (!empty($daire['katMalikiName'])) {
+                            echo   $daire['katMalikiName'] ;
+                    }else{echo "-";}  ?></td> 
+                    <td><?php if (!empty($daire['kiraciName'])) {
+                            echo   $daire['kiraciName'] ;
+                    }else{echo "-";}  ?></td>
+                </tr>
+             
+
+                <?php }?>
             </table>
 
         <hr class="horizontal dark mt-0 w-100">
@@ -116,9 +187,10 @@
                                                             <div class="dropdown-content-nereden searchInput-btn" id="kategoriDP">
                                                                 <div class="dropdown-content-inside-nereden">
                                                                     <input type="hidden" id="searchInput-kategori" placeholder="Ara...">
-
-                                                                    <button data-user-id="">Kategori 1</button>
-                                                                    <button data-user-id="">Kategori 2</button>
+                                                                     <?php    foreach ($results['kategori'] as $kategori) {   ?>       
+                                                                    <button data-user-id="<?php echo $kategori["kategori_id"] ?>">   <?php echo $kategori["kategori_adi"] ?></button>
+                                                                    
+                                                                    <?php } ?>
                                                                 </div>
                                                             </div>
                                                         </div>    
@@ -134,7 +206,8 @@
                                                     <p class="toplu-info">Tüm borçlara yazılacak borç açıklamasıdır.</p>
                                                 </div>
                                                 <div class="esit-input">
-                                                    <input class="toplu-input" type="text">
+                                                <input class="toplu-input" type="text" onclick="selectInput(this)" value="<?php echo suanki_ayi_getir(); ?> Dönemi Aidatı">
+
                                                 </div>
         	                                </div>
 
@@ -174,7 +247,7 @@
                                                     <p class="toplu-info">Gelişmiş hesaplama seçenekleri ile daire tipi, arsa payı veya sayaçlara göre borçlandırma yapabilirsiniz</p>
                                                 </div>
                                                 <div class="esit-input">
-                                                    <input class="toplu-input" type="text">
+                                                    <input class="toplu-input" type="text" onkeypress="return onlyNumberKey(event)" placeholder="0,00">
                                                 </div>
         	                                </div>
 
@@ -818,6 +891,54 @@ checkboxes[i].addEventListener('change', function() {
 <!-- tab lari aktif etme kisimi -->
 
 <script>
+
+//Fiyatı 2 basamak alır virgülden sonra *Tekrar1 eden kod ilerde düzenle
+function onlyNumberKey(evt) {
+        // Prevents the default action of the key pressed
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+
+        // Allows only digits, comma, and backspace keys
+        if (charCode > 31 && (charCode != 44) && (charCode < 48 || charCode > 57))
+            return false;
+
+        // Ensures only one decimal point
+        if (charCode == 44) {
+            if (evt.target.value.indexOf(',') !== -1 || evt.target.value.indexOf('.') !== -1)
+                return false;
+        }
+
+        // Limits to two decimal places after comma or dot
+        if (evt.target.value.indexOf(',') !== -1 || evt.target.value.indexOf('.') !== -1) {
+            var dotIndex = evt.target.value.indexOf(',') !== -1 ? evt.target.value.indexOf(',') : evt.target.value
+                .indexOf('.');
+            var afterDotLength = evt.target.value.length - dotIndex;
+            if (afterDotLength > 2)
+                return false;
+        }
+
+        return true;
+    }
+    function selectInput(input) {
+        input.select();
+
+    }
+
+//seçiilen inputun içindeki verileri seçer *Tekrar1 eden kod ilerde düzenle
+    function selectInput(input) {
+    input.select();
+}
+
+// Tıklanan input alanını seç
+const inputs = document.querySelectorAll('.sayac-input');
+inputs.forEach(input => {
+    input.addEventListener('click', function() {
+        selectInput(this);
+    });
+});
+
+// buraya kadar -------------
+
 
     $(document).ready(function(){
         resetTabs();

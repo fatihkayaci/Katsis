@@ -328,7 +328,11 @@ function indexSave(temp) {
 }
 
    </script>
+
+
+
    <script>
+    //Tablonun gruplandırılması 10,20 vs.
 document.addEventListener('DOMContentLoaded', function() {
     const rowsPerPageSelect = document.getElementById('rowsPerPageSelect');
     const table = document.getElementById('example');

@@ -19,6 +19,40 @@ function generateUniqueUserID( $conn) {
     $maxUserID = $maxUserID + 25384500;
     return  $maxUserID;
 }
+
+
+function suanki_ayi_getir(){
+    // Bulunduğumuz ayın ismini alalım
+    $ay = date('F');
+
+    // Bulunduğumuz yıl
+    $yil = date('Y');
+
+    // Ay ismini Türkçe'ye çevirme
+    $turkce_aylar = array(
+        'January' => 'Ocak',
+        'February' => 'Şubat',
+        'March' => 'Mart',
+        'April' => 'Nisan',
+        'May' => 'Mayıs',
+        'June' => 'Haziran',
+        'July' => 'Temmuz',
+        'August' => 'Ağustos',
+        'September' => 'Eylül',
+        'October' => 'Ekim',
+        'November' => 'Kasım',
+        'December' => 'Aralık'
+    );
+
+    $ay = $turkce_aylar[$ay];
+
+    // Sonucu döndürme
+    return "$ay" .","." $yil";
+}
+
+
+
+
 function formatDatetime($datetime_str) {
     // Verilen tarihi DateTime nesnesine dönüştür
     $datetime = new DateTime($datetime_str);
