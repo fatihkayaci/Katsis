@@ -536,32 +536,50 @@ function validatePhoneNumber(element) {
         }
     }
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+<!-- jQuery'yi ekleyin -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
 <script>
-   $('#exportButton').click(function () {
-    event.preventDefault();
-    
-    $.ajax({
-        url: 'Controller/Accounts/exportExcel.php',
-        type: 'POST',
-        contentType: 'application/json',
-        success: function (response) {
-            var blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-            var url = window.URL.createObjectURL(blob);
-            var a = document.createElement('a');
-            a.href = url;
-            a.download = 'tablo_verileri.xlsx';
-            document.body.appendChild(a);
-            a.click();
-            window.URL.revokeObjectURL(url);
-        },
-        error: function (xhr, status, error) {
-            console.error(xhr.responseText);
-        }
-    });
-});
+    document.addEventListener("DOMContentLoaded", function() {
+        var usersData = <?php echo json_encode($result); ?>;
 
+        // userID'yi çıkartarak ve blokAdi ile daireSayisi'ni birleştirerek yeni bir dizi oluşturma
+        var usersArray = usersData.map(function(user) {
+            return {
+                userName: user.userName,
+                tc: user.tc,
+                phoneNumber: user.phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3'), // Telefon numarası düzenleme
+                blokDaire: user.blok_adi + " / " + user.daire_sayisi, // Blok ve daire sayısını birleştirme
+                durum: user.durum
+            };
+        });
+
+        document.getElementById('exportButton').addEventListener('click', function() {
+            var ws = XLSX.utils.json_to_sheet(usersArray);
+            var wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Users");
+
+            // Başlıkları ayarlama
+            ws['A1'].v = 'Ad Soyad';
+            ws['B1'].v = 'TC';
+            ws['C1'].v = 'Telefon Numarası';
+            ws['D1'].v = 'Blok / Daire';
+            ws['E1'].v = 'Durum';
+
+            // Sütun genişliklerini ayarlama
+            ws['!cols'] = [
+                { wpx: 150 }, // Ad Soyad
+                { wpx: 100 }, // TC
+                { wpx: 120 }, // Telefon Numarası
+                { wpx: 150 }, // Blok / Daire
+                { wpx: 100 }  // Durum
+            ];
+
+            XLSX.writeFile(wb, 'Users.xlsx');
+        });
+    });
 </script>
+
 </body>
 
 </html>
@@ -765,6 +783,7 @@ function validatePhoneNumber(element) {
                 newCell1.colSpan = "1"; // İlk hücre 1 sütunu kaplasın
                 newCell2.colSpan = "1"; // İkinci hücre 2 sütunu kaplasın
                 newCell4.colSpan = "1"; // Dördüncü hücre 1 sütunu kaplasın
+                newCell5.colSpan = "1"; // Dördüncü hücre 1 sütunu kaplasın
 
                 newCell1.textContent = userName; // İlk hücreye userName değerini ekle
                 newCell2.textContent = tc;
@@ -782,7 +801,6 @@ function validatePhoneNumber(element) {
                 newRow.appendChild(newCell2);
                 newRow.appendChild(newCell4);
                 newRow.appendChild(newTextCell);
-                newRow.appendChild(newCell5);
 
                 // Yeni satırı ekleyeceğimiz referans satırı bul
                 var referenceRow = document.querySelector('[data-userid="' + userID + '"]');
