@@ -3171,6 +3171,7 @@ min-width: 0;
   padding: 0px !important;
   left: 0px !important;
   top: 0;
+  pointer-events: inherit;
 }
 
 .yeni-check * {
