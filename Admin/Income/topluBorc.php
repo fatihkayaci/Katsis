@@ -285,10 +285,10 @@ try {
                                                             </div>
                                                             <div class="dropdown-content-nereden searchInput-btn" id="tutarDP">
                                                                 <div class="dropdown-content-inside-nereden">
-                                                                    <input type="text" id="searchInput-tutar" placeholder="Ara...">
+                                                                    <input type="hidden" id="searchInput-tutar" placeholder="Ara...">
 
-                                                                    <button data-user-id="">Tutarı Paylaştır</button>
-                                                                    <button data-user-id="">Tutarı Çarp</button>
+                                                                    <button id="tutar_bol" data-user-id="1">Tutarı Böl</button>
+                                                                    <button id="tutar_carp" data-user-id="2">Tutarı Çarp</button>
                                                                 </div>
                                                             </div>
                                                         </div>    
@@ -301,15 +301,14 @@ try {
                                                             </div>
                                                             <div class="dropdown-content-nereden searchInput-btn" id="payDP">
                                                                 <div class="dropdown-content-inside-nereden">
-                                                                    <input type="text" id="searchInput-pay" placeholder="Ara...">
+                                                                    <input type="hidden" id="searchInput-pay" placeholder="Ara...">
 
-                                                                    <button data-user-id="">Eşit Paylaştır</button>
-                                                                    <button data-user-id="">Daire Tipi</button>
-                                                                    <button data-user-id="">Arsa Payı</button>
-                                                                    <button data-user-id="">Brüt m2</button>
-                                                                    <button data-user-id="">Net m2</button>
-                                                                    <button data-user-id="">Park Sayısı</button>
-                                                                    <button data-user-id="">Petek Sayısı</button>
+                                                                    <button id="esitPaylastır" data-user-id="1">Eşit Paylaştır</button>
+                                                                    <button id="daireTipi" data-user-id="2">Daire Tipi</button>
+                                                                    <button id="arsaPayı" data-user-id="3">Arsa Payı</button>
+                                                                    <button id="brutm2" data-user-id="4">Brüt m2</button>
+                                                                    <button id="netm2" data-user-id="5">Net m2</button>
+                                                                  
                                                                 </div>
                                                             </div>
                                                         </div>    
