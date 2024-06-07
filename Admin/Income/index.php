@@ -67,9 +67,9 @@ JOIN
 
         <div class="input-group1">
 
-            <button class="adduser btn-custom-outline bcoc1"
+            <button class="adduser btn-custom-outline finansClr"
                 onclick=" popupOpenControl('popupBorcEkle','borcEkleForm')">Borç Tanımla</button>
-            <a href="index?parametre=topluborc" class="toplu btn-custom-outline a-btn bcoc1">Toplu Borç Tanımla</a>
+            <a href="index?parametre=topluborc" class="toplu btn-custom-outline a-btn finansClr">Toplu Borç Tanımla</a>
 
         </div>
 
@@ -81,7 +81,7 @@ JOIN
 
             <div class="search-box">
                 <i class="fas fa-search search-icon" aria-hidden="true"></i>
-                <input type="text" class="search-input" id="searchValue" onkeyup="filtrele()" placeholder="Arama...">
+                <input type="text" class="search-input finansSrch" id="searchValue" onkeyup="filtrele()" placeholder="Arama...">
             </div>
         </div>
 
@@ -251,7 +251,7 @@ JOIN
 <!-- Borç Ekleme Popup-->
 <div id="popupBorcEkle" class="form-popup">
 
-    <form id="borcEkleForm" class="login-form">
+    <form id="borcEkleForm" class="login-form finansInpClr">
 
         <h2 class="form-signin-heading">Borç Ekle</h2>
 
@@ -292,7 +292,7 @@ JOIN
                         </div>
 
                         <div class="dropdown-content-nereden searchInput-btn" id="kategoriDP">
-                            <div class="dropdown-content-inside-nereden">
+                            <div class="dropdown-content-inside-nereden finansPopup">
                                 <input type="text" id="searchInput" placeholder="Ara...">
 
                                 <?php 
@@ -327,7 +327,7 @@ JOIN
                         </div>
 
                         <div class="dropdown-content-nereden searchInput-btn" id="kategoriDP2">
-                            <div class="dropdown-content-inside-nereden">
+                            <div class="dropdown-content-inside-nereden finansPopup">
                                 <input type="text" id="searchInput2" placeholder="Ara...">
 
                                 <?php 

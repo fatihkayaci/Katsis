@@ -2679,7 +2679,6 @@ min-width: 0;
 }
 
 .dropdown-content-inside-nereden {
-  min-width: max-content;
   max-height: 300px;
   width: 100%;
   overflow-y: auto;
@@ -3427,4 +3426,113 @@ min-width: 0;
 }
 .userPopup button:hover {
   color: #34A853;
+}
+
+/* bolum Sayfasi */
+.bolumClr {
+  border: 1px solid #d2d6da;
+  background-color: #8E44AD;
+  color: #fff;
+}
+.bolumClr:hover {
+  border: 1px solid #9B59B6 ;
+  background-color: #9B59B6 ;
+}
+.bolumSrch:focus {
+  color: #0d0c22;
+  border: 1px solid #8E44AD;
+}
+.bolumInpClr .input:focus,
+.bolumInpClr .input:valid  {
+  border-color: #8E44AD;
+}
+.bolumPopup input:focus {
+  border-bottom: 1px solid #8E44AD;
+}
+.bolumPopup button:hover {
+  color: #8E44AD;
+}
+
+/* Finans Sayfasi */
+.finansClr {
+  border: 1px solid #d2d6da;
+  background-color: #02b7e4;
+  color: #fff;
+}
+.finansClr:hover {
+  border: 1px solid #0fcfff ;
+  background-color: #0fcfff ;
+}
+.finansSrch:focus {
+  color: #0d0c22;
+  border: 1px solid #02b7e4;
+}
+.finansInpClr .input:focus,
+.finansInpClr .input:valid  {
+  border-color: #02b7e4;
+}
+.finansPopup input:focus {
+  border-bottom: 1px solid #02b7e4;
+}
+.finansPopup button:hover {
+  color: #02b7e4;
+}
+
+/* Sayaclar Sayfasi */
+.sayac-btn-slide {
+  border: none;
+  min-height: 42px;
+  padding: 0.25rem;
+  background-color: #eceff199;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  width: 100%;
+}
+.sayaczero {
+  border: none;
+  outline: none;
+  background: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.25rem 0.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border: 1px solid transparent;
+  color: #263238;
+  border-radius: .375rem;
+  width: 100%;
+}
+.sayaczero:hover {
+  border: 1px solid #0fcfff ;
+  background-color: #0fcfff ;
+  color: #fff;
+}
+
+.sayacClr {
+  border: 1px solid #d2d6da;
+  background-color: #02b7e4;
+  color: #fff;
+}
+.sayac:hover {
+  border: 1px solid #0fcfff ;
+  background-color: #0fcfff ;
+}
+.finansSrch:focus {
+  color: #0d0c22;
+  border: 1px solid #02b7e4;
+}
+.finansInpClr .input:focus,
+.finansInpClr .input:valid  {
+  border-color: #02b7e4;
+}
+.finansPopup input:focus {
+  border-bottom: 1px solid #02b7e4;
+}
+.finansPopup button:hover {
+  color: #02b7e4;
 }
