@@ -31,16 +31,17 @@ try {
 
 
 <input type="hidden" id="hiddenApartman" value="<?php echo $idapartman ?>" />
+<input type="hidden" id="btnprm" value="<?php echo $tur_php ?>" />
 
 <div class="cener-table">
     <div class="input-group-div">
         <div class="input-group1 w-50">
             <div class="sayac-btn-slide">
-                <button class=" btn-custom-outline sayaczero sayacClr" onclick="sayacTuru('elektrik')">Elektrik</button>
-                <button class=" btn-custom-outline sayaczero" onclick="sayacTuru('su')">Su</button>
-                <button class=" btn-custom-outline sayaczero" onclick="sayacTuru('sicaksu')">Sıcak Su</button>
-                <button class=" btn-custom-outline sayaczero" onclick="sayacTuru('kalorimetre')">Kalorimetre</button>
-                <button class=" btn-custom-outline sayaczero" onclick="sayacTuru('payolcer')">Pay Ölçer</button>
+                <button id="elektrik" class=" btn-custom-outline  sayaczero " onclick="sayacTuru('elektrik')">Elektrik</button>
+                <button id="su" class=" btn-custom-outline  sayaczero" onclick="sayacTuru('su')">Su</button>
+                <button id="sicaksu" class=" btn-custom-outline  sayaczero" onclick="sayacTuru('sicaksu')">Sıcak Su</button>
+                <button id="kalorimetre" class=" btn-custom-outline  sayaczero" onclick="sayacTuru('kalorimetre')">Kalorimetre</button>
+                <button id="payolcer" class=" btn-custom-outline  sayaczero" onclick="sayacTuru('payolcer')">Pay Ölçer</button>
             </div>
         </div>
         <div class="input-group1">
@@ -124,6 +125,17 @@ try {
    <!-- =========== iNDEX DEĞERLERİNİN KAYDI AJAX ============= -->
 
 <script>
+
+document.addEventListener('DOMContentLoaded', function() {
+    var btnprm = document.getElementById('btnprm').value;
+    if(btnprm ==null || btnprm ==""){
+        btnprm="elektrik";
+    }
+    var btn = document.getElementById(btnprm);
+    btn.classList.add("sayacClr");
+});
+
+
 
 function sayacTuru(veri){
    
