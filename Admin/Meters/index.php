@@ -44,8 +44,8 @@ try {
             </div>
         </div>
         <div class="input-group1">
-          <button class="btnAddindex btn-custom-outline bcoc1" onclick="okuma()">Sayaç Oku</button>
-          <button class="saveindesbtn btn-custom-outline bcoc1" onclick="indexSave('<?php echo $tur_php; ?>')">Kaydet</button>
+          <button class="btnAddindex btn-custom-outline sayacClr" onclick="okuma()">Sayaç Oku</button>
+          <button class="saveindesbtn btn-custom-outline sayacClr" onclick="indexSave('<?php echo $tur_php; ?>')">Kaydet</button>
         </div>
   </div>
 
@@ -124,12 +124,13 @@ try {
    <!-- =========== iNDEX DEĞERLERİNİN KAYDI AJAX ============= -->
 
 <script>
-    
+
 function sayacTuru(veri){
    
 window.location.href = "index?parametre=meters&tur=" + veri;
 
 }
+
 
 function okuma() {
    

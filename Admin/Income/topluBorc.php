@@ -738,7 +738,6 @@ try {
         	</div>
         </div> 
     </div>
-    tarihSecTarihine Kadar Tekrarla :
 </div>
 </div>
 
