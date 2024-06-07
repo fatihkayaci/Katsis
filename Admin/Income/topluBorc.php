@@ -251,7 +251,7 @@ try {
                                                 </div>
         	                                </div>
 
-                                            <div class="toplu-p b-old">
+                                            <div class="toplu-p mt-3 b-old">
                                                 <div class="esit-input">
                                                     <div class="gelismis-checkbox">
                                                         <div class="yeni-check">
@@ -318,13 +318,7 @@ try {
                                             
                                             <hr class="horizontal dark w-100">
 
-                                            <div class="toplu-p b-old">
-                                                <div class="esit-input">
-                                                    <button class="btn-custom-outline m-0 bcoc1" id="tekrar-button"><i class="fa-solid fa-rotate"></i> Tekrarla</button>
-                                                </div>
-                                            </div>
-
-                                            <div class="toplu-p mt-3 b-old tekrar-once">
+                                            <div class="toplu-p b-old tekrar-once">
                                                 <div class="esit-veri">
                                                     <p>Düzenleme Tarihi :</p>
                                                 </div>
@@ -339,6 +333,12 @@ try {
                                                 </div>
                                                 <div class="esit-input">
                                                     <input class="toplu-input" id="datepicker2" type="text">
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="toplu-p mt-3 b-old">
+                                                <div class="esit-input">
+                                                    <button class="btn-custom-outline m-0 bcoc1" id="tekrar-button"><i class="fa-solid fa-rotate"></i> Tekrarla</button>
                                                 </div>
                                             </div>
                                             
@@ -359,89 +359,6 @@ try {
                                                 </div>
                                                 <div class="esit-input">
                                                     <input class="toplu-input" id="datepickerSecim3" type="text">
-                                                </div>
-                                            </div>
-
-                                            <hr class="horizontal dark w-100">
-
-                                            <div class="toplu-p b-old">
-                                                <div class="esit-veri">
-                                                    <p>Gecikme Tazminatı :</p>
-                                                    <p class="toplu-info">Borçların gecikmesi durumunda uygulanacak gecikme tazminatını günlük veya aylık olarak tanımlayabilirsiniz.</p>
-                                                </div>
-                                                <div class="esit-input">
-                                                    <div class="gelismis-checkbox">
-                                                        <div class="yeni-check">
-                                                            <input class="yenichk-inpt" id="gecikmeTazminati" type="checkbox"/>
-                                                            <label class="yenichk-label" for="gecikmeTazminati"><span>
-                                                                <svg width="12px" height="10px">
-                                                                    <use xlink:href="#check-4"></use>
-                                                                </svg></span><span>Gecikme Tazminatı Uygula</span>
-                                                            </label>
-                                                            <svg class="inline-svg">
-                                                                <symbol id="check-4" viewbox="0 0 12 10">
-                                                                    <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
-                                                                </symbol>
-                                                            </svg>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="mt-3 b-old gecikmeT">
-                                                <div class="esit-veri">
-                                                    <p>Son Ödeme Tarihinden :</p>
-                                                </div>
-                                                <div class="esit-input">
-                                                    <div class="dropToplu-div w-100">
-                                                        <div class="dropdown-nereden">
-                                                            <div class="group">
-                                                                <input class="toplu-input i-kontrol" data-user-id="" type="text" list="Users" id="gecikmeTarih" name="gecikmeTarih" required="" readonly />
-                                                                <i class="fa-solid fa-chevron-down absolute-input"></i>
-                                                            </div>
-                                                            <div class="dropdown-content-nereden searchInput-btn mainpopup" id="gecikmeTarihDP">
-                                                                <div class="dropdown-content-inside-nereden">
-                                                                    <input type="text" id="searchInput-gecikmeTarih" placeholder="Ara...">
-
-                                                                    <button>5 Gün Sonra</button>
-                                                                    <button>10 Gün Sonra</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>    
-                                                    </div> 
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="mt-3 b-old gecikmeT">
-                                                <div class="esit-veri">
-                                                    <p>Gecikme Tazminatı Yüzdesi :</p>
-                                                </div>
-                                                <div class="esit-input">
-                                                    <input class="toplu-input" type="text">
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="mt-3 b-old gecikmeT">
-                                                <div class="esit-veri">
-                                                    <p>Tazminat Uygulama Şekli :</p>
-                                                </div>
-                                                <div class="esit-input">
-                                                    <div class="dropToplu-div w-100">
-                                                        <div class="dropdown-nereden">
-                                                            <div class="group">
-                                                                <input class="toplu-input i-kontrol" data-user-id="" type="text" list="Users" id="tazminatsekli" name="gecikmeTarih" required="" readonly />
-                                                                <i class="fa-solid fa-chevron-down absolute-input"></i>
-                                                            </div>
-                                                            <div class="dropdown-content-nereden searchInput-btn mainpopup" id="tazminatsekliDP">
-                                                                <div class="dropdown-content-inside-nereden">
-                                                                    <input type="hidden" id="searchInput-tazminatsekli" placeholder="Ara...">
-
-                                                                    <button>Günlük</button>
-                                                                    <button>Aylık</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>    
-                                                    </div> 
                                                 </div>
                                             </div>
 
@@ -613,7 +530,7 @@ try {
                                                 </div>
                                             </div>     
 
-                                            <div class="toplu-p b-old">
+                                            <div class="toplu-p mt-3 b-old">
                                                 <div class="esit-input">
                                                     <div class="gelismis-checkbox">
                                                         <div class="yeni-check">
@@ -738,7 +655,7 @@ try {
         	</div>
         </div> 
     </div>
-    tarihSecTarihine Kadar Tekrarla :
+    
 </div>
 </div>
 
@@ -783,7 +700,7 @@ try {
     
     }
 
-     
+    
     tarihSecikili('datepickerSecim');
 
 tarihSec('datepicker');
@@ -987,27 +904,6 @@ checkboxes[i].addEventListener('change', function() {
 
 <!-- ========================================= -->
 
-<!-- gecikme tazminati -->
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const checkbox = document.getElementById('gecikmeTazminati');
-        const gecikmeTDivs = document.querySelectorAll('.gecikmeT');
-
-        checkbox.addEventListener('change', function() {
-            if (checkbox.checked) {
-                gecikmeTDivs.forEach(div => div.classList.add('flex'));
-            } else {
-                gecikmeTDivs.forEach(div => div.classList.remove('flex'));
-            }
-        });
-    });
-</script>
-
-<!-- gecikme tazminati bitis -->
-
-<!-- ========================================= -->
-
 <!-- tab lari aktif etme kisimi -->
 
 <script>
@@ -1091,8 +987,6 @@ dropDownn('hesaplar', 'hesaplarDP', 'searchInput');
 dropDownn('kategori', 'kategoriDP', 'searchInput-kategori');
 dropDownn('tutar', 'tutarDP', 'searchInput-tutar');
 dropDownn('pay', 'payDP', 'searchInput-pay');
-dropDownn('gecikmeTarih', 'gecikmeTarihDP', 'searchInput-gecikmeTarih');
-dropDownn('tazminatsekli', 'tazminatsekliDP', 'searchInput-tazminatsekli');
 
 dropDownn('hesaplar1', 'hesaplar1DP', 'searchInput1');
 dropDownn('kategori1', 'kategori1DP', 'searchInput-kategori1');
