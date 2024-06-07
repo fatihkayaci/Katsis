@@ -323,7 +323,7 @@ try {
                                                     <p>Düzenleme Tarihi :</p>
                                                 </div>
                                                 <div class="esit-input">
-                                                    <input class="toplu-input" type="text">
+                                                    <input class="toplu-input" id="datepicker" type="text">
                                                 </div>
                                             </div>
                                             
@@ -332,7 +332,7 @@ try {
                                                     <p>Son Ödeme Tarihi :</p>
                                                 </div>
                                                 <div class="esit-input">
-                                                    <input class="toplu-input" type="text">
+                                                    <input class="toplu-input" id="datepicker2" type="text">
                                                 </div>
                                             </div>
                                             
@@ -351,14 +351,7 @@ try {
                                                 </div>
                                             </div>
                                             
-                                            <div class="toplu-p mt-3 b-old tekrar-tarih">
-                                                <div class="esit-veri">
-                                                    <p>Tarihine Kadar Tekrarla :</p>
-                                                </div>
-                                                <div class="esit-input">
-                                                    <input class="toplu-input" id="datepickerSecim2" type="text">
-                                                </div>
-                                            </div>
+                                         
                                             
                                             <div class="toplu-p mt-3 b-old tekrar-tarih">
                                                 <div class="esit-veri">
@@ -662,7 +655,7 @@ try {
         	</div>
         </div> 
     </div>
-    
+    tarihSecTarihine Kadar Tekrarla :
 </div>
 </div>
 
@@ -672,9 +665,26 @@ try {
     <script src="assets/js/mycode/lightpick.js"></script>
 
 <script>
-    
+ function tarihSecikili(veri){  
+    var picker = new Lightpick({
+            field: document.getElementById(veri),
+            singleDate: false,
+            selectForward: true,
+            selectBackward: false,
+            lang: 'tr',
+            minDate: moment(),
+            repick: true,
+            onSelect: function(start, end){
+                var str = '';
+                str += start ? start.format('DD MMMM YYYY') + ' to ' : '';
+                str += end ? end.format('DD MMMM YYYY') : '...';
+                document.getElementById(veri).innerHTML = str;
+            }
+        });
+    }
+    function tarihSec(veri){  
         var picker = new Lightpick({
-            field: document.getElementById('datepickerSecim'),
+            field: document.getElementById(veri),
             singleDate: true,
             selectForward: true,
             selectBackward: false,
@@ -684,13 +694,20 @@ try {
             maxDate: moment().add(3, 'months'),
             repick: true,
             onSelect: function(date){
-                document.getElementById('datepickerSecim').value = date.format('DD MMMM YYYY');
+                document.getElementById(veri).value = date.format('DD MMMM YYYY');
             }
         });
     
-   
+    }
 
-   
+     
+    tarihSecikili('datepickerSecim');
+
+tarihSec('datepicker');
+tarihSec('datepicker2');
+
+
+
     </script>
 <!-- Istisna Ekle Popup -->
 
@@ -941,7 +958,6 @@ inputs.forEach(input => {
 
     $(document).ready(function(){
         resetTabs();
-    
         $('ul.nav.nav-tabs li a').click(function(){
             $('ul.nav.nav-tabs li.active').removeClass('active');
             $('.tab-content .tab-pane.active').removeClass('active');
@@ -979,6 +995,19 @@ dropDownn('pay1', 'pay1DP', 'searchInput-pay1');
 
 
   document.getElementById("btn-select").click();
+  document.getElementById("tutar_bol").click(); 
+  document.getElementById("esitPaylastır").click();
+
+  document.getElementById("tutar_carp").addEventListener("click", function(){
+    document.getElementById("esitPaylastır").style.display = "none";   
+    document.getElementById("daireTipi").click();
+  });
+
+  document.getElementById("tutar_bol").addEventListener("click", function(){
+    document.getElementById("esitPaylastır").style.display = "flex";   
+    document.getElementById("esitPaylastır").click();
+  });
+
 
 
 </script>
