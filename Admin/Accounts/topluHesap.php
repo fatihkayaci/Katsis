@@ -2,12 +2,12 @@
     <div class="input-group-div">
 
         <div class="input-group1">
-            <button type="button" class="btn-custom-outline bcoc1" id="saveButton">Kaydet</button>
+            <button type="button" class="btn-custom-outline userClr" id="saveButton">Kaydet</button>
         </div>
         <div class="input-group1">
             <div class="search-box">
                 <i class="fas fa-search search-icon" aria-hidden="true"></i>
-                <input type="text" class="search-input" placeholder="Arama...">
+                <input type="text" class="search-input userSrch" placeholder="Arama...">
             </div>
         </div>
 

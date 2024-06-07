@@ -22705,10 +22705,7 @@ html {
   border-radius: 8px;
 }
 
-.leftbar .nav-item.active {
-  background-color: #277CE0;
-  font-weight: 600;
-}
+
 
 .leftbar .nav-item.active .nav-link-text {
   font-weight: 600;
@@ -22718,9 +22715,41 @@ html {
 .leftbar .nav-item.activex .nav-link .fa-angle-right {
   transform: rotate(90deg);
 }
-
+/* main page */
+.leftbar .mainPage.active {
+  background-color: #277CE0;
+  font-weight: 600;
+}
 .leftbar .nav-item:hover {
   background-color: #277CE0;
+}
+/* user page */
+.leftbar .userPage.active {
+  background-color: #34A853;
+  font-weight: 600;
+}
+/* employee page */
+.leftbar .employeePage.active {
+  background-color: #FFA726;
+  font-weight: 600;
+}
+/* bolum page */
+.leftbar .bolumPage.active {
+  background-color: #8E44AD;
+  font-weight: 600;
+}
+/* Finans page */
+.leftbar .finansPage.active {
+  background-color: #FFD700;
+  font-weight: 600;
+}
+/* Sayac page */
+.leftbar .sayacPage.active {
+  background-color: #E74C3C;
+  font-weight: 600;
+}
+.leftbar .sayacPage.active > .sayacPage .nav-ico {
+  color: #fff;
 }
 
 .leftbar .nav-item:hover .nav-link-text,
@@ -22765,6 +22794,14 @@ html {
 
 .navbar-vertical.navbar-expand-xs .navbar-nav .nav .nav-link>span.sidenav-normal {
   transition: all 0.1s ease 0s;
+}
+
+.new-radius {
+  border-radius: 0px !important;
+}
+
+.new-radius-btm {
+  border-radius: 0px 0px 8px 8px !important;
 }
 
 @media (min-width: 576px) {
