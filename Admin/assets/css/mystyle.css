@@ -3508,19 +3508,19 @@ min-width: 0;
   width: 100%;
 }
 .sayaczero:hover {
-  border: 1px solid #0fcfff ;
-  background-color: #0fcfff ;
+  border: 1px solid #EF5350 ;
+  background-color: #EF5350 ;
   color: #fff;
 }
 
 .sayacClr {
   border: 1px solid #d2d6da;
-  background-color: #02b7e4;
+  background-color: #E74C3C;
   color: #fff;
 }
-.sayac:hover {
-  border: 1px solid #0fcfff ;
-  background-color: #0fcfff ;
+.sayacClr:hover {
+  border: 1px solid #EF5350 ;
+  background-color: #EF5350 ;
 }
 .finansSrch:focus {
   color: #0d0c22;
