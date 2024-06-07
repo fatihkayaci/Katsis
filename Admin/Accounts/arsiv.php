@@ -34,7 +34,7 @@ try {
 
             <div class="search-box">
                 <i class="fas fa-search search-icon" aria-hidden="true"></i>
-                <input type="text" class="search-input" id="searchValue" onkeyup="filtrele()" placeholder="Arama...">
+                <input type="text" class="search-input userSrch" id="searchValue" onkeyup="filtrele()" placeholder="Arama...">
             </div>
         </div>
 
@@ -193,7 +193,7 @@ try {
             <button class="topluSil btn-custom-outline bcoc4" id="silButton" style="display: none;">Sil</button>
             <div class="search-box">
                 <i class="fas fa-search search-icon" aria-hidden="true"></i>
-                <input type="text" class="search-input" id="searchValue" onkeyup="filtrele()" placeholder="Arama...">
+                <input type="text" class="search-input userSrch" id="searchValue" onkeyup="filtrele()" placeholder="Arama...">
             </div>
         </div>
 

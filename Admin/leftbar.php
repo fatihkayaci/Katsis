@@ -17,7 +17,7 @@ $idapartman =$_SESSION["apartID"];
     <div class="collapse navbar-collapse w-auto " id="sidenav-collapse-main">
       <ul class="navbar-nav leftbar">
 
-        <a class="nav-item modul mt-1" href="index?parametre=dashboard">
+        <a class="nav-item mainPage modul mt-1" href="index?parametre=dashboard">
           <li class="nav-link">
             <div class="nav-ico">
               <i class="fa-solid fa-house"></i>
@@ -26,7 +26,7 @@ $idapartman =$_SESSION["apartID"];
           </li>
         </a>
 
-        <button class="dropdown-btn  nav-item">
+        <button class="dropdown-btn userPage nav-item">
           <li class="nav-link">
             <div class="nav-ico">
               <i class="fa-solid fa-users"></i>
@@ -35,20 +35,20 @@ $idapartman =$_SESSION["apartID"];
             <i class="fa-solid fa-angle-right ms-5"></i>
           </li>
         </button>
-        <div class="dropdown-container">
-          <a class="nav-item modul"  href="index?parametre=Accounts">
+        <div class="dropdown-container dropdownUser">
+          <a class="nav-item modul new-radius"  href="index?parametre=Accounts">
             <li class="nav-link">
               <div class="nav-ico"></div>
-              <span class="nav-link-text color-fff">
+              <span class="nav-link-text">
                 <i class="fa-solid fa-users me-2"></i>
                 Kullanıcılar
               </span>
             </li>
           </a>
-          <a class="nav-item modul" href="index?parametre=Arsiv">
+          <a class="nav-item modul new-radius-btm" href="index?parametre=Arsiv">
             <li class="nav-link">
               <div class="nav-ico"></div>
-              <span class="nav-link-text color-fff">
+              <span class="nav-link-text">
               <i class="fa-solid fa-box-archive me-2"></i>
                 Arşiv
               </span>
@@ -56,7 +56,7 @@ $idapartman =$_SESSION["apartID"];
           </a>
         </div>
 
-        <button class="dropdown-btn  nav-item">
+        <button class="dropdown-btn employeePage nav-item">
           <li class="nav-link">
             <div class="nav-ico">
             <i class="fa-solid fa-user-tie"></i>
@@ -65,20 +65,20 @@ $idapartman =$_SESSION["apartID"];
             <i class="fa-solid fa-angle-right ms-5"></i>
           </li>
         </button>
-        <div class="dropdown-container">
-          <a class="nav-item modul"  href="index?parametre=employee">
+        <div class="dropdown-container dropdownEmployee">
+          <a class="nav-item modul new-radius"  href="index?parametre=employee">
             <li class="nav-link">
               <div class="nav-ico"></div>
-              <span class="nav-link-text color-fff">
+              <span class="nav-link-text">
               <i class="fa-solid fa-building-user me-2"></i>
                 Personeller
               </span>
             </li>
           </a>
-          <a class="nav-item modul" href="index?parametre=employee-arsiv">
+          <a class="nav-item modul new-radius-btm" href="index?parametre=employee-arsiv">
             <li class="nav-link">
               <div class="nav-ico"></div>
-              <span class="nav-link-text color-fff">
+              <span class="nav-link-text">
               <i class="fa-solid fa-box-archive me-2"></i>
                 Arşiv
               </span>
@@ -86,7 +86,7 @@ $idapartman =$_SESSION["apartID"];
           </a>
         </div>
 
-        <a class="nav-item mt-1 modul" href="index?parametre=Sections">
+        <a class="nav-item bolumPage mt-1 modul" href="index?parametre=Sections">
           <li class="nav-link">
             <div class="nav-ico">
               <i class="fa-solid fa-building"></i>
@@ -96,7 +96,7 @@ $idapartman =$_SESSION["apartID"];
         </a>
         
 
-        <button class="dropdown-btn  nav-item">
+        <button class="dropdown-btn nav-item finansPage">
           <li class="nav-link">
             <div class="nav-ico">
             <i class="fa-solid fa-coins"></i>
@@ -106,19 +106,19 @@ $idapartman =$_SESSION["apartID"];
           </li>
         </button>
         <div class="dropdown-container">
-          <a class="nav-item modul"  href="index?parametre=income">
+          <a class="nav-item modul new-radius"  href="index?parametre=income">
             <li class="nav-link">
               <div class="nav-ico"></div>
-              <span class="nav-link-text color-fff">
+              <span class="nav-link-text">
               <i class="fa-solid fa-building-user me-2"></i>
                 Gelirler
               </span>
             </li>
           </a>
-          <a class="nav-item modul" href="index?parametre=employee-arsiv">
+          <a class="nav-item modul new-radius-btm" href="index?parametre=employee-arsiv">
             <li class="nav-link">
               <div class="nav-ico"></div>
-              <span class="nav-link-text color-fff">
+              <span class="nav-link-text">
               <i class="fa-solid fa-box-archive me-2"></i>
                 Giderler
               </span>
@@ -126,7 +126,7 @@ $idapartman =$_SESSION["apartID"];
           </a>
         </div>
 
-        <a class="nav-item mt-1 modul" href="index?parametre=meters">
+        <a class="nav-item mt-1 modul sayacPage" href="index?parametre=meters">
           <li class="nav-link">
             <div class="nav-ico">
               <i class="fa-solid fa-tachometer-alt"></i>
@@ -136,7 +136,7 @@ $idapartman =$_SESSION["apartID"];
         </a>
 
 
-        <a class="nav-item mt-1 modul" href="index?parametre=profile">
+        <a class="nav-item mt-1 mainPage modul" href="index?parametre=profile">
           <li class="nav-link">
             <div class="nav-ico">
               <i class="fa-solid fa-user"></i>

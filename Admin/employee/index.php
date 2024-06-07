@@ -22,8 +22,8 @@ try {
 
         <div class="input-group1">
 
-            <button class="adduser btn-custom-outline bcoc1">Kullanıcı Ekle</button>
-            <button class="toplu btn-custom-outline bcoc1">Toplu İşlemler</button>
+            <button class="adduser btn-custom-outline empClr">Kullanıcı Ekle</button>
+            <button class="toplu btn-custom-outline empClr">Toplu İşlemler</button>
 
 
             <div class="check-box">
@@ -46,7 +46,7 @@ try {
 
             <div class="search-box">
                 <i class="fas fa-search search-icon" aria-hidden="true"></i>
-                <input type="text" class="search-input" id="searchValue" onkeyup="filtrele()" placeholder="Arama...">
+                <input type="text" class="search-input empSrch" id="searchValue" onkeyup="filtrele()" placeholder="Arama...">
             </div>
         </div>
 
@@ -172,7 +172,7 @@ try {
 <!-- Popup Form -->
 <div id="popup">
 
-    <form class="login-form" id="userForm">
+    <form class="login-form empInpClr" id="userForm">
 
         <h2 class="form-signin-heading">personel Ekleme</h2>
 
@@ -269,8 +269,19 @@ try {
         <!-- buraya bak yusuf bunlara css atılacak -->
         <div class="row">
             <div class="col-md-6 check-label margint">
-                <input onchange="toggleDisplay()" type="checkbox" id="onay" name="onay" value="bakiye">
-                <label for="onay"> Açılış Bakiyesi Ekleme</label>
+                <div class="yeni-check empchc">
+                    <input onchange="toggleDisplay()" class="yenichk-inpt" id="onay" name="onay" type="checkbox"/>
+                    <label class="yenichk-label" for="onay"><span>
+                        <svg width="12px" height="10px">
+                            <use xlink:href="#check-4"></use>
+                        </svg></span><span>Açılış Bakiyesi Ekleme</span>
+                    </label>
+                    <svg class="inline-svg">
+                        <symbol id="check-4" viewbox="0 0 12 10">
+                            <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+                        </symbol>
+                    </svg>
+                </div>
             </div>
         </div>
 
@@ -312,7 +323,7 @@ try {
 
         <div class="row row-btn">
             <button type="button" class="btn-custom-close" onclick="closePopup()">Kapat</button>
-            <button type="button" class="btn-custom" onclick="saveUser()" id="saveButton">Kaydet</button>
+            <button type="button" class="btn-custom bcoc1" onclick="saveUser()" id="saveButton">Kaydet</button>
         </div>
 
 
@@ -327,16 +338,16 @@ try {
 
         <div class="row">
             <div class="col-md-12 col-btn mb-0">
-                <a class="ahref btn-custom-daire w-100" href="index?parametre=TopluPersonel">Toplu Personel Ekleme</a>
-                <a class="ahref btn-custom-daire w-100" href="Controller/Employeed/excelCreate.php" id="excelDownload" download="PersonelEkle.xlsx">Excel İndir</a>
+                <a class="ahref btn-custom-daire empClr w-100" href="index?parametre=TopluPersonel">Toplu Personel Ekleme</a>
+                <a class="ahref btn-custom-daire empClr w-100" href="Controller/Employeed/excelCreate.php" id="excelDownload" download="PersonelEkle.xlsx">Excel İndir</a>
                 <p class="text-left">Excel İle Kullanıcı Ekleme:</p>
-                <div class="upload-box">
+                <div class="upload-box empupl">
                     <input type="file" id="excel_file" accept=".xlsx" hidden>
-                    <label for="excel_file" class="file_label">Dosya Seçin</label>
+                    <label for="excel_file" class="file_label empeUpl">Dosya Seçin</label>
                     <!-- name of file chosen -->
                     <span id="file-chosen"></span>
 
-                    <button id="upload_btn">Gönder</button>
+                    <button id="upload_btn" class="empClr">Gönder</button>
                 </div>
                 <!--bakılacak excel-->
             </div>

@@ -50,8 +50,8 @@ try {
 
             <div class="input-group1">
 
-                <button class="adduser btn-custom-outline bcoc1">Kullanıcı Ekle</button>
-                <button class="toplu btn-custom-outline bcoc1">Toplu İşlemler</button>
+                <button class="adduser btn-custom-outline userClr">Kullanıcı Ekle</button>
+                <button class="toplu btn-custom-outline userClr">Toplu İşlemler</button>
 
 
                 <div class="check-box">
@@ -74,7 +74,7 @@ try {
 
                 <div class="search-box">
                     <i class="fas fa-search search-icon" aria-hidden="true"></i>
-                    <input type="text" class="search-input" id="searchValue" onkeyup="filtrele()" placeholder="Arama...">
+                    <input type="text" class="search-input userSrch" id="searchValue" onkeyup="filtrele()" placeholder="Arama...">
                 </div>
             </div>
 
@@ -229,7 +229,7 @@ try {
 <!-- Popup Form -->
 <div id="popup">
 
-    <form class="login-form" id="userForm">
+    <form class="login-form userInpClr" id="userForm">
 
         <h2 class="form-signin-heading">Kullanıcı Ekleme</h2>
 
@@ -274,7 +274,7 @@ try {
                         </div>
 
                         <div class="dropdown-content-nereden searchInput-btn" id="genderDp">
-                            <div class="dropdown-content-inside-nereden">
+                            <div class="dropdown-content-inside-nereden userPopup">
                                 <input type="text" id="searchInput3" placeholder="Ara...">
                                 <button>Erkek</button>
                                 <button>Kadın</button>
@@ -293,8 +293,19 @@ try {
         
         <div class="row">
             <div class="col-md-6 check-label margint">
-                <input onchange="toggleDisplay()" type="checkbox" id="onay" name="onay" value="bakiye">
-                <label for="onay"> Açılış Bakiyesi Ekleme</label>
+                <div class="yeni-check acilischc">
+                    <input onchange="toggleDisplay()" class="yenichk-inpt" id="onay" name="onay" type="checkbox"/>
+                    <label class="yenichk-label" for="onay"><span>
+                        <svg width="12px" height="10px">
+                            <use xlink:href="#check-4"></use>
+                        </svg></span><span>Açılış Bakiyesi Ekleme</span>
+                    </label>
+                    <svg class="inline-svg">
+                        <symbol id="check-4" viewbox="0 0 12 10">
+                            <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+                        </symbol>
+                    </svg>
+                </div>
             </div>
         </div>
 
@@ -315,7 +326,7 @@ try {
                             </div>
 
                             <div class="dropdown-content-nereden searchInput-btn" id="odemeDurumuDP">
-                                <div class="dropdown-content-inside-nereden">
+                                <div class="dropdown-content-inside-nereden userPopup">
                                     <input type="text" id="odemeSearch" placeholder="Ara...">
                                     <button>Borç</button>
                                     <button>Alacak</button>
@@ -338,7 +349,7 @@ try {
 
         <div class="row">
             <div class="col-md-12 col-btn">
-                <button type="button" class="daireEkle btn-custom-daire">Daire Ata</button>
+                <button type="button" class="daireEkle btn-custom-daire userClr">Daire Ata</button>
             </div>
         </div>
         <div class="row">
@@ -352,7 +363,7 @@ try {
 
         <div class="row row-btn">
             <button type="button" class="btn-custom-close" onclick="closePopup()">Kapat</button>
-            <button type="button" class="btn-custom" onclick="saveUser()" id="saveButton">Kaydet</button>
+            <button type="button" class="btn-custom bcoc1" onclick="saveUser()" id="saveButton">Kaydet</button>
         </div>
 
 
@@ -367,17 +378,17 @@ try {
 
         <div class="row">
             <div class="col-md-12 col-btn mb-0">
-                <a class="ahref btn-custom-daire w-100" href="index?parametre=TopluHesap">Toplu Kullanıcı Ekleme</a>
-                <a class="ahref btn-custom-daire w-100" href="Controller/excelCreate.php" id="excelDownload"
+                <a class="ahref btn-custom-daire userClr w-100" href="index?parametre=TopluHesap">Toplu Kullanıcı Ekleme</a>
+                <a class="ahref btn-custom-daire userClr w-100" href="Controller/excelCreate.php" id="excelDownload"
                     download="KullaniciEkle.xlsx">Excel İndir</a>
                 <p class="text-left">Excel İle Kullanıcı Ekleme:</p>
-                <div class="upload-box">
+                <div class="upload-box usereupl">
                     <input type="file" id="excel_file" accept=".xlsx" hidden>
-                    <label for="excel_file" class="file_label">Dosya Seçin</label>
+                    <label for="excel_file" class="file_label userUpl">Dosya Seçin</label>
                     <!-- name of file chosen -->
                     <span id="file-chosen"></span>
 
-                    <button id="upload_btn">Gönder</button>
+                    <button id="upload_btn" class="userClr">Gönder</button>
                 </div>
             </div>
         </div>
@@ -394,7 +405,7 @@ try {
 </div>
 <!--buraya daire için popup eklendi içeriğinin düzenlenmesi lazım-->
 <div id="dairePopup">
-    <form class="login-form-daire" id="userForm1" >
+    <form class="login-form-daire userInpClr" id="userForm1" >
 
         <h2 class="form-signin-heading">Daire Atama</h2>
 
@@ -409,7 +420,7 @@ try {
                         </div>
 
                         <div class="dropdown-content-nereden searchInput-btn" id="daireGrupDP">
-                            <div class="dropdown-content-inside-nereden">
+                            <div class="dropdown-content-inside-nereden userPopup">
                                 <input type="text" id="daireSearchInput" placeholder="Ara...">
 
                                
@@ -443,7 +454,7 @@ foreach ($optionsBlok as $bloks) {
                         </div>
 
                         <div class="dropdown-content-nereden searchInput-btn" id="durumDP">
-                            <div class="dropdown-content-inside-nereden">
+                            <div class="dropdown-content-inside-nereden userPopup">
                                 <input type="text" id="durumSearch" placeholder="Ara...">
                                 <button data-user-id="0">Kat Maliki</button>
                                 <button data-user-id="1">Kiracı</button>

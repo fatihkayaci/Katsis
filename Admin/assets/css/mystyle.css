@@ -304,11 +304,6 @@ overflow: auto;
   transition: 0.5s;
 }
 
-.input:focus,
-.input:valid  {
-  border-color: #277CE0;
-}
-
 .input:focus ~ label,
 .input:valid ~ label {
   top: -30px;
@@ -370,15 +365,8 @@ overflow: auto;
   border-radius: 4px;
   font-family: 'poppins-medium';
   font-weight: 500;
-  background-color: #277CE0;
   color: #fff;
   outline: none;
-  border: 1px solid #277CE0;
-}
-
-.btn-custom-daire:hover {
-  background-color: #1c5aa1;
-  border: 1px solid #1c5aa1;
 }
 
 .daireEkle {
@@ -653,7 +641,6 @@ box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
   align-items: start;
   flex-direction: column;
   padding: 10px 0px;
-  overflow: hidden;
   background-color: #fff;
   border-radius: 15px;
   margin: 1rem;
@@ -704,16 +691,6 @@ box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
   border-radius: 4px;
   font-family: 'poppins-medium';
   margin-right: 10px;
-}
-
-.bcoc1 {
-  border: 1px solid #d2d6da;
-  background-color: #277CE0;
-  color: #fff;
-}
-.bcoc1:hover {
-  border: 1px solid #1c5aa1;
-  background-color: #1c5aa1;
 }
 
 .bcoc2 {
@@ -799,6 +776,10 @@ box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
 .users-table tr,
 .users-table td {
   height: 50px;
+}
+
+.users-table td {
+  font-weight: 600;
 }
 
 .users-table-info {
@@ -1387,11 +1368,6 @@ text-transform: none;
   outline: none;
 }
 
-.search-input:focus {
-  color: #0d0c22;
-  border: 1px solid #277CE0;
-}
-
 .form-inpt-duzenle {
   width: 100%;
   min-width: 100px;
@@ -1613,8 +1589,29 @@ min-width: 0;
   line-height: 1;
 }
 
-.leftbar .nav-item.active > .nav-link,
-.leftbar .nav-item.active .nav-ico i {
+/* leftbar btn active color */
+.leftbar .mainPage.active > .nav-link,
+.leftbar .mainPage.active .nav-ico i {
+  color: #fff;
+}
+.leftbar .userPage.active > .nav-link,
+.leftbar .userPage.active .nav-ico i {
+  color: #fff;
+}
+.leftbar .employeePage.active > .nav-link,
+.leftbar .employeePage.active .nav-ico i {
+  color: #fff;
+}
+.leftbar .bolumPage.active > .nav-link,
+.leftbar .bolumPage.active .nav-ico i {
+  color: #fff;
+}
+.leftbar .finansPage.active > .nav-link,
+.leftbar .finansPage.active .nav-ico i {
+  color: #fff;
+}
+.leftbar .sayacPage.active > .nav-link,
+.leftbar .sayacPage.active .nav-ico i {
   color: #fff;
 }
 
@@ -1939,8 +1936,9 @@ min-width: 0;
   padding: 4px 0;
 }
 .pagination .pagination-number.current-number {
-  background: #277CE0;
+  background: #34A853;
   color: #fff;
+  border: 1px solid #34A853;
 }
 .pagination .pagination-arrow i {
   font-size: 24px;
@@ -2353,7 +2351,7 @@ min-width: 0;
   display: none;
   margin: 0 20px;
   border-radius: 0 0 8px 8px;
-  background-color: #277CE0;
+  border: 1px solid #277CE0;
 }
 
 .dropdown-container a {
@@ -2431,11 +2429,11 @@ min-width: 0;
 }
 
 .tumu-btn:hover {
-  color: #277CE0;
+  color: #34A853;
 }
 
 .active-tumu {
-  color: #277CE0;
+  color: #34A853;
   transform: rotate(180deg);
 }
 
@@ -2580,7 +2578,6 @@ min-width: 0;
   transition: 0.3s;
   border-radius: 4px;
   outline: none;
-  border: 1px dashed #277CE0;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -2597,7 +2594,6 @@ min-width: 0;
   transition: 0.3s;
 }
 .file_label:hover {
-  color: #277CE0;
   transform: translateX(10px);
 }
 
@@ -2610,10 +2606,8 @@ min-width: 0;
   border-radius: 4px;
   font-family: 'poppins-medium';
   font-weight: 500;
-  background-color: #277CE0;
   color: #fff;
   outline: none;
-  border: 1px solid #277CE0;
 }
 
 .text-left {
@@ -2667,6 +2661,7 @@ min-width: 0;
   position: absolute;
   top: 40px;
   left: 0;
+  right: 0;
   background-color: #f9f9f9;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
@@ -2686,6 +2681,7 @@ min-width: 0;
 .dropdown-content-inside-nereden {
   min-width: max-content;
   max-height: 300px;
+  width: 100%;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
@@ -2709,7 +2705,6 @@ min-width: 0;
 }
 
 .dropdown-content-inside-nereden button:hover {
-  color: #277CE0;
   padding-left: 15px;
   background-color: #ececec;
 }
@@ -2722,10 +2717,6 @@ min-width: 0;
   border-bottom: 1px solid #ececec;
   padding: 5px 10px;
   margin: 0px 0px 5px 0px;
-}
-
-.dropdown-content-inside-nereden input:focus {
-  border-bottom: 1px solid #277CE0;
 }
 
 .export-btn {
@@ -3046,12 +3037,13 @@ min-width: 0;
   flex-direction: column;
   flex-basis: 0;
   flex-grow: 1;
-  justify-content: flex-start;
+  justify-content: center;
   width: 100%;
 }
 
 .esit-veri p {
   font-weight: bold;
+  margin: 0;
 }
 
 .esit-input {
@@ -3094,13 +3086,18 @@ min-width: 0;
 
 .tutar-ayar,
 .tekrar-tarih,
-.gelismis-ayar {
+.gelismis-ayar,
+.gecikmeT {
   display: none;
   background-color: #f3f3f3;
   box-shadow: inset 0px 0px 5px #e0e0e0;
   border-radius: 8px;
   padding: 20px;
   color: #000 !important;
+}
+
+.gecikmeT.flex {
+  display: flex;
 }
 
 .active-tekrar {
@@ -3151,7 +3148,7 @@ min-width: 0;
   gap: 10px;
   flex-direction: row;
   flex-wrap: wrap;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
 }
 
@@ -3307,3 +3304,127 @@ min-width: 0;
 
 
 /* toplu borclandirma sayfasi */
+
+/* ========================================= */
+
+.additional-fields {
+  border-radius: 8px;
+  background-color: #f3f3f3;
+}
+
+/* sayfalar icin buton renkleri */
+
+.bcoc1 {
+  border: 1px solid #d2d6da;
+  background-color: #277CE0;
+  color: #fff;
+}
+.bcoc1:hover {
+  border: 1px solid #66BB6A ;
+  background-color: #174c8a ;
+}
+
+.mainpopup input:focus {
+  border-bottom: 1px solid #277CE0;
+}
+.mainpopup button:hover {
+  color: #277CE0;
+}
+
+/* Kulaanicilar Sayfasi */
+.userClr {
+  border: 1px solid #d2d6da;
+  background-color: #34A853;
+  color: #fff;
+}
+.userClr:hover {
+  border: 1px solid #66BB6A ;
+  background-color: #66BB6A ;
+}
+.userSrch:focus {
+  color: #0d0c22;
+  border: 1px solid #34A853;
+}
+.usereupl {
+  border: 1px dashed #34A853;
+}
+.userUpl:hover {
+  color: #34A853;
+}
+.userInpClr .input:focus,
+.userInpClr .input:valid  {
+  border-color: #34A853;
+}
+.acilischc .yenichk-label {
+  padding: 6px 0px;
+}
+.acilischc .yenichk-label:hover {
+  background: rgba(43, 255, 0, 0.06);
+}
+.acilischc .yenichk-label:hover span:first-child {
+  border-color: #34A853;
+}
+.acilischc .yenichk-inpt:checked + .yenichk-label span:first-child {
+  background: #34A853;
+  border-color: #34A853;
+  animation: wave-4 0.4s ease;
+}
+.acilischc label {
+  position: relative;
+  left: 0px;
+}
+.userPopup input:focus {
+  border-bottom: 1px solid #34A853;
+}
+.userPopup button:hover {
+  color: #34A853;
+}
+
+/* Employee Sayfasi */
+.empClr {
+  border: 1px solid #d2d6da;
+  background-color: #FFA726;
+  color: #fff;
+}
+.empClr:hover {
+  border: 1px solid #FFB74D ;
+  background-color: #FFB74D ;
+}
+.empSrch:focus {
+  color: #0d0c22;
+  border: 1px solid #FFA726;
+}
+.empupl {
+  border: 1px dashed #FFA726;
+}
+.empeUpl:hover {
+  color: #FFA726;
+}
+.empInpClr .input:focus,
+.empInpClr .input:valid  {
+  border-color: #FFA726;
+}
+.empchc .yenichk-label {
+  padding: 6px 0px;
+}
+.empchc .yenichk-label:hover {
+  background: rgba(255, 187, 0, 0.06);
+}
+.empchc .yenichk-label:hover span:first-child {
+  border-color: #FFA726;
+}
+.empchc .yenichk-inpt:checked + .yenichk-label span:first-child {
+  background: #FFA726;
+  border-color: #FFA726;
+  animation: wave-4 0.4s ease;
+}
+.empchc label {
+  position: relative;
+  left: 0px;
+}
+.userPopup input:focus {
+  border-bottom: 1px solid #34A853;
+}
+.userPopup button:hover {
+  color: #34A853;
+}
