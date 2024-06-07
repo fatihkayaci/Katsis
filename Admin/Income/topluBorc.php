@@ -1040,7 +1040,7 @@ inputs.forEach(input => {
     });
 });
 
-// buraya kadar -------------
+// buraya kadar -----------------
 
 
     $(document).ready(function(){

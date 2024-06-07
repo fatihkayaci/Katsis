@@ -33,21 +33,20 @@ try {
 <input type="hidden" id="hiddenApartman" value="<?php echo $idapartman ?>" />
 
 <div class="cener-table">
-  <div class="input-group-div">
-  <div class="input-group1">
-  <button class=" btn-custom-outline bcoc1" onclick="sayacTuru('elektrik')">Elektrik</button>
-  <button class=" btn-custom-outline bcoc1" onclick="sayacTuru('su')">Su</button>
-  <button class=" btn-custom-outline bcoc1" onclick="sayacTuru('sicaksu')">Sıcak Su</button>
-  <button class=" btn-custom-outline bcoc1" onclick="sayacTuru('kalorimetre')">Kalorimetre</button>
-  <button class=" btn-custom-outline bcoc1" onclick="sayacTuru('payolcer')">Pay Ölçer</button>
-
-    
-</div>
-    <div class="input-group1"></div>
-    <div class="input-group1">
-      <button class="btnAddindex btn-custom-outline bcoc1" onclick="okuma()">Sayaç Oku</button>
-      <button class="saveindesbtn btn-custom-outline bcoc1" onclick="indexSave('<?php echo $tur_php; ?>')">Kaydet</button>
-    </div>
+    <div class="input-group-div">
+        <div class="input-group1 w-50">
+            <div class="sayac-btn-slide">
+                <button class=" btn-custom-outline sayaczero sayacClr" onclick="sayacTuru('elektrik')">Elektrik</button>
+                <button class=" btn-custom-outline sayaczero" onclick="sayacTuru('su')">Su</button>
+                <button class=" btn-custom-outline sayaczero" onclick="sayacTuru('sicaksu')">Sıcak Su</button>
+                <button class=" btn-custom-outline sayaczero" onclick="sayacTuru('kalorimetre')">Kalorimetre</button>
+                <button class=" btn-custom-outline sayaczero" onclick="sayacTuru('payolcer')">Pay Ölçer</button>
+            </div>
+        </div>
+        <div class="input-group1">
+          <button class="btnAddindex btn-custom-outline bcoc1" onclick="okuma()">Sayaç Oku</button>
+          <button class="saveindesbtn btn-custom-outline bcoc1" onclick="indexSave('<?php echo $tur_php; ?>')">Kaydet</button>
+        </div>
   </div>
 
   <hr class="horizontal dark mb-1 w-100">
@@ -124,7 +123,8 @@ try {
 
    <!-- =========== iNDEX DEĞERLERİNİN KAYDI AJAX ============= -->
 
-   <script>
+<script>
+    
 function sayacTuru(veri){
    
 window.location.href = "index?parametre=meters&tur=" + veri;
@@ -384,7 +384,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     displayPage(currentPage);
 });
+
+
    </script>
+
+   
 
 
 

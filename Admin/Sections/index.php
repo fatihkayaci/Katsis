@@ -84,8 +84,8 @@ ORDER BY d.blok_adi ASC, d.daire_sayisi ASC";
     <div class="input-group-div">
 
         <div class="input-group1">
-            <button class="btn-custom-outline bcoc1" onclick="openPopupBlok()">Bloklar</button>
-            <button class="btn-custom-outline bcoc1" onclick="openPopupDaire()">Daire Ekle</button>
+            <button class="btn-custom-outline bolumClr" onclick="openPopupBlok()">Bloklar</button>
+            <button class="btn-custom-outline bolumClr" onclick="openPopupDaire()">Daire Ekle</button>
 
         </div>
 
@@ -98,7 +98,7 @@ ORDER BY d.blok_adi ASC, d.daire_sayisi ASC";
 
             <div class="search-box">
                 <i class="fas fa-search search-icon" aria-hidden="true"></i>
-                <input type="text" id="searchValue" class="search-input" placeholder="Arama..." onkeyup="filtrele()">
+                <input type="text" id="searchValue" class="search-input bolumSrch" placeholder="Arama..." onkeyup="filtrele()">
             </div>
         </div>
     </div>
@@ -111,7 +111,7 @@ ORDER BY d.blok_adi ASC, d.daire_sayisi ASC";
     <!-- Popup blok eklemek için-->
     <div id="popupBlokEkle" class="form-popup">
 
-        <form id="userFormBlok" class="login-form">
+        <form id="userFormBlok" class="login-form bolumInpClr">
 
             <h2 class="form-signin-heading">Bloklar</h2>
 
@@ -123,7 +123,7 @@ ORDER BY d.blok_adi ASC, d.daire_sayisi ASC";
                 </div>
 
                 <div class="col-blok w-30">
-                    <button type="button" class="btn-custom-daire ekle-btn blok-btn" id="saveButton"
+                    <button type="button" class="btn-custom-daire bolumClr ekle-btn blok-btn" id="saveButton"
                         onclick="saveBlok()">Ekle</button>
                 </div>
             </div>
@@ -346,8 +346,8 @@ ORDER BY d.blok_adi ASC, d.daire_sayisi ASC";
     <div class="input-group-div">
 
         <div class="input-group1">
-            <button class="btn-custom-outline bcoc1" onclick="openPopupBlok()">Bloklar</button>
-            <button class="btn-custom-outline bcoc1" onclick="openPopupDaire()">Daire Ekle</button>
+            <button class="btn-custom-outline bolumClr" onclick="openPopupBlok()">Bloklar</button>
+            <button class="btn-custom-outline bolumClr" onclick="openPopupDaire()">Daire Ekle</button>
 
         </div>
 
@@ -360,7 +360,7 @@ ORDER BY d.blok_adi ASC, d.daire_sayisi ASC";
 
             <div class="search-box">
                 <i class="fas fa-search search-icon" aria-hidden="true"></i>
-                <input type="text" id="searchValue" class="search-input" placeholder="Arama..." onkeyup="filtrele()">
+                <input type="text" id="searchValue" class="search-input bolumSrch" placeholder="Arama..." onkeyup="filtrele()">
             </div>
         </div>
     </div>
@@ -373,7 +373,7 @@ ORDER BY d.blok_adi ASC, d.daire_sayisi ASC";
     <!-- Popup blok eklemek için-->
     <div id="popupBlokEkle" class="form-popup">
 
-        <form id="userFormBlok" class="login-form">
+        <form id="userFormBlok" class="login-form bolumInpClr">
 
             <h2 class="form-signin-heading">Bloklar</h2>
 
@@ -385,7 +385,7 @@ ORDER BY d.blok_adi ASC, d.daire_sayisi ASC";
                 </div>
 
                 <div class="col-blok w-30">
-                    <button type="button" class="btn-custom-daire ekle-btn blok-btn" id="saveButton"
+                    <button type="button" class="btn-custom-daire bolumClr ekle-btn blok-btn" id="saveButton"
                         onclick="saveBlok()">Ekle</button>
                 </div>
             </div>
@@ -517,7 +517,7 @@ ORDER BY d.blok_adi ASC, d.daire_sayisi ASC";
 <!-- Popup kiracı ve kat maliki eklemek için-->
 <div id="popup2" class="form-popup">
 
-    <form id="userForm" class="login-form">
+    <form id="userForm" class="login-form bolumInpClr">
 
         <h2 class="form-signin-heading" id="pop-head"></h2>
 
@@ -537,7 +537,7 @@ ORDER BY d.blok_adi ASC, d.daire_sayisi ASC";
                         </div>
 
                         <div class="dropdown-content-nereden searchInput-btn" id="userInputDP">
-                            <div class="dropdown-content-inside-nereden">
+                            <div class="dropdown-content-inside-nereden bolumPopup">
                                 <input type="text" id="searchInput3" placeholder="Ara...">
 
                                 <?php 
@@ -591,7 +591,7 @@ ORDER BY d.blok_adi ASC, d.daire_sayisi ASC";
 
         <div class="row row-btn">
             <button type="button" class="btn-custom-close" onclick="closePopup()">Kapat</button>
-            <button type="button" class="btn-custom" id="saveButton" onclick="save()">Kaydet</button>
+            <button type="button" class="btn-custom bcoc1" id="saveButton" onclick="save()">Kaydet</button>
         </div>
 
     </form>
@@ -602,7 +602,7 @@ ORDER BY d.blok_adi ASC, d.daire_sayisi ASC";
 <!-- Popup daire eklemek için-->
 <div id="popupDaireEkle" class="form-popup">
 
-    <form id="userFormDaire" class="login-form">
+    <form id="userFormDaire" class="login-form bolumInpClr">
 
         <h2 class="form-signin-heading">Daire Ekle</h2>
 
@@ -631,7 +631,7 @@ ORDER BY d.blok_adi ASC, d.daire_sayisi ASC";
                         </div>
 
                         <div class="dropdown-content-nereden searchInput-btn" id="daireBlokDP">
-                            <div class="dropdown-content-inside-nereden">
+                            <div class="dropdown-content-inside-nereden bolumPopup">
                                 <input type="text" id="searchInput" placeholder="Ara...">
 
                                 <?php 
@@ -667,7 +667,7 @@ ORDER BY d.blok_adi ASC, d.daire_sayisi ASC";
                         </div>
 
                         <div class="dropdown-content-nereden searchInput-btn" id="daireGrupDP">
-                            <div class="dropdown-content-inside-nereden">
+                            <div class="dropdown-content-inside-nereden bolumPopup">
                                 <input type="text" id="searchInput2" placeholder="Ara...">
 
                                 <?php 
@@ -702,7 +702,7 @@ ORDER BY d.blok_adi ASC, d.daire_sayisi ASC";
 
         <div class="row row-btn">
             <button type="button" class="btn-custom-close" onclick="closePopupDaire()">Kapat</button>
-            <button type="button" class="btn-custom" id="saveButton" onclick="SaveDaire()">Kaydet</button>
+            <button type="button" class="btn-custom bcoc1" id="saveButton" onclick="SaveDaire()">Kaydet</button>
         </div>
 
     </form>
@@ -713,7 +713,7 @@ ORDER BY d.blok_adi ASC, d.daire_sayisi ASC";
 <!-- Toplu bilgi eklemek için-->
 <div id="popupTopluEkle" class="form-popup">
 
-    <form id="userFormToplu" class="login-form">
+    <form id="userFormToplu" class="login-form bolumInpClr">
 
         <h2 class="form-signin-heading">Toplu Ekle/Güncelle</h2>
 
@@ -776,7 +776,7 @@ ORDER BY d.blok_adi ASC, d.daire_sayisi ASC";
 
         <div class="row row-btn">
             <button type="button" class="btn-custom-close" onclick="closePopupToplu()">Kapat</button>
-            <button type="button" class="btn-custom" id="saveButton"
+            <button type="button" class="btn-custom bcoc1" id="saveButton"
                 onclick="daireGuncel(<?php echo $idapartman; ?>)">Kaydet</button>
         </div>
 
@@ -965,7 +965,7 @@ function closePopup() {
     document.getElementById("userInput").value = "";
     $('#userInput').css('border-color', '#000000');
     $('#userInput').focus(function() {
-        $(this).css('border-color', '#3BB4D7');
+        $(this).css('border-color', '#8E44AD');
     });
 
     $('#userForm').css('opacity', '0').css('transform', 'translateY(-180px)').delay(100).queue(function(next) {
@@ -1015,7 +1015,7 @@ function openPopupBlok() {
     });
 }
 $('#blokInput').focus(function() {
-    $(this).css('border-color', '#3BB4D7');
+    $(this).css('border-color', '#8E44AD');
 });
 var degisim = false;
 
@@ -1385,8 +1385,8 @@ $('#daireNo').blur(function() {
 });
 
 $('#daireNo').focus(function() {
-    $('#daireNo').css('border-color', '#277ce0');
-    $('#daireNoLabel').css('color', '#277ce0');
+    $('#daireNo').css('border-color', '#8E44AD');
+    $('#daireNoLabel').css('color', '#8E44AD');
 });
 
 $('#daireBlok').blur(function() {
@@ -1395,8 +1395,8 @@ $('#daireBlok').blur(function() {
 });
 
 $('#daireBlok').focus(function() {
-    $('#daireBlok').css('border-color', '#277ce0');
-    $('#daireBlokLabel').css('color', '#277ce0');
+    $('#daireBlok').css('border-color', '#8E44AD');
+    $('#daireBlokLabel').css('color', '#8E44AD');
 });
 
 
