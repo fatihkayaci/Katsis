@@ -206,7 +206,7 @@ try {
                                                     <p class="toplu-info">Tüm borçlara yazılacak borç açıklamasıdır.</p>
                                                 </div>
                                                 <div class="esit-input">
-                                                <input class="toplu-input" type="text" onclick="selectInput(this)" value="<?php echo suanki_ayi_getir(); ?> Dönemi Aidatı">
+                                                <input class="toplu-input" type="text" id="aciklama" onclick="selectInput(this)" value="<?php echo suanki_ayi_getir(); ?> Dönemi Aidatı">
 
                                                 </div>
         	                                </div>
@@ -247,7 +247,7 @@ try {
                                                     <p class="toplu-info">Gelişmiş hesaplama seçenekleri ile daire tipi, arsa payı veya sayaçlara göre borçlandırma yapabilirsiniz</p>
                                                 </div>
                                                 <div class="esit-input">
-                                                    <input class="toplu-input" type="text" onkeypress="return onlyNumberKey(event)" placeholder="0,00">
+                                                    <input class="toplu-input" id="fiyat" type="text" onkeypress="return onlyNumberKey(event)" placeholder="0,00">
                                                 </div>
         	                                </div>
 
@@ -259,7 +259,7 @@ try {
                                                             <label class="yenichk-label" for="gelismis"><span>
                                                                 <svg width="12px" height="10px">
                                                                     <use xlink:href="#check-4"></use>
-                                                                </svg></span><span>Gelişmiş Seçenekler</span>
+                                                                </svg></span><span>Hesaplama Şekilleri</span>
                                                             </label>
                                                             <svg class="inline-svg">
                                                                 <symbol id="check-4" viewbox="0 0 12 10">
@@ -329,7 +329,7 @@ try {
                                                     <p>Düzenleme Tarihi :</p>
                                                 </div>
                                                 <div class="esit-input">
-                                                    <input class="toplu-input" id="datepicker" type="text">
+                                                    <input class="toplu-input" data-user-id="" id="datepicker" type="text">
                                                 </div>
                                             </div>
                                             
@@ -347,7 +347,7 @@ try {
                                                     <p>İlk Tekrar Tarihi :</p>
                                                 </div>
                                                 <div class="esit-input">
-                                                    <input class="toplu-input" id="datepickerSecim" type="text">
+                                                    <input class="toplu-input" data-user-id="" id="datepickerSecim" type="text">
                                                 </div>
                                             </div>
                                             
@@ -358,7 +358,51 @@ try {
                                                     <p>Son Ödeme Tarihi :</p>
                                                 </div>
                                                 <div class="esit-input">
-                                                    <input class="toplu-input" id="datepickerSecim3" type="text">
+                                                    <div class="dropToplu-div w-100">
+                                                        <div class="dropdown-nereden">
+                                                            <div class="group">
+                                                                <input class="toplu-input i-kontrol" data-user-id="" type="text" list="Users" id="kacgunSonraid" name="gecikmeTarih" required="" readonly />
+                                                                <i class="fa-solid fa-chevron-down absolute-input"></i>
+                                                            </div>
+                                                            <div class="dropdown-content-nereden searchInput-btn mainpopup" id="kacgunSonra">
+                                                                <div class="dropdown-content-inside-nereden">
+                                                                    <input type="hidden" id="searchInput-kacgunSonra" placeholder="Ara...">
+
+                                                                    <button  data-user-id="1">1 Gün Sonra</button>
+                                                                    <button  data-user-id="2">2 Gün Sonra</button>
+                                                                    <button  data-user-id="3">3 Gün Sonra</button>
+                                                                    <button  data-user-id="4">4 Gün Sonra</button>
+                                                                    <button  data-user-id="5">5 Gün Sonra</button>
+                                                                    <button  data-user-id="6">6 Gün Sonra</button>
+                                                                    <button  data-user-id="7">7 Gün Sonra</button>
+                                                                    <button  data-user-id="8">8 Gün Sonra</button>
+                                                                    <button  data-user-id="9">9 Gün Sonra</button>
+                                                                    <button  data-user-id="10">10 Gün Sonra</button>
+                                                                    <button  data-user-id="11">11 Gün Sonra</button>
+                                                                    <button  data-user-id="12">12 Gün Sonra</button>
+                                                                    <button  data-user-id="13">13 Gün Sonra</button>
+                                                                    <button  data-user-id="14">14 Gün Sonra</button>
+                                                                    <button  data-user-id="15">15 Gün Sonra</button>
+                                                                    <button  data-user-id="16">16 Gün Sonra</button>
+                                                                    <button  data-user-id="17">17 Gün Sonra</button>
+                                                                    <button  data-user-id="18">18 Gün Sonra</button>
+                                                                    <button  data-user-id="19">19 Gün Sonra</button>
+                                                                    <button  data-user-id="20">20 Gün Sonra</button>
+                                                                    <button  data-user-id="21">21 Gün Sonra</button>
+                                                                    <button  data-user-id="22">22 Gün Sonra</button>
+                                                                    <button  data-user-id="23">23 Gün Sonra</button>
+                                                                    <button  data-user-id="24">24 Gün Sonra</button>
+                                                                    <button  data-user-id="25">25 Gün Sonra</button>
+                                                                    <button  data-user-id="26">26 Gün Sonra</button>
+                                                                    <button  data-user-id="27">27 Gün Sonra</button>
+                                                                    <button  data-user-id="28">28 Gün Sonra</button>
+                                                                    <button  data-user-id="29">29 Gün Sonra</button>
+                                                                    <button  data-user-id="30">30 Gün Sonra</button>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>    
+                                                    </div> 
                                                 </div>
                                             </div>
 
@@ -401,10 +445,39 @@ try {
                                                             </div>
                                                             <div class="dropdown-content-nereden searchInput-btn mainpopup" id="gecikmeTarihDP">
                                                                 <div class="dropdown-content-inside-nereden">
-                                                                    <input type="text" id="searchInput-gecikmeTarih" placeholder="Ara...">
+                                                                    <input type="hidden" id="searchInput-gecikmeTarih" placeholder="Ara...">
 
-                                                                    <button>5 Gün Sonra</button>
-                                                                    <button>10 Gün Sonra</button>
+                                                                    <button  data-user-id="1">1 Gün Sonra</button>
+                                                                    <button  data-user-id="2">2 Gün Sonra</button>
+                                                                    <button  data-user-id="3">3 Gün Sonra</button>
+                                                                    <button  data-user-id="4">4 Gün Sonra</button>
+                                                                    <button  data-user-id="5">5 Gün Sonra</button>
+                                                                    <button  data-user-id="6">6 Gün Sonra</button>
+                                                                    <button  data-user-id="7">7 Gün Sonra</button>
+                                                                    <button  data-user-id="8">8 Gün Sonra</button>
+                                                                    <button  data-user-id="9">9 Gün Sonra</button>
+                                                                    <button  data-user-id="10">10 Gün Sonra</button>
+                                                                    <button  data-user-id="11">11 Gün Sonra</button>
+                                                                    <button  data-user-id="12">12 Gün Sonra</button>
+                                                                    <button  data-user-id="13">13 Gün Sonra</button>
+                                                                    <button  data-user-id="14">14 Gün Sonra</button>
+                                                                    <button  data-user-id="15">15 Gün Sonra</button>
+                                                                    <button  data-user-id="16">16 Gün Sonra</button>
+                                                                    <button  data-user-id="17">17 Gün Sonra</button>
+                                                                    <button  data-user-id="18">18 Gün Sonra</button>
+                                                                    <button  data-user-id="19">19 Gün Sonra</button>
+                                                                    <button  data-user-id="20">20 Gün Sonra</button>
+                                                                    <button  data-user-id="21">21 Gün Sonra</button>
+                                                                    <button  data-user-id="22">22 Gün Sonra</button>
+                                                                    <button  data-user-id="23">23 Gün Sonra</button>
+                                                                    <button  data-user-id="24">24 Gün Sonra</button>
+                                                                    <button  data-user-id="25">25 Gün Sonra</button>
+                                                                    <button  data-user-id="26">26 Gün Sonra</button>
+                                                                    <button  data-user-id="27">27 Gün Sonra</button>
+                                                                    <button  data-user-id="28">28 Gün Sonra</button>
+                                                                    <button  data-user-id="29">29 Gün Sonra</button>
+                                                                    <button  data-user-id="30">30 Gün Sonra</button>
+
                                                                 </div>
                                                             </div>
                                                         </div>    
@@ -417,7 +490,10 @@ try {
                                                     <p>Gecikme Tazminatı Yüzdesi :</p>
                                                 </div>
                                                 <div class="esit-input">
+                                                <div class="group">
                                                     <input class="toplu-input" type="text">
+                                                    <i class="fa-solid fa-percent absolute-input"></i>
+                                                </div>
                                                 </div>
                                             </div>
                                             
@@ -450,7 +526,7 @@ try {
                                             <div class="toplu-p mt-3 b-old">
                                                 <div class="esit-input">
                                                     <button class="btn-custom-close respense-btn">İptal</button>
-                                                    <button class="btn-custom respense-btn">Kaydet</button>
+                                                    <button class="btn-custom respense-btn" onclick="topluBorc()">Kaydet</button>
                                                 </div>
                                             </div>
 
@@ -621,7 +697,7 @@ try {
                                                             <label class="yenichk-label" for="gelismis1"><span>
                                                                 <svg width="12px" height="10px">
                                                                     <use xlink:href="#check-4"></use>
-                                                                </svg></span><span>Gelişmiş Seçenekler</span>
+                                                                </svg></span><span>Hesaplama Şekilleri</span>
                                                             </label>
                                                             <svg class="inline-svg">
                                                                 <symbol id="check-4" viewbox="0 0 12 10">
@@ -749,21 +825,23 @@ try {
 <script>
  function tarihSecikili(veri){  
     var picker = new Lightpick({
-            field: document.getElementById(veri),
-            singleDate: false,
-            selectForward: true,
-            selectBackward: false,
-            lang: 'tr',
-            minDate: moment(),
-            repick: true,
-            onSelect: function(start, end){
-                var str = '';
-                str += start ? start.format('DD MMMM YYYY') + ' to ' : '';
-                str += end ? end.format('DD MMMM YYYY') : '...';
-                document.getElementById(veri).innerHTML = str;
-            }
-        });
-    }
+        field: document.getElementById(veri),
+        singleDate: false,
+        selectForward: true,
+        selectBackward: false,
+        lang: 'tr',
+        minDate: moment(),
+        repick: true,
+        onSelect: function(start, end){
+            var str = '';
+            str += start ? start.format('DD MMMM YYYY') + ' to ' : '';
+            str += end ? end.format('DD MMMM YYYY') : '...';
+            document.getElementById(veri).innerHTML = str;
+            document.getElementById(veri).setAttribute('data-user-id',  str);
+        }
+    });
+}
+
     function tarihSec(veri,day){
     var dateFormat = 'DD MMMM YYYY';
 
@@ -778,11 +856,14 @@ try {
         startDate: moment().add(day, 'days'),
         onSelect: function(date){
             document.getElementById(veri).value = date.format(dateFormat);
+            document.getElementById(veri).setAttribute('data-user-id',  date.format("YYYY-MM-DD"));
         }
+      
     });
 
     // Başlangıç tarihini input alanına yazdır
     document.getElementById(veri).value = moment().add(day, 'days').format(dateFormat);
+    document.getElementById(veri).setAttribute('data-user-id',  moment().add(day, 'days').format("YYYY-MM-DD"));
 }
 
      
@@ -1093,6 +1174,7 @@ dropDownn('hesaplar', 'hesaplarDP', 'searchInput');
 dropDownn('kategori', 'kategoriDP', 'searchInput-kategori');
 dropDownn('tutar', 'tutarDP', 'searchInput-tutar');
 dropDownn('pay', 'payDP', 'searchInput-pay');
+dropDownn('kacgunSonraid', 'kacgunSonra', 'searchInput-kacgunSonra');
 dropDownn('gecikmeTarih', 'gecikmeTarihDP', 'searchInput-gecikmeTarih');
 dropDownn('tazminatsekli', 'tazminatsekliDP', 'searchInput-tazminatsekli');
 
@@ -1117,6 +1199,36 @@ dropDownn('pay1', 'pay1DP', 'searchInput-pay1');
   });
 
 
+
+</script>
+<script>
+function topluBorc(){
+    var kategori = document.getElementById('kategori').dataset.userId;
+    var aciklama = document.getElementById('aciklama').value;
+    var hesaplar = document.getElementById('hesaplar').dataset.userId;
+    var fiyat = document.getElementById('fiyat').value; 
+
+    
+
+    //Hesaplama Şekli
+    var checkbox = document.getElementById('gelismis').checked;
+    var tutar = document.getElementById('tutar').dataset.userId;
+    var pay = document.getElementById('pay').dataset.userId;
+
+    // Tarihler
+    var duzenlemeTarih = document.getElementById('datepicker').dataset.userId;
+    var sonOdemeTarihi = document.getElementById('datepicker2').dataset.userId;
+    
+    var tekrarTarihi = document.getElementById('datepickerSecim').dataset.userId;
+
+
+    console.log(tekrarTarihi);
+
+
+
+    
+
+} 
 
 </script>
 
