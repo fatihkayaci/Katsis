@@ -747,24 +747,55 @@ try {
     <script src="assets/js/mycode/lightpick.js"></script>
 
 <script>
- function tarihSecikili(veri){  
-    var picker = new Lightpick({
-            field: document.getElementById(veri),
-            singleDate: false,
-            selectForward: true,
-            selectBackward: false,
-            lang: 'tr',
-            minDate: moment(),
-            repick: true,
-            onSelect: function(start, end){
-                var str = '';
-                str += start ? start.format('DD MMMM YYYY') + ' to ' : '';
-                str += end ? end.format('DD MMMM YYYY') : '...';
-                document.getElementById(veri).innerHTML = str;
-            }
-        });
+ // yeni eklenen kısım
+moment.locale('tr', {
+    months : [
+        "Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", 
+        "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"
+    ],
+    monthsShort : [
+        "Oca", "Şub", "Mar", "Nis", "May", "Haz", 
+        "Tem", "Ağu", "Eyl", "Eki", "Kas", "Ara"
+    ],
+    weekdays : [
+        "Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"
+    ],
+    weekdaysShort : [
+        "Paz", "Pzt", "Sal", "Çar", "Per", "Cum", "Cmt"
+    ],
+    weekdaysMin : [
+        "Pz", "Pt", "Sa", "Ça", "Pe", "Cu", "Ct"
+    ],
+    longDateFormat : {
+        LT : "HH:mm",
+        LTS : "HH:mm:ss",
+        L : "DD/MM/YYYY",
+        LL : "D MMMM YYYY",
+        LLL : "D MMMM YYYY HH:mm",
+        LLLL : "dddd, D MMMM YYYY HH:mm"
     }
-    function tarihSec(veri,day){
+});
+
+// Tarih seçici fonksiyonlar
+function tarihSecikili(veri) {  
+    var picker = new Lightpick({
+        field: document.getElementById(veri),
+        singleDate: false,
+        selectForward: true,
+        selectBackward: false,
+        lang: 'tr',
+        minDate: moment(),
+        repick: true,
+        onSelect: function(start, end) {
+            var str = '';
+            str += start ? start.format('DD MMMM YYYY') + ' - ' : '';
+            str += end ? end.format('DD MMMM YYYY') : '...';
+            document.getElementById(veri).value = str; // Tarihi input'a yazdırma
+        }
+    });
+}
+
+function tarihSec(veri, day) {
     var dateFormat = 'DD MMMM YYYY';
 
     var picker = new Lightpick({
@@ -776,7 +807,7 @@ try {
         minDate: moment(),
         repick: true,
         startDate: moment().add(day, 'days'),
-        onSelect: function(date){
+        onSelect: function(date) {
             document.getElementById(veri).value = date.format(dateFormat);
         }
     });
@@ -785,13 +816,10 @@ try {
     document.getElementById(veri).value = moment().add(day, 'days').format(dateFormat);
 }
 
-     
-    tarihSecikili('datepickerSecim');
-
-tarihSec('datepicker',0);
-tarihSec('datepicker2',7);
-
-
+// Fonksiyonları çağırma
+tarihSecikili('datepickerSecim');
+tarihSec('datepicker', 0);
+tarihSec('datepicker2', 7);
 
     </script>
 <!-- Istisna Ekle Popup -->
