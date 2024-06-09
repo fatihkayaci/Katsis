@@ -1683,6 +1683,13 @@ min-width: 0;
   left: -5px;
 }
 
+.selectx-label {
+  position: absolute;
+  top: 0;
+  left: 0px !important;
+  margin-left: 0 !important;
+}
+
 .search-selectx:focus ~ .selectx-label,
 .search-selectx:valid ~ .selectx-label {
   top: -30px;
