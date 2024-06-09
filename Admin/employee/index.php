@@ -202,25 +202,47 @@ try {
         <div class="row">
             <div class="col-md-6 col margint mt-0">
                 <div class="select-div">
-                    <input class="search-selectx input" type="text" list="Users" id="userInput" required="" />
-                    <label class="selectx-label" for="userInput" for="gender">Cinsiyet :</label>
-                    <ul class="value-listx" id="userInputDrop">
-                        <li class="li-select" data-user-id="Erkek">Erkek</li>
-                        <li class="li-select" data-user-id="Kadin">Kadın</li>
-                    </ul>
+                    <div class="dropdown-nereden">
+                        <div class="group">
+                            <input class="search-selectx input" data-user-id="" type="text" id="userInput"
+                                required="" />
+                            <label class="selectx-label" for="userInput">Cinsiyet :</label>
+                        </div>
+
+                        <div class="dropdown-content-nereden searchInput-btn" id="userInputDP">
+                            <div class="dropdown-content-inside-nereden empPopup">
+                                <input type="hidden" id="searchInput-userInput" placeholder="Ara...">
+
+                                <button  data-user-id="Erkek">Erkek</button>
+                                <button  data-user-id="Kadin">Kadın</button>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div class="col-md-6 col margint mt-0">
                 <div class="select-div">
-                    <input class="search-selectx input" type="text" list="Users" id="educationStatus" name="educationStatus" required="" />
-                    <label class="selectx-label" for="educationStatus" for="gender">Öğrenim Durumu :</label>
-                    <ul class="value-listx" id="educationStatusDrop">
-                    <li class="li-select" data-user-id="ilkokul">ilkokul</li>
-                    <li class="li-select" data-user-id="ortaokul">ortaokul</li>
-                    <li class="li-select" data-user-id="lise">lise</li>
-                    <li class="li-select" data-user-id="üniversite">üniversite</li>
-                    </ul>
+                    <div class="dropdown-nereden">
+                        <div class="group">
+                            <input class="search-selectx input" data-user-id="" type="text" id="educationStatus"
+                                required="" />
+                            <label class="selectx-label" for="educationStatus">Öğrenim Durumu :</label>
+                        </div>
+
+                        <div class="dropdown-content-nereden searchInput-btn" id="educationStatusDP">
+                            <div class="dropdown-content-inside-nereden empPopup">
+                                <input type="hidden" id="searchInput-educationStatus" placeholder="Ara...">
+
+                                <button  data-user-id="ilkokul">ilkokul</button>
+                                <button  data-user-id="ortaokul">ortaokul</button>
+                                <button  data-user-id="lise">lise</button>
+                                <button  data-user-id="üniversite">üniversite</button>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -232,7 +254,7 @@ try {
             </div>
             <!-- labela Bakilicak Kutuphane ile Yapilicak -->
             <div class="col-md-6 col margint">
-                <input class="input" type="date" name="startingWorking" required="">
+                <input class="input" data-user-id="" id="datepickerSecim" name="startingWorking" type="text" required="">
                 <label for="startingWorking">İşe Giriş Tarihi</label>
             </div>
         </div>
@@ -254,15 +276,24 @@ try {
                 <input class="input" type="text" name="salary" required="">
                 <label for="salary">Maaş</label>
             </div>
-            <div class="col-md-6 col margint mt-0">
-                <div class="select-div">
-                    <input class="search-selectx input" type="text" list="Users" id="unit" required="" />
-                    <label class="selectx-label" for="unit" for="gender">Brim :</label>
-                    <ul class="value-listx" id="unitDrop">
-                        <li class="li-select" data-user-id="tl">TL (₺)</li>
-                        <li class="li-select" data-user-id="euro">EURO (€)</li>
-                        <li class="li-select" data-user-id="dolar">DOLAR ($)</li>
-                    </ul>
+            <div class="col-md-6 col margint">
+                <div class="dropdown-nereden">
+                    <div class="group">
+                        <input class="search-selectx input" data-user-id="" type="text" id="unit"
+                            required="" />
+                        <label class="selectx-label" for="unit">Brim :</label>
+                    </div>
+
+                    <div class="dropdown-content-nereden searchInput-btn" id="unitDP">
+                        <div class="dropdown-content-inside-nereden empPopup">
+                            <input type="hidden" id="searchInput-unit" placeholder="Ara...">
+
+                            <button  data-user-id="tl">TL (₺)</button>
+                            <button  data-user-id="euro">EURO (€)</button>
+                            <button  data-user-id="dolar">DOLAR ($)</button>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
@@ -293,13 +324,24 @@ try {
                 </div>
 
                 <div class="col-md-6 col margint">
-                    <div class="select-div m-0">
-                        <input class="search-selectx input" type="text" list="Users" id="userInput-bakiye" required="" />
-                        <label class="selectx-label" for="userInput-bakiye" for="gender">Durum :</label>
-                        <ul class="value-listx" id="userInputDrop-bakiye">
-                            <li class="li-select" data-user-id="Borç">Borç</li>
-                            <li class="li-select" data-user-id="Alacak">Alacak</li>
-                        </ul>
+                    <div class="select-div">
+                        <div class="dropdown-nereden">
+                            <div class="group">
+                                <input class="search-selectx input" data-user-id="" type="text" id="userInput-bakiye"
+                                    required="" />
+                                <label class="selectx-label" for="userInput-bakiye">Durum :</label>
+                            </div>
+
+                            <div class="dropdown-content-nereden searchInput-btn" id="userInput-bakiyeDP">
+                                <div class="dropdown-content-inside-nereden empPopup">
+                                    <input type="hidden" id="searchInput-userInput-bakiye" placeholder="Ara...">
+
+                                    <button data-user-id="borc">Borç</button>
+                                    <button data-user-id="alacak">Alacak</button>
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
                     <!-- fatih burdaki selecti iptal ettim yeni select bu yukardaki -->
                     <!-- <select name="balanceType">
@@ -540,88 +582,13 @@ function toggleDisplay() {
 </script>
 <!-- =============================== -->
 <!-- custom gender input start -->
+
+<script src="assets/js/mycode/dropdown.js"></script>
 <script>
-function setupSearchSelect(inputSelector, dropdownSelector) {
-    const inputField = document.querySelector(inputSelector);
-    const dropdown = document.querySelector(dropdownSelector);
-    const dropdownArray = [...dropdown.querySelectorAll('.li-select')];
-    let valueArray = [];
-
-    inputField.focus();
-
-    dropdownArray.forEach(item => {
-        valueArray.push(item.textContent);
-    });
-
-    const closeDropdown = () => {
-        setTimeout(() => {
-            dropdown.classList.remove('open');
-        }, 100);
-    }
-
-    inputField.addEventListener('input', () => {
-        setTimeout(() => {
-            dropdown.classList.add('open');
-            let inputValue = inputField.value.toLowerCase();
-            if (inputValue.length > 0) {
-                dropdownArray.forEach((item, j) => {
-                    if (!(inputValue.substring(0, inputValue.length) === valueArray[j].substring(0, inputValue.length).toLowerCase())) {
-                        dropdownArray[j].classList.add('closed');
-                    } else {
-                        dropdownArray[j].classList.remove('closed');
-                    }
-                });
-            } else {
-                dropdownArray.forEach(item => {
-                    item.classList.remove('closed');
-                });
-            }
-        }, 100);
-    });
-
-    dropdownArray.forEach(item => {
-        item.addEventListener('click', (evt) => {
-            setTimeout(() => {
-                const selectedUserID = evt.target.dataset.userId;
-                inputField.value = item.textContent;
-                dropdownArray.forEach(dropdown => {
-                    dropdown.classList.add('closed');
-                });
-            }, 100);
-        });
-    });
-
-    inputField.addEventListener('focus', () => {
-        setTimeout(() => {
-            dropdown.classList.add('open');
-            dropdownArray.forEach(dropdown => {
-                dropdown.classList.remove('closed');
-            });
-        }, 100);
-    });
-
-    inputField.addEventListener('blur', () => {
-        setTimeout(() => {
-            dropdown.classList.remove('open');
-        }, 100);
-    });
-
-    document.addEventListener('click', (evt) => {
-        setTimeout(() => {
-            const isDropdown = dropdown.contains(evt.target);
-            const isInput = inputField.contains(evt.target);
-            if (!isDropdown && !isInput) {
-                dropdown.classList.remove('open');
-            }
-        }, 100);
-    });
-}
-
-setupSearchSelect('#userInput', '#userInputDrop');
-setupSearchSelect('#educationStatus', '#educationStatusDrop');
-setupSearchSelect('#unit', '#unitDrop');
-setupSearchSelect('#userInput-bakiye', '#userInputDrop-bakiye');
-
+dropDownn('unit', 'unitDP', 'searchInput-unit');
+dropDownn('userInput', 'userInputDP', 'searchInput-userInput');
+dropDownn('educationStatus', 'educationStatusDP', 'searchInput-educationStatus');
+dropDownn('userInput-bakiye', 'userInput-bakiyeDP', 'searchInput-userInput-bakiye');
 </script>
 
 <!-- =============================== -->
@@ -1338,3 +1305,66 @@ tableTdElements.forEach(function(element) {
       fileChosen.textContent = this.files[0].name
     })
 </script>
+
+<!-- secme Tarihi -->
+    <script src="assets/js/mycode/moment.min.js"></script>
+    <script src="assets/js/mycode/moment.js"></script>
+    <script src="assets/js/mycode/lightpick.js"></script>
+
+<script>
+ // yeni eklenen kısım
+moment.locale('tr', {
+    months : [
+        "Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", 
+        "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"
+    ],
+    monthsShort : [
+        "Oca", "Şub", "Mar", "Nis", "May", "Haz", 
+        "Tem", "Ağu", "Eyl", "Eki", "Kas", "Ara"
+    ],
+    weekdays : [
+        "Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"
+    ],
+    weekdaysShort : [
+        "Paz", "Pzt", "Sal", "Çar", "Per", "Cum", "Cmt"
+    ],
+    weekdaysMin : [
+        "Pz", "Pt", "Sa", "Ça", "Pe", "Cu", "Ct"
+    ],
+    longDateFormat : {
+        LT : "HH:mm",
+        LTS : "HH:mm:ss",
+        L : "DD/MM/YYYY",
+        LL : "D MMMM YYYY",
+        LLL : "D MMMM YYYY HH:mm",
+        LLLL : "dddd, D MMMM YYYY HH:mm"
+    }
+});
+
+function tarihSec(veri, day) {
+    var dateFormat = 'DD MMMM YYYY';
+    var picker = new Lightpick({
+        field: document.getElementById(veri),
+        singleDate: true,
+        selectForward: true,
+        selectBackward: false,
+        lang: 'tr',
+        minDate: moment(),
+        repick: true,
+        startDate: moment().add(day, 'days'),
+        onSelect: function(date) {
+            document.getElementById(veri).value = date.format(dateFormat);
+            document.getElementById(veri).setAttribute('data-user-id',  date.format("YYYY-MM-DD"));
+        }
+      
+    });
+
+    // Başlangıç tarihini input alanına yazdır
+    document.getElementById(veri).value = moment().add(day, 'days').format(dateFormat);
+    document.getElementById(veri).setAttribute('data-user-id',  moment().add(day, 'days').format("YYYY-MM-DD"));
+}
+
+// Fonksiyonları çağırma
+tarihSec('datepickerSecim', 0);
+
+    </script>
