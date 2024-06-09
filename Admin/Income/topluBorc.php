@@ -447,7 +447,7 @@ try {
                                                                 <div class="dropdown-content-inside-nereden">
                                                                     <input type="hidden" id="searchInput-gecikmeTarih" placeholder="Ara...">
 
-                                                                    <button  data-user-id="1" id="defaultGecikmeTarih">1 Gün Sonra</button>
+                                                                    <button  data-user-id="1">1 Gün Sonra</button>
                                                                     <button  data-user-id="2">2 Gün Sonra</button>
                                                                     <button  data-user-id="3">3 Gün Sonra</button>
                                                                     <button  data-user-id="4">4 Gün Sonra</button>
@@ -491,7 +491,7 @@ try {
                                                 </div>
                                                 <div class="esit-input">
                                                 <div class="group">
-                                                    <input class="toplu-input" type="text" id="tazminatYuzde" value="1">
+                                                    <input class="toplu-input" type="text">
                                                     <i class="fa-solid fa-percent absolute-input"></i>
                                                 </div>
                                                 </div>
@@ -512,8 +512,8 @@ try {
                                                                 <div class="dropdown-content-inside-nereden">
                                                                     <input type="hidden" id="searchInput-tazminatsekli" placeholder="Ara...">
 
-                                                                    <button data-user-id="1" id="defaultTazminatSekli">Günlük</button>
-                                                                    <button data-user-id="2">Aylık</button>
+                                                                    <button>Günlük</button>
+                                                                    <button>Aylık</button>
                                                                 </div>
                                                             </div>
                                                         </div>    
@@ -823,37 +823,7 @@ try {
     <script src="assets/js/mycode/lightpick.js"></script>
 
 <script>
- // yeni eklenen kısım
-moment.locale('tr', {
-    months : [
-        "Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", 
-        "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"
-    ],
-    monthsShort : [
-        "Oca", "Şub", "Mar", "Nis", "May", "Haz", 
-        "Tem", "Ağu", "Eyl", "Eki", "Kas", "Ara"
-    ],
-    weekdays : [
-        "Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"
-    ],
-    weekdaysShort : [
-        "Paz", "Pzt", "Sal", "Çar", "Per", "Cum", "Cmt"
-    ],
-    weekdaysMin : [
-        "Pz", "Pt", "Sa", "Ça", "Pe", "Cu", "Ct"
-    ],
-    longDateFormat : {
-        LT : "HH:mm",
-        LTS : "HH:mm:ss",
-        L : "DD/MM/YYYY",
-        LL : "D MMMM YYYY",
-        LLL : "D MMMM YYYY HH:mm",
-        LLLL : "dddd, D MMMM YYYY HH:mm"
-    }
-});
-
-// Tarih seçici fonksiyonlar
-function tarihSecikili(veri) {  
+ function tarihSecikili(veri){  
     var picker = new Lightpick({
         field: document.getElementById(veri),
         singleDate: false,
@@ -862,20 +832,17 @@ function tarihSecikili(veri) {
         lang: 'tr',
         minDate: moment(),
         repick: true,
-        onSelect: function(start, end) {
+        onSelect: function(start, end){
             var str = '';
-            var rte = '';
-            str += start ? start.format('DD MMMM YYYY') + ' - ' : '';
-            rte += start ? start.format('YYYY-MM-DD') + '/' : '';
+            str += start ? start.format('DD MMMM YYYY') + ' to ' : '';
             str += end ? end.format('DD MMMM YYYY') : '...';
-            rte += end ? end.format('YYYY-MM-DD') : '...';
-            document.getElementById(veri).value = str;
-            document.getElementById(veri).setAttribute('data-user-id',  rte);
+            document.getElementById(veri).innerHTML = str;
+            document.getElementById(veri).setAttribute('data-user-id',  str);
         }
     });
 }
 
-function tarihSec(veri, day) {
+    function tarihSec(veri,day){
     var dateFormat = 'DD MMMM YYYY';
     var picker = new Lightpick({
         field: document.getElementById(veri),
@@ -886,7 +853,7 @@ function tarihSec(veri, day) {
         minDate: moment(),
         repick: true,
         startDate: moment().add(day, 'days'),
-        onSelect: function(date) {
+        onSelect: function(date){
             document.getElementById(veri).value = date.format(dateFormat);
             document.getElementById(veri).setAttribute('data-user-id',  date.format("YYYY-MM-DD"));
         }
@@ -898,10 +865,13 @@ function tarihSec(veri, day) {
     document.getElementById(veri).setAttribute('data-user-id',  moment().add(day, 'days').format("YYYY-MM-DD"));
 }
 
-// Fonksiyonları çağırma
-tarihSecikili('datepickerSecim');
-tarihSec('datepicker', 0);
-tarihSec('datepicker2', 7);
+     
+    tarihSecikili('datepickerSecim');
+
+tarihSec('datepicker',0);
+tarihSec('datepicker2',7);
+
+
 
     </script>
 <!-- Istisna Ekle Popup -->
@@ -1032,13 +1002,9 @@ for (var i = 0; i < checkboxes.length; i++) {
     checkboxes[i].checked = masterCheckbox.checked;
 }
 if (masterCheckbox.checked) {
-    $('#guncelleButton').css('display', 'inline-block');
-    $('#silButton').css('display', 'inline-block');
 
     $('.git-ac').addClass('git-ac-color');
 } else if (!masterCheckbox.checked) {
-    $('#guncelleButton').css('display', 'none');
-    $('#silButton').css('display', 'none');
     $('.git-ac').removeClass('git-ac-color');
 }
 }
@@ -1047,8 +1013,7 @@ if (masterCheckbox.checked) {
 function toggleMainCheckbox(id) {
 
 var checkboxes = document.querySelectorAll('.check1'); // Tüm checkboxları al
-var guncelleButton = document.getElementById('guncelleButton');
-var silButton = document.getElementById('silButton');
+
 var enAzBirSecili = false;
 
 checkboxes.forEach(function(checkbox) {
@@ -1057,13 +1022,7 @@ checkboxes.forEach(function(checkbox) {
     }
 });
 
-if (enAzBirSecili) {
-    guncelleButton.style.display = 'inline-block';
-    silButton.style.display = 'inline-block';
-} else {
-    guncelleButton.style.display = 'none';
-    silButton.style.display = 'none';
-}
+
 
 
 
@@ -1212,8 +1171,7 @@ dropDownn('kategori1', 'kategori1DP', 'searchInput-kategori1');
 dropDownn('tutar1', 'tutar1DP', 'searchInput-tutar1');
 dropDownn('pay1', 'pay1DP', 'searchInput-pay1');
 
-document.getElementById("defaultTazminatSekli").click();
-document.getElementById("defaultGecikmeTarih").click();
+
   document.getElementById("btn-select").click();
   document.getElementById("tutar_bol").click(); 
   document.getElementById("esitPaylastır").click();
@@ -1237,6 +1195,7 @@ function topluBorc(){
     var aciklama = document.getElementById('aciklama').value;
     var hesaplar = document.getElementById('hesaplar').dataset.userId;
     var fiyat = document.getElementById('fiyat').value; 
+
     
 
     //Hesaplama Şekli
@@ -1247,26 +1206,36 @@ function topluBorc(){
     // Tarihler
     var duzenlemeTarih = document.getElementById('datepicker').dataset.userId;
     var sonOdemeTarihi = document.getElementById('datepicker2').dataset.userId;
-    console.log()
-    //ikili tarih seçimi ve ayrılması sevenleri ayırmayalım.(rte)
+    
     var tekrarTarihi = document.getElementById('datepickerSecim').dataset.userId;
-    var tarihAraliklari = tekrarTarihi.split('/');
-    var baslangicTarihi = tarihAraliklari[0];
-    var bitisTarihi = tarihAraliklari[1];
-    //son ödeme tarihi
-    var kacgunSonraid = document.getElementById('kacgunSonraid').dataset.userId;
 
 
-    //gecikme checkbox
-    var gecikmeTazminati = document.getElementById('gecikmeTazminati').checked;
-    //gecikme tarihi
-    var gecikmeTarih = document.getElementById('gecikmeTarih').dataset.userId;
-    //tazminat yüzdesi
-    var tazminatYuzde = document.getElementById('tazminatYuzde').value;
-    //tazminatsekli günlük, aylık;
-    var tazminatsekli = document.getElementById('tazminatsekli').dataset.userId;
+
+
+   getCheckedValues();
+    
+    
+
 } 
-
+function getCheckedValues() {
+    console.log("hcdjg");
+    let checkedValues = [];
+    // Get all checkboxes with class 'check1'
+    let checkboxes = document.querySelectorAll('.check1');
+    
+    // Iterate over each checkbox
+    checkboxes.forEach(function(checkbox) {
+        // Check if the checkbox is checked
+        if (checkbox.checked) {
+            // Add the data-userid value to the array
+            checkedValues.push();
+            console.log(checkbox.getAttribute('data-userid'));
+        }
+    });
+    
+    // Return the array of checked values
+    return checkedValues;
+}
 </script>
 
 <body>
