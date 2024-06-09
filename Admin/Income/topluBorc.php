@@ -844,7 +844,6 @@ try {
 
     function tarihSec(veri,day){
     var dateFormat = 'DD MMMM YYYY';
-
     var picker = new Lightpick({
         field: document.getElementById(veri),
         singleDate: true,
