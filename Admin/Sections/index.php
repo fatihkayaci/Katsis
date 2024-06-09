@@ -727,31 +727,53 @@ ORDER BY d.blok_adi ASC, d.daire_sayisi ASC";
                 <label for="daireKat1">Kat :</label>
             </div>
             <div class="col-md-6 col">
-                <select class="input" id="daireBlok1" required="">
-                    <option style="display: none;" value="" disabled selected></option>
-                    <?php
+                <div class="dropdown-nereden">
+                    <div class="group">
+                        <input class="search-selectx input" data-user-id="" type="text" list="Users" id="daireBlok1"
+                            required="" />
+                        <label class="selectx-label" for="daireBlok1">Blok :</label>
+                    </div>
 
-                foreach ($blokList as $s ){
-                    echo "  <option value='".$s['blok_id']."'>".$s['blok_adi']."</option>";
+                    <div class="dropdown-content-nereden searchInput-btn" id="daireBlok1DP">
+                        <div class="dropdown-content-inside-nereden bolumPopup">
+                            <input type="text" id="searchInput-daireBlok1" placeholder="Ara...">
 
-                }
-                  ?>
-                </select>
-                <label id="daireBlokLabel" for="daireBlok1">Blok: </label>
+                            <?php 
+                        foreach($blokList as $s){
+                         echo '                                        
+                            <button  data-user-id="' . $s['blok_id'] . '">' . $s['blok_adi'] . '</button>';
+                        }
+                    ?>
+                        </div>
+
+                    </div>
+
+                </div>
             </div>
 
             <div class="col-md-6 col">
-                <select class="input" id="daireGrup1" required="">
-                    <option style="display: none;" value="" disabled selected></option>
-                    <?php
+                <div class="dropdown-nereden">
+                    <div class="group">
+                        <input class="search-selectx input" data-user-id="" type="text" list="Users" id="daireGrup1"
+                            required="" />
+                        <label class="selectx-label" for="daireGrup1">Daire Grubu :</label>
+                    </div>
 
+                    <div class="dropdown-content-nereden searchInput-btn" id="daireGrup1DP">
+                        <div class="dropdown-content-inside-nereden bolumPopup">
+                            <input type="text" id="searchInput-daireGrup1" placeholder="Ara...">
+
+                            <?php 
                         foreach ($grupList as $s ){
-                            echo "  <option value='".$s['grup_id']."'>".$s['grup_adi']."</option>";
-
+                         echo '                                        
+                            <button  data-user-id="' . $s['grup_id'] . '">' . $s['grup_adi'] . '</button>';
                         }
                     ?>
-                </select>
-                <label for="daireGrup1">Daire Grubu :</label>
+                        </div>
+
+                    </div>
+
+                </div>
             </div>
             <div class="col-md-6 col">
                 <input class="input" type="text" id="daireBrut1" onkeypress="onlyNumberKey(event)" required="" />
@@ -1721,4 +1743,6 @@ tableTdElements.forEach(function(element) {
 dropDownn('daireBlok', 'daireBlokDP', 'searchInput');
 dropDownn('daireGrup', 'daireGrupDP', 'searchInput2');
 dropDownn('userInput', 'userInputDP', 'searchInput3');
+dropDownn('daireBlok1', 'daireBlok1DP', 'searchInput-daireBlok1');
+dropDownn('daireGrup1', 'daireGrup1DP', 'searchInput-daireGrup1');
 </script>
