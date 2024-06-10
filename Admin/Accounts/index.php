@@ -783,25 +783,34 @@ function validatePhoneNumber(element) {
                 var newCell3 = document.createElement('td');
                 var newCell4 = document.createElement('td');
                 var newCell5 = document.createElement('td');
+                var newCell6 = document.createElement('td');
 
                 var newTextCell = document.createElement('td'); // Yeni metin hücresi oluştur
                 newTextCell.textContent = "Birden Fazla Daire"; // Metin içeriğini ayarla
-
                 newRow.classList.add('git-ac');
                 newRow.setAttribute('data-userid', userID);
+
                 newCell3.colSpan = "1"; // Üçüncü hücre 1 sütunu kaplasın
                 newCell1.colSpan = "1"; // İlk hücre 1 sütunu kaplasın
                 newCell2.colSpan = "1"; // İkinci hücre 2 sütunu kaplasın
                 newCell4.colSpan = "1"; // Dördüncü hücre 1 sütunu kaplasın
                 newCell5.colSpan = "1"; // Dördüncü hücre 1 sütunu kaplasın
+                newCell6.colSpan = "1"; // Dördüncü hücre 1 sütunu kaplasın
 
                 var userNameInput = document.createElement('input');
                 userNameInput.type = 'text';
                 userNameInput.value = userName;
                 userNameInput.className = 'edit-input';
 
-                newCell2.textContent = tc;
-                newCell4.textContent = phoneNumber;
+                var TCInput =  document.createElement('input');
+                TCInput.type = 'text';
+                TCInput.value = tc;
+                TCInput.className = 'edit-input';
+
+                var phoneNumberInput =  document.createElement('input');
+                phoneNumberInput.type = 'text';
+                phoneNumberInput.value = phoneNumber;
+                phoneNumberInput.className = 'edit-input';
                 
                 newCell2.setAttribute('oninput', 'validateTC(this)');
                 newCell4.setAttribute('oninput', 'validatePhoneNumber(this)');
@@ -811,11 +820,15 @@ function validatePhoneNumber(element) {
                 newCell3.innerHTML = "<i class='fa-solid fa-turn-up tumu-btn'></i>";
 
                 newCell1.appendChild(userNameInput);
+                newCell2.appendChild(TCInput);
+                newCell4.appendChild(phoneNumberInput);
+
                 newRow.appendChild(newCell3);
                 newRow.appendChild(newCell1); // Yeni hücreleri yeni satıra ekle
                 newRow.appendChild(newCell2);
                 newRow.appendChild(newCell4);
                 newRow.appendChild(newTextCell);
+                newRow.appendChild(newCell6);
 
                 // Yeni satırı ekleyeceğimiz referans satırı bul
                 var referenceRow = document.querySelector('[data-userid="' + userID + '"]');
@@ -1356,6 +1369,7 @@ function validatePhoneNumber(element) {
         // editToggle checkbox'ının durumunu kontrol et ve uygun fonksiyonu çağır
         editToggle.addEventListener('change', () => {
             if (editToggle.checked) {
+                checkEdit = false;
                 okuma();
             } else {
                 iptal();
@@ -1364,23 +1378,32 @@ function validatePhoneNumber(element) {
     });
 
     function okuma() {
-        //bakılacak..
-        const elements = document.querySelectorAll('.edit-input');
-        // Tüm .edit-input öğelerine "active" sınıfını ekle
-        elements.forEach(element => {
-            element.classList.add('activeEdit');
-        });
+    // Tüm .edit-input öğelerine "active" sınıfını ekle
+    const allRows = document.querySelectorAll('.users-table tbody tr');
+    const processedUserIDs = new Set();
 
-        // Tüm tablo satırlarına "active" sınıfını ekle
-        const allRows = document.querySelectorAll('.users-table tbody tr');
-        allRows.forEach(row => {
-            row.classList.add('activeEdit');
-        });
+    allRows.forEach(row => {
+        const userID = row.getAttribute('data-userid');
 
-        // Butonu görünür yap
-        const guncelleButton = document.getElementById('guncelleButton');
-        guncelleButton.style.display = 'block';
-    }
+        if (!processedUserIDs.has(userID)) {
+            // İlk kez karşılaşılan userID, sadece bu satırın .edit-input öğelerine sınıf ekle
+            const elements = row.querySelectorAll('.edit-input');
+            elements.forEach(element => {
+                element.classList.add('activeEdit');
+            });
+            processedUserIDs.add(userID);
+        }
+    });
+
+    // Tüm tablo satırlarına "active" sınıfını ekle 
+    allRows.forEach(row => {
+        row.classList.add('activeEdit');
+    });
+
+    // Butonu görünür yap
+    const guncelleButton = document.getElementById('guncelleButton');
+    guncelleButton.style.display = 'block';
+}
 
     function iptal() {
         // .edit-input öğelerini seç ve "activeEdit" sınıfını kaldır
@@ -1467,7 +1490,6 @@ function validatePhoneNumber(element) {
                     d: d,
                 },
                 success: function (response) {
-
                     if (response && checkEdit) {
                         window.location.href = "index.php?parametre=custom";
                     }
