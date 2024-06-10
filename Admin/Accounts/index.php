@@ -1402,30 +1402,43 @@ function validatePhoneNumber(element) {
         row.classList.add('activeEdit');
     });
 
+    // .table_td sınıfındaki tüm öğelere cursor: inline ekle
+    const tableTdElements = document.querySelectorAll('.table_td');
+    tableTdElements.forEach(element => {
+        element.style.cursor = 'inherit';
+    });
+
     // Butonu görünür yap
     const guncelleButton = document.getElementById('guncelleButton');
     guncelleButton.style.display = 'block';
 }
 
-    function iptal() {
-        // .edit-input öğelerini seç ve "activeEdit" sınıfını kaldır
-        const elements = document.querySelectorAll('.edit-input');
-        elements.forEach(element => {
-            element.classList.remove('activeEdit');
-        });
+function iptal() {
+    // .edit-input öğelerini seç ve "activeEdit" sınıfını kaldır
+    const elements = document.querySelectorAll('.edit-input');
+    elements.forEach(element => {
+        element.classList.remove('activeEdit');
+    });
 
-        // Tüm tablo satırlarından "activeEdit" sınıfını kaldır
-        const allRows = document.querySelectorAll('.users-table tbody tr');
-        allRows.forEach(row => {
-            row.classList.remove('activeEdit');
-        });
+    // Tüm tablo satırlarından "activeEdit" sınıfını kaldır
+    const allRows = document.querySelectorAll('.users-table tbody tr');
+    allRows.forEach(row => {
+        row.classList.remove('activeEdit');
+    });
 
-        // Butonu görünmez yap
-        const guncelleButton = document.getElementById('guncelleButton');
-        guncelleButton.style.display = 'none';
+    // .table_td sınıfındaki tüm öğelere cursor: pointer ekle
+    const tableTdElements = document.querySelectorAll('.table_td');
+    tableTdElements.forEach(element => {
+        element.style.cursor = 'pointer';
+    });
 
-        location.reload();
-    }
+    // Butonu görünmez yap
+    const guncelleButton = document.getElementById('guncelleButton');
+    guncelleButton.style.display = 'none';
+
+    location.reload();
+}
+
 
 /* ======================================================== */
 
