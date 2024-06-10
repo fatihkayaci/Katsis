@@ -178,15 +178,6 @@ try {
     <div class="input-group-div">
 
         <div class="input-group1">
-            <div class="check-box"> 
-                <div class="custom-checkbox">
-                    <input type="checkbox" name="status" id="editToggle">
-                    <label for="editToggle">
-                        <div class="status-switch" data-unchecked="kapalı" data-checked="açık"></div>
-                    </label>
-                </div>
-            </div>
-
         </div>
 
         <div class="input-group1">
@@ -205,6 +196,15 @@ try {
         <thead>
             <tr class="users-table-info">
                 <th class="check-style">
+                    <input id="check-" class="check1" type="checkbox" />
+                    <label for="check-" class="check">
+                        <svg width="18px" height="18px" viewBox="0 0 18 18">
+                            <path
+                                d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z">
+                            </path>
+                            <polyline points="1 9 7 14 15 4"></polyline>
+                        </svg>
+                    </label>
                 </th>
                 <th onclick="sortTable(1)">Ad Soyad <i id="icon-table1" class="fa-solid fa-sort-down"></i></th>
                 <th onclick="sortTable(2)">TC <i id="icon-table2" class="fa-solid fa-sort-down"></i></th>
@@ -215,7 +215,8 @@ try {
         </thead>
         <tbody>
             <tr>
-                <td>Kullanıcı Bulunamamaktadır</td>
+                <td></td>
+                <td colspan="5">Kullanıcı Bulunamamaktadır</td>
             </tr>
         </tbody>
     </table>
