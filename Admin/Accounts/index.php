@@ -764,9 +764,10 @@ function validatePhoneNumber(element) {
 
     rows.forEach(function (row) {
         var userID = row.getAttribute('data-userid');
-        var userName = row.querySelector('.table_tt.table_td').textContent;
-        var tc = row.querySelector('.tc').textContent;
-        var phoneNumber = row.querySelector('.phoneNumberTable').textContent;
+        var userName = row.querySelector('td[data-title="Ad Soyad"] input').value;
+        var tc = row.querySelector('td[data-title="TC"] input').value;
+        var phoneNumber = row.querySelector('td[data-title="Telefon Numarası"] input').value;
+        
         if (userIdArray[userID]) {
             // Tekrarlanan bir kullanıcı kimliği bulunduğunda tüm satırı gizle
             document.querySelectorAll('[id^="tr-' + userID + '"]').forEach(function (item) {
@@ -794,7 +795,11 @@ function validatePhoneNumber(element) {
                 newCell4.colSpan = "1"; // Dördüncü hücre 1 sütunu kaplasın
                 newCell5.colSpan = "1"; // Dördüncü hücre 1 sütunu kaplasın
 
-                newCell1.textContent = userName; // İlk hücreye userName değerini ekle
+                var userNameInput = document.createElement('input');
+                userNameInput.type = 'text';
+                userNameInput.value = userName;
+                userNameInput.className = 'edit-input';
+
                 newCell2.textContent = tc;
                 newCell4.textContent = phoneNumber;
                 
@@ -805,6 +810,7 @@ function validatePhoneNumber(element) {
                 newCell4.setAttribute('contenteditable', 'false');
                 newCell3.innerHTML = "<i class='fa-solid fa-turn-up tumu-btn'></i>";
 
+                newCell1.appendChild(userNameInput);
                 newRow.appendChild(newCell3);
                 newRow.appendChild(newCell1); // Yeni hücreleri yeni satıra ekle
                 newRow.appendChild(newCell2);
@@ -1358,6 +1364,7 @@ function validatePhoneNumber(element) {
     });
 
     function okuma() {
+        //bakılacak..
         const elements = document.querySelectorAll('.edit-input');
         // Tüm .edit-input öğelerine "active" sınıfını ekle
         elements.forEach(element => {
