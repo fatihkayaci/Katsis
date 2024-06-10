@@ -130,12 +130,12 @@ try {
                         <td data-title="Ad Soyad" class="table_tt table_td" contenteditable="false">
                             <input class="edit-input" id="adSoyad" type="text" value="<?php echo $row["userName"]; ?>">
                         </td>
-                        <td data-title="TC" class="table_tt table_td tc"  contenteditable="false" oninput="validateTC(this)">
-                            <input class="edit-input" id="tcNo" type="text" value="<?php echo $row["tc"]; ?>">
+                        <td data-title="TC" class="table_tt table_td tc" contenteditable="false">
+                            <input class="edit-input" id="tcNo" type="text" value="<?php echo $row["tc"]; ?>" oninput="validateTC(this)">
                         </td>
 
-                        <td data-title="Telefon Numarası" class="table_tt table_td phoneNumberTable" contenteditable="false" oninput="validatePhoneNumber(this)">
-                            <input class="edit-input" id="numara" type="text" value="<?php echo $row["phoneNumber"]; ?>">
+                        <td data-title="Telefon Numarası" class="table_tt table_td phoneNumberTable" contenteditable="false">
+                            <input class="edit-input" id="numara" type="text" value="<?php echo $row["phoneNumber"]; ?>" oninput="validatePhoneNumber(this)">
                         </td>
 
                         <td data-title="Blok Adi" class="table_tt table_td">
@@ -473,25 +473,24 @@ foreach ($optionsBlok as $bloks) {
 </div>
 <script>
 function validateTC(element) {
-    let tc = element.innerText;
+    let tc = element.value;
 
     // Sadece sayılara izin ver ve uzunluğu 11 karakterle sınırla
     if (!/^\d*$/.test(tc) || tc.length > 11) {
-        element.innerText = tc.slice(0, 11).replace(/\D/g, '');
+        element.value = tc.slice(0, 11).replace(/\D/g, '');
         alert("TC numarası sadece sayılardan oluşmalı ve 11 karakter uzunluğunda olmalıdır.");
     }
 }
 
 function validatePhoneNumber(element) {
-    let phoneNumber = element.innerText;
+    let phoneNumber = element.value;
 
     // Sadece sayılara izin ver ve uzunluğu 10 karakterle sınırla
     if (!/^\d*$/.test(phoneNumber) || phoneNumber.length > 10) {
-        element.innerText = phoneNumber.slice(0, 10).replace(/\D/g, '');
+        element.value = phoneNumber.slice(0, 10).replace(/\D/g, '');
         alert("Telefon numarası sadece sayılardan oluşmalı ve 10 karakter uzunluğunda olmalıdır.");
     }
 }
-
     window.onload = function () {
         var tcInput = document.getElementsByName('tc')[0];
         var phoneInput = document.getElementsByName('phoneNumber')[0];
@@ -806,11 +805,13 @@ function validatePhoneNumber(element) {
                 TCInput.type = 'text';
                 TCInput.value = tc;
                 TCInput.className = 'edit-input';
+                TCInput.setAttribute('oninput', 'validateTC(this)'); // oninput özelliğini ekle
 
                 var phoneNumberInput =  document.createElement('input');
                 phoneNumberInput.type = 'text';
                 phoneNumberInput.value = phoneNumber;
                 phoneNumberInput.className = 'edit-input';
+                phoneNumberInput.setAttribute('oninput', 'validatePhoneNumber(this)'); // oninput özelliğini ekle
                 
                 newCell2.setAttribute('oninput', 'validateTC(this)');
                 newCell4.setAttribute('oninput', 'validatePhoneNumber(this)');
@@ -1082,9 +1083,9 @@ function validatePhoneNumber(element) {
             var rows = document.querySelectorAll('#example tbody tr.git-ac:not(.none)');
             rows.forEach(function (row) {
                 var userID = row.getAttribute('data-userid');
-                var userName = row.querySelector('td:nth-child(2)').textContent.trim();
-                var tc = row.querySelector('td:nth-child(3)').textContent.trim();
-                var phoneNumber = row.querySelector('td:nth-child(4)').textContent.trim();
+                var userName = row.querySelector('td:nth-child(2) input').value.trim();
+                var tc = row.querySelector('td:nth-child(3) input').value.trim();
+                var phoneNumber = row.querySelector('td:nth-child(4) input').value.trim();
                 $.ajax({
                     url: 'Controller/Accounts/update_user.php',
                     type: 'POST',
@@ -1266,6 +1267,7 @@ function validatePhoneNumber(element) {
         var block = row.block;
         var flatCount = row.flatCount;
         var status = row.status;
+        console.log(`block: ${block}, flatCount: ${flatCount}, status: ${status}`);
 
         blokArray.forEach(function(blokElement) {
             if (block === blokElement.letter && flatCount === blokElement.number) {
@@ -1277,7 +1279,7 @@ function validatePhoneNumber(element) {
             }
         });
     });
-
+    alert(isConflict);
     // Çakışma durumu varsa uyarı ver ve işlem yap
     if (isConflict) {
         alert(`Çakışma durumu bulundu: Blok ismi: ${block}, Daire sayısı: ${flatCount}, Durum: ${status}`);
