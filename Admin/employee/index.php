@@ -98,16 +98,15 @@ try {
                     </label>
                 </td>
                 <td data-title="Ad Soyad" class="table_tt table_td" contenteditable="false">
-                    <?php echo $row["fullName"]; ?>
+                    <input class="edit-input" id="adSoyad" type="text" value="<?php echo $row["fullName"]; ?>">
                 </td>
 
                 <td data-title="tc" class="table_tt table_td" contenteditable="false">
-                    <?php echo $row["TC"]; ?>
+                    <input class="edit-input" id="tcNo" type="text" value="<?php echo $row["TC"]; ?>">
                 </td>
 
                 <td data-title="Telefon Numarası" class="table_tt table_td phoneNumberTable" contenteditable="false">
-
-                    <?php echo $row["phoneNumber"]; ?>
+                    <input class="edit-input" id="numara" type="text" value="<?php echo $row["phoneNumber"]; ?>">
                 </td>
 
                 <td data-title="Email" class="table_tt table_td email" contenteditable="false">
@@ -182,29 +181,31 @@ try {
         <h2 class="form-signin-heading">personel Ekleme</h2>
 
         <div class="row mb-1">
-            <div class="col-md-6 col">
+            <div class="col-md-6 col-btn">
                 <input class="input" type="text" name="userName" required="">
                 <label for="userName">Ad Soyad :</label>
-            </div>
-
-            <div class="col-md-6 col">
-                <input class="input" type="text" name="tc" required="" require>
-                <label for="tc">T.C. Kimlik No :</label>
             </div>
         </div>
 
         <div class="row">
+            <div class="col-md-6 col">
+                <input class="input" type="text" name="tc" required="" require>
+                <label for="tc">T.C. Kimlik No :</label>
+            </div>
+
             <div class="col-md-6 col">
                 <input class="input tel" type="number" name="phoneNumber" required="">
                 <label for="phoneNumber">Telefon Numarası :</label>
             </div>
 
+        </div>
+
+        <div class="row">
             <div class="col-md-6 col">
                 <input class="input" type="text" name="userEmail" required="">
                 <label for="userEmail">E-Posta :</label>
             </div>
-        </div>
-        <div class="row">
+
             <div class="col-md-6 col margint mt-0">
                 <div class="select-div">
                     <div class="dropdown-nereden">
@@ -227,6 +228,9 @@ try {
                 </div>
             </div>
 
+        </div>
+
+        <div class="row">
             <div class="col-md-6 col margint mt-0">
                 <div class="select-div">
                     <div class="dropdown-nereden">
@@ -250,57 +254,36 @@ try {
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="row">
             <div class="col-md-6 col margint">
                 <input class="input" type="text" id="iban" name="iban" maxlength="28" oninput="addTRPrefix(this)" required="" />
                 <label for="iban">Iban</label>
             </div>
-            <!-- labela Bakilicak Kutuphane ile Yapilicak -->
+            
+        </div>
+
+        <div class="row">
             <div class="col-md-6 col margint">
                 <input class="input" data-user-id="" id="datepickerSecim" name="startingWorking" type="text" required="">
                 <label for="startingWorking">İşe Giriş Tarihi</label>
             </div>
-        </div>
-
-        <div class="row">
             <!-- burayı beraber konuşmamız gerekiyor. -->
             <div class="col-md-6 col margint">
                 <input class="input" type="text" name="task" required="">
                 <label for="task">Görevi</label>
             </div>
+        </div>
 
+        <div class="row">
             <div class="col-md-6 col margint">
                 <input class="input" type="text" name="sigortaNo" required="">
                 <label for="sigortaNo">Sigorta No</label>
             </div>
-        </div>
-        <div class="row">
             <div class="col-md-6 col margint">
                 <input class="input" type="text" name="salary" required="">
                 <label for="salary">Maaş</label>
             </div>
-            <div class="col-md-6 col margint">
-                <div class="dropdown-nereden">
-                    <div class="group">
-                        <input class="search-selectx input" data-user-id="" type="text" id="unit"
-                            required="" />
-                        <label class="selectx-label" for="unit">Brim :</label>
-                    </div>
-
-                    <div class="dropdown-content-nereden searchInput-btn" id="unitDP">
-                        <div class="dropdown-content-inside-nereden empPopup">
-                            <input type="hidden" id="searchInput-unit" placeholder="Ara...">
-
-                            <button  data-user-id="tl">TL (₺)</button>
-                            <button  data-user-id="euro">EURO (€)</button>
-                            <button  data-user-id="dolar">DOLAR ($)</button>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
+            
         </div>
         <!-- buraya bak yusuf bunlara css atılacak -->
         <div class="row">
@@ -323,13 +306,13 @@ try {
 
         <div class="additional-fields hidden">
             <div class="row">
-                <div class="col-md-6 col margint">
+                <div class="col-md-6 mt-4 col margint">
                     <input class="input" type="text" name="openingBalance" required="">
                     <label for="openingBalance">Açılış Bakiyesi</label>
                 </div>
 
-                <div class="col-md-6 col margint">
-                    <div class="select-div">
+                <div class="col-md-6 mt-4 col margint">
+                    <div class="select-div mt-0">
                         <div class="dropdown-nereden">
                             <div class="group">
                                 <input class="search-selectx input" data-user-id="" type="text" id="userInput-bakiye"
@@ -348,18 +331,13 @@ try {
                             </div>
                         </div>
                     </div>
-                    <!-- fatih burdaki selecti iptal ettim yeni select bu yukardaki -->
-                    <!-- <select name="balanceType">
-                        <option value=""></option>
-                        <option value="Borç">Borç</option>
-                        <option value="Alacak">Alacak</option>
-                    </select> -->
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-md-6 col-btn margint">
-                    <input class="input" type="date" name="promise" required="">
+                    <input class="input" data-user-id="" id="datepickerAcilis" name="promise" type="text" required="">
+                    <label for="datepickerAcilis">Ekleme Tarihi</label>
                 </div>
             </div>
         </div>
@@ -590,7 +568,6 @@ function toggleDisplay() {
 
 <script src="assets/js/mycode/dropdown.js"></script>
 <script>
-dropDownn('unit', 'unitDP', 'searchInput-unit');
 dropDownn('userInput', 'userInputDP', 'searchInput-userInput');
 dropDownn('educationStatus', 'educationStatusDP', 'searchInput-educationStatus');
 dropDownn('userInput-bakiye', 'userInput-bakiyeDP', 'searchInput-userInput-bakiye');
@@ -971,7 +948,6 @@ function saveUser() {
     var task = $('input[name="task"]').val();
     var sigortaNo = $('input[name="sigortaNo"]').val();
     var salary = $('input[name="salary"]').val();
-    var unit = $('input[name="unit"]').val();
     var openingBalance = $('input[name="openingBalance"]').val() || null;
     var balanceType = $('select[name="balanceType"]').val() || null;
     var promise = $('input[name="promise"]').val() || null;
@@ -988,17 +964,16 @@ function saveUser() {
     console.log("task:", task);
     console.log("sigortaNo:", sigortaNo);
     console.log("salary:", salary);
-    console.log("unit:", unit);
     console.log("openingBalance:", openingBalance);
     console.log("balanceType:", balanceType);
     console.log("promise:", promise);
     */
     saveUserData(apartman_id, userName, tc, phoneNumber, userEmail, gender, educationStatus,
-    iban, startingWorking, task, sigortaNo, salary, unit, openingBalance, balanceType, promise);
+    iban, startingWorking, task, sigortaNo, salary, openingBalance, balanceType, promise);
 }
 
 function saveUserData(apartman_id, userName, tc, phoneNumber, userEmail, gender, educationStatus, 
-iban, startingWorking, task, sigortaNo, salary, unit, openingBalance, balanceType, promise) {
+iban, startingWorking, task, sigortaNo, salary, openingBalance, balanceType, promise) {
     $.ajax({
         url: 'Controller/Employeed/employedSave.php',
         type: 'POST',
@@ -1015,7 +990,6 @@ iban, startingWorking, task, sigortaNo, salary, unit, openingBalance, balanceTyp
             task: task,
             sigortaNo: sigortaNo,
             salary: salary,
-            unit: unit,
             openingBalance: openingBalance,
             balanceType: balanceType,
             promise: promise
@@ -1135,94 +1109,60 @@ tableRows.forEach(row => {
 
 var checkEdit = true;
 // Checkbox durumuna göre düzenleme fonksiyonlarını etkinleştirme veya devre dışı bırakma
-document.getElementById("editToggle").addEventListener("change", function() {
-    if (this.checked) {
-        openEdit();
-        disableDemoFunction();
-        checkEdit = false;
-        // Checkbox işaretlendiğinde 2. ve 3. sütunlara "color-new" class'ını ekle
-        var trElements = document.querySelectorAll('.git-ac');
-        $('#guncelleButton').css('display', 'inline-block');
-        trElements.forEach(function(trElement) {
-            var tdElements = trElement.querySelectorAll('td:nth-child(2), td:nth-child(3)');
-            tdElements.forEach(function(tdElement) {
-                tdElement.classList.add('color-new');
-            });
-        });
-    } else {
-        closeEdit();
-        enableDemoFunction();
-        checkEdit = true;
-        // Checkbox işaretlenmediğinde 2. ve 3. sütunlardan "color-new" class'ını kaldır
-        var trElements = document.querySelectorAll('.git-ac');
-        $('#guncelleButton').css('display', 'none');
-        trElements.forEach(function(trElement) {
-            var tdElements = trElement.querySelectorAll('td:nth-child(2), td:nth-child(3)');
-            tdElements.forEach(function(tdElement) {
-                tdElement.classList.remove('color-new');
-            });
-        });
-    }
-});
-var initiallyVisibleRows = "";
-document.addEventListener("DOMContentLoaded", function() {
-    initiallyVisibleRows = document.querySelectorAll('.git-ac:not([style*="display: none"])');
-});
-
-function openEdit() {
-    initiallyVisibleRows.forEach(function(row) {
-        var editableCells = row.querySelectorAll('td[contenteditable="false"]');
-        editableCells.forEach(function(cell) {
-            cell.setAttribute('contenteditable', 'true');
+/* Yeni Düzenleme Alanı (Ben ekledim fatih ama problemler olabilir) (ben == yusuf) */
+document.addEventListener('DOMContentLoaded', () => {
+        const editToggle = document.getElementById('editToggle');
+        
+        // editToggle checkbox'ının durumunu kontrol et ve uygun fonksiyonu çağır
+        editToggle.addEventListener('change', () => {
+            if (editToggle.checked) {
+                okuma();
+            } else {
+                iptal();
+            }
         });
     });
-}
 
+    function okuma() {
+        //bakılacak..
+        const elements = document.querySelectorAll('.edit-input');
+        // Tüm .edit-input öğelerine "active" sınıfını ekle
+        elements.forEach(element => {
+            element.classList.add('activeEdit');
+        });
 
-function closeEdit() {
-    var editableCells = document.querySelectorAll('td[contenteditable="true"]');
-    editableCells.forEach(function(cell) {
-        cell.setAttribute('contenteditable', 'false');
-    });
-}
+        // Tüm tablo satırlarına "active" sınıfını ekle
+        const allRows = document.querySelectorAll('.users-table tbody tr');
+        allRows.forEach(row => {
+            row.classList.add('activeEdit');
+        });
 
-function disableDemoFunction() {
-
-
-    var tableTds = document.getElementsByClassName("table_tt");
-    for (var i = 0; i < tableTds.length; i++) {
-        tableTds[i].classList.remove("table_td");
-    }
-}
-
-function enableDemoFunction() {
-    /*  var rows = document.querySelectorAll('.git-ac');
-      rows.forEach(function(row) {
-          row.addEventListener('click', handleClick);
-      });*/
-
-    var tableTds = document.getElementsByClassName("table_tt");
-    for (var i = 0; i < tableTds.length; i++) {
-        tableTds[i].classList.add("table_td");
+        // Butonu görünür yap
+        const guncelleButton = document.getElementById('guncelleButton');
+        guncelleButton.style.display = 'block';
     }
 
-}
-/*
-function handleClick(event) {
-    var isCheckboxClicked = event.target.tagName === 'INPUT' && event.target.getAttribute('type') === 'checkbox';
+    function iptal() {
+        // .edit-input öğelerini seç ve "activeEdit" sınıfını kaldır
+        const elements = document.querySelectorAll('.edit-input');
+        elements.forEach(element => {
+            element.classList.remove('activeEdit');
+        });
 
-    if (isCheckboxClicked) {
-        event.stopPropagation();
-        return;
+        // Tüm tablo satırlarından "activeEdit" sınıfını kaldır
+        const allRows = document.querySelectorAll('.users-table tbody tr');
+        allRows.forEach(row => {
+            row.classList.remove('activeEdit');
+        });
+
+        // Butonu görünmez yap
+        const guncelleButton = document.getElementById('guncelleButton');
+        guncelleButton.style.display = 'none';
+
+        location.reload();
     }
 
-    var userID = this.getAttribute('data-userid');
-    window.location.href = 'index.php?parametre=custom&userID=' + encodeURIComponent(userID);
-}  */
-
-enableDemoFunction();
-
-
+/* ======================================================== */
 
 
 
@@ -1371,5 +1311,6 @@ function tarihSec(veri, day) {
 
 // Fonksiyonları çağırma
 tarihSec('datepickerSecim', 0);
+tarihSec('datepickerAcilis', 0);
 
     </script>
