@@ -1124,43 +1124,64 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function okuma() {
-        //bakılacak..
-        const elements = document.querySelectorAll('.edit-input');
-        // Tüm .edit-input öğelerine "active" sınıfını ekle
-        elements.forEach(element => {
-            element.classList.add('activeEdit');
-        });
+    // Tüm .edit-input öğelerine "active" sınıfını ekle
+    const allRows = document.querySelectorAll('.users-table tbody tr');
+    const processedUserIDs = new Set();
 
-        // Tüm tablo satırlarına "active" sınıfını ekle
-        const allRows = document.querySelectorAll('.users-table tbody tr');
-        allRows.forEach(row => {
-            row.classList.add('activeEdit');
-        });
+    allRows.forEach(row => {
+        const userID = row.getAttribute('data-userid');
 
-        // Butonu görünür yap
-        const guncelleButton = document.getElementById('guncelleButton');
-        guncelleButton.style.display = 'block';
-    }
+        if (!processedUserIDs.has(userID)) {
+            // İlk kez karşılaşılan userID, sadece bu satırın .edit-input öğelerine sınıf ekle
+            const elements = row.querySelectorAll('.edit-input');
+            elements.forEach(element => {
+                element.classList.add('activeEdit');
+            });
+            processedUserIDs.add(userID);
+        }
+    });
 
-    function iptal() {
-        // .edit-input öğelerini seç ve "activeEdit" sınıfını kaldır
-        const elements = document.querySelectorAll('.edit-input');
-        elements.forEach(element => {
-            element.classList.remove('activeEdit');
-        });
+    // Tüm tablo satırlarına "active" sınıfını ekle 
+    allRows.forEach(row => {
+        row.classList.add('activeEdit');
+    });
 
-        // Tüm tablo satırlarından "activeEdit" sınıfını kaldır
-        const allRows = document.querySelectorAll('.users-table tbody tr');
-        allRows.forEach(row => {
-            row.classList.remove('activeEdit');
-        });
+    // .table_td sınıfındaki tüm öğelere cursor: inline ekle
+    const tableTdElements = document.querySelectorAll('.table_td');
+    tableTdElements.forEach(element => {
+        element.style.cursor = 'inherit';
+    });
 
-        // Butonu görünmez yap
-        const guncelleButton = document.getElementById('guncelleButton');
-        guncelleButton.style.display = 'none';
+    // Butonu görünür yap
+    const guncelleButton = document.getElementById('guncelleButton');
+    guncelleButton.style.display = 'block';
+}
 
-        location.reload();
-    }
+function iptal() {
+    // .edit-input öğelerini seç ve "activeEdit" sınıfını kaldır
+    const elements = document.querySelectorAll('.edit-input');
+    elements.forEach(element => {
+        element.classList.remove('activeEdit');
+    });
+
+    // Tüm tablo satırlarından "activeEdit" sınıfını kaldır
+    const allRows = document.querySelectorAll('.users-table tbody tr');
+    allRows.forEach(row => {
+        row.classList.remove('activeEdit');
+    });
+
+    // .table_td sınıfındaki tüm öğelere cursor: pointer ekle
+    const tableTdElements = document.querySelectorAll('.table_td');
+    tableTdElements.forEach(element => {
+        element.style.cursor = 'pointer';
+    });
+
+    // Butonu görünmez yap
+    const guncelleButton = document.getElementById('guncelleButton');
+    guncelleButton.style.display = 'none';
+
+    location.reload();
+}
 
 /* ======================================================== */
 
