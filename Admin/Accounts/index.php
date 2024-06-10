@@ -1179,7 +1179,7 @@ function validatePhoneNumber(element) {
 
     // Verileri saklamak için boş bir dizi oluştur
     const rowData = [];
-
+alert(rowData);
     // Her bir satırı dolaşarak verileri al
     tableRows.forEach(row => {
         const blockName = row.querySelector('td:nth-child(4)').textContent.trim(); // Blok Adı
