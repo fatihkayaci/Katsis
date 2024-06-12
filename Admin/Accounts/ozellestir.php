@@ -666,11 +666,50 @@ WHERE m.user_id = :user_id AND m.apartman_id = :apartman_id AND maliye_turu = :m
 
         }
 
+    }</script>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('#kaydetBtn').on('click', function() {
+            var userNo = $('#userNo').val();
+            var phoneNumber = $('#phoneNumber').val();
+            var gender = $('#gender').val();
+            var tc = $('#tc').val();
+            var password = $('#parola').val();
+            var plate = $('#plate').val();
 
+            // Verileri konsola yazdır
+            console.log("User No: " + userNo);
+            console.log("Phone Number: " + phoneNumber);
+            console.log("Gender: " + gender);
+            console.log("T.C. No: " + tc);
+            console.log("Password: " + password);
+            console.log("Plate: " + plate);
 
-
-    }
+            $.ajax({
+                url: 'update_profile.php',
+                type: 'POST',
+                data: {
+                    userNo: userNo,
+                    phoneNumber: phoneNumber,
+                    gender: gender,
+                    tc: tc,
+                    password: password,
+                    plate: plate
+                },
+                success: function(response) {
+                    alert(response);
+                    if (response == 1) {
+                        location.reload(); // Sayfayı yeniden yükle
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Gönderim hatası:', error);
+                }
+            });
+        });
+    });
     // Form alanlarına odaklandığında kendi renklerine dönmesi için yazılan kodlar.
     $('#aciklama').focus(function() {
         $('#aciklama').css('border-color', '#277ce0');
