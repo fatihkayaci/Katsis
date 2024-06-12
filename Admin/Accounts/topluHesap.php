@@ -501,7 +501,12 @@ function checkPhoneNumberLength(input) {
                         newEntries: JSON.stringify(newEntries)
                     },
                     success: function(response) {
-                        console.log(response);
+                        if (response == "success") {
+                            alert("Kullanıcılar Başarı ile Eklenmiştir.");
+                            location.reload();     
+                        }else {
+                            alert(response);
+                        }
                     },
                     error: function(error) {
                         console.error(error);

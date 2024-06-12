@@ -21,8 +21,8 @@
 
     try {
         // SQL sorgusu
-        $sql = "SELECT * from tbl_employed
-        WHERE apartman_ID = :apartmanID AND arsive = 0";
+        $sql = "SELECT * from tbl_users
+        WHERE apartman_ID = :apartmanID AND arsive = 0 AND rol = 6";
         
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':apartmanID', $_SESSION["apartID"]);
@@ -42,123 +42,91 @@
                 ?>
             <div id="toplu-box" data-userid="" class="toplu-islem">
 
-                <div data-title="Ad Soyad" name="fullName" class="toplu-islem-inside">
+                <div data-title="Ad Soyad" name="userName" class="toplu-islem-inside">
                     <label for="ad">İsim Soyisim:</label>
-                    <input id="ad" type="text" class="input-toplu" value="<?php echo $row["fullName"] ?? ''; ?>"
-                        <?php echo isset($row["fullName"]) ? 'readonly' : ''; ?> />
+                    <input id="ad" type="text" class="input-toplu" value="<?php echo $row["userName"] ?? ''; ?>"
+                        <?php echo isset($row["userName"]) ? 'readonly' : ''; ?> />
                 </div>
 
                 <div data-title="TC No" name="TC" class="toplu-islem-inside">
                     <label for="tc">TC Numarası:</label>
                     <input id="tc" type="text" class="input-toplu" oninput="checkTCNumberLength(this)"
-                        value="<?php echo $row["TC"] ?? ''; ?>"
-                        <?php echo isset($row["fullName"]) ? 'readonly' : ''; ?> />
+                        value="<?php echo $row["tc"] ?? ''; ?>"
+                        <?php echo isset($row["userName"]) ? 'readonly' : ''; ?> />
                 </div>
 
                 <div data-title="gender" name="gender" class="toplu-islem-inside">
                     <label for="gender">Cinsiyet:</label>
-                    <select id="gender" class="input-toplu" <?php echo isset($row["fullName"]) ? 'disabled' : ''; ?>>
-                        <option value="Erkek"
-                            <?php if(isset($row["gender"]) && $row["gender"] === "Erkek") echo "selected"; ?>>
-                            Erkek</option>
-                        <option value="Kadın"
-                            <?php if(isset($row["gender"]) && $row["gender"] === "Kadın") echo "selected"; ?>>
-                            Kadın</option>
-                    </select>
+                    <input id="gender" type="text" class="input-toplu" value="<?php echo $row["gender"] ?? ''; ?>"
+                        <?php echo isset($row["userName"]) ? 'readonly' : ''; ?> />
                 </div>
 
                 <div data-title="E-Posta" name="eposta" class="toplu-islem-inside">
                     <label for="mail">Email:</label>
                     <input id="mail" type="text" class="input-toplu" value="<?php echo $row["userEmail"] ?? ''; ?>"
-                        <?php echo isset($row["fullName"]) ? 'readonly' : ''; ?> />
+                        <?php echo isset($row["userName"]) ? 'readonly' : ''; ?> />
                 </div>
 
                 <div data-title="Telefon" name="telefon" class="toplu-islem-inside">
                     <label for="phone">Telefon Numarası:</label>
                     <input id="phone" type="text" class="input-toplu" oninput="checkPhoneNumberLength(this)"
                         value="<?php echo $row["phoneNumber"] ?? ''; ?>"
-                        <?php echo isset($row["fullName"]) ? 'readonly' : ''; ?> />
+                        <?php echo isset($row["userName"]) ? 'readonly' : ''; ?> />
                 </div>
 
                 <div data-title="educationStatus" name="educationStatus" class="toplu-islem-inside">
                     <label for="education">Öğrenim Durumu:</label>
-                    <select id="education" class="input-toplu" <?php echo isset($row["fullName"]) ? 'disabled' : ''; ?>>
-                        <option value="ilkOkul"
-                            <?php if(isset($row["educationStatus"]) && $row["educationStatus"] === "ilkOkul") echo "selected"; ?>>
-                            İlk Okul</option>
-                        <option value="ortaOkul"
-                            <?php if(isset($row["educationStatus"]) && $row["educationStatus"] === "ortaOkul") echo "selected"; ?>>
-                            Orta Okul</option>
-                        <option value="lise"
-                            <?php if(isset($row["educationStatus"]) && $row["educationStatus"] === "lise") echo "selected"; ?>>
-                            Lise</option>
-                        <option value="universite"
-                            <?php if(isset($row["educationStatus"]) && $row["educationStatus"] === "universite") echo "selected"; ?>>
-                            Üniversite</option>
-                    </select>
+                    <input id="educationStatus" type="text" class="input-toplu"
+                        value="<?php echo $row["educationStatus"] ?? ''; ?>"
+                        <?php echo isset($row["userName"]) ? 'readonly' : ''; ?> />
                 </div>
 
                 <div data-title="Iban" name="Iban" class="toplu-islem-inside">
                     <label for="iban">Iban:</label>
                     <input id="iban" type="text" class="input-toplu" value="<?php echo $row["Iban"] ?? ''; ?>"
-                        <?php echo isset($row["fullName"]) ? 'readonly' : ''; ?> />
+                        <?php echo isset($row["userName"]) ? 'readonly' : ''; ?> />
                 </div>
 
                 <div data-title="startingWorking" name="startingWorking" class="toplu-islem-inside">
                     <label for="start-date">İşe Başlangıç Tarihi:</label>
-                    <input id="start-date" type="date" class="input-toplu" value="<?php echo $row["startingWorking"] ?? ''; ?>"
-                        <?php echo isset($row["fullName"]) ? 'readonly' : ''; ?> />
+                    <input id="start-date" type="text" class="input-toplu" value="<?php echo $row["startingWorking"] ?? ''; ?>"
+                        <?php echo isset($row["userName"]) ? 'readonly' : ''; ?> />
                 </div>
 
                 <div data-title="task" name="task" class="toplu-islem-inside">
                     <label for="task">Görevi:</label>
                     <input id="task" type="text" class="input-toplu" value="<?php echo $row["task"] ?? ''; ?>"
-                        <?php echo isset($row["fullName"]) ? 'readonly' : ''; ?> />
+                        <?php echo isset($row["userName"]) ? 'readonly' : ''; ?> />
                 </div>
 
                 <div data-title="sigorta" name="sigorta" class="toplu-islem-inside">
                     <label for="sigortaNo">Sigorta Numarası:</label>
                     <input id="sigortaNo" type="text" class="input-toplu" value="<?php echo $row["sigortaNo"] ?? ''; ?>"
-                        <?php echo isset($row["fullName"]) ? 'readonly' : ''; ?> />
+                        <?php echo isset($row["userName"]) ? 'readonly' : ''; ?> />
                 </div>
 
                 <div data-title="salary" name="salary" class="toplu-islem-inside">
                     <label for="salary">Maaş:</label>
                     <input id="salary" type="text" class="input-toplu" value="<?php echo $row["salary"] ?? ''; ?>"
-                        <?php echo isset($row["fullName"]) ? 'readonly' : ''; ?> />
-                </div>
-
-                <div data-title="unit" name="unit" class="toplu-islem-inside">
-                    <label for="unit">Birim:</label>
-                    <input id="unit" type="text" class="input-toplu" value="<?php echo $row["unit"] ?? ''; ?>"
-                        <?php echo isset($row["fullName"]) ? 'readonly' : ''; ?> />
+                        <?php echo isset($row["userName"]) ? 'readonly' : ''; ?> />
                 </div>
 
                 <div data-title="openingBalance" name="openingBalance" class="toplu-islem-inside">
                     <label for="openingBalance">Açılış Bakiyesi:</label>
                     <input id="openingBalance" type="text" class="input-toplu" value="<?php echo $row["openingBalance"] ?? ''; ?>"
-                        <?php echo isset($row["fullName"]) ? 'readonly' : ''; ?> />
+                        <?php echo isset($row["userName"]) ? 'readonly' : ''; ?> />
                 </div>
 
                 <div data-title="balanceType" name="balanceType" class="toplu-islem-inside">
                     <label for="balanceType">Bakiye Türü:</label>
-                    <select id="balanceType" class="input-toplu" <?php echo isset($row["balanceType"]) ? 'disabled' : ''; ?>>
-                        <option value="TL"
-                            <?php if(isset($row["balanceType"]) && $row["balanceType"] === "TL") echo "selected"; ?>>
-                            TL</option>
-                        <option value="Euro"
-                            <?php if(isset($row["balanceType"]) && $row["balanceType"] === "Euro") echo "selected"; ?>>
-                            Euro</option>
-                        <option value="Dolar"
-                            <?php if(isset($row["balanceType"]) && $row["balanceType"] === "Dolar") echo "selected"; ?>>
-                            Dolar</option>
-                    </select>
+                    <input id="balanceType" type="text" class="input-toplu" value="<?php echo $row["balanceType"] ?? ''; ?>"
+                        <?php echo isset($row["userName"]) ? 'readonly' : ''; ?> />
                 </div>
 
                 <div data-title="promise" name="promise" class="toplu-islem-inside">
                     <label for="promise">Ödeme Tarihi:</label>
-                    <input id="promise" type="Date" class="input-toplu" value="<?php echo $row["promise"] ?? ''; ?>"
-                        <?php echo isset($row["fullName"]) ? 'readonly' : ''; ?> />
+                    <input id="promise" type="text" class="input-toplu" value="<?php echo $row["promise"] ?? ''; ?>"
+                        <?php echo isset($row["userName"]) ? 'readonly' : ''; ?> />
                 </div>
             </div>
 
@@ -221,20 +189,19 @@ function addRow() {
 
     // Her bir hücre için div oluştur ve içerik ekle
     var fields = [
-        {name: 'fullName', type: 'text', label: 'İsim Soyisim:'},
-        {name: 'TC', type: 'text', label: 'TC Numarası:', oninput: 'checkTCNumberLength(this)'},
+        {name: 'userName', type: 'text', label: 'İsim Soyisim:'},
+        {name: 'tc', type: 'text', label: 'TC Numarası:', oninput: 'checkTCNumberLength(this)'},
         {name: 'gender', type: 'select', label: 'Cinsiyet:', options: [{value: 'Erkek', text: 'Erkek'}, {value: 'Kadın', text: 'Kadın'}]},
-        {name: 'eposta', type: 'text', label: 'Email:'},
-        {name: 'telefon', type: 'text', label: 'Telefon Numarası:', oninput: 'checkPhoneNumberLength(this)'},
+        {name: 'userEmail', type: 'text', label: 'Email:'},
+        {name: 'phoneNumber', type: 'text', label: 'Telefon Numarası:', oninput: 'checkPhoneNumberLength(this)'},
         {name: 'educationStatus', type: 'select', label: 'Öğrenim Durumu:', options: [{value: 'ilkOkul', text: 'İlk Okul'}, {value: 'ortaOkul', text: 'Orta Okul'}, {value: 'lise', text: 'Lise'}, {value: 'universite', text: 'Üniversite'}]},
         {name: 'Iban', type: 'text', label: 'Iban:'},
         {name: 'startingWorking', type: 'date', label: 'İşe Başlangıç Tarihi:'},
         {name: 'task', type: 'text', label: 'Görevi:'},
         {name: 'sigorta', type: 'text', label: 'Sigorta Numarası:'},
         {name: 'salary', type: 'text', label: 'Maaş:'},
-        {name: 'unit', type: 'text', label: 'Birim:'},
         {name: 'openingBalance', type: 'text', label: 'Açılış Bakiyesi:'},
-        {name: 'balanceType', type: 'select', label: 'Bakiye Türü:', options: [{value: 'TL', text: 'TL'}, {value: 'Euro', text: 'Euro'}, {value: 'Dolar', text: 'Dolar'}]},
+        {name: 'balanceType', type: 'select', label: 'Bakiye Türü:', options: [{value: 'Alacak', text: 'Alacak'}, {value: 'Borç', text: 'Borç'}]},
         {name: 'promise', type: 'date', label: 'Ödeme Tarihi:'}
     ];
 
@@ -280,51 +247,46 @@ function addRow() {
 
             <script type="text/javascript">
             saveButton.addEventListener('click', function() {
-    var tableRows = document.querySelectorAll("#employee-main .toplu-islem");
-    var dataToSend = [];
+            var tableRows = document.querySelectorAll("#employee-main .toplu-islem");
+            var dataToSend = [];
 
-    // Tüm satırları döngüye al
-    tableRows.forEach(function(row) {
-        var rowData = {};
+            // Tüm satırları döngüye al
+            tableRows.forEach(function(row) {
+                var rowData = {};
 
-        // Satır içindeki input ve select elementlerini seç
-        var inputs = row.querySelectorAll("input, select");
+                // Satır içindeki input ve select elementlerini seç
+                var inputs = row.querySelectorAll("input, select");
 
-        // Her bir input/select için değeri rowData objesine ekle
-        inputs.forEach(function(input) {
-            var name = input.getAttribute("name");
-            var value = input.value;
-            rowData[name] = value;
+                // Her bir input/select için değeri rowData objesine ekle
+                inputs.forEach(function(input) {
+                    var name = input.getAttribute("name");
+                    var value = input.value;
+                    rowData[name] = value;
+                });
+
+                console.log(rowData);
+                // rowData objesini gönderilecek veriler dizisine ekle
+                dataToSend.push(rowData);
+            });
+
+            console.log(dataToSend);
+            // AJAX isteği oluştur
+            $.ajax({
+                url: 'Controller/Employeed/bulkAddingEmployed.php',
+                type: 'POST',
+                data: {
+                    dataToSend: JSON.stringify(dataToSend)
+                },
+                success: function(response) {
+                    alert(response);
+                    location.reload();
+                },
+                error: function(error) {
+                    console.error(error);
+                }
+            });
         });
-
-        // rowData objesini gönderilecek veriler dizisine ekle
-        dataToSend.push(rowData);
-    });
-
-    console.log(dataToSend);
-    // AJAX isteği oluştur
-    $.ajax({
-        url: 'Controller/Employeed/bulkAddingEmployed.php',
-        type: 'POST',
-        data: {
-            dataToSend: JSON.stringify(dataToSend)
-        },
-        success: function(response) {
-            console.log(response);
-            if (response == "success") {
-                console.log("Başarılı!");
-                location.reload();
-            } else {
-                alert(response);
-            }
-        },
-        error: function(error) {
-            console.error(error);
-        }
-    });
-});
-
-            </script>
+</script>
 
 
 

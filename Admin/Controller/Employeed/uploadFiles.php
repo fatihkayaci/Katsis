@@ -13,6 +13,9 @@ if (isset($_FILES['excel_file']['name'])) {
     $file_tmp = $_FILES['excel_file']['tmp_name'];
     $file_type = $_FILES['excel_file']['type'];
 
+    $rol = 6;
+    $popup = 0;
+    $durum = "Personel";
     if ($file_type == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") {
         $reader = IOFactory::createReader('Xlsx');
         $spreadsheet = $reader->load($file_tmp);
@@ -31,45 +34,47 @@ if (isset($_FILES['excel_file']['name'])) {
             $hashedPassword = base64_encode($userPass);
             $userNO = generateUniqueUserID($conn);
 
-            $fullName = $row['A'];
-            $TC = $row['B'];
+            $userName = $row['A'];
+            $tc = $row['B'];
             $phoneNumber = $row['C'];
             $userEmail = $row['D'];
             $gender = $row['E'];
             $educationStatus = $row['F'];
-            $Iban = $row['G'];
+            $iban = $row['G'];
             $startingWorking = $row['H'];
             $task = $row['I'];
             $sigortaNo = $row['J'];
             $salary = $row['K'];
             $unit = $row['L'];
             $openingBalance = $row['M'];
-            $balanceType = $row['N'];
+            $balanceStatus = $row['N'];
             $promise = $row['O'];
 
-            $Sql = "INSERT INTO tbl_employed (apartman_ID, userNo, employeedPassword, fullName, TC, phoneNumber, userEmail, gender, educationStatus, Iban, startingWorking, task, sigortaNo, salary, unit, openingBalance, balanceType, promise) VALUES 
-                    (:apartman_ID, :userNo, :employeedPassword, :fullName, :TC, :phoneNumber, :userEmail, :gender, :educationStatus, :Iban, :startingWorking, :task, :sigortaNo, :salary, :unit, :openingBalance, :balanceType, :promise)";
-
-            $Stmt = $conn->prepare($Sql);
-            $Stmt->bindParam(':fullName', $fullName);
-            $Stmt->bindParam(':TC', $TC);
-            $Stmt->bindParam(':phoneNumber', $phoneNumber);
-            $Stmt->bindParam(':userEmail', $userEmail);
-            $Stmt->bindParam(':gender', $gender);
-            $Stmt->bindParam(':educationStatus', $educationStatus);
-            $Stmt->bindParam(':Iban', $Iban);
-            $Stmt->bindParam(':startingWorking', $startingWorking);
-            $Stmt->bindParam(':task', $task);
-            $Stmt->bindParam(':sigortaNo', $sigortaNo);
-            $Stmt->bindParam(':salary', $salary);
-            $Stmt->bindParam(':unit', $unit);
-            $Stmt->bindParam(':openingBalance', $openingBalance);
-            $Stmt->bindParam(':balanceType', $balanceType);
-            $Stmt->bindParam(':promise', $promise);
-            $Stmt->bindParam(':apartman_ID', $_SESSION["apartID"], PDO::PARAM_INT);
-            $Stmt->bindParam(':userNo', $userNO);
-            $Stmt->bindParam(':employeedPassword', $hashedPassword);
-            $Stmt->execute();
+            
+            $sql = "INSERT INTO tbl_users (apartman_id, user_no, userPass, userName, tc, phoneNumber, userEmail, popup, rol, durum, gender, educationStatus, Iban, startingWorking, task, sigortaNo, salary, openingBalance, balanceType, promise) VALUES 
+            (:apartman_id, :user_no, :userPass, :userName, :tc, :phoneNumber, :userEmail, :popup, :rol, :durum, :gender, :educationStatus, :Iban, :startingWorking, :task, :sigortaNo, :salary, :openingBalance, :balanceType, :promise)";
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':apartman_id', $_SESSION["apartID"], PDO::PARAM_INT);
+            $stmt->bindParam(':user_no', $userNO);
+            $stmt->bindParam(':userPass', $hashedPassword);
+            $stmt->bindParam(':userName', $userName);
+            $stmt->bindParam(':tc', $tc);
+            $stmt->bindParam(':phoneNumber', $phoneNumber);
+            $stmt->bindParam(':userEmail', $userEmail);
+            $stmt->bindParam(':popup', $popup);
+            $stmt->bindParam(':rol', $rol);
+            $stmt->bindParam(':durum', $durum);
+            $stmt->bindParam(':gender', $gender);
+            $stmt->bindParam(':educationStatus', $educationStatus);
+            $stmt->bindParam(':Iban', $iban);
+            $stmt->bindParam(':startingWorking', $startingWorking);
+            $stmt->bindParam(':task', $task);
+            $stmt->bindParam(':sigortaNo', $sigortaNo);
+            $stmt->bindParam(':salary', $salary);
+            $stmt->bindParam(':openingBalance', $openingBalance);
+            $stmt->bindParam(':balanceType', $balanceStatus);
+            $stmt->bindParam(':promise', $promise);
+            $stmt->execute();
         }
         echo "Veriler başarıyla veritabanına kaydedildi.";
     } else {

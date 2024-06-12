@@ -6,7 +6,6 @@ session_start();
 try {
     $newEntriesJSON = $_POST['newEntries'];
     $newEntries = json_decode($newEntriesJSON, true);
-    print_r($newEntries);
     $apartman_id = $_SESSION["apartID"];
     $userStatus = "Y";
 
@@ -62,7 +61,6 @@ try {
             updateUserDaire($conn, $columnName, $existingUserId, $parcalanmisSon, $parcalanmisIlk, $apartman_id);
         } else {
             $lastInsertedId = addUser($conn, $userNO, $userName, $hashedPassword, $tc, $telefon, $durum, $eposta, $plate, $gender, $openingBalance, $balanceType, $promise, $apartman_id, $userStatus);
-            echo "lastuserID = " . $lastInsertedId . "---";
             $columnName = ($durum == "kiraci") ? "kiraciID" : "katMalikiID";
             $parcalanmis = explode("/", $blok);
             $parcalanmisIlk = $parcalanmis[0];
@@ -116,7 +114,6 @@ function addUser($conn, $userNO, $userName, $userPass, $tc, $telefon, $durum, $e
 
 function updateUserDaire($conn, $columnName, $userId, $daire, $blok, $apartman_id)
 {
-    echo "USERID = " . $userId . "---";
     $sql = "UPDATE tbl_daireler AS d
             INNER JOIN tbl_blok AS b ON d.blok_adi = b.blok_id
             SET d.$columnName = :userID";

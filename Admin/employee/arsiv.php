@@ -1,7 +1,7 @@
 <?php
 try {
     $sql2 = "SELECT * 
-    FROM tbl_employed
+    FROM tbl_users
     WHERE apartman_id = " . $_SESSION["apartID"] . " AND arsive=1
     ORDER BY userID ASC";
 
@@ -89,10 +89,10 @@ try {
                     </label>
                 </td>
                 <td data-title="Ad Soyad" class="table_tt table_td" contenteditable="false">
-                    <?php echo $row["fullName"]; ?>
+                    <?php echo $row["userName"]; ?>
                 </td>
                 <td data-title="tc" class="table_tt table_td" contenteditable="false">
-                    <?php echo $row["TC"]; ?>
+                    <?php echo $row["tc"]; ?>
                 </td>
                 <td data-title="Telefon Numarası" class="table_tt table_td phoneNumberTable" contenteditable="false">
 
@@ -893,7 +893,7 @@ var topluSilButton = document.getElementById('silButton');
 topluSilButton.addEventListener('click', function() {
     var silButton = document.getElementById('silButton');
     var checkboxes = document.querySelectorAll('#example tbody input[type="checkbox"]:checked');
-
+    var successCount = 0;
     checkboxes.forEach(function(checkbox) {
         var row = checkbox.closest('tr');
         var userID = row.getAttribute('data-userid');
@@ -904,8 +904,11 @@ topluSilButton.addEventListener('click', function() {
                 userID: userID
             },
             success: function(response) {
-                console.log(response);
-                location.reload();
+                successCount++;
+                if (successCount === checkboxes.length) {
+                    alert(response);
+                    location.reload();
+                }
             },
             error: function(error) {
                 console.error('Silme hatası:', error);

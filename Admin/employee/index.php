@@ -1,8 +1,8 @@
 <?php
 try {
     $sql2 = "SELECT * 
-    FROM tbl_employed
-    WHERE apartman_id = " . $_SESSION["apartID"] . " AND arsive=0
+    FROM tbl_users
+    WHERE apartman_id = " . $_SESSION["apartID"] . " AND arsive = 0 AND rol = 6
     ORDER BY userID ASC";
 
     $stmt = $conn->prepare($sql2);
@@ -15,6 +15,13 @@ try {
 .hidden {
     display: none;
 }
+.input::placeholder {
+            color: transparent;
+        }
+
+        .input:focus::placeholder {
+            color: #999; /* İstediğiniz renk burada olabilir */
+        }
 </style>
 <div class="cener-table">
 
@@ -98,11 +105,11 @@ try {
                     </label>
                 </td>
                 <td data-title="Ad Soyad" class="table_tt table_td" contenteditable="false">
-                    <input class="edit-input" id="adSoyad" type="text" value="<?php echo $row["fullName"]; ?>">
+                    <input class="edit-input" id="adSoyad" type="text" value="<?php echo $row["userName"]; ?>">
                 </td>
 
                 <td data-title="tc" class="table_tt table_td" contenteditable="false">
-                    <input class="edit-input" id="tcNo" type="text" value="<?php echo $row["TC"]; ?>">
+                    <input class="edit-input" id="tcNo" type="text" value="<?php echo $row["tc"]; ?>">
                 </td>
 
                 <td data-title="Telefon Numarası" class="table_tt table_td phoneNumberTable" contenteditable="false">
@@ -110,11 +117,11 @@ try {
                 </td>
 
                 <td data-title="Email" class="table_tt table_td email" contenteditable="false">
-                   <?php echo $row["userEmail"]; ?>
+                    <input class="edit-input" id="userEmail" type="text" value="<?php echo $row["userEmail"]; ?>">
                 </td> 
 
                 <td data-title="Task" class="table_tt table_td Task" contenteditable="false">
-                   <?php echo $row["task"]; ?>
+                    <input class="edit-input" id="task" type="text" value="<?php echo $row["task"]; ?>">
                 </td> 
             </tr>
 
@@ -194,7 +201,7 @@ try {
             </div>
 
             <div class="col-md-6 col">
-                <input class="input tel" type="number" name="phoneNumber" required="">
+                <input class="input tel" type="number" name="phoneNumber"  placeholder="555 555 55 55" required="">
                 <label for="phoneNumber">Telefon Numarası :</label>
             </div>
 
@@ -219,8 +226,8 @@ try {
                             <div class="dropdown-content-inside-nereden empPopup">
                                 <input type="hidden" id="searchInput-userInput" placeholder="Ara...">
 
-                                <button  data-user-id="Erkek">Erkek</button>
-                                <button  data-user-id="Kadin">Kadın</button>
+                                <button data-user-id="Erkek" name="gender">Erkek</button>
+                                <button data-user-id="Kadin" name="gender">Kadın</button>
                             </div>
 
                         </div>
@@ -244,10 +251,10 @@ try {
                             <div class="dropdown-content-inside-nereden empPopup">
                                 <input type="hidden" id="searchInput-educationStatus" placeholder="Ara...">
 
-                                <button  data-user-id="ilkokul">ilkokul</button>
-                                <button  data-user-id="ortaokul">ortaokul</button>
-                                <button  data-user-id="lise">lise</button>
-                                <button  data-user-id="üniversite">üniversite</button>
+                                <button  data-user-id="ilkokul" name="educationStatus">ilkokul</button>
+                                <button  data-user-id="ortaokul" name="educationStatus">ortaokul</button>
+                                <button  data-user-id="lise" name="educationStatus">lise</button>
+                                <button  data-user-id="üniversite" name="educationStatus"> üniversite</button>
                             </div>
 
                         </div>
@@ -256,9 +263,9 @@ try {
             </div>
 
             <div class="col-md-6 col margint">
-                <input class="input" type="text" id="iban" name="iban" maxlength="28" oninput="addTRPrefix(this)" required="" />
-                <label for="iban">Iban</label>
-            </div>
+    <input class="input" type="text" id="iban" name="iban" maxlength="50" oninput="formatIBAN(this)" required="" />
+    <label for="iban">Iban</label>
+</div>
             
         </div>
 
@@ -348,7 +355,7 @@ try {
 
         <div class="row row-btn">
             <button type="button" class="btn-custom-close" onclick="closePopup()">Kapat</button>
-            <button type="button" class="btn-custom bcoc1" onclick="saveUser()" id="saveButton">Kaydet</button>
+            <button type="button" class="btn-custom bcoc1" id="saveButton">Kaydet</button>
         </div>
 
 
@@ -436,61 +443,45 @@ try {
     }
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
 <script>
-    document.getElementById("exportButton").addEventListener("click", function() {
-        let table = document.getElementById("example");
-        let rows = table.querySelectorAll("tr");
-        let data = [];
-        rows.forEach((row, rowIndex) => {
-            let cols = row.querySelectorAll("td, th");
-            let rowData = [];
-            cols.forEach((col, colIndex) => {
-                if (colIndex !== 0) { // İlk sütunu atla
-                    rowData.push(col.innerText.trim());
-                }
-            });
-            data.push(rowData);
+    document.addEventListener("DOMContentLoaded", function() {
+        var usersData = <?php echo json_encode($result); ?>;
+
+        // userID'yi çıkartarak ve blokAdi ile daireSayisi'ni birleştirerek yeni bir dizi oluşturma
+        var usersArray = usersData.map(function(user) {
+            return {
+                userName: user.userName,
+                tc: user.tc,
+                phoneNumber: user.phoneNumber ? user.phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3') : '', // Telefon numarası düzenleme
+                userEmail: user.userEmail, // Blok ve daire sayısını birleştirme
+                task: user.task
+            };
         });
 
-        let wb = XLSX.utils.book_new();
-        let ws = XLSX.utils.aoa_to_sheet(data);
+        document.getElementById('exportButton').addEventListener('click', function() {
+            var ws = XLSX.utils.json_to_sheet(usersArray);
+            var wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Users");
 
-        // Hücre stillerini tanımlama
-        const headerCellStyle = {
-            font: { bold: true, color: { rgb: "FFFFFF" } },
-            fill: { fgColor: { rgb: "000000" } },
-            alignment: { horizontal: "center", vertical: "center" }
-        };
+            // Başlıkları ayarlama
+            ws['A1'].v = 'Ad Soyad';
+            ws['B1'].v = 'TC';
+            ws['C1'].v = 'Telefon Numarası';
+            ws['D1'].v = 'Email';
+            ws['E1'].v = 'Görevi';
 
-        const dataCellStyle = {
-            alignment: { horizontal: "center", vertical: "center" }
-        };
+            // Sütun genişliklerini ayarlama
+            ws['!cols'] = [
+                { wpx: 150 }, // Ad Soyad
+                { wpx: 100 }, // TC
+                { wpx: 120 }, // Telefon Numarası
+                { wpx: 150 }, // Blok / Daire
+                { wpx: 100 }  // Durum
+            ];
 
-        // Stil uygulama
-        let range = XLSX.utils.decode_range(ws['!ref']);
-        for (let rowNum = range.s.r; rowNum <= range.e.r; rowNum++) {
-            for (let colNum = range.s.c; colNum <= range.e.c; colNum++) {
-                let cellAddress = { c: colNum, r: rowNum };
-                let cellRef = XLSX.utils.encode_cell(cellAddress);
-                if (!ws[cellRef]) continue; // hücre boşsa geç
-                if (rowNum === 0) { // Başlık satırlarına stil uygula
-                    ws[cellRef].s = headerCellStyle;
-                } else { // Veri satırlarına stil uygula
-                    ws[cellRef].s = dataCellStyle;
-                }
-            }
-        }
-
-        // Sütun genişliklerini ayarlama
-        ws['!cols'] = [
-            { wpx: 150 }, 
-            { wpx: 150 }, 
-            { wpx: 150 }, 
-            { wpx: 100 }  
-        ];
-
-        XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
-        XLSX.writeFile(wb, "exported_table.xlsx");
+            XLSX.writeFile(wb, 'Personel.xlsx');
+        });
     });
     </script>
 
@@ -509,6 +500,7 @@ try {
                 processData: false,
                 success: function(response){
                     alert(response);
+                    location.reload();
                 },
                 error: function(xhr, status, error){
                     console.error(xhr.responseText);
@@ -518,36 +510,26 @@ try {
     });
 </script>
 <script>
-    //deneme scripti
-    function addTRPrefix(input) {
-    // Kullanıcının girdiği değeri al
-    var ibanValue = input.value.trim();
+  function formatIBAN(input) {
+    let iban = input.value.replace(/\D/g, ''); // Sadece rakamları al
+    iban = 'TR' + iban; // TR öne ekle
 
-    // TR ön eki eklemek için kontrol
-    if (!ibanValue.startsWith("TR")) {
-        // TR ön eki ekle
-        ibanValue = "TR" + ibanValue;
-        
-        // Eğer 28 karakterden fazlaysa, sınırı aşmamak için kırp
-        if (ibanValue.length > 28) {
-            ibanValue = ibanValue.substring(0, 28);
+    let formattedIBAN = 'TR'; // İlk iki karakter sabit
+
+    // IBAN uzunluğunu kontrol et ve formatla
+    if (iban.length > 2) {
+        for (let i = 2; i < iban.length; i++) {
+            if (i === 4 || (i > 4 && (i - 4) % 4 === 0)) {
+                formattedIBAN += ' '; // 4. karakterden itibaren her 4 karakterde bir boşluk
+            }
+            formattedIBAN += iban[i];
         }
-
-        // Input değerini güncelle
-        input.value = ibanValue;
     }
-}
-function formatIBAN(input) {
-    // Kullanıcının girdiği değeri al
-    var ibanInput = document.getElementById("iban");
-    var ibanValue = ibanInput.value.trim();
 
-    // Sadece rakamlardan oluşan bir IBAN oluşturmak için kontrol
-    var formattedIBAN = ibanValue.replace(/\D/g, ''); // Sadece rakamları tutar
-
-    // IBAN'ı güncelle
-    ibanInput.value = formattedIBAN;
+    // Son iki karakteri kontrol et ve son haliyle set et
+    input.value = formattedIBAN.slice(0, 32) + iban.slice(32);
 }
+
 </script>
 <script>
         
@@ -930,81 +912,65 @@ function kisitlamalar(userName) {
     }
     return true;
 }
-
 var demo = 0;
 
 //bakılacak
 //var saveButton = document.getElementById('saveButton');
-function saveUser() {
-    var apartman_id = $('input[name="apartman_id"]').val();
-    var userName = $('input[name="userName"]').val();
-    var tc = $('input[name="tc"]').val();
-    var phoneNumber = $('input[name="phoneNumber"]').val();
-    var userEmail = $('input[name="userEmail"]').val() || null;
-    var gender = $('input#userInputgender').val();
-    var educationStatus = $('input[name="educationStatus"]').val();
-    var iban =  $('input[name="iban"]').val();
-    var startingWorking = $('input[name="startingWorking"]').val();
-    var task = $('input[name="task"]').val();
-    var sigortaNo = $('input[name="sigortaNo"]').val();
-    var salary = $('input[name="salary"]').val();
-    var openingBalance = $('input[name="openingBalance"]').val() || null;
-    var balanceType = $('select[name="balanceType"]').val() || null;
-    var promise = $('input[name="promise"]').val() || null;
-    /*
-    console.log("apartman_id:", apartman_id);
-    console.log("userName:", userName);
-    console.log("tc:", tc);
-    console.log("phoneNumber:", phoneNumber);
-    console.log("userEmail:", userEmail);
-    console.log("gender:", gender);
-    console.log("educationStatus:", educationStatus);
-    console.log("iban:", iban);
-    console.log("startingWorking:", startingWorking);
-    console.log("task:", task);
-    console.log("sigortaNo:", sigortaNo);
-    console.log("salary:", salary);
-    console.log("openingBalance:", openingBalance);
-    console.log("balanceType:", balanceType);
-    console.log("promise:", promise);
-    */
-    saveUserData(apartman_id, userName, tc, phoneNumber, userEmail, gender, educationStatus,
-    iban, startingWorking, task, sigortaNo, salary, openingBalance, balanceType, promise);
-}
 
-function saveUserData(apartman_id, userName, tc, phoneNumber, userEmail, gender, educationStatus, 
-iban, startingWorking, task, sigortaNo, salary, openingBalance, balanceType, promise) {
-    $.ajax({
-        url: 'Controller/Employeed/employedSave.php',
-        type: 'POST',
-        data: {
-            apartman_id: apartman_id,
-            userName: userName,
-            tc: tc,
-            phoneNumber: phoneNumber,
-            userEmail: userEmail,
-            gender: gender,
-            educationStatus: educationStatus,
-            iban: iban,
-            startingWorking: startingWorking,
-            task: task,
-            sigortaNo: sigortaNo,
-            salary: salary,
-            openingBalance: openingBalance,
-            balanceType: balanceType,
-            promise: promise
-        },
-        success: function(response) {
-            console.log(response);
-            if(response == 1){
+$(document).ready(function() {
+    $('#saveButton').click(function() {
+        // Form verilerini topla
+        var formData = {
+            userName: $('input[name="userName"]').val(),
+            tc: $('input[name="tc"]').val(),
+            phoneNumber: $('input[name="phoneNumber"]').val(),
+            userEmail: $('input[name="userEmail"]').val(),
+            gender: $('#userInput').data('user-id'),
+            educationStatus: $('#educationStatus').data('user-id'),
+            iban: $('input[name="iban"]').val(),
+            startingWorking: $('input[name="startingWorking"]').val(),
+            task: $('input[name="task"]').val(),
+            sigortaNo: $('input[name="sigortaNo"]').val(),
+            salary: $('input[name="salary"]').val(),
+            openingBalance: $('input[name="openingBalance"]').val(),
+            balanceStatus: $('#userInput-bakiye').data('user-id'),
+            promise: $('input[name="promise"]').val()
+        };
+
+        $.ajax({
+            type: "POST",
+            url: 'Controller/Employeed/employedSave.php',  // Bu URL'yi sunucu tarafında işleme koyacağınız URL ile değiştirin
+            data: formData,
+            success: function(response) {
+                // Başarılı olursa
+                console.log(response);
+                alert("Form başarıyla gönderildi!");
                 location.reload();
+            },
+            error: function(error) {
+                // Hata olursa
+                console.log(error);
+                alert("Form gönderilirken bir hata oluştu.");
             }
-        },
-        error: function(error) {
-            console.error(error);
-        }
+        });
     });
-}
+
+    // Dropdown menülerde seçimi yönetmek için event handler ekleyelim
+    $('#userInputDP button').click(function() {
+        var gender = $(this).data('user-id');
+        $('#userInput').data('user-id', gender).val($(this).text());
+    });
+
+    $('#educationStatusDP button').click(function() {
+        var educationStatus = $(this).data('user-id');
+        $('#educationStatus').data('user-id', educationStatus).val($(this).text());
+    });
+
+    $('#userInput-bakiyeDP button').click(function() {
+        var balanceStatus = $(this).data('user-id');
+        $('#userInput-bakiye').data('user-id', balanceStatus).val($(this).text());
+    });
+});
 
 //kısıtlama ile ilgili fonksiyonlar bitiş...
 //var toplusil 
@@ -1013,24 +979,35 @@ var topluGuncelleButtons = document.querySelectorAll('.topluGuncelle');
 topluGuncelleButtons.forEach(function(button) {
     button.addEventListener('click', function() {
         var rows = document.querySelectorAll('#example tbody tr.git-ac:not(.none)');
+        var successCount = 0; // Başarılı işlemleri saymak için sayaç
+        var totalRows = rows.length; // Toplam satır sayısı
         rows.forEach(function(row) {
             var userID = row.getAttribute('data-userid');
-            var fullName = row.querySelector('td:nth-child(2)').textContent.trim();
-            var phoneNumber = row.querySelector('td:nth-child(3)').textContent.trim();
-            var userEmail = row.querySelector('td:nth-child(4)').textContent.trim();
-            var task =  row.querySelector('td:nth-child(5)').textContent.trim();
-          $.ajax({
+            var userName = row.querySelector('td:nth-child(2) input').value.trim();
+            var tc = row.querySelector('td:nth-child(3) input').value.trim();
+            var phoneNumber = row.querySelector('td:nth-child(4) input').value.trim();
+            var userEmail = row.querySelector('td:nth-child(5) input').value.trim();
+            var task = row.querySelector('td:nth-child(6) input').value.trim();
+            
+            console.log("userID = " + userID + " userName = " + userName + " tc = " + tc + " phoneNumber = " + phoneNumber + " userEmail = " + userEmail + " task = " + task);
+            
+            $.ajax({
                 url: 'Controller/Employeed/employedUpdate.php',
                 type: 'POST',
                 data: {
                     userID: userID,
-                    fullName: fullName,
+                    userName: userName,
+                    tc: tc,
                     phoneNumber: phoneNumber,
                     userEmail: userEmail,
                     task: task
                 },
                 success: function(response) {
-                    console.log(response);
+                    successCount++;
+                    if (successCount === totalRows) {
+                        alert(response);
+                        location.reload();
+                    }
                 },
                 error: function(error) {
                     console.error('Gönderim hatası:', error);
@@ -1039,11 +1016,14 @@ topluGuncelleButtons.forEach(function(button) {
         });
     });
 });
+
 // Toplu silme işlemi için butonları seç
 var topluSilButton = document.getElementById('silButton');
 topluSilButton.addEventListener('click', function() {
     var silButton = document.getElementById('silButton');
     var checkboxes = document.querySelectorAll('#example tbody input[type="checkbox"]:checked');
+    var successCount = 0; // Başarılı işlemleri saymak için sayaç
+    var totalCheckboxes = checkboxes.length; // Toplam checkbox sayısı
 
     checkboxes.forEach(function(checkbox) {
         var row = checkbox.closest('tr');
@@ -1055,8 +1035,11 @@ topluSilButton.addEventListener('click', function() {
                 userID: userID
             },
             success: function(response) {
-                console.log(response);
-                location.reload();
+                successCount++;
+                if (successCount === totalCheckboxes) {
+                    alert(response);
+                    location.reload();
+                }
             },
             error: function(error) {
                 console.error('Silme hatası:', error);
@@ -1116,6 +1099,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // editToggle checkbox'ının durumunu kontrol et ve uygun fonksiyonu çağır
         editToggle.addEventListener('change', () => {
             if (editToggle.checked) {
+                checkEdit = false;
                 okuma();
             } else {
                 iptal();

@@ -5,43 +5,46 @@ session_start();
 
 $dataToSendJSON = $_POST['dataToSend'];
 $dataToSend = json_decode($dataToSendJSON, true);
-$apartman_id = $_SESSION["apartID"];
+$rol = 6;
+$popup = 0;
+$durum = "Personel";
 try {
     foreach ($dataToSend as $dataEntry) {
         $userPass = randomPassword();
         $hashedPassword = base64_encode($userPass);
         $userNO = generateUniqueUserID($conn);
 
-        if (empty($dataEntry['fullName'])) {
+        if (empty($dataEntry['userName'])) {
             continue; // Boş fullName değerine sahip veriyi atla ve bir sonraki veriye geç
         }
-        $sql = "INSERT INTO tbl_employed (apartman_ID, userNO, employeedPassword, fullName, TC, gender, userEmail, phoneNumber, educationStatus, Iban, startingWorking, task, sigortaNo, salary, unit, openingBalance, balanceType, promise)
-         VALUES (:apartman_ID, :userNO, :employeedPassword, :fullName, :TC, :gender, :userEmail, :phoneNumber, :educationStatus, :Iban, :startingWorking, :task, :sigortaNo, :salary, :unit, :openingBalance, :balanceType, :promise)";
+        $sql = "INSERT INTO tbl_users (apartman_id, user_no, userPass, userName, tc, phoneNumber, userEmail, popup, rol, durum, gender, educationStatus, Iban, startingWorking, task, sigortaNo, salary, openingBalance, balanceType, promise) VALUES 
+        (:apartman_id, :user_no, :userPass, :userName, :tc, :phoneNumber, :userEmail, :popup, :rol, :durum, :gender, :educationStatus, :Iban, :startingWorking, :task, :sigortaNo, :salary, :openingBalance, :balanceType, :promise)";
           
         $stmt = $conn->prepare($sql);
         // Parametreleri bağla
-        $stmt->bindParam(':apartman_ID', $_SESSION["apartID"]);
-        $stmt->bindParam(':userNO', $userNO);
-        $stmt->bindParam(':employeedPassword', $hashedPassword);
-        $stmt->bindParam(':fullName', $dataEntry['fullName']);
-        $stmt->bindParam(':TC', $dataEntry['TC']);
-        $stmt->bindParam(':gender', $dataEntry['gender']);
-        $stmt->bindParam(':userEmail', $dataEntry['userEmail']);
-        $stmt->bindParam(':phoneNumber', $dataEntry['phoneNumber']);
-        $stmt->bindParam(':educationStatus', $dataEntry['educationStatus']);
-        $stmt->bindParam(':Iban', $dataEntry['Iban']);
-        $stmt->bindParam(':startingWorking', $dataEntry['startingWorking']);
-        $stmt->bindParam(':task', $dataEntry['task']);
-        $stmt->bindParam(':sigortaNo', $dataEntry['sigortaNo']);
-        $stmt->bindParam(':salary', $dataEntry['salary']);
-        $stmt->bindParam(':unit', $dataEntry['unit']);
-        $stmt->bindParam(':openingBalance', $dataEntry['openingBalance']);
-        $stmt->bindParam(':balanceType', $dataEntry['balanceType']);
-        $stmt->bindParam(':promise', $dataEntry['promise']);
+        $stmt->bindParam(':apartman_id', $_SESSION["apartID"], PDO::PARAM_INT);
+            $stmt->bindParam(':user_no', $userNO);
+            $stmt->bindParam(':userPass', $hashedPassword);
+            $stmt->bindParam(':userName', $dataEntry['userName']);
+            $stmt->bindParam(':tc', $dataEntry['tc']);
+            $stmt->bindParam(':phoneNumber', $dataEntry['phoneNumber']);
+            $stmt->bindParam(':userEmail', $dataEntry['userEmail']);
+            $stmt->bindParam(':popup', $popup);
+            $stmt->bindParam(':rol', $rol);
+            $stmt->bindParam(':durum', $durum);
+            $stmt->bindParam(':gender', $dataEntry['gender']);
+            $stmt->bindParam(':educationStatus', $dataEntry['educationStatus']);
+            $stmt->bindParam(':Iban', $dataEntry['Iban']);
+            $stmt->bindParam(':startingWorking', $dataEntry['startingWorking']);
+            $stmt->bindParam(':task', $dataEntry['task']);
+            $stmt->bindParam(':sigortaNo', $dataEntry['sigorta']);
+            $stmt->bindParam(':salary', $dataEntry['salary']);
+            $stmt->bindParam(':openingBalance', $dataEntry['openingBalance']);
+            $stmt->bindParam(':balanceType', $dataEntry['balanceType']);
+            $stmt->bindParam(':promise', $dataEntry['promise']);
         $stmt->execute();
     }
-
-    echo "success";
+    echo "Personeller Başarıyla Kaydedilmiştir";
 } catch (PDOException $e) {
     echo "Hata: " . $e->getMessage();
 }

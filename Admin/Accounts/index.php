@@ -43,6 +43,13 @@ try {
         .hidden {
             display: none;
         }
+        .input::placeholder {
+            color: transparent;
+        }
+
+        .input:focus::placeholder {
+            color: #999; /* İstediğiniz renk burada olabilir */
+        }
     </style>
     <div class="cener-table">
 
@@ -244,7 +251,7 @@ try {
                 <label for="tc">T.C. Kimlik No :</label>
             </div>
             <div class="col-md-6 col">
-                <input class="input tel" type="number" name="phoneNumber" required="">
+                <input class="input tel" type="number" name="phoneNumber"  placeholder="555 555 55 55" required="">
                 <label for="phoneNumber">Telefon Numarası :</label>
             </div>
         </div>
@@ -257,7 +264,7 @@ try {
 
             <div class="col-md-6 col margint">
                 <input class="input" type="text" name="plate" required="">
-                <label for="plate">Araç Plakası</label>
+                <label for="plate">Araç Plakası : </label>
             </div>
         </div>
 
@@ -268,24 +275,23 @@ try {
                         <div class="group">
                             <input class="search-selectx input" data-user-id="" type="text" list="Users" id="gender"
                                 required="" />
-                            <label class="selectx-label" for="gender">Cinsiyet: </label>
+                            <label class="selectx-label" for="gender">Cinsiyet : </label>
                         </div>
 
                         <div class="dropdown-content-nereden searchInput-btn" id="genderDp">
                             <div class="dropdown-content-inside-nereden userPopup">
                                 <input type="text" id="searchInput3" placeholder="Ara...">
-                                <button>Erkek</button>
-                                <button>Kadın</button>
+                                <button data-user-id="Erkek" name="gender" class="genderButton">Erkek</button>
+                                <button data-user-id="Kadin" name="gender" class="genderButton">Kadın</button>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
             <div class="col-md-6 col margint">
                 <input class="input" type="text" id="hashedPassword" name="password" value="<?= $hashedPassword ?>"
                     required="">
-                <label for="sifre">Şifre</label>
+                <label for="sifre">Şifre :</label>
             </div>
         </div>
         
@@ -326,8 +332,8 @@ try {
                             <div class="dropdown-content-nereden searchInput-btn" id="odemeDurumuDP">
                                 <div class="dropdown-content-inside-nereden userPopup">
                                     <input type="text" id="odemeSearch" placeholder="Ara...">
-                                    <button>Borç</button>
-                                    <button>Alacak</button>
+                                    <button data-odeme-durumu="Borç" name="odemeDurumu" class="odemeButton">Borç</button>
+                                    <button data-odeme-durumu="Alacak" name="odemeDurumu" class="odemeButton">Alacak</button>
                                 </div>
                             </div>
 
@@ -361,7 +367,7 @@ try {
 
         <div class="row row-btn">
             <button type="button" class="btn-custom-close" onclick="closePopup()">Kapat</button>
-            <button type="button" class="btn-custom bcoc1" onclick="saveUser()" id="saveButton">Kaydet</button>
+            <button type="button" class="btn-custom bcoc1" id="saveButton">Kaydet</button>
         </div>
 
 
@@ -556,7 +562,7 @@ function validatePhoneNumber(element) {
             return {
                 userName: user.userName,
                 tc: user.tc,
-                phoneNumber: user.phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3'), // Telefon numarası düzenleme
+                phoneNumber: user.phoneNumber ? user.phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3') : '', // Telefon numarası düzenleme
                 blokDaire: user.blok_adi + " / " + user.daire_sayisi, // Blok ve daire sayısını birleştirme
                 durum: user.durum
             };
@@ -880,7 +886,6 @@ function validatePhoneNumber(element) {
         
         selectedValuesArray.push(selectedValue);
         selectedDurumArray.push(selectedDurum);
-
         // Yeni bir ana div oluştur
         var newContainer = document.createElement('div');
         newContainer.className = 'daire-container';
@@ -889,7 +894,6 @@ function validatePhoneNumber(element) {
         var newDaire = document.createElement('div');
         newDaire.className = 'daire';
         newDaire.innerHTML = selectedValue;
-
         //durum için div oluşturuldu.
         var newDurum = document.createElement('div');
         newDurum.className = 'durum';
@@ -1179,10 +1183,9 @@ function validatePhoneNumber(element) {
 
     // Verileri saklamak için boş bir dizi oluştur
     const rowData = [];
-alert(rowData);
     // Her bir satırı dolaşarak verileri al
     tableRows.forEach(row => {
-        const blockName = row.querySelector('td:nth-child(4)').textContent.trim(); // Blok Adı
+        const blockName = row.querySelector('td:nth-child(5)').textContent.trim(); // Blok Adı
         let block = '';
         let flatCount = '';
         let status = '';
@@ -1194,12 +1197,12 @@ alert(rowData);
         }
 
         // Durumu uygun şekilde alabiliyorsanız işlem yap
-        const statusElement = row.querySelector('td:nth-child(5) .main-durum');
+        const statusElement = row.querySelector('td:nth-child(6) .main-durum');
         if (statusElement) {
             status = statusElement.textContent.trim();
-            if (status === "Kat Maliki") {
-                status = "katmaliki";
-            } else if (status === "kiraci") {
+            if (status === "kat Maliki") {
+                status = "Kat Maliki";
+            } else if (status === "kiracı") {
                 status = "kiraci";
             }
         }
@@ -1211,139 +1214,163 @@ alert(rowData);
             status: status
         });
 
+        // console.log(JSON.stringify(rowData, null, 2));
     });
 
     var demo = 0;
-
+    
     //bakılacak
     //var saveButton = document.getElementById('saveButton');
-    function saveUser() {
-    // Form alanlarını topla
-    var userName = $('input[name="userName"]').val();
-    var tc = $('input[name="tc"]').val();
-    var phoneNumber = $('input[name="phoneNumber"]').val();
-    var userEmail = $('input[name="userEmail"]').val() || null;
-    var plate = $('input[name="plate"]').val();
-    var gender = $('input#userInput').val();
-    var apartman_id = $('input[name="apartman_id"]').val();
-    var password = $('#hashedPassword').val();
-    var openingBalance = $('input[name="openingBalance"]').val() || null;
-    var balanceType = $('select[name="balanceType"]').val() || null;
-    var promise = $('input[name="promise"]').val() || null;
-    
-    // Blok ve durum dizilerini tanımla
-    var blokArray = [];
-    var durumArray = [];
-    var isConflict = false;
+    $(document).ready(function() {
+        var selectedGender = null;
+        var selectedOdemeDurumu = null;
 
-    // Şifre kontrolleri
-    if (!password) {
-        alert("Şifre kısmı boş bırakılamaz");
-        return;
-    } else if (password.length < 6) {
-        alert("Şifre kısmı 6 karakterden az olamaz.");
-        return;
-    }
+        $('.genderButton').click(function() {
+            selectedGender = $(this).data('user-id');
+            console.log("Selected gender: " + selectedGender);
+        });
+        $('.odemeButton').click(function() {
+            selectedOdemeDurumu = $(this).data('odeme-durumu');
+            console.log("Selected ödeme durumu: " + selectedOdemeDurumu);
+        });
+    $('#saveButton').click(function() {
+        // Form verilerini topla
+        var formData = {
+            userName: $('input[name="userName"]').val(),
+            tc: $('input[name="tc"]').val(),
+            phoneNumber: $('input[name="phoneNumber"]').val(),
+            userEmail: $('input[name="userEmail"]').val() || null,
+            plate: $('input[name="plate"]').val(),
+            gender: selectedGender,
+            password: $('#hashedPassword').val(),
+            openingBalance: $('input[name="openingBalance"]').val() || null,
+            balanceStatus: selectedOdemeDurumu,
+            promise: $('input[name="promise"]').val(),
+            blokArray: getBlockArray(), // Blok dizisini al
+            durumArray: getDurumArray() // Durum dizisini al
+        };
+        // console.log("Form Verileri:");
+        // console.log("User Name:", formData.userName);
+        // console.log("TC:", formData.tc);
+        // console.log("Phone Number:", formData.phoneNumber);
+        // console.log("User Email:", formData.userEmail);
+        // console.log("Plate:", formData.plate);
+        // console.log("Gender:", formData.gender);
+        // console.log("Password:", formData.password);
+        // console.log("Opening Balance:", formData.openingBalance);
+        // console.log("Balance Status:", formData.balanceStatus);
+        // console.log("Promise:", formData.promise);
+        console.log("Block Array:", formData.blokArray);
+        // console.log("Durum Array:", formData.durumArray);
 
-    // Durum dizisini doldur
-    selectedDurumArray.forEach(function(durum) {
-        durum.split(',').forEach(function(d) {
-            durumArray.push(d);
+        // Şifre kontrolleri
+        if (!formData.password) {
+            alert("Şifre kısmı boş bırakılamaz");
+            return;
+        } else if (formData.password.length < 6) {
+            alert("Şifre kısmı 6 karakterden az olamaz.");
+            return;
+        }
+
+        // Çakışma kontrolü ve işlemler
+        checkConflict(formData, function(isConflict, lastBlock, lastFlotCount, lastDurum) {
+            if (isConflict) {
+                if (confirm(`Çakışma durumu bulundu: Blok ismi: ${lastBlock}, Daire sayısı: ${lastFlotCount}, Durum: ${lastDurum}. Bu dairede oturan kullanıcıyı silmek ister misiniz?`)) {
+                    if (kisitlamalar(formData.userName /* tc, phoneNumber, userEmail, plate */)) {
+                        saveUserData(formData);
+                        arsiveUser();
+                    }
+                }
+            } else {
+                if (kisitlamalar(formData.userName /* tc, phoneNumber, userEmail, plate */)) {
+                    saveUserData(formData);
+                }
+            }
         });
     });
 
-    // Blok dizisini doldur
+    function getBlockArray() {
+    // Blok dizisini oluştur
+    var blokArray = [];
     selectedValuesArray.forEach(function(element) {
+        // "blok" kelimesini bul ve öncesindeki kısmı al
+        var blokIndex = element.toLowerCase().indexOf("blok");
+        var letterPart = blokIndex > -1 ? element.substring(0, blokIndex).trim() : '';
+        
+        // Sayı kısmını ayır
         var match = element.match(/\d+/);
-        var letterPart = element.charAt(0);
         var numberPart = match ? match[0] : null;
-
-        console.log(`Element: ${element}, Letter: ${letterPart}, Number: ${numberPart}`);
-
+        
         blokArray.push({ letter: letterPart, number: numberPart });
     });
-    // Çakışma kontrolü
-    rowData.forEach(function(row) {
-        var block = row.block;
-        var flatCount = row.flatCount;
-        var status = row.status;
-        console.log(`block: ${block}, flatCount: ${flatCount}, status: ${status}`);
-
-        blokArray.forEach(function(blokElement) {
-            if (block === blokElement.letter && flatCount === blokElement.number) {
-                durumArray.forEach(function(durum) {
-                    if (status === durum) {
-                        isConflict = true;
-                    }
-                });
-            }
-        });
-    });
-    alert(isConflict);
-    // Çakışma durumu varsa uyarı ver ve işlem yap
-    if (isConflict) {
-        alert(`Çakışma durumu bulundu: Blok ismi: ${block}, Daire sayısı: ${flatCount}, Durum: ${status}`);
-        if (confirm(`Çakışma durumu bulundu: Blok ismi: ${block}, Daire sayısı: ${flatCount}, Durum: ${status}. Bu dairede oturan kullanıcıyı silmek ister misiniz?`)) {
-            if (kisitlamalar(userName /* tc, phoneNumber, userEmail, plate*/)) {
-                demo = 1;
-                saveUserData(userName, tc, phoneNumber, durumArray, userEmail, plate, gender, password, apartman_id, blokArray, openingBalance, balanceType, promise);
-            }
-        }
-    } else {
-        if (kisitlamalar(userName /* tc, phoneNumber, userEmail, plate*/)) {
-            saveUserData(userName, tc, phoneNumber, durumArray, userEmail, plate, gender, password, apartman_id, blokArray, openingBalance, balanceType, promise);
-        }
-    }
+    return blokArray;
 }
-    function saveUserData(userName, tc, phoneNumber, durumArray, userEmail, plate, gender, password, apartman_id, blokArray, openingBalance, balanceType, promise) {
+
+
+    function getDurumArray() {
+        // Durum dizisini oluştur
+        var durumArray = [];
+        selectedDurumArray.forEach(function(durum) {
+            durum.split(',').forEach(function(d) {
+                durumArray.push(d);
+            });
+        });
+        return durumArray;
+    }
+
+    function checkConflict(formData, callback) {
+        var isConflict = false;
+        var lastBlock, lastFlotCount, lastDurum;
+        
+        rowData.forEach(function(row) {
+            var block = row.block;
+            var flatCount = row.flatCount;
+            var status = row.status;
+
+            formData.blokArray.forEach(function(blokElement) {
+                if (block === blokElement.letter && flatCount === blokElement.number) {
+                    lastBlock = blokElement.letter;
+                    lastFlotCount = blokElement.number;
+                    formData.durumArray.forEach(function(durum) {
+                        lastDurum = durum;
+                        if (status === durum) {
+                            isConflict = true;
+                        }
+                    });
+                }
+            });
+        });
+        
+        callback(isConflict, lastBlock, lastFlotCount, lastDurum);
+    }
+    function saveUserData(formData) {
         $.ajax({
             url: 'Controller/Accounts/save_user.php',
             type: 'POST',
             data: {
-                userName: userName,
-                tc: tc,
-                phoneNumber: phoneNumber,
-                durumArray: JSON.stringify(durumArray),
-                userEmail: userEmail,
-                plate: plate,
-                gender: gender,
-                password: password,
-                apartman_id: apartman_id,
-                openingBalance: openingBalance,
-                balanceType: balanceType,
-                promise: promise
+                userName: formData.userName,
+                tc: formData.tc,
+                phoneNumber: formData.phoneNumber,
+                userEmail: formData.userEmail,
+                gender: formData.gender,
+                plate:formData.plate,
+                password: formData.password,
+                openingBalance: formData.openingBalance,
+                balanceStatus: formData.balanceStatus,
+                promise: formData.promise,
+                blokArray: JSON.stringify(formData.blokArray),
+                durumArray: JSON.stringify(formData.durumArray)
             },
-            success: function (response) {
-                
-                sendData(blokArray, durumArray);
+            success: function(response) {
+                alert("Kullanıcı ve daire bilgileri başarıyla güncellendi.");
+                location.reload();
             },
-            error: function (error) {
-                console.error(error);
+            error: function(error) {
+                console.error("AJAX hatası: ", error);
             }
         });
     }
-
-    function sendData(blokArray, durumArray) {
-        $.ajax({
-            url: 'Controller/Accounts/demo.php',
-            type: 'POST',
-            data: {
-                blokArray: JSON.stringify(blokArray),
-                durumArray: JSON.stringify(durumArray)
-            },
-            success: function (secondResponse) {
-                alert("attt");
-                if (demo == 1) {
-                    arsiveUser();
-                } else {
-                    location.reload();
-                }
-            },
-            error: function (secondError) {
-                console.error(secondError);
-            }
-        });
-    }
+});
 
     function arsiveUser() {
         demo = 0;
