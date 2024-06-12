@@ -177,7 +177,7 @@ JOIN
                   ?>
 
                     <a href="Controller/pdf/Income_pdf?temp=<?php echo $row["maliye_id"]; ?>" target="_blank">
-                        <button class="fatura_btn"><i class="fa-solid fa-file-export"></i> Fatura</button>
+                        <button class="fatura_btn"><i class="fa-solid fa-file-export"></i></button>
                     </a>
                     <?php 
                 }

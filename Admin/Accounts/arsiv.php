@@ -147,7 +147,7 @@ try {
 
         </div>
         
-        <button id="exportButton">Excel'e Aktar</button>
+        <button class="export-btn excel-btn" id="exportButton"><i class="fa-solid fa-file-excel"></i> Excel'e Aktar</button>
         <div class="input-group1">
 
             <ul class="pagination">

@@ -276,9 +276,16 @@ WHERE m.user_id = :user_id AND m.apartman_id = :apartman_id AND maliye_turu = :m
                     </div>
                 </div>
                 <div class="user-info-top">
-                    <h5 class="user-name">
-                        <?= !empty($row["userName"]) ? $row["userName"] : "-" ?>
-                    </h5>
+                    <div class="top-guncelle">
+                        <h5 class="user-name">
+                            <?= !empty($row["userName"]) ? $row["userName"] : "-" ?>
+                        </h5>
+                        <div class="duzenleBtns">
+                            <button class="duzenleProfil" id="iptapBtn" onclick="iptal()" title="İptal"><i class="fa-solid fa-xmark"></i></button>
+                            <button class="duzenleProfil" id="duzenleBtn" onclick="okuma()" title="Profili Düzenle"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button class="duzenleProfil" id="kaydetBtn" onclick="saveProfil()" title="Kaydet"><i class="fa-solid fa-check"></i></button>
+                        </div>
+                    </div>
                     <div class="bilgi-p">
                         <p>Durumu :</p>
                         <div class="cursor-none main-durum <?php
@@ -326,19 +333,7 @@ WHERE m.user_id = :user_id AND m.apartman_id = :apartman_id AND maliye_turu = :m
 
             <div class="shown-info">
 
-                <div class="bilgi-p p-new">
-                    <p>T.C. Kimlik No</p>
-                    <p id="tc">
-                        <?= !empty($row["tc"]) ? $row["tc"] : "-" ?>
-                    </p>
-                </div>
-
-                <div class="bilgi-p p-new">
-                    <p>Telefon Numarası</p>
-                    <p id="phoneNumber">
-                        <?= !empty($row["phoneNumber"]) ? $row["phoneNumber"] : "-" ?>
-                    </p>
-                </div>
+                <hr class="horizontal dark m-0 w-100">
 
                 <div class="bilgi-p p-new">
                     <p>E-Posta</p>
@@ -347,23 +342,53 @@ WHERE m.user_id = :user_id AND m.apartman_id = :apartman_id AND maliye_turu = :m
                     </p>
                 </div>
 
+                <hr class="horizontal dark m-0 w-100">
+
+                <div class="bilgi-p p-new">
+                    <p>Telefon Numarası</p>
+                    <input class="profile-edit" id="phoneNumber" type="text" value="<?= !empty($row["phoneNumber"]) ? $row["phoneNumber"] : "-" ?>">
+                </div>
+
+                <hr class="horizontal dark m-0 w-100">
+
                 <div class="bilgi-p p-new">
                     <p>Cinsiyet</p>
-                    <p id="gender">
-                        <?= !empty($row["gender"]) ? $row["gender"] : "-" ?>
-                    </p>
+                    <input class="profile-edit" id="gender" type="text" value="<?= !empty($row["gender"]) ? $row["gender"] : "-" ?>">
+                </div>
+                
+                <hr class="horizontal dark m-0 w-100">
+
+                <div class="bilgi-p p-new">
+                    <p>T.C. Kimlik No</p>
+                    <input class="profile-edit" id="tc" type="text" value="<?= !empty($row["tc"]) ? $row["tc"] : "-" ?>">
                 </div>
 
             </div>
 
             <div class="hide-info">
 
+                <hr class="horizontal dark m-0 w-100">
+
                 <div class="bilgi-p p-new">
                     <p>Kullanıcı No :</p>
-                    <p>
-                        <?= !empty($row["user_no"]) ? $row["user_no"] : "-" ?>
-                    </p>
+                    <input class="profile-edit" id="userNo" type="text" value="<?= !empty($row["user_no"]) ? $row["user_no"] : "-" ?>">
                 </div>
+
+                <hr class="horizontal dark m-0 w-100">
+
+                <div class="bilgi-p p-new">
+                    <p>Parola :</p>
+                    <input class="profile-edit" id="parola" type="text" value="<?php echo base64_decode($row["userPass"]); ?>">
+                </div>
+
+                <hr class="horizontal dark m-0 w-100">
+
+                <div class="bilgi-p p-new">
+                    <p>Araç Plakası :</p>
+                    <input class="profile-edit" id="parola" type="text" value="<?= !empty($row["plate"]) ? $row["plate"] : "-" ?>">
+                </div>
+
+                <hr class="horizontal dark m-0 w-100">
 
                 <div class="bilgi-p p-new">
                     <p>Giriş Tarihi :</p>
@@ -378,23 +403,11 @@ WHERE m.user_id = :user_id AND m.apartman_id = :apartman_id AND maliye_turu = :m
                     </p>
                 </div>
 
+                <hr class="horizontal dark m-0 w-100">
+
                 <div class="bilgi-p p-new">
                     <p>Son Oturum Açma Tarihi :</p>
                     <p>Son Oturum Açma Tarihi yazılacak</p>
-                </div>
-
-                <div class="bilgi-p p-new">
-                    <p>Parola :</p>
-                    <p>
-                        <?php echo base64_decode($row["userPass"]); ?>
-                    </p>
-                </div>
-
-                <div class="bilgi-p p-new">
-                    <p>Araç Plakası :</p>
-                    <p>
-                        <?= !empty($row["plate"]) ? $row["plate"] : "-" ?>
-                    </p>
                 </div>
 
             </div>
@@ -963,4 +976,45 @@ WHERE m.user_id = :user_id AND m.apartman_id = :apartman_id AND maliye_turu = :m
     <script src="assets/js/mycode/dropdown.js"></script>
     <script>
     dropDownn('kategori', 'kategoriDP', 'searchInput');
+    </script>
+
+    <script>
+        function okuma() {
+            // .profile-edit öğelerine "activeEdit" sınıfını ekle
+            const elements = document.querySelectorAll('.profile-edit');
+            elements.forEach(element => {
+                element.classList.add('activeEdit');
+            });
+        
+            // Butonların görünürlüğünü ayarla
+            document.getElementById('iptapBtn').style.display = 'flex';
+            document.getElementById('kaydetBtn').style.display = 'flex';
+            document.getElementById('duzenleBtn').style.display = 'none';
+        }
+
+        function iptal() {
+            // .profile-edit öğelerinden "activeEdit" sınıfını kaldır
+            const elements = document.querySelectorAll('.profile-edit');
+            elements.forEach(element => {
+                element.classList.remove('activeEdit');
+            });
+        
+            // Butonların görünürlüğünü ayarla
+            document.getElementById('iptapBtn').style.display = 'none';
+            document.getElementById('kaydetBtn').style.display = 'none';
+            document.getElementById('duzenleBtn').style.display = 'flex';
+        }
+
+        function saveProfil() {
+            // Profil kaydetme işlemlerini burada gerçekleştirin
+            const elements = document.querySelectorAll('.profile-edit');
+            elements.forEach(element => {
+                element.classList.remove('activeEdit');
+            });        
+            // Kaydetme işleminden sonra butonların görünürlüğünü ayarla
+            document.getElementById('iptapBtn').style.display = 'none';
+            document.getElementById('kaydetBtn').style.display = 'none';
+            document.getElementById('duzenleBtn').style.display = 'flex';
+        }
+
     </script>

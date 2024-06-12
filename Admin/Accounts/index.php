@@ -280,7 +280,7 @@ try {
 
                         <div class="dropdown-content-nereden searchInput-btn" id="genderDp">
                             <div class="dropdown-content-inside-nereden userPopup">
-                                <input type="text" id="searchInput3" placeholder="Ara...">
+                                <input type="hidden" id="searchInput3" placeholder="Ara...">
                                 <button data-user-id="Erkek" name="gender" class="genderButton">Erkek</button>
                                 <button data-user-id="Kadin" name="gender" class="genderButton">Kadın</button>
                             </div>
@@ -315,12 +315,12 @@ try {
 
         <div class="additional-fields hidden">
             <div class="row">
-                <div class="col-md-6 col margint">
+                <div class="col-md-6 col mt-4 margint">
                     <input class="input" type="text" name="openingBalance" required="">
                     <label for="openingBalance">Açılış Bakiyesi</label>
                 </div>
 
-                <div class="col-md-6 col margint">
+                <div class="col-md-6 col mt-4 margint">
                     <div class="select-div m-0">
                         <div class="dropdown-nereden">
                             <div class="group">
@@ -331,7 +331,7 @@ try {
 
                             <div class="dropdown-content-nereden searchInput-btn" id="odemeDurumuDP">
                                 <div class="dropdown-content-inside-nereden userPopup">
-                                    <input type="text" id="odemeSearch" placeholder="Ara...">
+                                    <input type="hidden" id="odemeSearch" placeholder="Ara...">
                                     <button data-odeme-durumu="Borç" name="odemeDurumu" class="odemeButton">Borç</button>
                                     <button data-odeme-durumu="Alacak" name="odemeDurumu" class="odemeButton">Alacak</button>
                                 </div>
@@ -344,7 +344,8 @@ try {
 
             <div class="row">
                 <div class="col-md-6 col-btn margint">
-                    <input class="input" type="date" name="promise" required="">
+                    <input class="input" data-user-id="" id="datepickerAcilis" name="promise" type="text" required="">
+                    <label for="datepickerAcilis">Ekleme Tarihi</label>
                 </div>
             </div>
         </div>
@@ -1567,3 +1568,66 @@ function iptal() {
     dropDownn('daireGrup', 'daireGrupDP', 'daireSearchInput');  
     dropDownn('durum', 'durumDP', 'durumSearch');  
 </script>
+
+<!-- secme Tarihi -->
+<script src="assets/js/mycode/moment.min.js"></script>
+    <script src="assets/js/mycode/moment.js"></script>
+    <script src="assets/js/mycode/lightpick.js"></script>
+
+<script>
+ // yeni eklenen kısım
+moment.locale('tr', {
+    months : [
+        "Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", 
+        "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"
+    ],
+    monthsShort : [
+        "Oca", "Şub", "Mar", "Nis", "May", "Haz", 
+        "Tem", "Ağu", "Eyl", "Eki", "Kas", "Ara"
+    ],
+    weekdays : [
+        "Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"
+    ],
+    weekdaysShort : [
+        "Paz", "Pzt", "Sal", "Çar", "Per", "Cum", "Cmt"
+    ],
+    weekdaysMin : [
+        "Pz", "Pt", "Sa", "Ça", "Pe", "Cu", "Ct"
+    ],
+    longDateFormat : {
+        LT : "HH:mm",
+        LTS : "HH:mm:ss",
+        L : "DD/MM/YYYY",
+        LL : "D MMMM YYYY",
+        LLL : "D MMMM YYYY HH:mm",
+        LLLL : "dddd, D MMMM YYYY HH:mm"
+    }
+});
+
+function tarihSec(veri, day) {
+    var dateFormat = 'DD MMMM YYYY';
+    var picker = new Lightpick({
+        field: document.getElementById(veri),
+        singleDate: true,
+        selectForward: true,
+        selectBackward: false,
+        lang: 'tr',
+        minDate: moment(),
+        repick: true,
+        startDate: moment().add(day, 'days'),
+        onSelect: function(date) {
+            document.getElementById(veri).value = date.format(dateFormat);
+            document.getElementById(veri).setAttribute('data-user-id',  date.format("YYYY-MM-DD"));
+        }
+      
+    });
+
+    // Başlangıç tarihini input alanına yazdır
+    document.getElementById(veri).value = moment().add(day, 'days').format(dateFormat);
+    document.getElementById(veri).setAttribute('data-user-id',  moment().add(day, 'days').format("YYYY-MM-DD"));
+}
+
+// Fonksiyonları çağırma
+tarihSec('datepickerAcilis', 0);
+
+    </script>
