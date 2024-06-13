@@ -26,13 +26,13 @@ $idapartman =$_SESSION["apartID"];
           </li>
         </a>
 
-        <button class="dropdown-btn userPage nav-item">
+        <button class="dropdown-btn userPage mt-1 nav-item">
           <li class="nav-link">
             <div class="nav-ico">
               <i class="fa-solid fa-users"></i>
             </div>
             <span class="nav-link-text">Kullanıcılar</span>
-            <i class="fa-solid fa-angle-right ms-5"></i>
+            <i class="fa-solid fa-angle-right abso-ico"></i>
           </li>
         </button>
         <div class="dropdown-container dropdownUser">
@@ -56,13 +56,13 @@ $idapartman =$_SESSION["apartID"];
           </a>
         </div>
 
-        <button class="dropdown-btn employeePage nav-item">
+        <button class="dropdown-btn mt-1 employeePage nav-item">
           <li class="nav-link">
             <div class="nav-ico">
             <i class="fa-solid fa-user-tie"></i>
             </div>
             <span class="nav-link-text">Personeller</span>
-            <i class="fa-solid fa-angle-right ms-5"></i>
+            <i class="fa-solid fa-angle-right abso-ico"></i>
           </li>
         </button>
         <div class="dropdown-container dropdownEmployee">
@@ -96,13 +96,13 @@ $idapartman =$_SESSION["apartID"];
         </a>
         
 
-        <button class="dropdown-btn nav-item finansPage">
+        <button class="dropdown-btn nav-item mt-1 finansPage">
           <li class="nav-link">
             <div class="nav-ico">
             <i class="fa-solid fa-coins"></i>
             </div>
             <span class="nav-link-text">FİNANS</span>
-            <i class="fa-solid fa-angle-right ms-5"></i>
+            <i class="fa-solid fa-angle-right abso-ico"></i>
           </li>
         </button>
         <div class="dropdown-container">

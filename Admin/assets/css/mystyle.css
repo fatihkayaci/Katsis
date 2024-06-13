@@ -1564,6 +1564,7 @@ border: 1px solid #277CE0;
 .table-blok {
 width: 100%;
 min-width: 0;
+white-space: inherit;
 }
 
 @media (max-width: 350px) {
@@ -1819,6 +1820,18 @@ min-width: 0;
 .header-ico:hover .toggle-icon,
 .header-ico:hover .name-title {
   color: #277CE0 !important;
+}
+
+.nav-link {
+  position: relative;
+}
+
+.abso-ico {
+  position: absolute;
+  right: 0;
+}
+.nav-link-text {
+  line-height: 22.4px;
 }
 /* ====================================== */
 
@@ -2546,6 +2559,7 @@ min-width: 0;
   outline: none;
   border: none;
   background: none;
+  padding: 0px;
 }
 
 .dropdown-btn.activex {
@@ -3155,14 +3169,14 @@ min-width: 0;
 .toplu-line > .nav-tabs > li.active a{
   font-family: 'poppins-medium';
   width: 100%;
-  background-color: #277CE0;
+  background-color: #02b7e4;
   box-shadow: 0 1px 3px 0 rgb(0 0 0 / .1), 0 1px 2px -1px rgb(0 0 0 / .1);;
   color: #fff;
   position: relative;
 }
 
 .toplu-line > .nav-tabs > li.active > a > i {
-  color: #277CE0;
+  color: #02b7e4;
 }
 .toplu-line > .tab-content {
   background-color: #fff;
@@ -3387,15 +3401,15 @@ min-width: 0;
   line-height: 18px;
 }
 .yeni-check .yenichk-label:hover span:first-child {
-  border-color: #07f;
+  border-color: #02b7e4;
 }
 .yeni-check .yenichk-inpt {
   position: absolute;
   visibility: hidden;
 }
 .yeni-check .yenichk-inpt:checked + .yenichk-label span:first-child {
-  background: #07f;
-  border-color: #07f;
+  background: #02b7e4;
+  border-color: #02b7e4;
   animation: wave-4 0.4s ease;
 }
 .yeni-check .yenichk-inpt:checked + .yenichk-label span:first-child svg {
@@ -3449,16 +3463,34 @@ min-width: 0;
   }
 }
 @media (max-width: 479px) {
-  .toplu-p {
+  .toplu-p,
+  .tutar-ayar,
+  .gecikmeT {
     flex-direction: column;
   }
+  .gecikmeT {
+    gap: 10px;
+  }  
   .respense-btn {
     width: 100%;
+  }
+  .gelismis-checkbox {
+    margin-top: 10px;
   }
 }
 @media (max-width: 424px) {
   .esit-input {
     flex-direction: column;
+  }
+  .adduser,
+  #tekrar-button {
+    width: 100%;
+  }
+  .respense-btn {
+    margin-right: 0;
+  }
+  .response-ttr {
+    margin-top: 10px;
   }
 }
 @media (max-width: 380px) {

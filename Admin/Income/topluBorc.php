@@ -68,7 +68,9 @@ try {
 
     <form class="login-form new-chck" id="userForm">
 
-        <h2 class="form-signin-heading">İstisna Ekleme</h2>
+        <h2 class="form-signin-heading mb-3">İstisna Ekleme</h2>
+
+        <hr class="horizontal dark mt-0 w-100">
 
             <table class="users-table table-blok">
                 <tr class="users-table-info">
@@ -235,7 +237,7 @@ try {
                                                             </div>
                                                         </div>    
                                                     </div> 
-                                                    <button class="adduser btn-custom-outline bcoc1 m-0">İstisna Ekle</button>
+                                                    <button class="adduser btn-custom-outline finansClr m-0">İstisna Ekle</button>
                                                 </div>
         	                                </div>
 
@@ -276,7 +278,7 @@ try {
                                                     <p>Hesaplama Şekli :</p>
                                                     <p class="toplu-info">Tutarı daire parametrelerine veya sayaç endekslerine göre dağıtabilir yada birim fiyat olarak kullanarak sağlanan parametrelerle çarpabilirsiniz</p>
                                                 </div>
-                                                <div class="esit-input">
+                                                <div class="esit-input response-ttr">
                                                     <div class="dropToplu-div w-100">
                                                         <div class="dropdown-nereden">
                                                             <div class="group">
@@ -320,7 +322,7 @@ try {
 
                                             <div class="toplu-p b-old">
                                                 <div class="esit-input">
-                                                    <button class="btn-custom-outline m-0 bcoc1" id="tekrar-button"><i class="fa-solid fa-rotate"></i> Tekrarla</button>
+                                                    <button class="btn-custom-outline m-0 finansClr" id="tekrar-button"><i class="fa-solid fa-rotate"></i> Tekrarla</button>
                                                 </div>
                                             </div>
 
@@ -490,7 +492,7 @@ try {
                                                     <p>Gecikme Tazminatı Yüzdesi :</p>
                                                 </div>
                                                 <div class="esit-input">
-                                                <div class="group">
+                                                <div class="group w-100">
                                                     <input class="toplu-input" type="text">
                                                     <i class="fa-solid fa-percent absolute-input"></i>
                                                 </div>
@@ -613,7 +615,7 @@ try {
                                                             </div>
                                                         </div>    
                                                     </div> 
-                                                    <button class="adduser btn-custom-outline bcoc1 m-0">İstisna Ekle</button>
+                                                    <button class="adduser btn-custom-outline finansClr m-0">İstisna Ekle</button>
                                                 </div>
                                             </div>
 
