@@ -127,7 +127,7 @@ else if($indexx == 'profile'){
     include ("Surveys/index.php");
     echo "<script>pagename('Anketler');</script>";
     echo "<script>
-            localStorage.setItem('selectedLink', 'anket');
+            localStorage.setItem('selectedLink', 'Surveys');
          </script>";
 }else{
     include ("Dashboard/index.php");

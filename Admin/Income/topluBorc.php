@@ -366,7 +366,7 @@ try {
                                                                 <input class="toplu-input i-kontrol" data-user-id="" type="text" list="Users" id="kacgunSonraid" name="gecikmeTarih" required="" readonly />
                                                                 <i class="fa-solid fa-chevron-down absolute-input"></i>
                                                             </div>
-                                                            <div class="dropdown-content-nereden searchInput-btn mainpopup" id="kacgunSonra">
+                                                            <div class="dropdown-content-nereden searchInput-btn mainpopupx" id="kacgunSonra">
                                                                 <div class="dropdown-content-inside-nereden">
                                                                     <input type="hidden" id="searchInput-kacgunSonra" placeholder="Ara...">
 
@@ -445,7 +445,7 @@ try {
                                                                 <input class="toplu-input i-kontrol" data-user-id="" type="text" list="Users" id="gecikmeTarih" name="gecikmeTarih" required="" readonly />
                                                                 <i class="fa-solid fa-chevron-down absolute-input"></i>
                                                             </div>
-                                                            <div class="dropdown-content-nereden searchInput-btn mainpopup" id="gecikmeTarihDP">
+                                                            <div class="dropdown-content-nereden searchInput-btn mainpopupx" id="gecikmeTarihDP">
                                                                 <div class="dropdown-content-inside-nereden">
                                                                     <input type="hidden" id="searchInput-gecikmeTarih" placeholder="Ara...">
 
@@ -510,7 +510,7 @@ try {
                                                                 <input class="toplu-input i-kontrol" data-user-id="" type="text" list="Users" id="tazminatsekli" name="gecikmeTarih" required="" readonly />
                                                                 <i class="fa-solid fa-chevron-down absolute-input"></i>
                                                             </div>
-                                                            <div class="dropdown-content-nereden searchInput-btn mainpopup" id="tazminatsekliDP">
+                                                            <div class="dropdown-content-nereden searchInput-btn mainpopupx" id="tazminatsekliDP">
                                                                 <div class="dropdown-content-inside-nereden">
                                                                     <input type="hidden" id="searchInput-tazminatsekli" placeholder="Ara...">
 

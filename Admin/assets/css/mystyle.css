@@ -2141,6 +2141,7 @@ white-space: inherit;
   font-family: 'poppins-medium';
   font-weight: 500;
   padding: 0px 15px;
+  width: 100%;
 }
 
 .kiraci {
@@ -2820,6 +2821,10 @@ white-space: inherit;
   background-color: #1c5aa1;
 }
 
+.oylar_btn {
+  padding: 10px 15px;
+}
+
 .odendi {
   border: 1px solid #4BB543;
   background-color: #4BB543;
@@ -3070,11 +3075,6 @@ white-space: inherit;
   color: #fff;
 }
 
-
-.check-style, .table_tt {
-  width: 5%; /* Eşit genişlikte kalmalarını sağlar */
-}
-
 .center-txt th,
 .center-txt td {
   text-align: center;
@@ -3241,6 +3241,32 @@ white-space: inherit;
 
 .group {
   position: relative;
+}
+
+.trash-k:hover ~ .trashcan {
+ display: flex;
+}
+
+.trashcan {
+  position: absolute;
+  top: 11.45px;
+  right: 20px;
+  transition: 0.3s;
+  border: none;
+  outline: none;
+  background: none;
+  display: none;
+  color: #d63031;
+}
+.trashcan:hover {
+  display: flex;
+}
+.trashcan i {
+  transition: 0.3s;
+}
+.trashcan:hover i {
+  color: #9e2020;
+  transform: scale(1.2);
 }
 
 .absolute-input {
@@ -3511,21 +3537,28 @@ white-space: inherit;
 
 /* sayfalar icin buton renkleri */
 
+.mainpopupx button:hover {
+  color: #277CE0;
+}
+
 .bcoc1 {
   border: 1px solid #d2d6da;
   background-color: #277CE0;
   color: #fff;
 }
 .bcoc1:hover {
-  border: 1px solid #66BB6A ;
+  border: 1px solid #174c8a ;
   background-color: #174c8a ;
 }
 
-.mainpopup input:focus {
+.mainpopup input:focus,
+.mainpopup .input:valid {
   border-bottom: 1px solid #277CE0;
 }
-.mainpopup button:hover {
-  color: #277CE0;
+
+.mainSrch:focus {
+  color: #0d0c22;
+  border: 1px solid #277CE0;
 }
 
 /* Kulaanicilar Sayfasi */
