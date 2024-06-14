@@ -275,10 +275,10 @@ WHERE m.user_id = :user_id AND m.apartman_id = :apartman_id AND maliye_turu = :m
                         </p>
                     </div>
                 </div>
-                <div class="user-info-top">
+                <div class="user-info-top" >
                     <div class="top-guncelle">
                         <h5 class="user-name">
-                            <?= !empty($row["userName"]) ? $row["userName"] : "-" ?>
+                            <input class="profile-edit" id="userName" type="text" value="<?= !empty($row["userName"]) ? $row["userName"] : "-" ?>">
                         </h5>
                         <div class="duzenleBtns">
                             <button class="duzenleProfil" id="iptapBtn" onclick="iptal()" title="İptal"><i class="fa-solid fa-xmark"></i></button>
@@ -337,9 +337,8 @@ WHERE m.user_id = :user_id AND m.apartman_id = :apartman_id AND maliye_turu = :m
 
                 <div class="bilgi-p p-new">
                     <p>E-Posta</p>
-                    <p id="userEmail">
-                        <?= !empty($row["userEmail"]) ? $row["userEmail"] : "-" ?>
-                    </p>
+                    <input class="profile-edit" id="userEmail" type="text" value="<?= !empty($row["userEmail"]) ? $row["userEmail"] : "-" ?>">
+                
                 </div>
 
                 <hr class="horizontal dark m-0 w-100">
@@ -371,7 +370,7 @@ WHERE m.user_id = :user_id AND m.apartman_id = :apartman_id AND maliye_turu = :m
 
                 <div class="bilgi-p p-new">
                     <p>Kullanıcı No :</p>
-                    <input class="profile-edit" id="userNo" type="text" value="<?= !empty($row["user_no"]) ? $row["user_no"] : "-" ?>">
+                    <input class="profile-edit" id="userNo" data-user-id ="<?= !empty($row["userID"]) ? $row["userID"] : "-" ?>"  type="text" value="<?= !empty($row["user_no"]) ? $row["user_no"] : "-" ?>">
                 </div>
 
                 <hr class="horizontal dark m-0 w-100">
@@ -385,7 +384,7 @@ WHERE m.user_id = :user_id AND m.apartman_id = :apartman_id AND maliye_turu = :m
 
                 <div class="bilgi-p p-new">
                     <p>Araç Plakası :</p>
-                    <input class="profile-edit" id="parola" type="text" value="<?= !empty($row["plate"]) ? $row["plate"] : "-" ?>">
+                    <input class="profile-edit" id="plate" type="text" value="<?= !empty($row["plate"]) ? $row["plate"] : "-" ?>">
                 </div>
 
                 <hr class="horizontal dark m-0 w-100">
@@ -672,34 +671,34 @@ WHERE m.user_id = :user_id AND m.apartman_id = :apartman_id AND maliye_turu = :m
     <script>
     $(document).ready(function() {
         $('#kaydetBtn').on('click', function() {
+            var userID = $('#userNo').data('user-id');
             var userNo = $('#userNo').val();
+            var userName = $('#userName').val();
             var phoneNumber = $('#phoneNumber').val();
             var gender = $('#gender').val();
             var tc = $('#tc').val();
             var password = $('#parola').val();
+            var userEmail = $('#userEmail').val();
             var plate = $('#plate').val();
-
-            // Verileri konsola yazdır
-            console.log("User No: " + userNo);
-            console.log("Phone Number: " + phoneNumber);
-            console.log("Gender: " + gender);
-            console.log("T.C. No: " + tc);
-            console.log("Password: " + password);
-            console.log("Plate: " + plate);
+            //plate var birde ona bakılacak
 
             $.ajax({
-                url: 'update_profile.php',
+                url: 'Controller/Accounts/updateOzellestir.php',
                 type: 'POST',
                 data: {
                     userNo: userNo,
+                    userName: userName,
                     phoneNumber: phoneNumber,
                     gender: gender,
                     tc: tc,
                     password: password,
-                    plate: plate
+                    userEmail: userEmail,
+                    plate: plate,
+                    userID: userID
                 },
+                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                 success: function(response) {
-                    alert(response);
+                    console.log(response);
                     if (response == 1) {
                         location.reload(); // Sayfayı yeniden yükle
                     }

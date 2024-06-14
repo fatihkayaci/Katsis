@@ -123,6 +123,12 @@ else if($indexx == 'profile'){
     echo "<script>
             localStorage.setItem('selectedLink', 'employee-arsiv');
          </script>";
+}else if($indexx == 'Surveys'){
+    include ("Surveys/index.php");
+    echo "<script>pagename('Anketler');</script>";
+    echo "<script>
+            localStorage.setItem('selectedLink', 'anket');
+         </script>";
 }else{
     include ("Dashboard/index.php");
     echo "<script>pagename('ANA SAYFA');</script>";
