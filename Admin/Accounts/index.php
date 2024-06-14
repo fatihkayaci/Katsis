@@ -236,7 +236,9 @@ try {
 
     <form class="login-form userInpClr" id="userForm">
 
-        <h2 class="form-signin-heading">Kullanıcı Ekleme</h2>
+        <h2 class="form-signin-heading mb-3">Kullanıcı Ekleme</h2>
+
+        <hr class="horizontal dark mt-0 w-100">
 
         <div class="row mb-1">
             <div class="col-md-6 col-btn">
