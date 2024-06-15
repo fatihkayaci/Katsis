@@ -135,10 +135,10 @@ $idapartman =$_SESSION["apartID"];
           </li>
         </a>
 
-        <a class="nav-item mt-1 modul sayacPage" href="index?parametre=Surveys">
+        <a class="nav-item mt-1 modul mainPage" href="index?parametre=Surveys">
           <li class="nav-link">
             <div class="nav-ico">
-              <i class="fa-solid fa-tachometer-alt"></i>
+              <i class="fa-solid fa-square-poll-vertical"></i>
             </div>
             <span class="nav-link-text">Anketler</span>
           </li>
