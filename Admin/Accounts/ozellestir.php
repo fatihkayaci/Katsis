@@ -336,37 +336,56 @@ WHERE m.user_id = :user_id AND m.apartman_id = :apartman_id AND maliye_turu = :m
                 <hr class="horizontal dark m-0 w-100">
 
                 <div class="bilgi-p p-new">
+                    <p>T.C. Kimlik No</p>
+                    <input class="profile-edit" id="tc" type="text" oninput="validateTC(this)" value="<?= !empty($row["tc"]) ? $row["tc"] : "-" ?>">
+                </div>
+                <hr class="horizontal dark m-0 w-100">
+
+                <div class="bilgi-p p-new">
+                    <p>Telefon Numarası</p>
+                    <input class="profile-edit" id="phoneNumber" type="text" oninput="validatePhoneNumber(this)" value="<?= !empty($row["phoneNumber"]) ? $row["phoneNumber"] : "-" ?>">
+                </div>
+
+                <hr class="horizontal dark m-0 w-100">
+
+                <div class="bilgi-p p-new">
                     <p>E-Posta</p>
                     <input class="profile-edit" id="userEmail" type="text" value="<?= !empty($row["userEmail"]) ? $row["userEmail"] : "-" ?>">
                 
                 </div>
 
-                <hr class="horizontal dark m-0 w-100">
-
-                <div class="bilgi-p p-new">
-                    <p>Telefon Numarası</p>
-                    <input class="profile-edit" id="phoneNumber" type="text" value="<?= !empty($row["phoneNumber"]) ? $row["phoneNumber"] : "-" ?>">
-                </div>
 
                 <hr class="horizontal dark m-0 w-100">
 
                 <div class="bilgi-p p-new">
-                    <p>Cinsiyet</p>
-                    <input class="profile-edit" id="gender" type="text" value="<?= !empty($row["gender"]) ? $row["gender"] : "-" ?>">
-                </div>
+                <p>Cinsiyet</p>
+                    <div class="col-md-6 col margint">
+                            <div class="select-div m-0">
+                                <div class="dropdown-nereden">
+                                    <div class="group">
+                                        <input class="search-selectx profile-edit input" 
+                                        data-user-id="" type="text" value="<?= !empty($row["gender"]) ? $row["gender"] : "-" ?>" 
+                                        list="Users" id="gender" readonly required="" />
+                                    </div>
+                                    <div class="dropdown-content-nereden searchInput-btn" id="genderDp">
+                                        <div class="dropdown-content-inside-nereden userPopup">
+                                            <input type="hidden" id="searchInput3" placeholder="Ara...">
+                                            <button data-user-id="Erkek" name="gender" class="genderButton">Erkek</button>
+                                            <button data-user-id="Kadin" name="gender" class="genderButton">Kadın</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 
                 <hr class="horizontal dark m-0 w-100">
 
-                <div class="bilgi-p p-new">
-                    <p>T.C. Kimlik No</p>
-                    <input class="profile-edit" id="tc" type="text" value="<?= !empty($row["tc"]) ? $row["tc"] : "-" ?>">
-                </div>
 
             </div>
 
             <div class="hide-info">
 
-                <hr class="horizontal dark m-0 w-100">
 
                 <div class="bilgi-p p-new">
                     <p>Kullanıcı No :</p>
@@ -377,6 +396,7 @@ WHERE m.user_id = :user_id AND m.apartman_id = :apartman_id AND maliye_turu = :m
 
                 <div class="bilgi-p p-new">
                     <p>Parola :</p>
+                    <!-- bakılacak password çözümü -->
                     <input class="profile-edit" id="parola" type="text" value="<?php echo base64_decode($row["userPass"]); ?>">
                 </div>
 
@@ -552,7 +572,14 @@ WHERE m.user_id = :user_id AND m.apartman_id = :apartman_id AND maliye_turu = :m
     ?>
 
 
-
+<script>
+    // Butonlara tıklanınca input alanını güncelleme
+    document.querySelectorAll('.genderButton').forEach(button => {
+        button.addEventListener('click', function() {
+            document.getElementById('gender').value = this.innerText;
+        });
+    });
+</script>
     <script type="text/javascript">
     $(document).ready(function() {
         $('#borcTutar').css('border-color', '#0d0c22');
@@ -1056,3 +1083,58 @@ WHERE m.user_id = :user_id AND m.apartman_id = :apartman_id AND maliye_turu = :m
         }
 
     </script>
+<script>
+function validateTC(element) {
+    let tc = element.value;
+
+    // Sadece sayılara izin ver ve uzunluğu 11 karakterle sınırla
+    if (!/^\d*$/.test(tc) || tc.length > 11) {
+        element.value = tc.slice(0, 11).replace(/\D/g, '');
+        alert("TC numarası sadece sayılardan oluşmalı ve 11 karakter uzunluğunda olmalıdır.");
+    }
+}
+
+function validatePhoneNumber(element) {
+    let phoneNumber = element.value;
+
+    // Sadece sayılara izin ver ve uzunluğu 10 karakterle sınırla
+    if (!/^\d*$/.test(phoneNumber) || phoneNumber.length > 10) {
+        element.value = phoneNumber.slice(0, 10).replace(/\D/g, '');
+        alert("Telefon numarası sadece sayılardan oluşmalı ve 10 karakter uzunluğunda olmalıdır.");
+    }
+}
+    window.onload = function () {
+        var tcInput = document.getElementsByName('tc')[0];
+        var phoneInput = document.getElementsByName('phoneNumber')[0];
+
+        // TC için 11 karakter sınırlaması ve sadece rakam girişine izin verme
+        tcInput.addEventListener('input', function () {
+            this.value = this.value.replace(/\D/g, '').slice(0, 11);
+        });
+
+        // Telefon numarası için 10 karakter sınırlaması ve sadece rakam girişine izin verme
+        phoneInput.addEventListener('input', function () {
+            this.value = this.value.replace(/\D/g, '').slice(0, 10);
+        });
+
+        var userPopup = document.getElementById('popup');
+        var dairePopup = document.getElementById('dairePopup');
+        var topluPopup = document.getElementById('topluPopup');
+        // ESC tuşuna basıldığında popup'ı kapat
+        window.addEventListener('keydown', function (event) {
+            if (event.key === "Escape") {
+                if (dairePopup.style.display === 'flex') {
+                    closeDaire();
+                } else if (userPopup.style.display === 'flex') {
+                    closePopup();
+                } else if (topluPopup.style.display === 'flex') {
+                    closeToplu();
+                }
+            }
+        });
+    };
+</script>
+<script src="assets/js/mycode/dropdown.js"></script>
+<script>
+    dropDownn('gender', 'genderDp', 'searchInput3');
+</script>
