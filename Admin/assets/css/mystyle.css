@@ -2955,10 +2955,13 @@ white-space: inherit;
   gap: 10px;
   width: 100%;
   transition: all 0.3s ease;
-  padding: 5px 0px;
+  padding: 5px 10px;
 }
 .toplu-islem:hover {
   background-color: #f1f1f1;
+}
+#addRowBtn {
+  margin: 10px;
 }
 
 .toplu-islem-inside {
