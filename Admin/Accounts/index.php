@@ -1,7 +1,6 @@
 <?php
 require_once 'Controller/class.func.php';
 $userPass = randomPassword();
-$hashedPassword = base64_encode($userPass);
 
 $optionsBlok = [];
 $optionsDurum = '';
@@ -291,7 +290,7 @@ try {
                 </div>
             </div>
             <div class="col-md-6 col margint">
-                <input class="input" type="text" id="hashedPassword" name="password" value="<?= $hashedPassword ?>"
+                <input class="input" type="text" id="userPass" name="password" value="<?= $userPass ?>"
                     required="">
                 <label for="sifre">Şifre :</label>
             </div>
@@ -1245,7 +1244,7 @@ function validatePhoneNumber(element) {
             userEmail: $('input[name="userEmail"]').val() || null,
             plate: $('input[name="plate"]').val(),
             gender: selectedGender,
-            password: $('#hashedPassword').val(),
+            password: $('#userPass').val(),
             openingBalance: $('input[name="openingBalance"]').val() || null,
             balanceStatus: selectedOdemeDurumu,
             promise: $('input[name="promise"]').val(),

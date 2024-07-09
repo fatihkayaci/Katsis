@@ -91,28 +91,8 @@ WHERE m.user_id = :user_id AND m.apartman_id = :apartman_id AND maliye_turu = :m
         } else {
             $toplamBorc = 0;
         }
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
         /////////////////////////////////
     
-
-
-
-
-
-
         if ($result) {
             foreach ($result as $row) {
                 ?>
@@ -258,17 +238,17 @@ WHERE m.user_id = :user_id AND m.apartman_id = :apartman_id AND maliye_turu = :m
             <div class="name-area">
                 <div class="user-profile">
                     <?php
-                                $names = explode(" ", $row["userName"]);
-                                $initials = "";
-                                $count = 0;
-                                foreach ($names as $name) {
-                                    $initials .= strtoupper(substr($name, 0, 1));
-                                    $count++;
-                                    if ($count == 2) {
-                                        break;
-                                    }
-                                }
-                                ?>
+                        $names = explode(" ", $row["userName"]);
+                        $initials = "";
+                        $count = 0;
+                        foreach ($names as $name) {
+                            $initials .= strtoupper(substr($name, 0, 1));
+                            $count++;
+                            if ($count == 2) {
+                                break;
+                            }
+                        }
+                        ?>
                     <div class="user-avatar">
                         <p>
                             <?php echo $initials; ?>
@@ -290,13 +270,13 @@ WHERE m.user_id = :user_id AND m.apartman_id = :apartman_id AND maliye_turu = :m
                         <p>Durumu :</p>
                         <div class="cursor-none main-durum <?php
                                   
-                                        if ($row["durum"] == "Kiracı") {
-                                            echo "kiraci";
-                                        } elseif ($row["durum"] == "Kat Maliki") {
-                                            echo "kat-maliki";
-                                        } else {
-                                            echo "belirtilmemis";
-                                        }
+                                    if ($row["durum"] == "Kiracı") {
+                                        echo "kiraci";
+                                    } elseif ($row["durum"] == "Kat Maliki") {
+                                        echo "kat-maliki";
+                                    } else {
+                                        echo "belirtilmemis";
+                                    }
                                     ?>">
                             <?php
                             

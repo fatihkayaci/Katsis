@@ -13,7 +13,7 @@ try {
     $apartman_id = $_SESSION["apartID"];
     $plate = $_POST['plate'];
     $gender = $_POST['gender'] ?? '';
-    $password = $_POST['password'];
+    $password = base64_encode($_POST['password']);
     $openingBalance = !empty($_POST['openingBalance']) ? $_POST['openingBalance'] : null;
     $balanceType = !empty($_POST['balanceStatus']) ? $_POST['balanceStatus'] : null;
     $promise = !empty($_POST['promise']) ? $_POST['promise'] : null;

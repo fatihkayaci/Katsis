@@ -75,7 +75,7 @@ class USER
    {
     if ($userRow['userStatus'] == "Y")
     {
-     if ($userRow['userPass'] == base64_encode($upass))
+     if ($userRow['userPass'] == $upass)
      {
       $_SESSION['userSession'] = $userRow['userID'];
       $_SESSION['rol'] = $userRow['rol'];

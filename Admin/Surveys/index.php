@@ -9,6 +9,7 @@
 
         <div class="row mt-3">
             <div class="col-md-6 col-btn">
+
                 <textarea class="input" name="anketSoru" id="anketSoru" required></textarea>
                 <label for="anketSoru">Anket Sorusu :</label>
             </div>
@@ -30,7 +31,7 @@
 
         <div class="row">
             <div class="col-md-6 col">
-                <input class="input" data-user-id="" id="datepickerson" name="promise" type="text" required="">
+                <input class="input" data-user-id="" id="datepickerson" name="lastDate" type="text" required="">
                 <label for="datepickerson">Son Cevaplama Tarihi</label>
             </div>
             <div class="col-md-6 col">
@@ -103,8 +104,8 @@
 <?php
 try {
     
-    $sql2 = "SELECT * FROM tbl_arsive 
-    ORDER BY fullName ASC";
+    $sql2 = "SELECT * FROM tbl_surveys WHERE ". $_SESSION["apartID"] . "
+    ORDER BY surveysID ASC";
     
     $stmt = $conn->prepare($sql2);
     $stmt->execute();
@@ -162,15 +163,16 @@ try {
             <?php
             $i = 0;
             foreach ($result as $row) {
+                
                 $i++;
             ?>
-            <tr data-userid="<?php echo $row["userID"]; ?>" id="<?php echo $row["grupID"]; ?>"
+            <tr data-userid="<?php echo $row["surveysID"]; ?>"
                 class="git-ac">
                 <td data-title="Seç" class="check-style">
                     <!-- Checkbox id'sine $i değerini ekliyoruz -->
-                    <input id="check-<?php echo $row["userID"] . '-' . $i; ?>" class="check1" type="checkbox"
-                        onclick="toggleCheckbox(<?php echo $row['userID']; ?>, <?php echo $i; ?>)" />
-                    <label for="check-<?php echo $row["userID"] . '-' . $i; ?>" class="check">
+                    <input id="check-<?php echo $row["surveysID"] . '-' . $i; ?>" class="check1" type="checkbox"
+                        onclick="toggleCheckbox(<?php echo $row['surveysID']; ?>, <?php echo $i; ?>)" />
+                    <label for="check-<?php echo $row["surveysID"] . '-' . $i; ?>" class="check">
                         <svg width="18px" height="18px" viewBox="0 0 18 18">
                             <path
                                 d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z">
@@ -179,32 +181,21 @@ try {
                         </svg>
                     </label>
                 </td>
-                <td data-title="Ad Soyad" class="table_tt" contenteditable="false">
+                <td data-title="Anket Basligi" class="table_tt" contenteditable="false">
 
-                    <?php echo $row["fullName"]; ?></td>
+                    <?php echo $row["surveysQuestion"]; ?></td>
 
                     <td data-title="TC" class="table_tt" contenteditable="false">
 
-                    <?php echo $row["TC"]; ?></td>
+                    <?php echo $row["lastDate"]; ?></td>
 
                 <td data-title="Telefon Numarası" class="table_tt phoneNumber" contenteditable="false">
 
-                    <?php echo $row["phoneNumber"]; ?></td>
+                <?php echo $row["vote"]; ?></td>
 
-                <td style="text-align: center; width: 100;" data-title="Durum" class="table_tt">
-                    <div class="main-durum <?php
-                                if ($row["status"] == "kiraci") {
-                                    echo "kiraci";
-                                } elseif ($row["status"] == "katMaliki") {
-                                    echo "kat-maliki";
-                                } else {
-                                    echo "belirtilmemis";
-                                }
-                                ?> ">
-                        <?php echo $row["status"]; ?>
-                    </div>
+
+                <td style="text-align: center;" data-title="oylar" class="table_tt">
                 </td>
-
                 <td style="text-align: center;" data-title="oylar" class="table_tt">
                     <button type="button" class="fatura_btn oylar_btn" id="oylar"><i class="fa-regular fa-clipboard"></i></button>
                 </td>
@@ -265,6 +256,9 @@ try {
 
 <div class="cener-table">
 
+<div class="input-group1">
+            <button class="addAnket btn-custom-outline bcoc1">Anket Ekle</button>
+        </div>
     <div class="input-group-div">
 
         <div class="input-group1">
@@ -359,6 +353,40 @@ try {
     echo "Bağlantı hatası: " . $e->getMessage();
 }
 ?>
+
+<script>
+    $('#saveButton').click(function() {
+    var formData = {
+        surveysName: $('textarea[name="anketSoru"]').val(), // Textarea için doğru seçici
+        secenek: [], // Boş bir dizi oluşturuyoruz
+        lastDate: $('input[name="lastDate"]').val() // "promise" adında bir input olduğu varsayılıyor
+    };
+     // Tüm secenek inputlarını topluyoruz
+     $('input[name$="secenek"]').each(function() {
+        formData.secenek.push($(this).val());
+    });
+    console.log(formData);
+    
+    $.ajax({
+            url: 'Controller/Surveys/surveysSave.php',
+            type: 'POST',
+            data: {
+                surveysName: formData.surveysName,
+                secenek: formData.secenek,
+                lastDate: formData.lastDate
+            },
+            success: function(response) {
+                alert(response);
+                // alert("Kullanıcı ve daire bilgileri başarıyla güncellendi.");
+                // location.reload();
+            },
+            error: function(error) {
+                console.error("AJAX hatası: ", error);
+            }
+        });
+    });
+</script>
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
 <script>
@@ -616,12 +644,12 @@ topluSilButton.addEventListener('click', function() {
 
     checkboxes.forEach(function(checkbox) {
         var row = checkbox.closest('tr');
-        var userID = row.getAttribute('data-userid');
+        var surveysID = row.getAttribute('data-userid');
         $.ajax({
-            url: 'Controller/deleteArsiv.php',
+            url: 'Controller/Surveys/surveysDelete.php',
             type: 'POST',
             data: {
-                userID: userID
+                surveysID: surveysID
             },
             success: function(deleteResponse) {
                 location.reload();
