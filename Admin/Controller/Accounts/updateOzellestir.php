@@ -9,7 +9,7 @@ try {
     $phoneNumber=$_POST['phoneNumber']; 
     $gender= $_POST['gender'];
     $tc = $_POST['tc'];
-    $zpassword = $_POST['password'];
+    $password = base64_encode($_POST['password']);
     $userEmail = $_POST['userEmail'];
     $plate = $_POST['plate'];
     

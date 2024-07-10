@@ -16,10 +16,11 @@ try {
     $password = base64_encode($_POST['password']);
     $openingBalance = !empty($_POST['openingBalance']) ? $_POST['openingBalance'] : null;
     $balanceType = !empty($_POST['balanceStatus']) ? $_POST['balanceStatus'] : null;
-    $promise = !empty($_POST['promise']) ? $_POST['promise'] : null;
+    $promise = $_POST['promise'] ?? '';
     $blokArray = json_decode($_POST['blokArray'], true);
     $resultsArrayKiraci = array(); // Kiracılar için olanlar
     $resultsArrayKatMaliki = array(); // Kat malikleri için olanlar
+    $saveUserDate = date('Y-m-d H:i:s');
     // Kullanıcıyı kontrol et
     $sqlCheck = "SELECT userID FROM tbl_users WHERE userName = :userName AND tc = :tc";
     $stmtCheck = $conn->prepare($sqlCheck);
@@ -37,8 +38,8 @@ try {
         $t = "Y";
 
         if (empty($durumArray)) {
-            $sql = "INSERT INTO tbl_users (userName, user_no, tc, phoneNumber, durum, userEmail, userPass, plate, gender, apartman_id, rol, popup, userStatus, openingBalance, balanceType, promise) VALUES 
-                (:userName, :user_no, :tc, :phoneNumber, :durum, :userEmail, :userPass, :plate, :gender, :apartman_id, :rol, :popup, :userStatus, :openingBalance, :balanceType, :promise)";
+            $sql = "INSERT INTO tbl_users (userName, user_no, tc, phoneNumber, durum, userEmail, userPass, plate, gender, apartman_id, rol, popup, userStatus, openingBalance, balanceType, promise, saveUserDate) VALUES 
+                (:userName, :user_no, :tc, :phoneNumber, :durum, :userEmail, :userPass, :plate, :gender, :apartman_id, :rol, :popup, :userStatus, :openingBalance, :balanceType, :promise, :saveUserDate)";
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(':userName', $userName);
             $stmt->bindParam(':user_no', $userNO);
@@ -53,6 +54,7 @@ try {
             $stmt->bindParam(':openingBalance', $openingBalance);
             $stmt->bindParam(':balanceType', $balanceType);
             $stmt->bindParam(':promise', $promise);
+            $stmt->bindParam(':saveUserDate', $saveUserDate);
             $stmt->bindParam(':apartman_id', $apartman_id);
             $rol = 3;
             $popup = 0;
@@ -62,8 +64,8 @@ try {
             $userID = $conn->lastInsertId();
         } else {
             foreach ($durumArray as $durum) {
-                $sql = "INSERT INTO tbl_users (userName, user_no, tc, phoneNumber, durum, userEmail, userPass, plate, gender, apartman_id, rol, popup, userStatus, openingBalance, balanceType, promise) VALUES 
-                    (:userName, :user_no, :tc, :phoneNumber, :durum, :userEmail, :userPass, :plate, :gender, :apartman_id, :rol, :popup, :userStatus, :openingBalance, :balanceType, :promise)";
+                $sql = "INSERT INTO tbl_users (userName, user_no, tc, phoneNumber, durum, userEmail, userPass, plate, gender, apartman_id, rol, popup, userStatus, openingBalance, balanceType, promise, saveUserDate) VALUES 
+                    (:userName, :user_no, :tc, :phoneNumber, :durum, :userEmail, :userPass, :plate, :gender, :apartman_id, :rol, :popup, :userStatus, :openingBalance, :balanceType, :promise, :saveUserDate)";
                 $stmt = $conn->prepare($sql);
                 $stmt->bindParam(':userName', $userName);
                 $stmt->bindParam(':user_no', $userNO);
@@ -78,6 +80,7 @@ try {
                 $stmt->bindParam(':openingBalance', $openingBalance);
                 $stmt->bindParam(':balanceType', $balanceType);
                 $stmt->bindParam(':promise', $promise);
+                $stmt->bindParam(':saveUserDate', $saveUserDate);
                 $stmt->bindParam(':apartman_id', $apartman_id);
                 $rol = 3;
                 $popup = 0;

@@ -70,12 +70,12 @@ class USER
    $stmt = $this->conn->prepare("SELECT * FROM tbl_users WHERE $field=:identifier");
    $stmt->execute(array(":identifier" => $identifier));
    $userRow = $stmt->fetch(PDO::FETCH_ASSOC);
- 
+
    if ($stmt->rowCount() == 1)
    {
     if ($userRow['userStatus'] == "Y")
     {
-     if ($userRow['userPass'] == $upass)
+     if ($userRow['userPass'] == base64_encode($upass))
      {
       $_SESSION['userSession'] = $userRow['userID'];
       $_SESSION['rol'] = $userRow['rol'];

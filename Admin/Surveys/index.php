@@ -9,6 +9,7 @@
 
         <div class="row mt-3">
             <div class="col-md-6 col-btn">
+
                 <textarea class="input" name="anketSoru" id="anketSoru" required></textarea>
                 <label for="anketSoru">Anket Sorusu :</label>
             </div>
@@ -30,7 +31,7 @@
 
         <div class="row">
             <div class="col-md-6 col">
-                <input class="input" data-user-id="" id="datepickerson" name="promise" type="text" required="">
+                <input class="input" data-user-id="" id="datepickerson" name="lastDate" type="text" required="">
                 <label for="datepickerson">Son Cevaplama Tarihi</label>
             </div>
             <div class="col-md-6 col">
@@ -103,7 +104,7 @@
 <?php
 try {
     
-    $sql2 = "SELECT * FROM tbl_surveys 
+    $sql2 = "SELECT * FROM tbl_surveys WHERE ". $_SESSION["apartID"] . "
     ORDER BY surveysID ASC";
     
     $stmt = $conn->prepare($sql2);
@@ -162,9 +163,10 @@ try {
             <?php
             $i = 0;
             foreach ($result as $row) {
+                
                 $i++;
             ?>
-            <tr data-userid="<?php echo $row["surveysID"]; ?>" id="<?php echo $row["surveysID"]; ?>"
+            <tr data-userid="<?php echo $row["surveysID"]; ?>"
                 class="git-ac">
                 <td data-title="Seç" class="check-style">
                     <!-- Checkbox id'sine $i değerini ekliyoruz -->
@@ -179,21 +181,21 @@ try {
                         </svg>
                     </label>
                 </td>
-                <td data-title="surveysQuestion" class="table_tt" contenteditable="false">
+                <td data-title="Anket Basligi" class="table_tt" contenteditable="false">
 
                     <?php echo $row["surveysQuestion"]; ?></td>
 
-                    <td data-title="lastDate" class="table_tt" contenteditable="false">
+                    <td data-title="TC" class="table_tt" contenteditable="false">
 
                     <?php echo $row["lastDate"]; ?></td>
 
-                <td data-title="vote" class="table_tt phoneNumber" contenteditable="false">
-                    <?php echo $row["vote"]; ?></td>
-                </td>
                 <td data-title="Telefon Numarası" class="table_tt phoneNumber" contenteditable="false">
-                    <p>sona erdi</p>
-                </td>
 
+                <?php echo $row["vote"]; ?></td>
+
+
+                <td style="text-align: center;" data-title="oylar" class="table_tt">
+                </td>
                 <td style="text-align: center;" data-title="oylar" class="table_tt">
                     <button type="button" class="fatura_btn oylar_btn" id="oylar"><i class="fa-regular fa-clipboard"></i></button>
                 </td>
@@ -254,6 +256,9 @@ try {
 
 <div class="cener-table">
 
+<div class="input-group1">
+            <button class="addAnket btn-custom-outline bcoc1">Anket Ekle</button>
+        </div>
     <div class="input-group-div">
 
         <div class="input-group1">
@@ -348,6 +353,40 @@ try {
     echo "Bağlantı hatası: " . $e->getMessage();
 }
 ?>
+
+<script>
+    $('#saveButton').click(function() {
+    var formData = {
+        surveysName: $('textarea[name="anketSoru"]').val(), // Textarea için doğru seçici
+        secenek: [], // Boş bir dizi oluşturuyoruz
+        lastDate: $('input[name="lastDate"]').val() // "promise" adında bir input olduğu varsayılıyor
+    };
+     // Tüm secenek inputlarını topluyoruz
+     $('input[name$="secenek"]').each(function() {
+        formData.secenek.push($(this).val());
+    });
+    console.log(formData);
+    
+    $.ajax({
+            url: 'Controller/Surveys/surveysSave.php',
+            type: 'POST',
+            data: {
+                surveysName: formData.surveysName,
+                secenek: formData.secenek,
+                lastDate: formData.lastDate
+            },
+            success: function(response) {
+                alert(response);
+                // alert("Kullanıcı ve daire bilgileri başarıyla güncellendi.");
+                // location.reload();
+            },
+            error: function(error) {
+                console.error("AJAX hatası: ", error);
+            }
+        });
+    });
+</script>
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
 <script>
@@ -490,131 +529,6 @@ document.addEventListener("click", closeAllSelect);
 </script>
 
 <script>
-    $(document).ready(function() {
-    $('#saveButton').click(function() {
-        // Form verilerini topla
-        var formData = {
-            surveysID: $('input[name="anketSoru"]').val(),
-            tc: $('input[name="tc"]').val(),
-            phoneNumber: $('input[name="phoneNumber"]').val(),
-            userEmail: $('input[name="userEmail"]').val(),
-            plate: $('input[name="plate"]').val()
-        };
-        // console.log("Promise:", formData.promise);
-        console.log("Block Array:", formData.blokArray);
-        // console.log("Durum Array:", formData.durumArray);
-
-        // Şifre kontrolleri
-        if (!formData.password) {
-            alert("Şifre kısmı boş bırakılamaz");
-            return;
-        } else if (formData.password.length < 6) {
-            alert("Şifre kısmı 6 karakterden az olamaz.");
-            return;
-        }
-
-        // Çakışma kontrolü ve işlemler
-        checkConflict(formData, function(isConflict, lastBlock, lastFlotCount, lastDurum) {
-            if (isConflict) {
-                if (confirm(`Çakışma durumu bulundu: Blok ismi: ${lastBlock}, Daire sayısı: ${lastFlotCount}, Durum: ${lastDurum}. Bu dairede oturan kullanıcıyı silmek ister misiniz?`)) {
-                    if (kisitlamalar(formData.userName /* tc, phoneNumber, userEmail, plate */)) {
-                        saveUserData(formData);
-                        arsiveUser();
-                    }
-                }
-            } else {
-                if (kisitlamalar(formData.userName /* tc, phoneNumber, userEmail, plate */)) {
-                    saveUserData(formData);
-                }
-            }
-        });
-    });
-
-    function getBlockArray() {
-    // Blok dizisini oluştur
-    var blokArray = [];
-    selectedValuesArray.forEach(function(element) {
-        // "blok" kelimesini bul ve öncesindeki kısmı al
-        var blokIndex = element.toLowerCase().indexOf("blok");
-        var letterPart = blokIndex > -1 ? element.substring(0, blokIndex).trim() : '';
-        
-        // Sayı kısmını ayır
-        var match = element.match(/\d+/);
-        var numberPart = match ? match[0] : null;
-        
-        blokArray.push({ letter: letterPart, number: numberPart });
-    });
-    return blokArray;
-}
-
-
-    function getDurumArray() {
-        // Durum dizisini oluştur
-        var durumArray = [];
-        selectedDurumArray.forEach(function(durum) {
-            durum.split(',').forEach(function(d) {
-                durumArray.push(d);
-            });
-        });
-        return durumArray;
-    }
-
-    function checkConflict(formData, callback) {
-        var isConflict = false;
-        var lastBlock, lastFlotCount, lastDurum;
-        
-        rowData.forEach(function(row) {
-            var block = row.block;
-            var flatCount = row.flatCount;
-            var status = row.status;
-
-            formData.blokArray.forEach(function(blokElement) {
-                if (block === blokElement.letter && flatCount === blokElement.number) {
-                    lastBlock = blokElement.letter;
-                    lastFlotCount = blokElement.number;
-                    formData.durumArray.forEach(function(durum) {
-                        lastDurum = durum;
-                        if (status === durum) {
-                            isConflict = true;
-                        }
-                    });
-                }
-            });
-        });
-        
-        callback(isConflict, lastBlock, lastFlotCount, lastDurum);
-    }
-    function saveUserData(formData) {
-        $.ajax({
-            url: 'Controller/Accounts/save_user.php',
-            type: 'POST',
-            data: {
-                userName: formData.userName,
-                tc: formData.tc,
-                phoneNumber: formData.phoneNumber,
-                userEmail: formData.userEmail,
-                gender: formData.gender,
-                plate:formData.plate,
-                password: formData.password,
-                openingBalance: formData.openingBalance,
-                balanceStatus: formData.balanceStatus,
-                promise: formData.promise,
-                blokArray: JSON.stringify(formData.blokArray),
-                durumArray: JSON.stringify(formData.durumArray)
-            },
-            success: function(response) {
-                alert("Kullanıcı ve daire bilgileri başarıyla güncellendi.");
-                location.reload();
-            },
-            error: function(error) {
-                console.error("AJAX hatası: ", error);
-            }
-        });
-    }
-});
-
-</script>
-<script>
 function sortTable(columnIndex) {
     const table = document.getElementById("example");
     const rows = Array.from(table.rows).slice(1);
@@ -730,12 +644,12 @@ topluSilButton.addEventListener('click', function() {
 
     checkboxes.forEach(function(checkbox) {
         var row = checkbox.closest('tr');
-        var userID = row.getAttribute('data-userid');
+        var surveysID = row.getAttribute('data-userid');
         $.ajax({
-            url: 'Controller/deleteArsiv.php',
+            url: 'Controller/Surveys/surveysDelete.php',
             type: 'POST',
             data: {
-                userID: userID
+                surveysID: surveysID
             },
             success: function(deleteResponse) {
                 location.reload();

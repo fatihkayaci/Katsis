@@ -1,101 +1,160 @@
+<script>
+function pagename(temp) {
+    document.getElementById('pageName').innerHTML = temp;
+}
+</script>
+
 <?php
 session_start();
-
 include("../DB/dbconfig.php");
+require_once '../class.user.php';
+$user_login = new USER();
+if (!isset($_SESSION["mail"]) || empty($_SESSION["mail"])) {
+    $user_login->redirect('../index');
+} 
 
-// Çerezleri kontrol et ve otomatik giriş yap
-if (isset($_COOKIE['email']) && isset($_COOKIE['sifre'])) {
-    $cookieEmail = $_COOKIE['email'];
-    $cookieSifre = $_COOKIE['sifre'];
+$identifier = $_SESSION["mail"];
+$field = is_numeric($identifier) ? "user_no" : "userEmail";
 
-    $email = $cookieEmail;
-    $sifre = $cookieSifre;
+$sql = "SELECT * FROM tbl_users WHERE $field = :identifier";
 
-    // Otomatik giriş yapma işlemleri
-    if ($email && $sifre) {
-        $sql = "SELECT * FROM tbl_kullanici WHERE email = :email AND sifre = :sifre";
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
-        $stmt->bindParam(':sifre', $sifre, PDO::PARAM_STR);
-        $stmt->execute();
+$stmt = $conn->prepare($sql);
 
-        $rowCount = $stmt->rowCount();
+$stmt->bindParam(":identifier", $identifier);
+$stmt->execute();
 
-        if ($rowCount > 0) {
-            $_SESSION['email'] = $email;
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    $idApartman = $row['apartman_id'];
+    $userName = $row['userName'];
+    $userID = $row['userID'];
+} 
 
-            // Hatırla işareti varsa, çerez oluştur
-            if ($hatirla) {
-                setcookie('email', $email, time() + (86400 * 30), "/"); // 30 gün süreyle geçerli çerez
-                setcookie('sifre', $sifre, time() + (86400 * 30), "/"); // 30 gün süreyle geçerli çerez
-            }
+$_SESSION["pageName"]="Dashboard";
+$_SESSION["userName"] =$userName;
+$_SESSION["apartID"] =$idApartman;
+$_SESSION["userID"] =$userID;
 
-            // Kullanıcı bulundu, giriş başarılı
-            // Başka bir sayfaya yönlendir
-            header("Location: giris.php");
-            exit();
-        }
-    }
+$indexx= "";
+
+if(isset($_GET['parametre'])){
+    $indexx = $_GET['parametre'];
 }
 
-// Otomatik giriş yapılmadıysa, diğer giriş kontrollerini yap
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = $_POST["email"];
-    $sifre = $_POST["sifre"];
-    $hatirla = isset($_POST["hatirla"]) ? true : false;
-    
 
-    $sql = "SELECT * FROM tbl_kullanici WHERE email = :email AND sifre = :sifre";
-    $stmt = $conn->prepare($sql);
-    $stmt->bindParam(':email', $email, PDO::PARAM_STR);
-    $stmt->bindParam(':sifre', $sifre, PDO::PARAM_STR);
-    $stmt->execute();
+include('header.php');
 
-    $rowCount = $stmt->rowCount();
+include('leftbar.php');
 
-    if ($rowCount > 0) {
-        $_SESSION['email'] = $email;
-
-        // Hatırla işareti varsa, çerez oluştur
-        if ($hatirla) {
-            setcookie('email', $email, time() + (86400 * 30), "/"); // 30 gün süreyle geçerli çerez
-            setcookie('sifre', $sifre, time() + (86400 * 30), "/"); // 30 gün süreyle geçerli çerez
-        }
-
-        // Kullanıcı bulundu, giriş başarılı
-        // Başka bir sayfaya yönlendir
-        header("Location: giris.php");
-        exit();
-    } else {
-        // Kullanıcı bulunamadı, hata mesajı
-        echo "Kullanıcı adı veya şifre hatalı.";
-    }
+if($indexx == 'Accounts'){
+    include ("Accounts/index.php");
+    echo "<script>pagename('Kullanıcılar');</script>";
+    echo "<script>
+            localStorage.setItem('selectedLink', 'Accounts');
+         </script>";
 }
+else if($indexx == 'Arsiv'){
+    include ("Accounts/arsiv.php");
+    echo "<script>pagename('Kullanıcılar / Aşiv');</script>";
+}
+else if($indexx == 'TopluHesap'){
+    include ("Accounts/topluHesap.php");
+    echo "<script>pagename('Toplu Hesap Ekleme');</script>";
+}else if($indexx == 'TopluPersonel'){
+    include ("employee/topluPersonel.php");
+    echo "<script>pagename('Toplu Personel Ekleme');</script>";
+}
+else if($indexx == 'custom'){
+    include ("Accounts/ozellestir.php");
+    echo "<script>pagename('Kullanıcı Ayrıntıları');</script>";
+}
+else if($indexx == 'Sections'){
+    include ("Sections/index.php");
+    echo "<script>pagename('Bölümler');</script>";
+    echo "<script>
+            localStorage.setItem('selectedLink', 'Sections');
+         </script>";
+} else if($indexx == 'detail'){
+    include ("Sections/detail.php");
+    echo "<script>pagename('Daire Ayrıntıları');</script>";
+    echo "<script>
+            localStorage.setItem('selectedLink', 'Sections');
+         </script>";
+}  else if($indexx == 'income'){ 
+    include ("Income/index.php");
+    echo "<script>pagename('Gelirler');</script>";
+    echo "<script>
+            localStorage.setItem('selectedLink', 'income');
+         </script>";
+} else if($indexx == 'topluborc'){ 
+    include ("Income/topluBorc.php");
+    echo "<script>pagename('Toplu Borçlandırma');</script>";
+    echo "<script>
+            localStorage.setItem('selectedLink', 'topluborc');
+         </script>";
+} else if($indexx == 'meters'){
+    include ("Meters/index.php");
+    echo "<script>pagename('Sayaçlar');</script>";
+    echo "<script>
+            localStorage.setItem('selectedLink', 'meters');
+         </script>";
+} 
+else if($indexx == 'dashboard'){
+    include ("Dashboard/index.php");
+    echo "<script>pagename('Ana Sayfa');</script>";
+    echo "<script>
+            localStorage.setItem('selectedLink', 'dashboard');
+         </script>";
+}
+else if($indexx == 'profile'){
+    include ("profile/profile.php");
+    echo "<script>pagename('Profil');</script>";
+    echo "<script>
+            localStorage.setItem('selectedLink', 'profile');
+         </script>";
+}else if($indexx == 'employee'){
+    include ("employee/index.php");
+    echo "<script>pagename('Personeller');</script>";
+    echo "<script>
+            localStorage.setItem('selectedLink', 'employee');
+         </script>";
+}else if($indexx == 'employee-arsiv'){
+    include ("employee/arsiv.php");
+    echo "<script>pagename('Personeller / Aşiv');</script>";
+    echo "<script>
+            localStorage.setItem('selectedLink', 'employee-arsiv');
+         </script>";
+}else if($indexx == 'Surveys'){
+    include ("Surveys/index.php");
+    echo "<script>pagename('Anketler');</script>";
+    echo "<script>
+            localStorage.setItem('selectedLink', 'Surveys');
+         </script>";
+}else{
+    include ("Dashboard/index.php");
+    echo "<script>pagename('ANA SAYFA');</script>";
+    echo "<script>
+            localStorage.setItem('selectedLink', 'dashboard');
+         </script>";
+
+}
+
+$sql = "SELECT * FROM tbl_users WHERE userEmail = :userEmail";
+$stmt = $conn->prepare($sql);
+$stmt->bindParam(":userEmail", $_SESSION["mail"]);
+$stmt->execute();
+
+// Sonuçları al
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    // "popup" sütunundaki değeri al
+    $popupValue = $row['popup'];
+
+    if($popupValue ==1){
+        include('popup.php');
+    } 
+}
+
+
+
+
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kiracı Girişi</title>
-</head>
-
-<body>
-    <h2>Kiracı Girişi</h2>
-    <form method="post">
-        <label for="email">email:</label>
-        <input type="email" id="email" name="email" required><br><br>
-
-        <label for="sifre">Şifre:</label>
-        <input type="password" id="sifre" name="sifre" required><br><br>
-
-        <input type="checkbox" id="hatirla" name="hatirla">
-        <label for="hatirla">Beni Hatırla</label><br><br>
-
-        <input type="submit" value="Giriş Yap">
-    </form>
-</body>
-
-</html>

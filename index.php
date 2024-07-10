@@ -21,7 +21,7 @@ function redirectUserBasedOnRole($role) {
     if ($role == 1) {
         $user_login->redirect('Admin/index?parametre=dashboard');
     } elseif ($role == 3) {
-        $user_login->redirect('Kullanici/giris');
+        $user_login->redirect('Kullanici/index');
     } else {
         echo '<h2>Geçersiz kullanıcı rolü.</h2>';
     }
@@ -40,7 +40,6 @@ if (isset($_COOKIE["cokkiemail"]) && isset($_COOKIE["cokkiepass"])) {
 if (isset($_POST['btn-login'])) {
     $email = $_POST['txtemail'];
     $upass = $_POST['txtupass'];
-    base64_decode($upass);
     $remember = trim($_POST["remember"]);
     
     if (isset($_POST['g-recaptcha-response'])) {
