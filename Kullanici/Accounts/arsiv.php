@@ -1,115 +1,14 @@
-<!-- Popup Form -->
-<div id="popup">
-
-    <form class="login-form mainpopup" id="userForm">
-
-        <h2 class="form-signin-heading mb-3">Anket Ekleme</h2>
-
-        <hr class="horizontal dark mt-0 w-100">
-
-        <div class="row mt-3">
-            <div class="col-md-6 col-btn">
-
-                <textarea class="input" name="anketSoru" id="anketSoru" required></textarea>
-                <label for="anketSoru">Anket Sorusu :</label>
-            </div>
-        </div>
-
-        <div class="row secekE" id="secenekContainer">
-            <div class="col-md-6 col-btn group">
-                <input class="input trash-k" type="text" name="1secenek" required>
-                <label for="1secenek">1. Seçenek :</label>
-                <button class="trashcan"><i class="fa-solid fa-trash-can"></i></button>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-6 col-btn">
-                <button class="btn-custom w-100 bcoc1" id="secenekEkle"><i class="fa-solid fa-plus"></i> Seçenek Ekle</button>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-6 col">
-                <input class="input" data-user-id="" id="datepickerson" name="lastDate" type="text" required="">
-                <label for="datepickerson">Son Cevaplama Tarihi</label>
-            </div>
-            <div class="col-md-6 col">
-                <div class="select-div m-0">
-                    <div class="dropdown-nereden">
-                        <div class="group">
-                            <input class="search-selectx input" data-user-id="" type="text" id="kisiler"
-                                required="" />
-                            <label class="selectx-label" for="kisiler">Kişiler: </label>
-                        </div>
-
-                        <div class="dropdown-content-nereden searchInput-btn" id="kisilerDP">
-                            <div class="dropdown-content-inside-nereden mainpopupx">
-                                <input type="hidden" id="kisilerSearch" placeholder="Ara...">
-                                <button data-odeme-durumu="tumkisiler" name="tumkisiler">Tüm Kişiler</button>
-                                <button data-odeme-durumu="katmaliki" name="katmaliki">Kat Malikleri</button>
-                                <button data-odeme-durumu="kiraci" name="kiraci">Kiracılar</button>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-
-        <hr class="horizontal dark mt-0 w-100">
-
-        <div class="row row-btn">
-            <button type="button" class="btn-custom-close" onclick="closePopup()">Kapat</button>
-            <button type="button" class="btn-custom userClr" id="saveButton">Kaydet</button>
-        </div>
-
-
-    </form>
-</div>
-
-<!-- Oy POPUP -->
-<div id="topluPopup">
-
-    <form class="login-form-toplu" id="userForm2" action="">
-
-        <h2 class="form-signin-heading">Oy Kullanan Kişiler</h2>
-        
-        <hr class="horizontal mt-0 dark w-100">
-
-        <table class="users-table table-blok">
-                <tr class="users-table-info">
-                    <th>Blok / Daire </th>
-                    <th>Ad Soyad </th>
-                </tr>
-                <tr id="mainTr" style="display:none;">
-                    <tr class="git-ac" id="">
-                        <td>a-1</td>
-                        <td>Ad Soayd</td>
-                    </tr>
-                </tr>
-
-            </table>
-
-            <hr class="horizontal dark w-100">
-
-            <div class="row row-btn">
-                <button type="button" class="btn-custom-close w-100 me-0" onclick="closeToplu()">Kapat</button>
-            </div>
-
-    </form>
-</div>
-
 <?php
 try {
     
-    $sql2 = "SELECT * FROM tbl_surveys WHERE ". $_SESSION["apartID"] . "
-    ORDER BY surveysID ASC";
+    $sql2 = "SELECT * FROM tbl_arsive 
+    ORDER BY fullName ASC";
     
     $stmt = $conn->prepare($sql2);
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+//contenteditable="true"
     if ($result) {
        ?>
 
@@ -118,16 +17,24 @@ try {
     <div class="input-group-div">
 
         <div class="input-group1">
-            <button class="addAnket btn-custom-outline bcoc1">Anket Ekle</button>
+            <div class="check-box">
+                <div class="custom-checkbox">
+                    <label for="editToggle">
+                        <div class="status-switch" data-unchecked="kapalı" data-checked="açık"></div>
+                    </label>
+                </div>
+            </div>
         </div>
 
         <div class="input-group1">
-            
+
+            <button class="topluGuncelle btn-custom-outline bcoc3" id="guncelleButton"
+                style="display: none;">Güncelle</button>
             <button class="topluSil btn-custom-outline bcoc4" id="silButton" style="display: none;">Sil</button>
 
             <div class="search-box">
                 <i class="fas fa-search search-icon" aria-hidden="true"></i>
-                <input type="text" class="search-input mainSrch" id="searchValue" onkeyup="filtrele()" placeholder="Arama...">
+                <input type="text" class="search-input userSrch" id="searchValue" onkeyup="filtrele()" placeholder="Arama...">
             </div>
         </div>
 
@@ -149,11 +56,11 @@ try {
                         </svg>
                     </label>
                 </th>
-                <th onclick="sortTable(1)">Anket Başlığı <i id="icon-table1" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(2)">Son Tarihi <i id="icon-table2" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(3)">Kullanılan Oy <i id="icon-table3" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(4)">Oylama Durumu <i id="icon-table4" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(5)">Oy Kullananlar <i id="icon-table5" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(1)">Ad Soyad <i id="icon-table1" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(2)">TC <i id="icon-table2" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(3)">Telefon Numarası <i id="icon-table3" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(4)">Blok / Daire <i id="icon-table4" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(5)">Durum <i id="icon-table5" class="fa-solid fa-sort-down"></i></th>
             </tr>
         </thead>
         <tbody>
@@ -161,30 +68,15 @@ try {
             <?php
             $i = 0;
             foreach ($result as $row) {
-                
                 $i++;
-                
-                $currentDate = date('Y-m-d');
-                // lastDate'i çek ve datetime formatına çevir
-                
-                $lastDate = $row["lastDate"];
-                $lastDateTime = new DateTime($lastDate);
-                $currentDateTime = new DateTime($currentDate);
-
-                // Tarih karşılaştırması yap
-                if ($currentDateTime > $lastDateTime) {
-                    $oylamaDurumu = "Bitti";
-                } else {
-                    $oylamaDurumu = "Devam Ediyor";
-                }
             ?>
-            <tr data-userid="<?php echo $row["surveysID"]; ?>"
+            <tr data-userid="<?php echo $row["userID"]; ?>" id="<?php echo $row["grupID"]; ?>"
                 class="git-ac">
                 <td data-title="Seç" class="check-style">
                     <!-- Checkbox id'sine $i değerini ekliyoruz -->
-                    <input id="check-<?php echo $row["surveysID"] . '-' . $i; ?>" class="check1" type="checkbox"
-                        onclick="toggleCheckbox(<?php echo $row['surveysID']; ?>, <?php echo $i; ?>)" />
-                    <label for="check-<?php echo $row["surveysID"] . '-' . $i; ?>" class="check">
+                    <input id="check-<?php echo $row["userID"] . '-' . $i; ?>" class="check1" type="checkbox"
+                        onclick="toggleCheckbox(<?php echo $row['userID']; ?>, <?php echo $i; ?>)" />
+                    <label for="check-<?php echo $row["userID"] . '-' . $i; ?>" class="check">
                         <svg width="18px" height="18px" viewBox="0 0 18 18">
                             <path
                                 d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z">
@@ -193,24 +85,38 @@ try {
                         </svg>
                     </label>
                 </td>
-                <td data-title="Anket Basligi" class="table_tt" contenteditable="false">
+                <td data-title="Ad Soyad" class="table_tt table_td" contenteditable="false">
 
-                    <?php echo $row["surveysQuestion"]; ?></td>
+                    <?php echo $row["fullName"]; ?></td>
 
-                    <td data-title="TC" class="table_tt" contenteditable="false">
+                    <td data-title="TC" class="table_tt table_td" contenteditable="false">
 
-                    <?php echo $row["lastDate"]; ?></td>
+                    <?php echo $row["TC"]; ?></td>
 
-                <td data-title="kullanılanOy" class="table_tt phoneNumber" contenteditable="false">
+                <td data-title="Telefon Numarası" class="table_tt table_td phoneNumber" contenteditable="false">
 
-                <?php echo $row["vote"]; ?></td>
+                    <?php echo $row["phoneNumber"]; ?></td>
 
-
-                <td data-title="oylamaDurumu" class="table_tt">
-                    <?php echo $oylamaDurumu; ?>
+                <td data-title="Blok Adi" class="table_tt table_td">
+                    <?php 
+                            if (!empty($row["oldBlock"]) && !empty($row["oldNumber"])) {
+                                echo $row["oldBlock"] . " / " . $row["oldNumber"];
+                            }
+                        ?>
                 </td>
-                <td data-title="oylar" class="table_tt">
-                    <button type="button" class="fatura_btn oylar_btn" id="oylar"><i class="fa-regular fa-clipboard"></i></button>
+
+                <td data-title="Durum" class="table_tt table_td">
+                    <div class="main-durum <?php
+                                if ($row["status"] == "kiraci") {
+                                    echo "kiraci";
+                                } elseif ($row["status"] == "katMaliki") {
+                                    echo "kat-maliki";
+                                } else {
+                                    echo "belirtilmemis";
+                                }
+                                ?> ">
+                        <?php echo $row["status"]; ?>
+                    </div>
                 </td>
             </tr>
             <?php
@@ -269,9 +175,6 @@ try {
 
 <div class="cener-table">
 
-<div class="input-group1">
-            <button class="addAnket btn-custom-outline bcoc1">Anket Ekle</button>
-        </div>
     <div class="input-group-div">
 
         <div class="input-group1">
@@ -303,17 +206,17 @@ try {
                         </svg>
                     </label>
                 </th>
-                <th onclick="sortTable(1)">Anket Başlığı <i id="icon-table1" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(2)">Son Tarihi <i id="icon-table2" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(3)">Kullanılan Oy <i id="icon-table3" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(4)">Oylama Durumu <i id="icon-table4" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(5)">Oy Kullananlar <i id="icon-table5" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(1)">Ad Soyad <i id="icon-table1" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(2)">TC <i id="icon-table2" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(3)">Telefon Numarası <i id="icon-table3" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(4)">Blok / Daire <i id="icon-table4" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(5)">Durum <i id="icon-table5" class="fa-solid fa-sort-down"></i></th>
             </tr>
         </thead>
         <tbody>
             <tr>
                 <td></td>
-                <td colspan="5">Anket Bulunamamaktadır</td>
+                <td colspan="5">Kullanıcı Bulunamamaktadır</td>
             </tr>
         </tbody>
     </table>
@@ -366,60 +269,6 @@ try {
     echo "Bağlantı hatası: " . $e->getMessage();
 }
 ?>
-
-<script>
-      $(document).ready(function() {
-        var voters = 0;
-
-        $('.dropdown-content-inside-nereden button').click(function() {
-            var selectedOption = $(this).attr('data-odeme-durumu');
-
-            if (selectedOption === 'tumkisiler') {
-                voters = 1;
-            } else if (selectedOption === 'katmaliki') {
-                voters = 2;
-            } else if (selectedOption === 'kiraci') {
-                voters = 3;
-            }
-        });
-
-        $('#saveButton').click(function() {
-            var formData = {
-                surveysName: $('textarea[name="anketSoru"]').val(), // Textarea için doğru seçici
-                secenek: [], // Boş bir dizi oluşturuyoruz
-                lastDate: $('input[name="lastDate"]').val(), // "promise" adında bir input olduğu varsayılıyor
-                voters: voters // voters değişkenini formData'ya ekliyoruz
-            };
-
-            // Tüm secenek inputlarını topluyoruz
-            $('input[name$="secenek"]').each(function() {
-                formData.secenek.push($(this).val());
-            });
-
-            console.log(formData);
-
-            $.ajax({
-                url: 'Controller/Surveys/surveysSave.php',
-                type: 'POST',
-                data: {
-                    surveysName: formData.surveysName,
-                    secenek: formData.secenek,
-                    lastDate: formData.lastDate,
-                    voters: formData.voters // voters'ı POST verisine ekliyoruz
-                },
-                success: function(response) {
-                    alert(response);
-                    // alert("Kullanıcı ve daire bilgileri başarıyla güncellendi.");
-                    // location.reload();
-                },
-                error: function(error) {
-                    console.error("AJAX hatası: ", error);
-                }
-            });
-        });
-    });
-</script>
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
 <script>
@@ -488,7 +337,86 @@ try {
         XLSX.writeFile(wb, "kullaniciArsivTablosu.xlsx");
     });
     </script>
+<script>
+var rows = document.querySelectorAll('#example tbody tr');
+var userIdArray = {};
+var emptyRowCreated = {}; // Boş satır oluşturulduğunu kontrol etmek için bir nesne
 
+rows.forEach(function(row) {
+    var userID = row.getAttribute('id');
+    var userName = row.querySelector('.table_tt.table_td').textContent;
+    var phoneNumber = row.querySelector('.phoneNumber').textContent;
+    // console.log(phoneNumber);
+    if (userIdArray[userID]) {
+        // Tekrarlanan bir kullanıcı kimliği bulunduğunda tüm satırı gizle
+        document.querySelectorAll('[id^="' + userID + '"]').forEach(function(item) {
+            item.setAttribute('data-groupid', userID);
+            item.style.display = 'none';
+            item.classList.add('none');
+        });
+
+        if (!emptyRowCreated[userID]) {
+            var newRow = document.createElement('tr');
+            var newCell3 = document.createElement('td');
+            var newCell1 = document.createElement('td');
+            var newCell2 = document.createElement('td');
+            var newCell4 = document.createElement('td');
+            
+            var newTextCell = document.createElement('td'); // Yeni metin hücresi oluştur
+            newTextCell.textContent = "Birden Fazla Daire"; // Metin içeriğini ayarla
+
+            newRow.classList.add('git-ac');
+            newRow.setAttribute('data-userid', userID);
+            newRow.setAttribute('data-groupid', userID); // GroupID olarak userID kullanıyoruz
+            newCell3.colSpan = "1"; // Üçüncü hücre 1 sütunu kaplasın
+            newCell1.colSpan = "1"; // İlk hücre 1 sütunu kaplasın
+            newCell2.colSpan = "1"; // İkinci hücre 2 sütunu kaplasın
+            newCell4.colSpan = "1"; // Dördüncü hücre 1 sütunu kaplasın
+
+            newCell1.textContent = userName; // İlk hücreye userName değerini ekle
+            newCell2.textContent = phoneNumber;
+            newCell1.setAttribute('contenteditable', 'false');
+            newCell2.setAttribute('contenteditable', 'false');
+            newCell3.innerHTML = "<i class='fa-solid fa-turn-up tumu-btn'></i>";
+
+            newRow.appendChild(newCell3);
+            newRow.appendChild(newCell1); // Yeni hücreleri yeni satıra ekle
+            newRow.appendChild(newCell2);
+            newRow.appendChild(newTextCell);
+            newRow.appendChild(newCell4);
+
+            // Yeni satırı ekleyeceğimiz referans satırı bul
+            var referenceRow = document.querySelector('[id="' + userID + '"]');
+
+            referenceRow.parentNode.insertBefore(newRow, referenceRow); // Yeni satırı referans satırının üstüne ekle
+            emptyRowCreated[userID] = true; // Boş satır oluşturulduğunu işaretle
+
+            newCell3.querySelector('.tumu-btn').addEventListener('click', function() {
+                // Tıklanan düğmeye ait kullanıcıya ait satırları göster/gizle
+                var rows = document.querySelectorAll('[id^="' + userID + '"]');
+                rows.forEach(function(item) {
+                    if (item.style.display === 'none') {
+                        item.style.display = 'table-row'; // Eğer gizli ise görünür yap
+                        item.classList.add('open-tr');
+                        this.classList.add('active-tumu');
+                        newCell3.parentNode.classList.add('git-ac-active');
+                    } else {
+                        item.style.display = 'none'; // Eğer görünür ise gizle
+                        this.classList.remove('active-tumu');
+                        item.classList.remove('open-tr');
+                        newCell3.parentNode.classList.remove('git-ac-active');
+                    }
+                }, this);
+            });
+        }
+    } else {
+        userIdArray[userID] = true;
+        row.setAttribute('data-groupid', userID); // Benzersiz kullanıcı kimliğine sahip satırlara da groupID ekle
+    }
+});
+
+
+</script>
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -677,12 +605,12 @@ topluSilButton.addEventListener('click', function() {
 
     checkboxes.forEach(function(checkbox) {
         var row = checkbox.closest('tr');
-        var surveysID = row.getAttribute('data-userid');
+        var userID = row.getAttribute('data-userid');
         $.ajax({
-            url: 'Controller/Surveys/surveysDelete.php',
+            url: 'Controller/deleteArsiv.php',
             type: 'POST',
             data: {
-                surveysID: surveysID
+                userID: userID
             },
             success: function(deleteResponse) {
                 location.reload();
@@ -739,159 +667,32 @@ function filtrele() {
         }
     }
 }
-</script>
+var tableTdElements = document.querySelectorAll('.table_td');
 
-<script>
-    $('.addAnket').click(function () {
-        $('#popup').show().css('display', 'flex').delay(100).queue(function (next) {
-            $('body').css('overflow', 'hidden');
-            $('#popup').css('opacity', '1');
-            $('#userForm').css('opacity', '1');
-            $('#userForm').css('transform', 'translateY(0)');
-            next();
-        });
-    });
+tableTdElements.forEach(function(element) {
+    element.addEventListener('click', function() {
 
-    function closePopup() {
-        $('#userForm').css('opacity', '0').css('transform', 'translateY(-180px)').delay(100).queue(function (next) {
-            $('#popup').css('opacity', '0').delay(300).queue(function (nextInner) {
-                $(this).hide().css('display', 'none');
-                nextInner();
-                $('body').css('overflow', 'auto');
-            });
-            next();
-        });
-    }
+        var trId = element.parentElement.getAttribute('data-userid');
+        var d = "user";
 
-    $('#oylar').click(function () {
-        $('#topluPopup').show().css('display', 'flex').delay(100).queue(function (next) {
-            $('body').css('overflow', 'hidden');
-            $('#topluPopup').css('opacity', '1');
-            $('#userForm2').css('opacity', '1');
-            $('#userForm2').css('transform', 'translateY(0)');
-            next();
-        });
-    });
+        $.ajax({
+            url: 'Controller/create_session.php',
+            type: 'POST',
+            data: {
+                id: trId,
+                d: d,
+            },
+            success: function(response) {
 
-    function closeToplu() {
-        $('#userForm2').css('opacity', '0').css('transform', 'translateY(-180px)').delay(100).queue(function (next) {
-            $('#topluPopup').css('opacity', '0').delay(300).queue(function (nextInner) {
-                $(this).hide().css('display', 'none');
-                nextInner();
-                $('body').css('overflow', 'auto');
-            });
-            next();
-        });
-    }
-</script>
-
-<script src="assets/js/mycode/dropdown.js"></script>
-<script>
-    
-    dropDownn('kisiler', 'kisilerDP', 'kisilerSearch');
-</script>
-
-<!-- secme Tarihi -->
-<script src="assets/js/mycode/moment.min.js"></script>
-    <script src="assets/js/mycode/moment.js"></script>
-    <script src="assets/js/mycode/lightpick.js"></script>
-
-<script>
- // yeni eklenen kısım
-moment.locale('tr', {
-    months : [
-        "Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", 
-        "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"
-    ],
-    monthsShort : [
-        "Oca", "Şub", "Mar", "Nis", "May", "Haz", 
-        "Tem", "Ağu", "Eyl", "Eki", "Kas", "Ara"
-    ],
-    weekdays : [
-        "Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"
-    ],
-    weekdaysShort : [
-        "Paz", "Pzt", "Sal", "Çar", "Per", "Cum", "Cmt"
-    ],
-    weekdaysMin : [
-        "Pz", "Pt", "Sa", "Ça", "Pe", "Cu", "Ct"
-    ],
-    longDateFormat : {
-        LT : "HH:mm",
-        LTS : "HH:mm:ss",
-        L : "DD/MM/YYYY",
-        LL : "D MMMM YYYY",
-        LLL : "D MMMM YYYY HH:mm",
-        LLLL : "dddd, D MMMM YYYY HH:mm"
-    }
-});
-
-function tarihSec(veri, day) {
-    var dateFormat = 'DD MMMM YYYY';
-    var picker = new Lightpick({
-        field: document.getElementById(veri),
-        singleDate: true,
-        selectForward: true,
-        selectBackward: false,
-        lang: 'tr',
-        minDate: moment(),
-        repick: true,
-        startDate: moment().add(day, 'days'),
-        onSelect: function(date) {
-            document.getElementById(veri).value = date.format(dateFormat);
-            document.getElementById(veri).setAttribute('data-user-id',  date.format("YYYY-MM-DD"));
-        }
-      
-    });
-
-    // Başlangıç tarihini input alanına yazdır
-    document.getElementById(veri).value = moment().add(day, 'days').format(dateFormat);
-    document.getElementById(veri).setAttribute('data-user-id',  moment().add(day, 'days').format("YYYY-MM-DD"));
-}
-
-// Fonksiyonları çağırma
-tarihSec('datepickerson', 7);
-
-    </script>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-        const secenekContainer = document.getElementById("secenekContainer");
-        const secenekEkleButton = document.getElementById("secenekEkle");
-        let secenekCount = 1;  // Başlangıçta 1 seçenek var
-
-        secenekEkleButton.addEventListener("click", function() {
-            secenekCount++;
-            const newSecenek = document.createElement("div");
-            newSecenek.className = "col-md-6 col-btn group";
-            newSecenek.innerHTML = `
-                <input class="input trash-k" type="text" name="${secenekCount}secenek" required>
-                <label for="${secenekCount}secenek">${secenekCount}. Seçenek :</label>
-                <button class="trashcan"><i class="fa-solid fa-trash-can"></i></button>
-            `;
-            secenekContainer.appendChild(newSecenek);
-
-            updateTrashCanButtons();
-        });
-
-        function updateTrashCanButtons() {
-            const trashCanButtons = document.querySelectorAll(".trashcan");
-            trashCanButtons.forEach(button => {
-                button.removeEventListener("click", handleTrashCanClick);
-                button.addEventListener("click", handleTrashCanClick);
-            });
-        }
-
-        function handleTrashCanClick(event) {
-            const groups = secenekContainer.querySelectorAll(".group");
-            if (groups.length > 1) {  // En az 1 seçenek kalmalı
-                const lastGroup = groups[groups.length - 1];
-                secenekContainer.removeChild(lastGroup);
-                secenekCount--;
+                if (response && checkEdit) {
+                    window.location.href = "index.php?parametre=custom";
+                }
+            },
+            error: function(xhr, status, error) {
+                var errorMessage = xhr.status + ': ' + xhr.statusText;
+                alert('Hata alındı: ' + errorMessage);
             }
-        }
-
-        updateTrashCanButtons();  // Sayfa yüklendiğinde mevcut butonlara event ekle
+        });
     });
-
-    </script>
+});
+</script>

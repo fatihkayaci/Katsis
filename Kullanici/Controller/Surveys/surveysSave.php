@@ -5,11 +5,11 @@ require_once '../class.func.php';
 
 try {
     // POST verilerini al
-    if (isset($_POST['surveysName'], $_POST['secenek'], $_POST['lastDate'], $_POST['voters'])) {
+    if (isset($_POST['surveysName'], $_POST['secenek'], $_POST['lastDate'])) {
         $surveysQuestion = $_POST['surveysName'];
         $secenek = $_POST['secenek'];
         $lastDate = $_POST['lastDate']; // Kullanıcıdan gelen tarih: "15 Temmuz 2024"
-        $voters = $_POST['voters'];
+        print_r($secenek);
 
         // Ay isimlerini Türkçe'den İngilizce'ye çevirme
         $turkishMonths = [
@@ -32,12 +32,10 @@ try {
         }
 
         // Veritabanı işlemleri
-        $sql = "INSERT INTO tbl_surveys (apartmanID, surveysQuestion, lastDate, voters) VALUES (:apartmanID, :surveysQuestion, :lastDate, :voters)";
+        $sql = "INSERT INTO tbl_surveys (surveysQuestion, lastDate) VALUES (:surveysQuestion, :lastDate)";
         $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':apartmanID', $_SESSION["apartID"]);
         $stmt->bindParam(':surveysQuestion', $surveysQuestion);
         $stmt->bindParam(':lastDate', $lastDate);
-        $stmt->bindParam(':voters', $voters);
         $stmt->execute();
 
         
