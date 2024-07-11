@@ -45,7 +45,8 @@ try {
                 <th onclick="sortTable(1)">Anket Başlığı <i id="icon-table1" class="fa-solid fa-sort-down"></i></th>
                 <th onclick="sortTable(2)">Son Tarihi <i id="icon-table2" class="fa-solid fa-sort-down"></i></th>
                 <th onclick="sortTable(3)">Kullanılan Oy <i id="icon-table3" class="fa-solid fa-sort-down"></i></th>
-                <th style="text-align: center;" onclick="sortTable(4)">Oy<i id="icon-table5" class="fa-solid fa-sort-down"></i></th>
+                <th style="text-align: center;" onclick="sortTable(4)">Oy<i id="icon-table5"
+                        class="fa-solid fa-sort-down"></i></th>
                 <!-- <th style="text-align: center;" onclick="sortTable(4)">Oylama Durumu <i id="icon-table4" class="fa-solid fa-sort-down"></i></th> -->
             </tr>
         </thead>
@@ -57,8 +58,7 @@ try {
                 
                 $i++;
             ?>
-            <tr data-userid="<?php echo $row["surveysID"]; ?>"
-                class="git-ac">
+            <tr data-userid="<?php echo $row["surveysID"]; ?>" class="git-ac">
                 <td data-title="Seç" class="check-style">
                     <!-- Checkbox id'sine $i değerini ekliyoruz -->
                     <input id="check-<?php echo $row["surveysID"] . '-' . $i; ?>" class="check1" type="checkbox"
@@ -76,15 +76,16 @@ try {
 
                     <?php echo $row["surveysQuestion"]; ?></td>
 
-                    <td data-title="TC" class="table_tt" contenteditable="false">
+                <td data-title="TC" class="table_tt" contenteditable="false">
 
                     <?php echo $row["lastDate"]; ?></td>
 
                 <td data-title="vote" class="table_tt phoneNumber" contenteditable="false">
 
-                <?php echo $row["vote"]; ?></td>
+                    <?php echo $row["vote"]; ?></td>
                 <td style="text-align: center;" data-title="oylar" class="table_tt">
-                    <button type="button" class="fatura_btn oylar_btn" id="oylar"><i class="fa-regular fa-clipboard"></i></button>
+                    <button type="button" class="fatura_btn oylar_btn" onclick="openOyPopup(this)" id="oylar"><i
+                            class="fa-regular fa-clipboard"></i></button>
                 </td>
             </tr>
             <?php
@@ -96,45 +97,45 @@ try {
     </table>
 </div>
 
-    <hr class="horizontal dark mb-0 w-100">
+<hr class="horizontal dark mb-0 w-100">
 
-    <div class="input-group-div">
+<div class="input-group-div">
 
-        <div class="input-group1">
+    <div class="input-group1">
 
-            <div class="custom-select">
-                <select>
-                    <option selected value="1">10</option>
-                    <option value="2">20</option>
-                    <option value="3">50</option>
-                    <option value="4">100</option>
-                </select>
-            </div>
-
-            <p class="adet-txt">Adet Veri Gösteriliyor</p>
-
+        <div class="custom-select">
+            <select>
+                <option selected value="1">10</option>
+                <option value="2">20</option>
+                <option value="3">50</option>
+                <option value="4">100</option>
+            </select>
         </div>
-        
-        <button class="export-btn excel-btn" id="exportButton"><i class="fa-solid fa-file-excel"></i> Excel'e Aktar</button>
-        <div class="input-group1">
 
-            <ul class="pagination">
-                <a href="#" class="pagination-arrow arrow-left">
-                    <i class="fa-solid fa-angle-left"></i>
-                </a>
-                <a href="#" class="pagination-number">1</a>
-                <a href="#" class="pagination-number">2</a>
-                <a href="#" class="pagination-number current-number">3</a>
-                <a href="#" class="pagination-number">4</a>
-                <a href="#" class="pagination-number">5</a>
-                <a href="#" class="pagination-arrow arrow-right">
-                    <i class="fa-solid fa-angle-right"></i>
-                </a>
-            </ul>
-
-        </div>
+        <p class="adet-txt">Adet Veri Gösteriliyor</p>
 
     </div>
+
+    <button class="export-btn excel-btn" id="exportButton"><i class="fa-solid fa-file-excel"></i> Excel'e Aktar</button>
+    <div class="input-group1">
+
+        <ul class="pagination">
+            <a href="#" class="pagination-arrow arrow-left">
+                <i class="fa-solid fa-angle-left"></i>
+            </a>
+            <a href="#" class="pagination-number">1</a>
+            <a href="#" class="pagination-number">2</a>
+            <a href="#" class="pagination-number current-number">3</a>
+            <a href="#" class="pagination-number">4</a>
+            <a href="#" class="pagination-number">5</a>
+            <a href="#" class="pagination-arrow arrow-right">
+                <i class="fa-solid fa-angle-right"></i>
+            </a>
+        </ul>
+
+    </div>
+
+</div>
 
 </div>
 <?php
@@ -142,36 +143,37 @@ try {
 ?>
 
 <div class="cener-table">
-<div class="table-overflow">
-    <table id="example" class="users-table">
-        <thead>
-            <tr class="users-table-info">
-                <th class="check-style">
-                    <input id="check-" class="check1" type="checkbox" />
-                    <label for="check-" class="check">
-                        <svg width="18px" height="18px" viewBox="0 0 18 18">
-                            <path
-                                d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z">
-                            </path>
-                            <polyline points="1 9 7 14 15 4"></polyline>
-                        </svg>
-                    </label>
-                </th>
-                <th onclick="sortTable(1)">Anket Başlığı <i id="icon-table1" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(2)">Son Tarihi <i id="icon-table2" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(3)">Kullanılan Oy <i id="icon-table3" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(4)">Oylama Durumu <i id="icon-table4" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(5)">Oy Kullananlar <i id="icon-table5" class="fa-solid fa-sort-down"></i></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td></td>
-                <td colspan="5">Anket Bulunamamaktadır</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+    <div class="table-overflow">
+        <table id="example" class="users-table">
+            <thead>
+                <tr class="users-table-info">
+                    <th class="check-style">
+                        <input id="check-" class="check1" type="checkbox" />
+                        <label for="check-" class="check">
+                            <svg width="18px" height="18px" viewBox="0 0 18 18">
+                                <path
+                                    d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z">
+                                </path>
+                                <polyline points="1 9 7 14 15 4"></polyline>
+                            </svg>
+                        </label>
+                    </th>
+                    <th onclick="sortTable(1)">Anket Başlığı <i id="icon-table1" class="fa-solid fa-sort-down"></i></th>
+                    <th onclick="sortTable(2)">Son Tarihi <i id="icon-table2" class="fa-solid fa-sort-down"></i></th>
+                    <th onclick="sortTable(3)">Kullanılan Oy <i id="icon-table3" class="fa-solid fa-sort-down"></i></th>
+                    <th onclick="sortTable(4)">Oylama Durumu <i id="icon-table4" class="fa-solid fa-sort-down"></i></th>
+                    <th onclick="sortTable(5)">Oy Kullananlar <i id="icon-table5" class="fa-solid fa-sort-down"></i>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td colspan="5">Anket Bulunamamaktadır</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
     <hr class="horizontal dark mb-0 w-100">
 
@@ -189,130 +191,182 @@ try {
     <form class="login-form-toplu" id="userForm2" action="">
 
         <h2 class="form-signin-heading">Oy</h2>
-        
+
         <hr class="horizontal mt-0 dark w-100">
 
         <table class="users-table table-blok">
-                <tr class="users-table-info">
-                    <th>Blok / Daire </th>
-                    <th>Ad Soyad </th>
-                </tr>
-                <tr id="mainTr" style="display:none;">
-                    <tr class="git-ac" id="">
-                        <td>a-1</td>
-                        <td>Ad Soayd</td>
-                    </tr>
-                </tr>
+            
+        </table>
 
-            </table>
-
-            <div class="row row-btn">
-                <button type="button" class="btn-custom-close w-100 me-0" onclick="closeToplu()">Kapat</button>
-            </div>
-
+        <div class="row row-btn">
+            <button type="button" class="btn-custom-close w-100 me-0" onclick="closeToplu()">Kapat</button>
+        </div>
     </form>
 </div>
 
 
 <script>
-    function closePopup() {
-        $('#userForm').css('opacity', '0').css('transform', 'translateY(-180px)').delay(100).queue(function (next) {
-            $('#popup').css('opacity', '0').delay(300).queue(function (nextInner) {
-                $(this).hide().css('display', 'none');
-                nextInner();
-                $('body').css('overflow', 'auto');
-            });
-            next();
-        });
-    }
 
-    $('#oylar').click(function () {
-        $('#topluPopup').show().css('display', 'flex').delay(100).queue(function (next) {
-            $('body').css('overflow', 'hidden');
-            $('#topluPopup').css('opacity', '1');
-            $('#userForm2').css('opacity', '1');
-            $('#userForm2').css('transform', 'translateY(0)');
-            next();
-        });
+let selectedSurveyID = null;
+
+function openOyPopup(button) {
+    const row = button.closest('tr');
+    selectedSurveyID = row.getAttribute('data-userid');
+
+    $('#topluPopup').show().css('display', 'flex').delay(100).queue(function(next) {
+        $('body').css('overflow', 'hidden');
+        $('#topluPopup').css('opacity', '1');
+        $('#userForm2').css('opacity', '1');
+        $('#userForm2').css('transform', 'translateY(0)');
+        next();
     });
-    function closeToplu() {
-        $('#userForm2').css('opacity', '0').css('transform', 'translateY(-180px)').delay(100).queue(function (next) {
-            $('#topluPopup').css('opacity', '0').delay(300).queue(function (nextInner) {
-                $(this).hide().css('display', 'none');
-                nextInner();
-                $('body').css('overflow', 'auto');
-            });
-            next();
+    $.ajax({
+        url: 'Controller/Surveys/getSurveyOptions.php', // PHP dosyasının yolu
+        type: 'POST',
+        data: {
+            surveysID: selectedSurveyID
+        },
+        success: function(response) {
+             // Başarılı cevap geldiğinde işlemleri yap
+        var options = JSON.parse(response);
+
+        // table içine buttonları ekle
+        var table = $('.table-blok');
+        table.empty(); // Önce tabloyu temizle
+
+        options.forEach(function(option) {
+            var button = $('<button type="button" class="btn btn-primary">' + option.optionName + '</button>');
+            button.click(function() {
+                    // Butona tıklandığında yapılacak işlemler burada
+                    $.ajax({
+                        url: 'Controller/Surveys/updateSurveyOption.php', // Güncelleme için PHP dosyasının yolu
+                        type: 'POST',
+                        data: {
+                            surveysID: selectedSurveyID,
+                            optionID: option.optionID  // Varsayalım ki optionID ile güncelleme yapacaksınız
+                        },
+                        success: function(updateResponse) {
+                            console.log('Veritabanı güncellendi:', updateResponse);
+                            // Başarılı güncelleme mesajı veya işlemi burada yapılabilir
+                        },
+                        error: function(updateError) {
+                            console.error('Güncelleme Hatası:', updateError);
+                        }
+                    });
+                });
+            table.append($('<tr>').append($('<td>').append(button)));
         });
-    }
+        },
+        error: function(error) {
+            console.error('Hata:', error);
+        }
+    });
+}
+
+function closeToplu() {
+    $('#userForm2').css('opacity', '0').css('transform', 'translateY(-180px)').delay(100).queue(function(next) {
+        $('#topluPopup').css('opacity', '0').delay(300).queue(function(nextInner) {
+            $(this).hide().css('display', 'none');
+            nextInner();
+            $('body').css('overflow', 'auto');
+        });
+        next();
+    });
+}
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
 <script>
-    document.getElementById("exportButton").addEventListener("click", function() {
-        let table = document.getElementById("example");
-        let rows = table.querySelectorAll("tr");
-        let data = [];
-        
-        rows.forEach((row, rowIndex) => {
-            let cols = row.querySelectorAll("td, th");
-            let rowData = [];
-            let skipRow = false;
+document.getElementById("exportButton").addEventListener("click", function() {
+    let table = document.getElementById("example");
+    let rows = table.querySelectorAll("tr");
+    let data = [];
 
-            cols.forEach((col, colIndex) => {
-                if (colIndex === 3 && col.innerText.trim() === "Birden Fazla Daire") {
-                    skipRow = true; // Bu satırı atla
-                }
-                if (colIndex !== 0 && !skipRow) { // İlk sütunu ve "Birden Fazla Daire" içeren satırları atla
-                    rowData.push(col.innerText.trim());
-                }
-            });
+    rows.forEach((row, rowIndex) => {
+        let cols = row.querySelectorAll("td, th");
+        let rowData = [];
+        let skipRow = false;
 
-            if (!skipRow) {
-                data.push(rowData);
+        cols.forEach((col, colIndex) => {
+            if (colIndex === 3 && col.innerText.trim() === "Birden Fazla Daire") {
+                skipRow = true; // Bu satırı atla
+            }
+            if (colIndex !== 0 && !
+                skipRow) { // İlk sütunu ve "Birden Fazla Daire" içeren satırları atla
+                rowData.push(col.innerText.trim());
             }
         });
 
-        let wb = XLSX.utils.book_new();
-        let ws = XLSX.utils.aoa_to_sheet(data);
+        if (!skipRow) {
+            data.push(rowData);
+        }
+    });
 
-        // Hücre stillerini tanımlama
-        const headerCellStyle = {
-            font: { bold: true, color: { rgb: "FFFFFF" } }, // Beyaz yazı
-            fill: { fgColor: { rgb: "4F81BD" } }, // Mavi arka plan
-            alignment: { horizontal: "center", vertical: "center" }
-        };
+    let wb = XLSX.utils.book_new();
+    let ws = XLSX.utils.aoa_to_sheet(data);
 
-        const dataCellStyle = {
-            alignment: { horizontal: "center", vertical: "center" }
-        };
+    // Hücre stillerini tanımlama
+    const headerCellStyle = {
+        font: {
+            bold: true,
+            color: {
+                rgb: "FFFFFF"
+            }
+        }, // Beyaz yazı
+        fill: {
+            fgColor: {
+                rgb: "4F81BD"
+            }
+        }, // Mavi arka plan
+        alignment: {
+            horizontal: "center",
+            vertical: "center"
+        }
+    };
 
-        // Stil uygulama
-        let range = XLSX.utils.decode_range(ws['!ref']);
-        for (let rowNum = range.s.r; rowNum <= range.e.r; rowNum++) {
-            for (let colNum = range.s.c; colNum <= range.e.c; colNum++) {
-                let cellAddress = { c: colNum, r: rowNum };
-                let cellRef = XLSX.utils.encode_cell(cellAddress);
-                if (!ws[cellRef]) continue; // Hücre boşsa geç
-                if (rowNum === 0) { // Başlık satırlarına stil uygula
-                    ws[cellRef].s = headerCellStyle;
-                } else { // Veri satırlarına stil uygula
-                    ws[cellRef].s = dataCellStyle;
-                }
+    const dataCellStyle = {
+        alignment: {
+            horizontal: "center",
+            vertical: "center"
+        }
+    };
+
+    // Stil uygulama
+    let range = XLSX.utils.decode_range(ws['!ref']);
+    for (let rowNum = range.s.r; rowNum <= range.e.r; rowNum++) {
+        for (let colNum = range.s.c; colNum <= range.e.c; colNum++) {
+            let cellAddress = {
+                c: colNum,
+                r: rowNum
+            };
+            let cellRef = XLSX.utils.encode_cell(cellAddress);
+            if (!ws[cellRef]) continue; // Hücre boşsa geç
+            if (rowNum === 0) { // Başlık satırlarına stil uygula
+                ws[cellRef].s = headerCellStyle;
+            } else { // Veri satırlarına stil uygula
+                ws[cellRef].s = dataCellStyle;
             }
         }
+    }
 
-        // Sütun genişliklerini ayarlama
-        ws['!cols'] = [
-            { wpx: 150 }, // Ad Soyad
-            { wpx: 150 }, // Telefon Numarası
-            { wpx: 150 }, // Blok / Daire
-            { wpx: 100 }  // Durum
-        ];
+    // Sütun genişliklerini ayarlama
+    ws['!cols'] = [{
+            wpx: 150
+        }, // Ad Soyad
+        {
+            wpx: 150
+        }, // Telefon Numarası
+        {
+            wpx: 150
+        }, // Blok / Daire
+        {
+            wpx: 100
+        } // Durum
+    ];
 
-        XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
-        XLSX.writeFile(wb, "kullaniciArsivTablosu.xlsx");
-    });
-    </script>
+    XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+    XLSX.writeFile(wb, "kullaniciArsivTablosu.xlsx");
+});
+</script>
 
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -425,7 +479,6 @@ function sortTable(columnIndex) {
 </script>
 
 <script type="text/javascript">
-
 function toggleAll(masterCheckbox) {
 
     var checkboxes = document.getElementsByClassName('check1');
@@ -477,7 +530,7 @@ for (var i = 0; i < checkboxes.length; i++) {
                 allChecked = false;
                 break;
             }
-        } 
+        }
         document.getElementById('mainCheckbox').checked = allChecked;
     });
 }
