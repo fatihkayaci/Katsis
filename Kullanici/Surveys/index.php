@@ -239,7 +239,7 @@ function openOyPopup(button) {
             button.click(function() {
                     // Butona tıklandığında yapılacak işlemler burada
                     $.ajax({
-                        url: 'Controller/Surveys/updateSurveyOption.php', // Güncelleme için PHP dosyasının yolu
+                        url: 'Controller/Surveys/createSurveyVote.php', // Güncelleme için PHP dosyasının yolu
                         type: 'POST',
                         data: {
                             surveysID: selectedSurveyID,
