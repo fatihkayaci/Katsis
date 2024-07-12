@@ -69,45 +69,40 @@
     </form>
 </div>
 
-<!-- Oy POPUP -->
 <div id="topluPopup">
 
     <form class="login-form-toplu" id="userForm2" action="">
 
-        <h2 class="form-signin-heading">Oy Kullanan Kişiler</h2>
-        
-        <hr class="horizontal mt-0 dark w-100">
+    <h2 class="form-signin-heading">Oy Kullanan Kişiler</h2>
 
-        <table class="users-table table-blok">
-                <tr class="users-table-info">
-                    <th>Blok / Daire </th>
-                    <th>Ad Soyad </th>
-                </tr>
-                <tr id="mainTr" style="display:none;">
-                    <tr class="git-ac" id="">
-                        <td>a-1</td>
-                        <td>Ad Soayd</td>
-                    </tr>
-                </tr>
+    <hr class="horizontal mt-0 dark w-100">
 
-            </table>
+    <table class="users-table table-blok">
+            <tr class="users-table-info">
+                <th>Blok / Daire </th>
+                <th>Ad Soyad </th>
+            </tr>
+            <tr id="mainTr" style="display:none;">
+                <td><?php $row["surveysID"]?></td>
+                <td><?php $row["userID"]?></td>
+            </tr>
 
-            <hr class="horizontal dark w-100">
+        </table>
 
-            <div class="row row-btn">
-                <button type="button" class="btn-custom-close w-100 me-0" onclick="closeToplu()">Kapat</button>
-            </div>
+        <hr class="horizontal dark w-100">
+
+        <div class="row row-btn">
+            <button type="button" class="btn-custom-close w-100 me-0" onclick="closeToplu()">Kapat</button>
+        </div>
 
     </form>
 </div>
-
 <?php
 try {
-    
-    $sql2 = "SELECT * FROM tbl_surveys WHERE ". $_SESSION["apartID"] . "
+    $sql1 = "SELECT * FROM tbl_surveys WHERE ". $_SESSION["apartID"] . "
     ORDER BY surveysID ASC";
     
-    $stmt = $conn->prepare($sql2);
+    $stmt = $conn->prepare($sql1);
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     if ($result) {
@@ -210,7 +205,7 @@ try {
                     <?php echo $oylamaDurumu; ?>
                 </td>
                 <td data-title="oylar" class="table_tt">
-                    <button type="button" class="fatura_btn oylar_btn" id="oylar"><i class="fa-regular fa-clipboard"></i></button>
+                    <button type="button" class="fatura_btn oylar_btn" onclick="openVotersPopup(this)" id="oylar"><i class="fa-regular fa-clipboard"></i></button>
                 </td>
             </tr>
             <?php
@@ -366,7 +361,6 @@ try {
     echo "Bağlantı hatası: " . $e->getMessage();
 }
 ?>
-
 <script>
       $(document).ready(function() {
         var voters = 0;
@@ -762,16 +756,30 @@ function filtrele() {
             next();
         });
     }
-
-    $('#oylar').click(function () {
-        $('#topluPopup').show().css('display', 'flex').delay(100).queue(function (next) {
+    function openVotersPopup(button){
+        const row = button.closest('tr');
+        selectedSurveyID = row.getAttribute('data-userid');
+        $('#topluPopup').show().css('display', 'flex').delay(100).queue(function(next) {
             $('body').css('overflow', 'hidden');
             $('#topluPopup').css('opacity', '1');
             $('#userForm2').css('opacity', '1');
             $('#userForm2').css('transform', 'translateY(0)');
             next();
         });
-    });
+        $.ajax({
+            url: 'Controller/Surveys/getVoters.php', // PHP dosyasının yolu
+            type: 'POST',
+            data: {
+                surveysID: selectedSurveyID
+            },
+            success: function(response) {
+                console.log(response);
+            },
+            error: function(error) {
+                console.error('Hata:', error);
+            }
+        });
+    }
 
     function closeToplu() {
         $('#userForm2').css('opacity', '0').css('transform', 'translateY(-180px)').delay(100).queue(function (next) {

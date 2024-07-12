@@ -1,13 +1,13 @@
 <?php
 session_start(); // Session başlatma
 
-include("../../../DB/dbconfig.php"); // Veritabanı bağlantı bilgilerini dahil et
+include ("../../../DB/dbconfig.php"); // Veritabanı bağlantı bilgilerini dahil et
 require_once '../class.func.php'; // Fonksiyon dosyasını dahil et
 
 try {
     $surveysID = $_POST['surveysID'];
-    $optionID = $_POST['optionID'];   
-    $userID =  $_SESSION["userID"];
+    $optionID = $_POST['optionID'];
+    $userID = $_SESSION["userID"];
     // Mevcut kayıtları kontrol eden SQL sorgusu
     $checkSql = "SELECT COUNT(*) FROM tbl_surveys_vote WHERE surveysID = :surveysID AND userID = :userID";
     $checkStmt = $conn->prepare($checkSql);
@@ -36,6 +36,11 @@ try {
         $optionCount = $checkOptionStmt->fetchColumn();
 
         if ($optionCount == 0) {
+            $sql_delete = "DELETE FROM tbl_surveys_vote WHERE surveysID = :surveysID AND userID = :userID";
+            $stmt_delete = $conn->prepare($sql_delete);
+            $stmt_delete->bindParam(':surveysID', $surveysID);
+            $stmt_delete->bindParam(':userID', $userID);
+            $stmt_delete->execute(); // Silme işlemini gerçekleştir
             // Eğer aynı surveysID ve userID kombinasyonu varsa fakat optionID farklıysa, INSERT işlemi gerçekleştir
             $sql = "INSERT INTO tbl_surveys_vote (optionID, surveysID, userID) VALUES (:optionID, :surveysID, :userID)";
             $stmt = $conn->prepare($sql);

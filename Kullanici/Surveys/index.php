@@ -84,8 +84,7 @@ try {
 
                     <?php echo $row["vote"]; ?></td>
                 <td style="text-align: center;" data-title="oylar" class="table_tt">
-                    <button type="button" class="fatura_btn oylar_btn" onclick="openOyPopup(this)" id="oylar"><i
-                            class="fa-regular fa-clipboard"></i></button>
+                    <button type="button" class="fatura_btn oylar_btn" onclick="openOyPopup(this)" id="oylar"><i class="fa-regular fa-clipboard"></i></button>
                 </td>
             </tr>
             <?php
