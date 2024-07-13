@@ -18,12 +18,12 @@
         <div class="row">
             <div class="col-md-6 col-btn group">
                 <input class="input" type="text" name="unvan" required>
-                <label for="unvan">Unvan:</label>
+                <label for="unvan">Unvan/Görevi:</label>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6 col-btn group">
-                <input class="input" type="text" name="phoneNumber" required>
+                <input class="input" type="text" name="phoneNumber" oninput="validatePhoneNumber(this)" required>
                 <label for="phoneNumber">Telefon Numarası:</label>
             </div>
         </div>
@@ -52,7 +52,7 @@ try {
     <div class="input-group-div">
 
         <div class="input-group1">
-            <button class="addAnket btn-custom-outline bcoc1">Kişi Ekle</button>
+            <button class="addAnket btn-custom-outline bcoc1">Rehbere Kişi Ekle</button>
             <div class="check-box">
                     <p class="check-p">Düzenleme :</p>
 
@@ -94,7 +94,7 @@ try {
                     </label>
                 </th>
                 <th onclick="sortTable(1)">User Name<i id="icon-table1" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(2)">Unvan<i id="icon-table2" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(2)">Unvan/Görevi<i id="icon-table2" class="fa-solid fa-sort-down"></i></th>
                 <th onclick="sortTable(3)">Telefon Numarası<i id="icon-table3" class="fa-solid fa-sort-down"></i></th>
             </tr>
         </thead>
@@ -185,7 +185,7 @@ try {
 <div class="cener-table">
 
 <div class="input-group1">
-            <button class="addAnket btn-custom-outline bcoc1">Anket Ekle</button>
+            <button class="addAnket btn-custom-outline bcoc1">Rehbere Kişi Ekle</button>
         </div>
     <div class="input-group-div">
 
@@ -219,7 +219,7 @@ try {
                     </label>
                 </th>
                 <th onclick="sortTable(1)">User Name<i id="icon-table1" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(2)">Unvan<i id="icon-table2" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(2)">Unvan/Görevi<i id="icon-table2" class="fa-solid fa-sort-down"></i></th>
                 <th onclick="sortTable(3)">Telefon Numarası<i id="icon-table3" class="fa-solid fa-sort-down"></i></th>
             </tr>
         </thead>
@@ -280,32 +280,62 @@ try {
 }
 ?>
 <script>
+    
+function validatePhoneNumber(element) {
+    let phoneNumber = element.value;
+
+    // Sadece sayılara izin ver ve uzunluğu 10 karakterle sınırla
+    if (!/^\d*$/.test(phoneNumber) || phoneNumber.length > 10) {
+        element.value = phoneNumber.slice(0, 10).replace(/\D/g, '');
+        alert("Telefon numarası sadece sayılardan oluşmalı ve 10 karakter uzunluğunda olmalıdır.");
+    }
+}
+    window.onload = function () {
+        var phoneInput = document.getElementsByName('phoneNumber')[0];
+
+        // Telefon numarası için 10 karakter sınırlaması ve sadece rakam girişine izin verme
+        phoneInput.addEventListener('input', function () {
+            this.value = this.value.replace(/\D/g, '').slice(0, 10);
+        });
+
+        var popup = document.getElementById('popup');
+        window.addEventListener('keydown', function (event) {
+            if (event.key === "Escape") {
+                if (popup.style.display === 'flex') {
+                    closePopup();
+                }
+            }
+        });
+    };
+</script>
+<script>
       $(document).ready(function() {
-        $('#saveButton').click(function() {
-            var formData = {
-                userName: $('input[name="userName"]').val(), // Textarea için doğru seçici
-                unvan: $('input[name="unvan"]').val(), // Textarea için doğru seçici
-                phoneNumber: $('input[name="phoneNumber"]').val(), // "promise" adında bir input olduğu varsayılıyor
-            };
-            // console.log("username = "+ formData.userName);
-            // console.log("unvan = "+ formData.unvan);
-            // console.log("phoneNumber = "+ formData.phoneNumber);            
-            $.ajax({
-                url: 'Controller/Phone/phoneDirectionSave.php',
-                type: 'POST',
-                data: {
-                    userName: formData.userName,
-                    unvan: formData.unvan,
-                    phoneNumber: formData.phoneNumber
-                },
-                success: function(response) {
-                    alert(response);
-                },
-                error: function(error) {
-                    console.error("AJAX hatası: ", error);
+            $('#saveButton').click(function() {
+                var formData = {
+                    userName: $('input[name="userName"]').val(), // Textarea için doğru seçici
+                    unvan: $('input[name="unvan"]').val(), // Textarea için doğru seçici
+                    phoneNumber: $('input[name="phoneNumber"]').val(), // "promise" adında bir input olduğu varsayılıyor
+                };   
+                if (formData.phoneNumber == null || formData.phoneNumber.trim() === "") {
+                    alert("Telefon numarası boş olamaz");
+                }else{
+                    $.ajax({
+                    url: 'Controller/Phone/phoneDirectionSave.php',
+                    type: 'POST',
+                    data: {
+                        userName: formData.userName,
+                        unvan: formData.unvan,
+                        phoneNumber: formData.phoneNumber
+                    },
+                    success: function(response) {
+                        location.reload();
+                    },
+                    error: function(error) {
+                        console.error("AJAX hatası: ", error);
+                    }
+                });
                 }
             });
-        });
         });
         
     var checkEdit = true;
@@ -387,7 +417,7 @@ function iptal() {
 }
 </script>
 
-
+<!-- bakılacak export excel -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
 <script>
     document.getElementById("exportButton").addEventListener("click", function() {
@@ -637,18 +667,14 @@ var topluGuncelleButtons = document.querySelectorAll('.topluGuncelle');
                 var userName = row.querySelector('td:nth-child(2) input').value.trim();
                 var unvan = row.querySelector('td:nth-child(3) input').value.trim();
                 var phoneNumber = row.querySelector('td:nth-child(4) input').value.trim();
-                console.log("phoneID = "+phoneID);
-                console.log("userName = "+userName);
-                console.log("unvan = "+unvan);
-                console.log("phoneNumber = "+phoneNumber);
                 $.ajax({
-                    url: 'Controller/Surveys/surveysUpdate.php',
+                    url: 'Controller/Phone/phoneDirectionUpdate.php',
                     type: 'POST',
                     data: {
-                        surveysID: surveysID,
-                        surveysQuestion: surveysQuestion,
-                        lastDate: lastDate,
-                        vote: vote
+                        phoneID: phoneID,
+                        userName: userName,
+                        unvan: unvan,
+                        phoneNumber: phoneNumber
                     },
                     success: function (response) {
                         if (response == 1) {
@@ -679,12 +705,12 @@ topluSilButton.addEventListener('click', function() {
 
     checkboxes.forEach(function(checkbox) {
         var row = checkbox.closest('tr');
-        var surveysID = row.getAttribute('data-userid');
+        var phoneID = row.getAttribute('data-userid');
         $.ajax({
-            url: 'Controller/Surveys/surveysDelete.php',
+            url: 'Controller/Phone/phoneDelete.php',
             type: 'POST',
             data: {
-                surveysID: surveysID
+                phoneID: phoneID
             },
             success: function(deleteResponse) {
                 location.reload();
@@ -764,130 +790,5 @@ function filtrele() {
             next();
         });
     }
-    function openVotersPopup(button){
-        const row = button.closest('tr');
-        const selectedSurveyID = row.getAttribute('data-userid');
-        $('#topluPopup').show().css('display', 'flex').delay(100).queue(function(next) {
-            $('body').css('overflow', 'hidden');
-            $('#topluPopup').css('opacity', '1');
-            $('#userForm2').css('opacity', '1');
-            $('#userForm2').css('transform', 'translateY(0)');
-            next();
-        });
-        $.ajax({
-            url: 'Controller/Surveys/getVoters.php', // PHP dosyasının yolu
-            type: 'POST',
-            data: {
-                surveysID: selectedSurveyID
-            },
-            success: function(response) {
-                try {
-                    const data = JSON.parse(response);
-                    const votersList = $('#votersList');
-                    votersList.empty(); // Önceki verileri temizle
-
-                    if (data.error) {
-                        alert(data.error);
-                        return;
-                    }
-
-                    data.forEach(function(voter) {
-            const row = `
-                <tr>
-                    <td>${voter.blok_adi} / ${voter.daire_sayisi}</td>
-                    <td>${voter.userName}</td>
-                </tr>
-            `;
-            votersList.append(row);
-        });
-                } catch (e) {
-                    console.error('Veri işleme hatası:', e);
-                    console.error('Gelen yanıt:', response);
-                }
-            },
-            error: function(error) {
-                console.error('Hata:', error);
-            }
-        });
-    }
-
-    function closeToplu() {
-        $('#userForm2').css('opacity', '0').css('transform', 'translateY(-180px)').delay(100).queue(function (next) {
-            $('#topluPopup').css('opacity', '0').delay(300).queue(function (nextInner) {
-                $(this).hide().css('display', 'none');
-                nextInner();
-                $('body').css('overflow', 'auto');
-            });
-            next();
-        });
-    }
+   
 </script>
-
-<script src="assets/js/mycode/dropdown.js"></script>
-<script>
-    
-    dropDownn('kisiler', 'kisilerDP', 'kisilerSearch');
-</script>
-
-<!-- secme Tarihi -->
-<script src="assets/js/mycode/moment.min.js"></script>
-    <script src="assets/js/mycode/moment.js"></script>
-    <script src="assets/js/mycode/lightpick.js"></script>
-
-<script>
- // yeni eklenen kısım
-moment.locale('tr', {
-    months : [
-        "Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", 
-        "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"
-    ],
-    monthsShort : [
-        "Oca", "Şub", "Mar", "Nis", "May", "Haz", 
-        "Tem", "Ağu", "Eyl", "Eki", "Kas", "Ara"
-    ],
-    weekdays : [
-        "Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"
-    ],
-    weekdaysShort : [
-        "Paz", "Pzt", "Sal", "Çar", "Per", "Cum", "Cmt"
-    ],
-    weekdaysMin : [
-        "Pz", "Pt", "Sa", "Ça", "Pe", "Cu", "Ct"
-    ],
-    longDateFormat : {
-        LT : "HH:mm",
-        LTS : "HH:mm:ss",
-        L : "DD/MM/YYYY",
-        LL : "D MMMM YYYY",
-        LLL : "D MMMM YYYY HH:mm",
-        LLLL : "dddd, D MMMM YYYY HH:mm"
-    }
-});
-
-function tarihSec(veri, day) {
-    var dateFormat = 'DD MMMM YYYY';
-    var picker = new Lightpick({
-        field: document.getElementById(veri),
-        singleDate: true,
-        selectForward: true,
-        selectBackward: false,
-        lang: 'tr',
-        minDate: moment(),
-        repick: true,
-        startDate: moment().add(day, 'days'),
-        onSelect: function(date) {
-            document.getElementById(veri).value = date.format(dateFormat);
-            document.getElementById(veri).setAttribute('data-user-id',  date.format("YYYY-MM-DD"));
-        }
-      
-    });
-
-    // Başlangıç tarihini input alanına yazdır
-    document.getElementById(veri).value = moment().add(day, 'days').format(dateFormat);
-    document.getElementById(veri).setAttribute('data-user-id',  moment().add(day, 'days').format("YYYY-MM-DD"));
-}
-
-// Fonksiyonları çağırma
-tarihSec('datepickerson', 7);
-
-    </script>
