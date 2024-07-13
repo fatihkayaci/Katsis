@@ -19,6 +19,13 @@ try {
     $stmt = $conn->prepare($sql2);
     $stmt->bindParam(':surveysID', $surveysID);
     $stmt->execute();
+
+    $sql3 = "DELETE FROM tbl_surveys_vote WHERE surveysID = :surveysID";
+    
+    $stmt = $conn->prepare($sql3);
+    $stmt->bindParam(':surveysID', $surveysID);
+    $stmt->execute();
+    
     echo 1;
 } catch (PDOException $e) {
     echo $e;

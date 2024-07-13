@@ -25,10 +25,12 @@ try {
         $userIDsStr = implode(',', array_map('intval', $userIDs));
 
         // userName, blok_adi ve daire_sayisi değerlerini sorgula
-        $sql = "SELECT u.userName, d.blok_adi, d.daire_sayisi
-                FROM tbl_users u
-                JOIN tbl_daireler d ON u.userID = d.userID
-                WHERE u.userID IN ($userIDsStr)";
+        $sql = "SELECT u.userName, b.blok_adi, d.daire_sayisi
+        FROM tbl_users u
+        LEFT JOIN tbl_daireler d ON u.userID = d.kiraciID OR u.userID = d.katmalikiID
+        LEFT JOIN tbl_blok b ON d.blok_adi = b.blok_id
+        WHERE u.userID IN ($userIDsStr);";
+
         
         $stmt = $conn->prepare($sql);
         $stmt->execute();

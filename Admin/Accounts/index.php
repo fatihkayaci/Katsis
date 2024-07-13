@@ -73,8 +73,7 @@ try {
             </div>
 
             <div class="input-group1">
-                <button class="topluGuncelle btn-custom-outline bcoc3" id="guncelleButton"
-                    style="display: none;">Güncelle</button>
+                <button class="topluGuncelle btn-custom-outline bcoc3" id="guncelleButton" style="display: none;">Güncelle</button>
                 <button class="topluSil btn-custom-outline bcoc4" id="silButton" style="display: none;">Sil</button>
 
 

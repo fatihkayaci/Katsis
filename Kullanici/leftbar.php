@@ -25,7 +25,7 @@ $idapartman =$_SESSION["apartID"];
             <span class="nav-link-text">Ana Sayfa</span>
           </li>
         </a>
-
+<!-- 
         <button class="dropdown-btn userPage mt-1 nav-item">
           <li class="nav-link">
             <div class="nav-ico">
@@ -54,7 +54,7 @@ $idapartman =$_SESSION["apartID"];
               </span>
             </li>
           </a>
-        </div>
+        </div> 
 
         <button class="dropdown-btn mt-1 employeePage nav-item">
           <li class="nav-link">
@@ -126,6 +126,7 @@ $idapartman =$_SESSION["apartID"];
           </a>
         </div>
 
+-->
         <a class="nav-item mt-1 modul sayacPage" href="index?parametre=meters">
           <li class="nav-link">
             <div class="nav-ico">
@@ -134,7 +135,6 @@ $idapartman =$_SESSION["apartID"];
             <span class="nav-link-text">Sayaçlar</span>
           </li>
         </a>
-
         <a class="nav-item mt-1 modul mainPage" href="index?parametre=Surveys">
           <li class="nav-link">
             <div class="nav-ico">
@@ -143,7 +143,14 @@ $idapartman =$_SESSION["apartID"];
             <span class="nav-link-text">Anketler</span>
           </li>
         </a>
-
+        <a class="nav-item mt-1 modul mainPage" href="index?parametre=Phone">
+          <li class="nav-link">
+            <div class="nav-ico">
+              <i class="fa-solid fa-square-poll-vertical"></i>
+            </div>
+            <span class="nav-link-text">Telefon Rehberi</span>
+          </li>
+        </a>
         <a class="nav-item mt-1 mainPage modul" href="index?parametre=profile">
           <li class="nav-link">
             <div class="nav-ico">

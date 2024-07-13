@@ -24,7 +24,12 @@ try {
         $stmt->bindParam(':surveysID', $surveysID);
         $stmt->bindParam(':userID', $userID);
         $stmt->execute();
-        echo "güncellendi";
+
+        // Oy ekleme işlemi tamamlandığında, tbl_surveys tablosundaki vote sütununu 1 arttır
+        $updateVoteSql = "UPDATE tbl_surveys SET vote = vote + 1 WHERE surveysID = :surveysID";
+        $updateVoteStmt = $conn->prepare($updateVoteSql);
+        $updateVoteStmt->bindParam(':surveysID', $surveysID);
+        $updateVoteStmt->execute();
     } else {
         // Eğer aynı surveysID ve userID kombinasyonu varsa, optionID'yi kontrol et
         $checkOptionSql = "SELECT COUNT(*) FROM tbl_surveys_vote WHERE surveysID = :surveysID AND userID = :userID AND optionID = :optionID";
@@ -53,6 +58,8 @@ try {
             echo json_encode(array('error' => 'Bu kullanıcı ve seçenek için zaten oy kullanıldı.'));
         }
     }
+ 
+   
 } catch (PDOException $e) {
     // Hata durumunda JSON formatında hata mesajı gönder
     echo json_encode(array('error' => 'Veritabanı hatası: ' . $e->getMessage()));

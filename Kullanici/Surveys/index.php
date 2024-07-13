@@ -4,9 +4,9 @@ try {
     // Check the session variable and modify the query accordingly
     
     if ($_SESSION["durum"] == "Kiracı") {
-        $sql .= " AND voters = 3";
+        $sql .= " AND (voters = 3 OR voters = 1)";
     } elseif ($_SESSION["durum"] == "Kat Maliki") {
-        $sql .= " AND voters = 2";
+        $sql .= " AND (voters = 2 OR voters = 1)";
     }else{
         $sql .= " AND voters = 1";
     }
@@ -16,15 +16,6 @@ try {
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-
-    // $sql2 = "SELECT * FROM tbl_surveys_options WHERE apartmanID = " . $_SESSION["apartID"].
-    // " ORDER BY surveysID ASC";
-    
-    // $stmt = $conn->prepare($sql2);
-    // $stmt->execute();
-    // $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-//contenteditable="true"
     if ($result) {
        ?>
 <div class="table-overflow">
@@ -57,6 +48,20 @@ try {
             foreach ($result as $row) {
                 
                 $i++;
+            //    // Session'dan userID alınması (örnek olarak)
+            //     $userID = $_SESSION['userID'];  // Örneğin sessionda userID mevcut
+
+            //     // Veritabanından optionName'i almak için sorguyu hazırlayalım
+            //     $sql = "SELECT so.optionName
+            //             FROM tbl_surveys_vote sv
+            //             JOIN tbl_surveys_options so ON sv.optionID = so.optionID
+            //             WHERE sv.userID = :userID"; // userID'ye göre filtreleme
+
+            //     // SQL sorgusunu çalıştırmak için bağlantı nesnesi $conn kullanılacak
+            //     $stmt = $conn->prepare($sql);
+            //     $stmt->bindParam(':userID', $userID);
+            //     $stmt->execute();
+            //     $optionName = $stmt->fetchColumn();  // optionName'i fetch ediyoruz
             ?>
             <tr data-userid="<?php echo $row["surveysID"]; ?>" class="git-ac">
                 <td data-title="Seç" class="check-style">
@@ -82,7 +87,7 @@ try {
 
                 <td data-title="vote" class="table_tt phoneNumber" contenteditable="false">
 
-                    <?php echo $row["vote"]; ?></td>
+                    <?php echo  "doldurulacak" ?></td>
                 <td style="text-align: center;" data-title="oylar" class="table_tt">
                     <button type="button" class="fatura_btn oylar_btn" onclick="openOyPopup(this)" id="oylar"><i class="fa-regular fa-clipboard"></i></button>
                 </td>
@@ -166,12 +171,12 @@ try {
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td></td>
-                    <td colspan="5">Anket Bulunamamaktadır</td>
-                </tr>
-            </tbody>
+            <tr>
+                <td colspan="5">Anket Bulunamamaktadır.</td>
+            </tr>
+        </tbody>
         </table>
+        <button style="display: none;" class="export-btn excel-btn" id="exportButton"><i class="fa-solid fa-file-excel"></i> Excel'e Aktar</button>
     </div>
 
     <hr class="horizontal dark mb-0 w-100">
@@ -198,7 +203,8 @@ try {
         </table>
 
         <div class="row row-btn">
-            <button type="button" class="btn-custom-close w-100 me-0" onclick="closeToplu()">Kapat</button>
+            <button type="button" class="btn-custom-close w-50 me-0" onclick="closeToplu()">Kapat</button>
+            <button type="button" class="btn-custom-close w-50 me-0" onclick="oyIptal(this)">iptal</button>
         </div>
     </form>
 </div>
@@ -211,7 +217,6 @@ let selectedSurveyID = null;
 function openOyPopup(button) {
     const row = button.closest('tr');
     selectedSurveyID = row.getAttribute('data-userid');
-
     $('#topluPopup').show().css('display', 'flex').delay(100).queue(function(next) {
         $('body').css('overflow', 'hidden');
         $('#topluPopup').css('opacity', '1');
@@ -246,7 +251,6 @@ function openOyPopup(button) {
                         },
                         success: function(updateResponse) {
                             console.log('Veritabanı güncellendi:', updateResponse);
-                            // Başarılı güncelleme mesajı veya işlemi burada yapılabilir
                         },
                         error: function(updateError) {
                             console.error('Güncelleme Hatası:', updateError);
@@ -271,6 +275,23 @@ function closeToplu() {
         });
         next();
     });
+}
+
+function oyIptal(button){
+    $.ajax({
+        url: 'Controller/Surveys/deleteSurveysVote.php', // PHP dosyasının yolu
+        type: 'POST',
+        data: {
+            surveysID: selectedSurveyID,
+        },
+        success: function(response) {
+            console.log(response);
+        },
+        error: function(error) {
+            console.error('Hata:', error);
+        }
+    });
+
 }
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
