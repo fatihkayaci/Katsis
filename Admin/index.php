@@ -129,6 +129,9 @@ else if($indexx == 'profile'){
     echo "<script>
             localStorage.setItem('selectedLink', 'Surveys');
          </script>";
+}else if($indexx == 'property'){
+    include ("Surveys/surveysProperty.php");
+    echo "<script>pagename('Anket Ayrıntıları');</script>";
 }else if($indexx == 'Phone'){
     include ("Phone/index.php");
     echo "<script>pagename('Telefon Rehberi');</script>";
