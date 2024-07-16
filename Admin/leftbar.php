@@ -153,6 +153,15 @@ $idapartman =$_SESSION["apartID"];
           </li>
         </a>
 
+        <a class="nav-item mt-1 modul mainPage" href="index?parametre=Announcement">
+          <li class="nav-link">
+            <div class="nav-ico">
+              <i class="fa-solid fa-square-poll-vertical"></i>
+            </div>
+            <span class="nav-link-text">Duyurular</span>
+          </li>
+        </a>
+
         <a class="nav-item mt-1 mainPage modul" href="index?parametre=profile">
           <li class="nav-link">
             <div class="nav-ico">

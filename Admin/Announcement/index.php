@@ -1,37 +1,47 @@
+<?php
+$optionsBlok = [];
+try {
+    //burada yeni eklendi css eklenmesi lazım.
+    $sql1 = "SELECT d.daire_id, d.blok_adi, d.daire_sayisi, b.blok_adi
+    FROM tbl_daireler d
+    INNER JOIN tbl_blok b ON d.blok_adi = b.blok_id
+    WHERE d.apartman_id = " . $_SESSION["apartID"];
+
+    $result1 = $conn->query($sql1);
+
+    if ($result1->rowCount() > 0) {
+        while ($row = $result1->fetch(PDO::FETCH_ASSOC)) {
+            // Diziye değerleri ekle
+            $optionsBlok[] = '<option name="optionsBlok" data-user-id="' . $row['blok_adi'] . '" value="' . $row['blok_adi'] . '>' . $row['blok_adi'] . '</option>';
+        }
+    }
+
+} catch (PDOException $e) {
+    echo "Bağlantı hatası: " . $e->getMessage();
+}
+?>
 <!-- Popup Form -->
 <div id="popup">
 
     <form class="login-form mainpopup" id="userForm">
 
-        <h2 class="form-signin-heading mb-3">Anket Ekleme</h2>
+        <h2 class="form-signin-heading mb-3">Duyuru Ekleme</h2>
 
         <hr class="horizontal dark mt-0 w-100">
 
         <div class="row mt-3">
             <div class="col-md-6 col-btn">
-
-                <textarea class="input" name="anketSoru" id="anketSoru" required></textarea>
-                <label for="anketSoru">Anket Sorusu :</label>
+                <textarea class="input" name="announcementTitle" id="announcementTitle" required></textarea>
+                <label for="announcementTitle">Duyuru Başlığı:</label>
             </div>
         </div>
-
-        <div class="row secekE" id="secenekContainer">
-            <div class="col-md-6 col-btn group">
-                <input class="input trash-k" type="text" name="1secenek" required>
-                <label for="1secenek">1. Seçenek :</label>
-                <button class="trashcan"><i class="fa-solid fa-trash-can"></i></button>
-            </div>
-        </div>
-
         <div class="row">
-            <div class="col-md-6 col-btn">
-                <button class="btn-custom w-100 bcoc1" id="secenekEkle"><i class="fa-solid fa-plus"></i> Seçenek Ekle</button>
-            </div>
+            <textarea name="announcementContent" id="announcementContent"></textarea>
         </div>
 
-        <div class="row">
+        <div class="row" id="lastDate">
             <div class="col-md-6 col">
-                <input class="input" data-user-id="" id="datepickerson" name="lastDate" type="text" required="">
+                <input class="input" id="datepickerson" name="lastDate" type="text" required="">
                 <label for="datepickerson">Son Cevaplama Tarihi</label>
             </div>
             <div class="col-md-6 col">
@@ -51,10 +61,33 @@
                                 <button data-odeme-durumu="kiraci" name="kiraci">Kiracılar</button>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
+            <div class="col-md-6 col">
+                <div class="select-div m-0">
+                    <div class="dropdown-nereden">
+                        <div class="group">
+                            <input class="search-selectx input" data-user-id="" type="text" id="kisiler"
+                                required="" />
+                            <label class="selectx-label" for="kisiler">Kişiler: </label>
+                        </div>
+
+                        <div class="dropdown-content-nereden searchInput-btn" id="kisilerDP">
+                            <div class="dropdown-content-inside-nereden mainpopupx">
+                                <input type="hidden" id="kisilerSearch" placeholder="Ara...">
+                                <button data-odeme-durumu="tumkisiler" name="tumkisiler">Tüm Kişiler</button>
+                                <button data-odeme-durumu="katmaliki" name="katmaliki">Kat Malikleri</button>
+                                <button data-odeme-durumu="kiraci" name="kiraci">Kiracılar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            
         </div>
         
 

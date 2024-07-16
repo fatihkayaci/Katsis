@@ -125,7 +125,7 @@ try {
                 <td data-title="Unvan" class="table_tt" contenteditable="false">
                 <input class="edit-input" id="adSoyad" type="text" value="<?php echo $row["unvan"]; ?>"></td>
                 <td data-title="Phone Number" class="table_tt phoneNumber" contenteditable="false">
-                <input class="edit-input" id="adSoyad" type="text" value="<?php echo $row["phoneNumber"]; ?>"></td>
+                <input class="edit-input" id="adSoyad" type="text" oninput="validatePhoneNumber(this)" value="<?php echo $row["phoneNumber"]; ?>"></td>
 
             </tr>
             <?php

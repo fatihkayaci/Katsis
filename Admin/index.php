@@ -132,6 +132,9 @@ else if($indexx == 'profile'){
 }else if($indexx == 'property'){
     include ("Surveys/surveysProperty.php");
     echo "<script>pagename('Anket Ayrıntıları');</script>";
+}else if($indexx == 'Announcement'){
+    include ("Announcement/index.php");
+    echo "<script>pagename('Duyurular');</script>";
 }else if($indexx == 'Phone'){
     include ("Phone/index.php");
     echo "<script>pagename('Telefon Rehberi');</script>";
