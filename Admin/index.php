@@ -135,6 +135,9 @@ else if($indexx == 'profile'){
 }else if($indexx == 'Announcement'){
     include ("Announcement/index.php");
     echo "<script>pagename('Duyurular');</script>";
+}else if($indexx == 'AnnouncementProperty'){
+    include ("Announcement/announcementProperty.php");
+    echo "<script>pagename('Duyuru Ayrıntıları');</script>";
 }else if($indexx == 'Phone'){
     include ("Phone/index.php");
     echo "<script>pagename('Telefon Rehberi');</script>";

@@ -45,8 +45,6 @@ try {
         }
 
         echo json_encode($results);
-    } else {
-        echo json_encode(array('error' => 'Kullanıcı bulunamadı'));
     }
 
 } catch (PDOException $e) {

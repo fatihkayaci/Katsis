@@ -1,4 +1,5 @@
 <?php
+require_once "Controller/class.func.php";
 $optionsBlok = [];
 try {
     //burada yeni eklendi css eklenmesi lazım.
@@ -182,7 +183,7 @@ try {
                 <input class="edit-input" id="announcementContent" type="text" value="<?php echo $row["announcementContent"]; ?>"></td>
 
                 <td data-title="lastDate" class="table_tt table_td" contenteditable="false">
-                <input class="edit-input" id="lastDate" type="text" value="<?php echo $row["lastDate"]; ?>"></td>
+                <input class="edit-input" id="lastDate" type="text" value="<?php echo tarihDonustur($row["lastDate"]); ?>"></td>
             </tr>
             <?php
             }
@@ -381,6 +382,32 @@ try {
         });
     });
 });
+var topluSilButton = document.getElementById('silButton');
+
+// Silme işlemi butonuna tıklanınca bu fonksiyon çalışacak
+topluSilButton.addEventListener('click', function() {
+    var silButton = document.getElementById('silButton');
+    var checkboxes = document.querySelectorAll('#example tbody input[type="checkbox"]:checked');
+
+    checkboxes.forEach(function(checkbox) {
+        var row = checkbox.closest('tr');
+        var announcementID = row.getAttribute('data-userid');
+        $.ajax({
+            url: 'Controller/Announcement/announcementDelete.php',
+            type: 'POST',
+            data: {
+                announcementID: announcementID
+            },
+            success: function(deleteResponse) {
+                location.reload();
+            },
+            error: function(deleteError) {
+                console.error('Silme hatası:', deleteError);
+            }
+        });
+    });
+    silButton.style.display = 'none';
+});
 
 </script>
 
@@ -390,15 +417,15 @@ try {
 tableTdElements.forEach(function (element) {
     element.addEventListener('click', function () {
 
-        var surveysID = element.parentElement.getAttribute('data-userid');
+        var announcementID = element.parentElement.getAttribute('data-userid');
         $.ajax({
-            url: 'Controller/Surveys/createSession.php',
+            url: 'Controller/Announcement/createSession.php',
             type: 'POST',
             data: {
-                surveysID: surveysID
+                announcementID: announcementID
             },
             success: function (response) {
-                window.location.href = "index.php?parametre=property"; 
+                window.location.href = "index.php?parametre=AnnouncementProperty";
             },
             error: function (xhr, status, error) {
                 var errorMessage = xhr.status + ': ' + xhr.statusText;

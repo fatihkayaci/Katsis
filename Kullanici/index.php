@@ -137,7 +137,14 @@ else if($indexx == 'profile'){
     echo "<script>
             localStorage.setItem('selectedLink', 'Phone');
          </script>";
-}else{
+}else if($indexx == 'Announcement'){
+    include ("Announcement/index.php");
+    echo "<script>pagename('Duyurular');</script>";
+    echo "<script>
+            localStorage.setItem('selectedLink', 'Announcement');
+         </script>";
+}
+else{
     include ("Dashboard/index.php");
     echo "<script>pagename('ANA SAYFA');</script>";
     echo "<script>

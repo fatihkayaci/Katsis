@@ -1,3 +1,4 @@
+
 <!-- Popup Form -->
 <div id="popup">
 
@@ -91,6 +92,8 @@
     </form>
 </div>
 <?php
+
+require_once "Controller/class.func.php";
 try {
     $sql1 = "SELECT * FROM tbl_surveys WHERE ". $_SESSION["apartID"] . "
     ORDER BY surveysID ASC";
@@ -186,7 +189,7 @@ try {
                 <input class="edit-input" id="adSoyad" type="text" value="<?php echo $row["surveysQuestion"]; ?>"></td>
                     
                     <td data-title="lastDate" class="table_tt table_td" contenteditable="false">
-                    <input class="edit-input" id="adSoyad" type="text" value="<?php echo $row["lastDate"]; ?>"></td>
+                    <input class="edit-input" id="adSoyad" type="text" value="<?php echo tarihDonustur($row["lastDate"]); ?>"></td>
 
                 <td data-title="vote" class="table_tt table_td phoneNumber" contenteditable="false">
 
@@ -196,7 +199,7 @@ try {
                 <td data-title="oylamaDurumu" class="table_tt table_td">
                     <?php echo $oylamaDurumu; ?>
                 </td>
-                <td data-title="oylar" class="table_tt table_td">
+                <td data-title="oylar">
                     <button type="button" class="fatura_btn oylar_btn" onclick="openVotersPopup(this)" id="oylar"><i class="fa-regular fa-clipboard"></i></button>
                 </td>
             </tr>
@@ -421,6 +424,7 @@ tableTdElements.forEach(function (element) {
                 surveysID: surveysID
             },
             success: function (response) {
+                
                 window.location.href = "index.php?parametre=property"; 
             },
             error: function (xhr, status, error) {
@@ -834,10 +838,47 @@ function filtrele() {
     dropDownn('kisiler', 'kisilerDP', 'kisilerSearch');
 </script>
 
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+    const secenekContainer = document.getElementById("secenekContainer");
+    const secenekEkleButton = document.getElementById("secenekEkle");
+    let secenekCount = 1;  // Başlangıçta 1 seçenek var
+    secenekEkleButton.addEventListener("click", function() {
+        secenekCount++;
+        const newSecenek = document.createElement("div");
+        newSecenek.className = "col-md-6 col-btn group";
+        newSecenek.innerHTML = `
+            <input class="input trash-k" type="text" name="${secenekCount}secenek" required>
+            <label for="${secenekCount}secenek">${secenekCount}. Seçenek :</label>
+            <button class="trashcan"><i class="fa-solid fa-trash-can"></i></button>
+        `;
+        secenekContainer.appendChild(newSecenek);
+        updateTrashCanButtons();
+    });
+    function updateTrashCanButtons() {
+        const trashCanButtons = document.querySelectorAll(".trashcan");
+        trashCanButtons.forEach(button => {
+            button.removeEventListener("click", handleTrashCanClick);
+            button.addEventListener("click", handleTrashCanClick);
+        });
+    }
+    function handleTrashCanClick(event) {
+        const groups = secenekContainer.querySelectorAll(".group");
+        if (groups.length > 1) {  // En az 1 seçenek kalmalı
+            const lastGroup = groups[groups.length - 1];
+            secenekContainer.removeChild(lastGroup);
+            secenekCount--;
+        }
+    }
+    updateTrashCanButtons();  // Sayfa yüklendiğinde mevcut butonlara event ekle
+});
+</script>
+
 <!-- secme Tarihi -->
 <script src="assets/js/mycode/moment.min.js"></script>
-    <script src="assets/js/mycode/moment.js"></script>
-    <script src="assets/js/mycode/lightpick.js"></script>
+<script src="assets/js/mycode/moment.js"></script>
+<script src="assets/js/mycode/lightpick.js"></script>
 
 <script>
  // yeni eklenen kısım
@@ -893,48 +934,5 @@ function tarihSec(veri, day) {
 }
 
 // Fonksiyonları çağırma
-tarihSec('datepickerson', 7);
-
-    </script>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-        const secenekContainer = document.getElementById("secenekContainer");
-        const secenekEkleButton = document.getElementById("secenekEkle");
-        let secenekCount = 1;  // Başlangıçta 1 seçenek var
-
-        secenekEkleButton.addEventListener("click", function() {
-            secenekCount++;
-            const newSecenek = document.createElement("div");
-            newSecenek.className = "col-md-6 col-btn group";
-            newSecenek.innerHTML = `
-                <input class="input trash-k" type="text" name="${secenekCount}secenek" required>
-                <label for="${secenekCount}secenek">${secenekCount}. Seçenek :</label>
-                <button class="trashcan"><i class="fa-solid fa-trash-can"></i></button>
-            `;
-            secenekContainer.appendChild(newSecenek);
-
-            updateTrashCanButtons();
-        });
-
-        function updateTrashCanButtons() {
-            const trashCanButtons = document.querySelectorAll(".trashcan");
-            trashCanButtons.forEach(button => {
-                button.removeEventListener("click", handleTrashCanClick);
-                button.addEventListener("click", handleTrashCanClick);
-            });
-        }
-
-        function handleTrashCanClick(event) {
-            const groups = secenekContainer.querySelectorAll(".group");
-            if (groups.length > 1) {  // En az 1 seçenek kalmalı
-                const lastGroup = groups[groups.length - 1];
-                secenekContainer.removeChild(lastGroup);
-                secenekCount--;
-            }
-        }
-
-        updateTrashCanButtons();  // Sayfa yüklendiğinde mevcut butonlara event ekle
-    });
-
-    </script>
+tarihSec('datepickerson', 0);
+</script>

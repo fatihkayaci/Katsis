@@ -22,17 +22,6 @@ try {
     <table id="example" class="users-table">
         <thead>
             <tr class="users-table-info">
-                <th class="check-style">
-                    <input id="mainCheckbox" type="checkbox" onclick="toggleAll(this)" />
-                    <label for="mainCheckbox" class="check">
-                        <svg width="18px" height="18px" viewBox="0 0 18 18">
-                            <path
-                                d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z">
-                            </path>
-                            <polyline points="1 9 7 14 15 4"></polyline>
-                        </svg>
-                    </label>
-                </th>
                 <th onclick="sortTable(1)">Anket Başlığı <i id="icon-table1" class="fa-solid fa-sort-down"></i></th>
                 <th onclick="sortTable(2)">Son Tarihi <i id="icon-table2" class="fa-solid fa-sort-down"></i></th>
                 <th onclick="sortTable(3)">Kullanılan Oy <i id="icon-table3" class="fa-solid fa-sort-down"></i></th>
@@ -46,37 +35,9 @@ try {
             <?php
             $i = 0;
             foreach ($result as $row) {
-                
                 $i++;
-            //    // Session'dan userID alınması (örnek olarak)
-            //     $userID = $_SESSION['userID'];  // Örneğin sessionda userID mevcut
-
-            //     // Veritabanından optionName'i almak için sorguyu hazırlayalım
-            //     $sql = "SELECT so.optionName
-            //             FROM tbl_surveys_vote sv
-            //             JOIN tbl_surveys_options so ON sv.optionID = so.optionID
-            //             WHERE sv.userID = :userID"; // userID'ye göre filtreleme
-
-            //     // SQL sorgusunu çalıştırmak için bağlantı nesnesi $conn kullanılacak
-            //     $stmt = $conn->prepare($sql);
-            //     $stmt->bindParam(':userID', $userID);
-            //     $stmt->execute();
-            //     $optionName = $stmt->fetchColumn();  // optionName'i fetch ediyoruz
             ?>
             <tr data-userid="<?php echo $row["surveysID"]; ?>" class="git-ac">
-                <td data-title="Seç" class="check-style">
-                    <!-- Checkbox id'sine $i değerini ekliyoruz -->
-                    <input id="check-<?php echo $row["surveysID"] . '-' . $i; ?>" class="check1" type="checkbox"
-                        onclick="toggleCheckbox(<?php echo $row['surveysID']; ?>, <?php echo $i; ?>)" />
-                    <label for="check-<?php echo $row["surveysID"] . '-' . $i; ?>" class="check">
-                        <svg width="18px" height="18px" viewBox="0 0 18 18">
-                            <path
-                                d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z">
-                            </path>
-                            <polyline points="1 9 7 14 15 4"></polyline>
-                        </svg>
-                    </label>
-                </td>
                 <td data-title="Anket Basligi" class="table_tt" contenteditable="false">
 
                     <?php echo $row["surveysQuestion"]; ?></td>
@@ -151,17 +112,6 @@ try {
         <table id="example" class="users-table">
             <thead>
                 <tr class="users-table-info">
-                    <th class="check-style">
-                        <input id="check-" class="check1" type="checkbox" />
-                        <label for="check-" class="check">
-                            <svg width="18px" height="18px" viewBox="0 0 18 18">
-                                <path
-                                    d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z">
-                                </path>
-                                <polyline points="1 9 7 14 15 4"></polyline>
-                            </svg>
-                        </label>
-                    </th>
                     <th onclick="sortTable(1)">Anket Başlığı <i id="icon-table1" class="fa-solid fa-sort-down"></i></th>
                     <th onclick="sortTable(2)">Son Tarihi <i id="icon-table2" class="fa-solid fa-sort-down"></i></th>
                     <th onclick="sortTable(3)">Kullanılan Oy <i id="icon-table3" class="fa-solid fa-sort-down"></i></th>
