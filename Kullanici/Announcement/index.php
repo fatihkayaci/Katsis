@@ -387,3 +387,148 @@ function filtrele() {
     }
 }
 </script>
+
+<script>
+    $('.addAnket').click(function () {
+        $('#popup').show().css('display', 'flex').delay(100).queue(function (next) {
+            $('body').css('overflow', 'hidden');
+            $('#popup').css('opacity', '1');
+            $('#userForm').css('opacity', '1');
+            $('#userForm').css('transform', 'translateY(0)');
+            next();
+        });
+    });
+
+    function closePopup() {
+        $('#userForm').css('opacity', '0').css('transform', 'translateY(-180px)').delay(100).queue(function (next) {
+            $('#popup').css('opacity', '0').delay(300).queue(function (nextInner) {
+                $(this).hide().css('display', 'none');
+                nextInner();
+                $('body').css('overflow', 'auto');
+            });
+            next();
+        });
+    }
+   
+    function closeToplu() {
+        $('#userForm2').css('opacity', '0').css('transform', 'translateY(-180px)').delay(100).queue(function (next) {
+            $('#topluPopup').css('opacity', '0').delay(300).queue(function (nextInner) {
+                $(this).hide().css('display', 'none');
+                nextInner();
+                $('body').css('overflow', 'auto');
+            });
+            next();
+        });
+    }
+</script>
+
+<script src="assets/js/mycode/dropdown.js"></script>
+<script>
+    
+    dropDownn('kisiler', 'kisilerDP', 'kisilerSearch');
+</script>
+
+<!-- secme Tarihi -->
+<script src="assets/js/mycode/moment.min.js"></script>
+    <script src="assets/js/mycode/moment.js"></script>
+    <script src="assets/js/mycode/lightpick.js"></script>
+
+<script>
+ // yeni eklenen kısım
+moment.locale('tr', {
+    months : [
+        "Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", 
+        "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"
+    ],
+    monthsShort : [
+        "Oca", "Şub", "Mar", "Nis", "May", "Haz", 
+        "Tem", "Ağu", "Eyl", "Eki", "Kas", "Ara"
+    ],
+    weekdays : [
+        "Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"
+    ],
+    weekdaysShort : [
+        "Paz", "Pzt", "Sal", "Çar", "Per", "Cum", "Cmt"
+    ],
+    weekdaysMin : [
+        "Pz", "Pt", "Sa", "Ça", "Pe", "Cu", "Ct"
+    ],
+    longDateFormat : {
+        LT : "HH:mm",
+        LTS : "HH:mm:ss",
+        L : "DD/MM/YYYY",
+        LL : "D MMMM YYYY",
+        LLL : "D MMMM YYYY HH:mm",
+        LLLL : "dddd, D MMMM YYYY HH:mm"
+    }
+});
+
+function tarihSec(veri, day) {
+    var dateFormat = 'DD MMMM YYYY';
+    var picker = new Lightpick({
+        field: document.getElementById(veri),
+        singleDate: true,
+        selectForward: true,
+        selectBackward: false,
+        lang: 'tr',
+        minDate: moment(),
+        repick: true,
+        startDate: moment().add(day, 'days'),
+        onSelect: function(date) {
+            document.getElementById(veri).value = date.format(dateFormat);
+            document.getElementById(veri).setAttribute('data-user-id',  date.format("YYYY-MM-DD"));
+        }
+      
+    });
+
+    // Başlangıç tarihini input alanına yazdır
+    document.getElementById(veri).value = moment().add(day, 'days').format(dateFormat);
+    document.getElementById(veri).setAttribute('data-user-id',  moment().add(day, 'days').format("YYYY-MM-DD"));
+}
+
+// Fonksiyonları çağırma
+tarihSec('datepickerson', 7);
+
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+        const secenekContainer = document.getElementById("secenekContainer");
+        const secenekEkleButton = document.getElementById("secenekEkle");
+        let secenekCount = 1;  // Başlangıçta 1 seçenek var
+
+        secenekEkleButton.addEventListener("click", function() {
+            secenekCount++;
+            const newSecenek = document.createElement("div");
+            newSecenek.className = "col-md-6 col-btn group";
+            newSecenek.innerHTML = `
+                <input class="input trash-k" type="text" name="${secenekCount}secenek" required>
+                <label for="${secenekCount}secenek">${secenekCount}. Seçenek :</label>
+                <button class="trashcan"><i class="fa-solid fa-trash-can"></i></button>
+            `;
+            secenekContainer.appendChild(newSecenek);
+
+            updateTrashCanButtons();
+        });
+
+        function updateTrashCanButtons() {
+            const trashCanButtons = document.querySelectorAll(".trashcan");
+            trashCanButtons.forEach(button => {
+                button.removeEventListener("click", handleTrashCanClick);
+                button.addEventListener("click", handleTrashCanClick);
+            });
+        }
+
+        function handleTrashCanClick(event) {
+            const groups = secenekContainer.querySelectorAll(".group");
+            if (groups.length > 1) {  // En az 1 seçenek kalmalı
+                const lastGroup = groups[groups.length - 1];
+                secenekContainer.removeChild(lastGroup);
+                secenekCount--;
+            }
+        }
+
+        updateTrashCanButtons();  // Sayfa yüklendiğinde mevcut butonlara event ekle
+    });
+
+    </script>
