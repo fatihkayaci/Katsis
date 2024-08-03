@@ -26,7 +26,7 @@ $idapartman =$_SESSION["apartID"];
           </li>
         </a>
 
-        <button class="dropdown-btn userPage mt-1 nav-item">
+        <button id="kullanici" class="dropdown-btn modul userPage mt-1 nav-item">
           <li class="nav-link">
             <div class="nav-ico">
               <i class="fa-solid fa-users"></i>
@@ -36,7 +36,7 @@ $idapartman =$_SESSION["apartID"];
           </li>
         </button>
         <div class="dropdown-container dropdownUser">
-          <a class="nav-item modul new-radius"  href="index?parametre=Accounts">
+          <a class="nav-item modul new-radius userHover" href="index?parametre=Accounts">
             <li class="nav-link">
               <div class="nav-ico"></div>
               <span class="nav-link-text">
@@ -45,7 +45,7 @@ $idapartman =$_SESSION["apartID"];
               </span>
             </li>
           </a>
-          <a class="nav-item modul new-radius-btm" href="index?parametre=Arsiv">
+          <a class="nav-item modul new-radius-btm userHover" href="index?parametre=Arsiv">
             <li class="nav-link">
               <div class="nav-ico"></div>
               <span class="nav-link-text">
@@ -56,7 +56,7 @@ $idapartman =$_SESSION["apartID"];
           </a>
         </div>
 
-        <button class="dropdown-btn mt-1 employeePage nav-item">
+        <button id="personeller" class="dropdown-btn modul mt-1 employeePage nav-item">
           <li class="nav-link">
             <div class="nav-ico">
             <i class="fa-solid fa-user-tie"></i>
@@ -66,7 +66,7 @@ $idapartman =$_SESSION["apartID"];
           </li>
         </button>
         <div class="dropdown-container dropdownEmployee">
-          <a class="nav-item modul new-radius"  href="index?parametre=employee">
+          <a class="nav-item modul new-radius empHover"  href="index?parametre=employee">
             <li class="nav-link">
               <div class="nav-ico"></div>
               <span class="nav-link-text">
@@ -75,7 +75,7 @@ $idapartman =$_SESSION["apartID"];
               </span>
             </li>
           </a>
-          <a class="nav-item modul new-radius-btm" href="index?parametre=employee-arsiv">
+          <a class="nav-item modul new-radius-btm empHover" href="index?parametre=employee-arsiv">
             <li class="nav-link">
               <div class="nav-ico"></div>
               <span class="nav-link-text">
@@ -96,7 +96,7 @@ $idapartman =$_SESSION["apartID"];
         </a>
         
 
-        <button class="dropdown-btn nav-item mt-1 finansPage">
+        <button id="finans" class="dropdown-btn modul nav-item mt-1 finansPage">
           <li class="nav-link">
             <div class="nav-ico">
             <i class="fa-solid fa-coins"></i>
@@ -105,8 +105,8 @@ $idapartman =$_SESSION["apartID"];
             <i class="fa-solid fa-angle-right abso-ico"></i>
           </li>
         </button>
-        <div class="dropdown-container">
-          <a class="nav-item modul new-radius"  href="index?parametre=income">
+        <div class="dropdown-container dropdownFinans">
+          <a class="nav-item modul new-radius finansHover" href="index?parametre=income">
             <li class="nav-link">
               <div class="nav-ico"></div>
               <span class="nav-link-text">
@@ -115,7 +115,7 @@ $idapartman =$_SESSION["apartID"];
               </span>
             </li>
           </a>
-          <a class="nav-item modul new-radius-btm" href="index?parametre=employee-arsiv">
+          <a class="nav-item modul new-radius-btm finansHover" href="index?parametre=employee-arsiv">
             <li class="nav-link">
               <div class="nav-ico"></div>
               <span class="nav-link-text">
@@ -135,32 +135,44 @@ $idapartman =$_SESSION["apartID"];
           </li>
         </a>
 
-        <a class="nav-item mt-1 modul mainPage" href="index?parametre=Surveys">
+        <button id="iletisim" class="dropdown-btn modul mainPage mt-1 nav-item">
           <li class="nav-link">
             <div class="nav-ico">
-              <i class="fa-solid fa-square-poll-vertical"></i>
+              <i class="fa-solid fa-layer-group"></i>
             </div>
-            <span class="nav-link-text">Anketler</span>
+            <span class="nav-link-text">İletişim</span>
+            <i class="fa-solid fa-angle-right abso-ico"></i>
           </li>
-        </a>
-
-        <a class="nav-item mt-1 modul mainPage" href="index?parametre=Phone">
-          <li class="nav-link">
-            <div class="nav-ico">
-              <i class="fa-solid fa-square-poll-vertical"></i>
-            </div>
-            <span class="nav-link-text">Telefon Rehber</span>
-          </li>
-        </a>
-
-        <a class="nav-item mt-1 modul mainPage" href="index?parametre=Announcement">
-          <li class="nav-link">
-            <div class="nav-ico">
-              <i class="fa-solid fa-square-poll-vertical"></i>
-            </div>
-            <span class="nav-link-text">Duyurular</span>
-          </li>
-        </a>
+        </button>
+        <div class="dropdown-container dropdownIletisim">
+          <a class="nav-item modul new-radius"  href="index?parametre=Surveys">
+            <li class="nav-link">
+              <div class="nav-ico"></div>
+              <span class="nav-link-text">
+                <i class="fa-solid fa-square-poll-vertical me-2"></i>
+                Anketler
+              </span>
+            </li>
+          </a>
+          <a class="nav-item modul new-radius" href="index?parametre=Phone">
+            <li class="nav-link">
+              <div class="nav-ico"></div>
+              <span class="nav-link-text">
+                <i class="fa-solid fa-square-phone me-2"></i>
+                Telefon Rehberi
+              </span>
+            </li>
+          </a>
+          <a class="nav-item modul new-radius-btm" href="index?parametre=Announcement">
+            <li class="nav-link">
+              <div class="nav-ico"></div>
+              <span class="nav-link-text">
+              <i class="fa-solid fa-bullhorn me-2"></i>
+                Duyurular
+              </span>
+            </li>
+          </a>
+        </div>
 
         <a class="nav-item mt-1 mainPage modul" href="index?parametre=profile">
           <li class="nav-link">
@@ -394,22 +406,7 @@ $idapartman =$_SESSION["apartID"];
   <script src="assets/js/plugins/chartjs.min.js"></script>
   
   <!-- Leftbar Dropdown -->
-  <script>
-  var dropdown1 = document.getElementsByClassName("dropdown-btn");
-  var i;
 
-  for (i = 0; i < dropdown1.length; i++) {
-    dropdown1[i].addEventListener("click", function() {
-      this.classList.toggle("activex");
-      var dropdownContent = this.nextElementSibling;
-      if (dropdownContent.style.display === "block") {
-        dropdownContent.style.display = "none";
-      } else {
-        dropdownContent.style.display = "block";
-      }
-    });
-  }
-  </script>
 
   <script>
     document.addEventListener("DOMContentLoaded", function() {
@@ -448,50 +445,99 @@ $idapartman =$_SESSION["apartID"];
     });
   </script>
 
-  <script>
-  // Tüm nav linklerini seçin
-  const navLinks = document.querySelectorAll('.modul');
+<script>
+  // Dropdown butonları ve nav linkleri için ortak işlem
+document.addEventListener('DOMContentLoaded', function() {
+    var dropdowns = document.getElementsByClassName("dropdown-btn");
+    var navLinks = document.querySelectorAll('.modul');
+    var selectedParam = localStorage.getItem('selectedLink');
 
-  // Her bir nav linki için bir olay dinleyici ekleyin
-  navLinks.forEach(link => {
-    link.addEventListener('click', function(event) {
-      // Tüm nav linklerinden active sınıfını kaldırın
-      navLinks.forEach(link => {
-        link.classList.remove('active');
-      });
+    // Dropdown butonları için olay dinleyicisi
+    for (let i = 0; i < dropdowns.length; i++) {
+        dropdowns[i].addEventListener("click", function() {
+            var isActive = this.classList.contains("activex");
 
-      this.classList.add('active');
+            // Tüm dropdown butonlarından 'active' ve 'activex' sınıflarını kaldır ve içeriklerini gizle
+            for (let j = 0; j < dropdowns.length; j++) {
+                dropdowns[j].classList.remove("active", "activex");
+                var allDropdownContent = dropdowns[j].nextElementSibling;
+                if (allDropdownContent) {
+                    allDropdownContent.style.display = "none";
+                }
+            }
 
-      const selectedParam = this.getAttribute('href').split('=')[1];
-      localStorage.setItem('selectedLink', selectedParam);
-    });
-  });
-
-  // Sayfa yüklendiğinde seçili bağlantıyı geri yükleyin
-  window.addEventListener('load', function() {
-    const selectedParam = localStorage.getItem('selectedLink');
-    if (selectedParam) {
-      const selectedLink = document.querySelector(`.modul[href*="${selectedParam}"]`);
-
-      if (selectedLink) {
-        selectedLink.classList.add('active');
-      }
-    } else {
-      // localStorage'da seçili bağlantı yoksa, varsayılan olarak dashboard'u seç
-      const defaultLink = document.querySelector('.modul[href*="dashboard"]');
-      if (defaultLink) {
-        defaultLink.classList.add('active');
-        localStorage.setItem('selectedLink', 'dashboard');
-      }
+            // Eğer tıklanan buton aktif değilse, 'active' ve 'activex' sınıflarını ekle ve içeriğini göster
+            if (!isActive) {
+                this.classList.add("active", "activex");
+                var dropdownContent = this.nextElementSibling;
+                if (dropdownContent) {
+                    dropdownContent.style.display = "block";
+                }
+            }
+        });
     }
-  });
 
-  // Çıkış yapıldığında localStorage'daki seçili bağlantıyı temizle
-  function logout() {
+    // Nav linkleri için olay dinleyicisi
+    navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            // Tüm nav linklerinden 'active' sınıfını kaldır
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+            });
+
+            // Tıklanan linke 'active' sınıfını ekle
+            this.classList.add('active');
+
+            // Seçilen bağlantıyı localStorage'da sakla
+            const selectedParam = this.getAttribute('href').split('=')[1];
+            localStorage.setItem('selectedLink', selectedParam);
+        });
+    });
+
+    // Sayfa yüklendiğinde seçili bağlantıyı geri yükle
+    if (selectedParam) {
+        const selectedLink = document.querySelector(`.modul[href*="${selectedParam}"]`);
+        if (selectedLink) {
+            selectedLink.classList.add('active');
+        }
+        
+        // Aktif sınıfları ilgili butonlara ekle
+        const buttonMap = {
+            "Accounts": 'kullanici',
+            "Arsiv": 'kullanici',
+            "employee": 'personeller',
+            "employee-arsiv": 'personeller',
+            "income": 'finans',
+            "Surveys": 'iletisim',
+            "Phone": 'iletisim',
+            "Announcement": 'iletisim'
+        };
+
+        if (buttonMap[selectedParam]) {
+            const button = document.getElementById(buttonMap[selectedParam]);
+            if (button) {
+                button.classList.add('active');
+            }
+        }
+    } else {
+        // localStorage'da seçili bağlantı yoksa, varsayılan olarak dashboard'u seç
+        const defaultLink = document.querySelector('.modul[href*="dashboard"]');
+        if (defaultLink) {
+            defaultLink.classList.add('active');
+            localStorage.setItem('selectedLink', 'dashboard');
+        }
+    }
+});
+
+// Çıkış yapıldığında localStorage'daki seçili bağlantıyı temizle
+function logout() {
     localStorage.removeItem('selectedLink');
     // Burada gerektiğinde başka çıkış işlemleri de gerçekleştirebilirsiniz
-  }
+}
+
 </script>
+
+
 
 
   

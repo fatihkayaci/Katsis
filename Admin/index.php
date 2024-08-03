@@ -135,6 +135,9 @@ else if($indexx == 'profile'){
 }else if($indexx == 'Announcement'){
     include ("Announcement/index.php");
     echo "<script>pagename('Duyurular');</script>";
+    echo "<script>
+            localStorage.setItem('selectedLink', 'Announcement');
+         </script>";
 }else if($indexx == 'AnnouncementProperty'){
     include ("Announcement/announcementProperty.php");
     echo "<script>pagename('Duyuru Ayrıntıları');</script>";

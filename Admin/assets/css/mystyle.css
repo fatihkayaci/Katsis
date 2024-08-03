@@ -2533,7 +2533,6 @@ white-space: inherit;
   display: none;
   margin: 0 20px;
   border-radius: 0 0 8px 8px;
-  border: 1px solid #277CE0;
 }
 
 .dropdown-container a {
@@ -2566,6 +2565,19 @@ white-space: inherit;
 .dropdown-btn.activex {
   border-radius: 8px 8px 0 0;
   transition: 0.3s;
+}
+
+.dropdownUser {
+  border: 1px solid #34A853;
+}
+.dropdownEmployee {
+  border: 1px solid #FFA726;
+}
+.dropdownFinans {
+  border: 1px solid #FFD700;
+}
+.dropdownIletisim {
+  border: 1px solid #277CE0;
 }
 
 .nav-link .fa-angle-right {

@@ -22759,6 +22759,19 @@ html {
 }
 
 
+
+.userHover:hover {
+  background-color: #34A853 !important;
+}
+.empHover:hover {
+  background-color: #FFA726 !important;
+}
+.finansHover:hover {
+  background-color: #FFD700 !important;
+}
+
+
+
 .navbar-vertical.navbar-expand-xs .navbar-nav>.nav-item {
   margin-top: 0.125rem;
 }
@@ -22801,7 +22814,7 @@ html {
 }
 
 .new-radius-btm {
-  border-radius: 0px 0px 8px 8px !important;
+  border-radius: 0px 0px 6px 6px !important;
 }
 
 @media (min-width: 576px) {
