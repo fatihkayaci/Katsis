@@ -446,132 +446,111 @@ $idapartman =$_SESSION["apartID"];
   </script>
 
 <script>
-  // Dropdown butonları ve nav linkleri için ortak işlem
-document.addEventListener('DOMContentLoaded', function() {
-    var dropdowns = document.getElementsByClassName("dropdown-btn");
-    var navLinks = document.querySelectorAll('.modul');
-    var selectedParam = localStorage.getItem('selectedLink');
+  
+  document.addEventListener("DOMContentLoaded", function() {
+    const sidenav = document.querySelector(".sidenav");
+    const iconNavbarSidenav = document.getElementById("iconNavbarSidenav");
+    const iconSidenav = document.getElementById("iconSidenav");
 
-    // Dropdown butonları için olay dinleyicisi
-    for (let i = 0; i < dropdowns.length; i++) {
-        dropdowns[i].addEventListener("click", function() {
-            var isActive = this.classList.contains("activex");
-
-            // Tüm dropdown butonlarından 'active' ve 'activex' sınıflarını kaldır ve içeriklerini gizle
-            for (let j = 0; j < dropdowns.length; j++) {
-                dropdowns[j].classList.remove("active", "activex");
-                var allDropdownContent = dropdowns[j].nextElementSibling;
-                if (allDropdownContent) {
-                    allDropdownContent.style.display = "none";
-                }
-            }
-
-            // Eğer tıklanan buton aktif değilse, 'active' ve 'activex' sınıflarını ekle ve içeriğini göster
-            if (!isActive) {
-                this.classList.add("active", "activex");
-                var dropdownContent = this.nextElementSibling;
-                if (dropdownContent) {
-                    dropdownContent.style.display = "block";
-                }
-            }
-        });
-    }
-
-    // Nav linkleri için olay dinleyicisi
-    navLinks.forEach(link => {
-        link.addEventListener('click', function() {
-            // Tüm nav linklerinden 'active' sınıfını kaldır
-
-
-            // Tıklanan linke 'active' sınıfını ekle
-            this.classList.add('active');
-
-            // Seçilen bağlantıyı localStorage'da sakla
-            const selectedParam = this.getAttribute('href').split('=')[1];
-            localStorage.setItem('selectedLink', selectedParam);
-        });
+    iconNavbarSidenav.addEventListener("click", toggleSidenav);
+    iconSidenav.addEventListener("click", closeSidenav);
+    document.addEventListener("click", function(event) {
+        if (!sidenav.contains(event.target) && !iconNavbarSidenav.contains(event.target)) {
+            closeSidenav();
+        }
     });
 
-    // Sayfa yüklendiğinde seçili bağlantıyı geri yükle
-    if (selectedParam) {
-        const selectedLink = document.querySelector(`.modul[href*="${selectedParam}"]`);
-        if (selectedLink) {
-            selectedLink.classList.add('active');
-        }
-        
-        // Aktif sınıfları ilgili butonlara ekle
-        const buttonMap = {
-            "Accounts": 'kullanici',
-            "Arsiv": 'kullanici',
-            "employee": 'personeller',
-            "employee-arsiv": 'personeller',
-            "income": 'finans',
-            "Surveys": 'iletisim',
-            "Phone": 'iletisim',
-            "Announcement": 'iletisim'
-        };
+    function toggleSidenav() {
+        sidenav.classList.toggle("g-sidenav-show");
+        document.body.classList.toggle("g-sidenav-pinned", sidenav.classList.contains("g-sidenav-show"));
+    }
 
-        if (buttonMap[selectedParam]) {
-            const button = document.getElementById(buttonMap[selectedParam]);
-            if (button) {
-                button.classList.add('active');
-                button.classList.add('activex');
-            }
-        }
-    } else {
-        // localStorage'da seçili bağlantı yoksa, varsayılan olarak dashboard'u seç
-        const defaultLink = document.querySelector('.modul[href*="dashboard"]');
-        if (defaultLink) {
-            defaultLink.classList.add('active');
-            localStorage.setItem('selectedLink', 'dashboard');
-        }
+    function closeSidenav() {
+        sidenav.classList.remove("g-sidenav-show");
+        document.body.classList.remove("g-sidenav-pinned");
     }
 });
 
-// Çıkış yapıldığında localStorage'daki seçili bağlantıyı temizle
+document.addEventListener('DOMContentLoaded', function() {
+    const dropdowns = document.getElementsByClassName("dropdown-btn");
+    const navLinks = document.querySelectorAll('.modul');
+    const selectedParam = localStorage.getItem('selectedLink');
+
+    const buttonMap = {
+            "Accounts": 'kullanici', "Arsiv": 'kullanici', "employee": 'personeller',
+            "employee-arsiv": 'personeller', "income": 'finans', "Surveys": 'iletisim',
+            "Phone": 'iletisim', "Announcement": 'iletisim'
+        };
+
+    Array.from(dropdowns).forEach(dropdown => {
+        dropdown.addEventListener("click", function() {
+            const isActive = this.classList.toggle("activex");
+            this.classList.toggle("active", isActive);
+            if(!isActive){
+             
+              if (buttonMap[selectedParam] === this.id) {
+                this.classList.add('active');
+              } else {
+                this.classList.remove('active');
+              }
+
+              
+            }
+            
+            this.nextElementSibling.style.display = isActive ? "block" : "none";
+        });
+    });
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            
+            localStorage.setItem('selectedLink', this.getAttribute('href').split('=')[1]);
+        });
+    });
+
+    if (selectedParam) {
+        const selectedLink = document.querySelector(`.modul[href*="${selectedParam}"]`);
+        selectedLink && selectedLink.classList.add('active');
+
+       
+        const button = document.getElementById(buttonMap[selectedParam]);
+        button && button.classList.add('active', 'activex');
+        button.nextElementSibling.style.display="block";
+    } else {
+        const defaultLink = document.querySelector('.modul[href*="dashboard"]');
+        defaultLink && defaultLink.classList.add('active');
+        localStorage.setItem('selectedLink', 'dashboard');
+    }
+});
+
 function logout() {
     localStorage.removeItem('selectedLink');
-    // Burada gerektiğinde başka çıkış işlemleri de gerçekleştirebilirsiniz
 }
 
-</script>
-
-
-
-
-  
-  <script>
-
-  document.addEventListener('DOMContentLoaded', function () {
-    var headerIco = document.querySelector('.header-ico');
-    var toggleIcon = headerIco.querySelector('.toggle-icon');
-    var headerIco1 = document.querySelector('.header-ico1');
-    var toggleIcon1 = headerIco.querySelector('.toggle-icon1');
-    var btnRotate = document.querySelector('#btn-rotate');
+document.addEventListener('DOMContentLoaded', function () {
+    const headerIco = document.querySelector('.header-ico');
+    const headerIco1 = document.querySelector('.header-ico1');
+    const btnRotate = document.querySelector('#btn-rotate');
 
     headerIco.addEventListener('click', function (event) {
-      event.stopPropagation(); // Header içinde tıklamalarda sadece bu fonksiyon çalışsın
-      headerIco.classList.toggle('active');
-      btnRotate.classList.toggle('rotate1');
+        event.stopPropagation();
+        headerIco.classList.toggle('active');
+        btnRotate.classList.toggle('rotate1');
     });
 
     headerIco1.addEventListener('click', function (event) {
-      event.stopPropagation(); // Header içinde tıklamalarda sadece bu fonksiyon çalışsın
-      headerIco1.classList.toggle('active');
+        event.stopPropagation();
+        headerIco1.classList.toggle('active');
     });
 
-    // Document düzeyinde tıklamaları dinle
     document.addEventListener('click', function (event) {
-      var isClickInsideHeader = headerIco.contains(event.target);
-      var isClickInsideHeader = headerIco1.contains(event.target);
-      if (!isClickInsideHeader) {
-        headerIco.classList.remove('active');
-        headerIco1.classList.remove('active');
-        btnRotate.classList.remove('rotate1');
-      }
+        if (!headerIco.contains(event.target)) {
+            btnRotate.classList.remove('rotate1');
+        }
+        if (!headerIco1.contains(event.target)) {
+        }
     });
-  });
-
+});
 
 
   </script>
