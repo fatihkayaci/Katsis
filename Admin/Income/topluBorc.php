@@ -1208,17 +1208,57 @@ function topluBorc(){
     var sonOdemeTarihi = document.getElementById('datepicker2').dataset.userId;
     
     var tekrarTarihi = document.getElementById('datepickerSecim').dataset.userId;
+    // istisna daire idleri
+    let getCheckValue = getCheckedValues();
+
+
+   if(!checkbox){
+    
 
 
 
+    $.ajax({
+            url: 'Controller/maliye_kayit.php',
+            type: 'POST',
+            data: {
+                daireId: daireId,
+                userId: userId,
+                apartmanId: apartmanId,
+                gelir_turu: gelir_turu,
+                aciklamaValue: aciklamaValue,
+                borcTutarValue: borcTutarValue,
+                dateInputValue: dateInputValue,
+                dateInput2Value: dateInput2Value,
+                kategoriValue: kategoriValue,
 
-   getCheckedValues();
+            },
+            success: function(response) {
+                alert(response);
+
+
+            },
+            error: function(xhr, status, error) {
+                var errorMessage = xhr.status + ': ' + xhr.statusText;
+                alert('Hata alındı: ' + errorMessage);
+            }
+        });
+   }
     
     
 
 } 
+
+
+
+
+
+
+
+
+
+
+
 function getCheckedValues() {
-    console.log("hcdjg");
     let checkedValues = [];
     // Get all checkboxes with class 'check1'
     let checkboxes = document.querySelectorAll('.check1');
@@ -1228,8 +1268,7 @@ function getCheckedValues() {
         // Check if the checkbox is checked
         if (checkbox.checked) {
             // Add the data-userid value to the array
-            checkedValues.push();
-            console.log(checkbox.getAttribute('data-userid'));
+            checkedValues.push(checkbox.getAttribute('data-userid'));
         }
     });
     
