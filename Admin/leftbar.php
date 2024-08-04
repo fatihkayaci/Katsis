@@ -481,9 +481,7 @@ document.addEventListener('DOMContentLoaded', function() {
     navLinks.forEach(link => {
         link.addEventListener('click', function() {
             // Tüm nav linklerinden 'active' sınıfını kaldır
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-            });
+
 
             // Tıklanan linke 'active' sınıfını ekle
             this.classList.add('active');
@@ -517,6 +515,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const button = document.getElementById(buttonMap[selectedParam]);
             if (button) {
                 button.classList.add('active');
+                button.classList.add('activex');
             }
         }
     } else {
