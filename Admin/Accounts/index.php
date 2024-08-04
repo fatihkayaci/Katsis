@@ -1,7 +1,6 @@
 <?php
 require_once 'Controller/class.func.php';
 $userPass = randomPassword();
-$hashedPassword = base64_encode($userPass);
 
 $optionsBlok = [];
 $optionsDurum = '';
@@ -43,6 +42,13 @@ try {
         .hidden {
             display: none;
         }
+        .input::placeholder {
+            color: transparent;
+        }
+
+        .input:focus::placeholder {
+            color: #999; /* İstediğiniz renk burada olabilir */
+        }
     </style>
     <div class="cener-table">
 
@@ -67,8 +73,7 @@ try {
             </div>
 
             <div class="input-group1">
-                <button class="topluGuncelle btn-custom-outline bcoc3" id="guncelleButton"
-                    style="display: none;">Güncelle</button>
+                <button class="topluGuncelle btn-custom-outline bcoc3" id="guncelleButton" style="display: none;">Güncelle</button>
                 <button class="topluSil btn-custom-outline bcoc4" id="silButton" style="display: none;">Sil</button>
 
 
@@ -128,16 +133,14 @@ try {
                             </label>
                         </td>
                         <td data-title="Ad Soyad" class="table_tt table_td" contenteditable="false">
-
-                            <?php echo $row["userName"]; ?>
+                            <input class="edit-input" id="adSoyad" type="text" value="<?php echo $row["userName"]; ?>">
                         </td>
-                        <td data-title="TC" class="table_tt table_td tc"  contenteditable="false" oninput="validateTC(this)">
-
-                            <?php echo $row["tc"]; ?>
+                        <td data-title="TC" class="table_tt table_td tc" contenteditable="false">
+                            <input class="edit-input" id="tcNo" type="text" value="<?php echo $row["tc"]; ?>" oninput="validateTC(this)">
                         </td>
 
-                        <td data-title="Telefon Numarası" class="table_tt table_td phoneNumberTable" contenteditable="false" oninput="validatePhoneNumber(this)">
-                            <?php echo $row["phoneNumber"]; ?>
+                        <td data-title="Telefon Numarası" class="table_tt table_td phoneNumberTable" contenteditable="false">
+                            <input class="edit-input" id="numara" type="text" value="<?php echo $row["phoneNumber"]; ?>" oninput="validatePhoneNumber(this)">
                         </td>
 
                         <td data-title="Blok Adi" class="table_tt table_td">
@@ -231,7 +234,9 @@ try {
 
     <form class="login-form userInpClr" id="userForm">
 
-        <h2 class="form-signin-heading">Kullanıcı Ekleme</h2>
+        <h2 class="form-signin-heading mb-3">Kullanıcı Ekleme</h2>
+
+        <hr class="horizontal dark mt-0 w-100">
 
         <div class="row mb-1">
             <div class="col-md-6 col-btn">
@@ -246,7 +251,7 @@ try {
                 <label for="tc">T.C. Kimlik No :</label>
             </div>
             <div class="col-md-6 col">
-                <input class="input tel" type="number" name="phoneNumber" required="">
+                <input class="input tel" type="number" name="phoneNumber"  placeholder="555 555 55 55" required="">
                 <label for="phoneNumber">Telefon Numarası :</label>
             </div>
         </div>
@@ -259,7 +264,7 @@ try {
 
             <div class="col-md-6 col margint">
                 <input class="input" type="text" name="plate" required="">
-                <label for="plate">Araç Plakası</label>
+                <label for="plate">Araç Plakası : </label>
             </div>
         </div>
 
@@ -270,24 +275,23 @@ try {
                         <div class="group">
                             <input class="search-selectx input" data-user-id="" type="text" list="Users" id="gender"
                                 required="" />
-                            <label class="selectx-label" for="gender">Cinsiyet: </label>
+                            <label class="selectx-label" for="gender">Cinsiyet : </label>
                         </div>
 
                         <div class="dropdown-content-nereden searchInput-btn" id="genderDp">
                             <div class="dropdown-content-inside-nereden userPopup">
-                                <input type="text" id="searchInput3" placeholder="Ara...">
-                                <button>Erkek</button>
-                                <button>Kadın</button>
+                                <input type="hidden" id="searchInput3" placeholder="Ara...">
+                                <button data-user-id="Erkek" name="gender" class="genderButton">Erkek</button>
+                                <button data-user-id="Kadin" name="gender" class="genderButton">Kadın</button>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
             <div class="col-md-6 col margint">
-                <input class="input" type="text" id="hashedPassword" name="password" value="<?= $hashedPassword ?>"
+                <input class="input" type="text" id="userPass" name="password" value="<?= $userPass ?>"
                     required="">
-                <label for="sifre">Şifre</label>
+                <label for="sifre">Şifre :</label>
             </div>
         </div>
         
@@ -311,12 +315,12 @@ try {
 
         <div class="additional-fields hidden">
             <div class="row">
-                <div class="col-md-6 col margint">
+                <div class="col-md-6 col mt-4 margint">
                     <input class="input" type="text" name="openingBalance" required="">
                     <label for="openingBalance">Açılış Bakiyesi</label>
                 </div>
 
-                <div class="col-md-6 col margint">
+                <div class="col-md-6 col mt-4 margint">
                     <div class="select-div m-0">
                         <div class="dropdown-nereden">
                             <div class="group">
@@ -327,9 +331,9 @@ try {
 
                             <div class="dropdown-content-nereden searchInput-btn" id="odemeDurumuDP">
                                 <div class="dropdown-content-inside-nereden userPopup">
-                                    <input type="text" id="odemeSearch" placeholder="Ara...">
-                                    <button>Borç</button>
-                                    <button>Alacak</button>
+                                    <input type="hidden" id="odemeSearch" placeholder="Ara...">
+                                    <button data-odeme-durumu="Borç" name="odemeDurumu" class="odemeButton">Borç</button>
+                                    <button data-odeme-durumu="Alacak" name="odemeDurumu" class="odemeButton">Alacak</button>
                                 </div>
                             </div>
 
@@ -340,7 +344,8 @@ try {
 
             <div class="row">
                 <div class="col-md-6 col-btn margint">
-                    <input class="input" type="date" name="promise" required="">
+                    <input class="input" data-user-id="" id="datepickerAcilis" name="promise" type="text" required="">
+                    <label for="datepickerAcilis">Ekleme Tarihi</label>
                 </div>
             </div>
         </div>
@@ -363,7 +368,7 @@ try {
 
         <div class="row row-btn">
             <button type="button" class="btn-custom-close" onclick="closePopup()">Kapat</button>
-            <button type="button" class="btn-custom bcoc1" onclick="saveUser()" id="saveButton">Kaydet</button>
+            <button type="button" class="btn-custom bcoc1" id="saveButton">Kaydet</button>
         </div>
 
 
@@ -374,7 +379,7 @@ try {
 
     <form class="login-form-toplu" id="userForm2" action="">
 
-        <h2 class="form-signin-heading">oluşturma şeklini seçiniz!</h2>
+        <h2 class="form-signin-heading">Oluşturma Şeklini Seçiniz!</h2>
 
         <div class="row">
             <div class="col-md-12 col-btn mb-0">
@@ -475,25 +480,24 @@ foreach ($optionsBlok as $bloks) {
 </div>
 <script>
 function validateTC(element) {
-    let tc = element.innerText;
+    let tc = element.value;
 
     // Sadece sayılara izin ver ve uzunluğu 11 karakterle sınırla
     if (!/^\d*$/.test(tc) || tc.length > 11) {
-        element.innerText = tc.slice(0, 11).replace(/\D/g, '');
+        element.value = tc.slice(0, 11).replace(/\D/g, '');
         alert("TC numarası sadece sayılardan oluşmalı ve 11 karakter uzunluğunda olmalıdır.");
     }
 }
 
 function validatePhoneNumber(element) {
-    let phoneNumber = element.innerText;
+    let phoneNumber = element.value;
 
     // Sadece sayılara izin ver ve uzunluğu 10 karakterle sınırla
     if (!/^\d*$/.test(phoneNumber) || phoneNumber.length > 10) {
-        element.innerText = phoneNumber.slice(0, 10).replace(/\D/g, '');
+        element.value = phoneNumber.slice(0, 10).replace(/\D/g, '');
         alert("Telefon numarası sadece sayılardan oluşmalı ve 10 karakter uzunluğunda olmalıdır.");
     }
 }
-
     window.onload = function () {
         var tcInput = document.getElementsByName('tc')[0];
         var phoneInput = document.getElementsByName('phoneNumber')[0];
@@ -559,7 +563,7 @@ function validatePhoneNumber(element) {
             return {
                 userName: user.userName,
                 tc: user.tc,
-                phoneNumber: user.phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3'), // Telefon numarası düzenleme
+                phoneNumber: user.phoneNumber ? user.phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3') : '', // Telefon numarası düzenleme
                 blokDaire: user.blok_adi + " / " + user.daire_sayisi, // Blok ve daire sayısını birleştirme
                 durum: user.durum
             };
@@ -766,9 +770,10 @@ function validatePhoneNumber(element) {
 
     rows.forEach(function (row) {
         var userID = row.getAttribute('data-userid');
-        var userName = row.querySelector('.table_tt.table_td').textContent;
-        var tc = row.querySelector('.tc').textContent;
-        var phoneNumber = row.querySelector('.phoneNumberTable').textContent;
+        var userName = row.querySelector('td[data-title="Ad Soyad"] input').value;
+        var tc = row.querySelector('td[data-title="TC"] input').value;
+        var phoneNumber = row.querySelector('td[data-title="Telefon Numarası"] input').value;
+        
         if (userIdArray[userID]) {
             // Tekrarlanan bir kullanıcı kimliği bulunduğunda tüm satırı gizle
             document.querySelectorAll('[id^="tr-' + userID + '"]').forEach(function (item) {
@@ -784,21 +789,36 @@ function validatePhoneNumber(element) {
                 var newCell3 = document.createElement('td');
                 var newCell4 = document.createElement('td');
                 var newCell5 = document.createElement('td');
+                var newCell6 = document.createElement('td');
 
                 var newTextCell = document.createElement('td'); // Yeni metin hücresi oluştur
                 newTextCell.textContent = "Birden Fazla Daire"; // Metin içeriğini ayarla
-
                 newRow.classList.add('git-ac');
                 newRow.setAttribute('data-userid', userID);
+
                 newCell3.colSpan = "1"; // Üçüncü hücre 1 sütunu kaplasın
                 newCell1.colSpan = "1"; // İlk hücre 1 sütunu kaplasın
                 newCell2.colSpan = "1"; // İkinci hücre 2 sütunu kaplasın
                 newCell4.colSpan = "1"; // Dördüncü hücre 1 sütunu kaplasın
                 newCell5.colSpan = "1"; // Dördüncü hücre 1 sütunu kaplasın
+                newCell6.colSpan = "1"; // Dördüncü hücre 1 sütunu kaplasın
 
-                newCell1.textContent = userName; // İlk hücreye userName değerini ekle
-                newCell2.textContent = tc;
-                newCell4.textContent = phoneNumber;
+                var userNameInput = document.createElement('input');
+                userNameInput.type = 'text';
+                userNameInput.value = userName;
+                userNameInput.className = 'edit-input';
+
+                var TCInput =  document.createElement('input');
+                TCInput.type = 'text';
+                TCInput.value = tc;
+                TCInput.className = 'edit-input';
+                TCInput.setAttribute('oninput', 'validateTC(this)'); // oninput özelliğini ekle
+
+                var phoneNumberInput =  document.createElement('input');
+                phoneNumberInput.type = 'text';
+                phoneNumberInput.value = phoneNumber;
+                phoneNumberInput.className = 'edit-input';
+                phoneNumberInput.setAttribute('oninput', 'validatePhoneNumber(this)'); // oninput özelliğini ekle
                 
                 newCell2.setAttribute('oninput', 'validateTC(this)');
                 newCell4.setAttribute('oninput', 'validatePhoneNumber(this)');
@@ -807,11 +827,16 @@ function validatePhoneNumber(element) {
                 newCell4.setAttribute('contenteditable', 'false');
                 newCell3.innerHTML = "<i class='fa-solid fa-turn-up tumu-btn'></i>";
 
+                newCell1.appendChild(userNameInput);
+                newCell2.appendChild(TCInput);
+                newCell4.appendChild(phoneNumberInput);
+
                 newRow.appendChild(newCell3);
                 newRow.appendChild(newCell1); // Yeni hücreleri yeni satıra ekle
                 newRow.appendChild(newCell2);
                 newRow.appendChild(newCell4);
                 newRow.appendChild(newTextCell);
+                newRow.appendChild(newCell6);
 
                 // Yeni satırı ekleyeceğimiz referans satırı bul
                 var referenceRow = document.querySelector('[data-userid="' + userID + '"]');
@@ -862,7 +887,6 @@ function validatePhoneNumber(element) {
         
         selectedValuesArray.push(selectedValue);
         selectedDurumArray.push(selectedDurum);
-
         // Yeni bir ana div oluştur
         var newContainer = document.createElement('div');
         newContainer.className = 'daire-container';
@@ -871,7 +895,6 @@ function validatePhoneNumber(element) {
         var newDaire = document.createElement('div');
         newDaire.className = 'daire';
         newDaire.innerHTML = selectedValue;
-
         //durum için div oluşturuldu.
         var newDurum = document.createElement('div');
         newDurum.className = 'durum';
@@ -1065,9 +1088,9 @@ function validatePhoneNumber(element) {
             var rows = document.querySelectorAll('#example tbody tr.git-ac:not(.none)');
             rows.forEach(function (row) {
                 var userID = row.getAttribute('data-userid');
-                var userName = row.querySelector('td:nth-child(2)').textContent.trim();
-                var tc = row.querySelector('td:nth-child(3)').textContent.trim();
-                var phoneNumber = row.querySelector('td:nth-child(4)').textContent.trim();
+                var userName = row.querySelector('td:nth-child(2) input').value.trim();
+                var tc = row.querySelector('td:nth-child(3) input').value.trim();
+                var phoneNumber = row.querySelector('td:nth-child(4) input').value.trim();
                 $.ajax({
                     url: 'Controller/Accounts/update_user.php',
                     type: 'POST',
@@ -1161,10 +1184,9 @@ function validatePhoneNumber(element) {
 
     // Verileri saklamak için boş bir dizi oluştur
     const rowData = [];
-
     // Her bir satırı dolaşarak verileri al
     tableRows.forEach(row => {
-        const blockName = row.querySelector('td:nth-child(4)').textContent.trim(); // Blok Adı
+        const blockName = row.querySelector('td:nth-child(5)').textContent.trim(); // Blok Adı
         let block = '';
         let flatCount = '';
         let status = '';
@@ -1176,12 +1198,12 @@ function validatePhoneNumber(element) {
         }
 
         // Durumu uygun şekilde alabiliyorsanız işlem yap
-        const statusElement = row.querySelector('td:nth-child(5) .main-durum');
+        const statusElement = row.querySelector('td:nth-child(6) .main-durum');
         if (statusElement) {
             status = statusElement.textContent.trim();
-            if (status === "Kat Maliki") {
-                status = "katmaliki";
-            } else if (status === "kiraci") {
+            if (status === "kat Maliki") {
+                status = "Kat Maliki";
+            } else if (status === "kiracı") {
                 status = "kiraci";
             }
         }
@@ -1193,138 +1215,163 @@ function validatePhoneNumber(element) {
             status: status
         });
 
+        // console.log(JSON.stringify(rowData, null, 2));
     });
 
     var demo = 0;
-
+    
     //bakılacak
     //var saveButton = document.getElementById('saveButton');
-    function saveUser() {
-    // Form alanlarını topla
-    var userName = $('input[name="userName"]').val();
-    var tc = $('input[name="tc"]').val();
-    var phoneNumber = $('input[name="phoneNumber"]').val();
-    var userEmail = $('input[name="userEmail"]').val() || null;
-    var plate = $('input[name="plate"]').val();
-    var gender = $('input#userInput').val();
-    var apartman_id = $('input[name="apartman_id"]').val();
-    var password = $('#hashedPassword').val();
-    var openingBalance = $('input[name="openingBalance"]').val() || null;
-    var balanceType = $('select[name="balanceType"]').val() || null;
-    var promise = $('input[name="promise"]').val() || null;
-    
-    // Blok ve durum dizilerini tanımla
-    var blokArray = [];
-    var durumArray = [];
-    var isConflict = false;
+    $(document).ready(function() {
+        var selectedGender = null;
+        var selectedOdemeDurumu = null;
 
-    // Şifre kontrolleri
-    if (!password) {
-        alert("Şifre kısmı boş bırakılamaz");
-        return;
-    } else if (password.length < 6) {
-        alert("Şifre kısmı 6 karakterden az olamaz.");
-        return;
-    }
+        $('.genderButton').click(function() {
+            selectedGender = $(this).data('user-id');
+            console.log("Selected gender: " + selectedGender);
+        });
+        $('.odemeButton').click(function() {
+            selectedOdemeDurumu = $(this).data('odeme-durumu');
+            console.log("Selected ödeme durumu: " + selectedOdemeDurumu);
+        });
+    $('#saveButton').click(function() {
+        // Form verilerini topla
+        var formData = {
+            userName: $('input[name="userName"]').val(),
+            tc: $('input[name="tc"]').val(),
+            phoneNumber: $('input[name="phoneNumber"]').val(),
+            userEmail: $('input[name="userEmail"]').val() || null,
+            plate: $('input[name="plate"]').val(),
+            gender: selectedGender,
+            password: $('#userPass').val(),
+            openingBalance: $('input[name="openingBalance"]').val() || null,
+            balanceStatus: selectedOdemeDurumu,
+            promise: $('input[name="promise"]').val(),
+            blokArray: getBlockArray(), // Blok dizisini al
+            durumArray: getDurumArray() // Durum dizisini al
+        };
+        // console.log("Form Verileri:");
+        // console.log("User Name:", formData.userName);
+        // console.log("TC:", formData.tc);
+        // console.log("Phone Number:", formData.phoneNumber);
+        // console.log("User Email:", formData.userEmail);
+        // console.log("Plate:", formData.plate);
+        // console.log("Gender:", formData.gender);
+        // console.log("Password:", formData.password);
+        // console.log("Opening Balance:", formData.openingBalance);
+        // console.log("Balance Status:", formData.balanceStatus);
+        // console.log("Promise:", formData.promise);
+        console.log("Block Array:", formData.blokArray);
+        // console.log("Durum Array:", formData.durumArray);
 
-    // Durum dizisini doldur
-    selectedDurumArray.forEach(function(durum) {
-        durum.split(',').forEach(function(d) {
-            durumArray.push(d);
+        // Şifre kontrolleri
+        if (!formData.password) {
+            alert("Şifre kısmı boş bırakılamaz");
+            return;
+        } else if (formData.password.length < 6) {
+            alert("Şifre kısmı 6 karakterden az olamaz.");
+            return;
+        }
+
+        // Çakışma kontrolü ve işlemler
+        checkConflict(formData, function(isConflict, lastBlock, lastFlotCount, lastDurum) {
+            if (isConflict) {
+                if (confirm(`Çakışma durumu bulundu: Blok ismi: ${lastBlock}, Daire sayısı: ${lastFlotCount}, Durum: ${lastDurum}. Bu dairede oturan kullanıcıyı silmek ister misiniz?`)) {
+                    if (kisitlamalar(formData.userName /* tc, phoneNumber, userEmail, plate */)) {
+                        saveUserData(formData);
+                        arsiveUser();
+                    }
+                }
+            } else {
+                if (kisitlamalar(formData.userName /* tc, phoneNumber, userEmail, plate */)) {
+                    saveUserData(formData);
+                }
+            }
         });
     });
 
-    // Blok dizisini doldur
+    function getBlockArray() {
+    // Blok dizisini oluştur
+    var blokArray = [];
     selectedValuesArray.forEach(function(element) {
+        // "blok" kelimesini bul ve öncesindeki kısmı al
+        var blokIndex = element.toLowerCase().indexOf("blok");
+        var letterPart = blokIndex > -1 ? element.substring(0, blokIndex).trim() : '';
+        
+        // Sayı kısmını ayır
         var match = element.match(/\d+/);
-        var letterPart = element.charAt(0);
         var numberPart = match ? match[0] : null;
-
-        console.log(`Element: ${element}, Letter: ${letterPart}, Number: ${numberPart}`);
-
+        
         blokArray.push({ letter: letterPart, number: numberPart });
     });
-    // Çakışma kontrolü
-    rowData.forEach(function(row) {
-        var block = row.block;
-        var flatCount = row.flatCount;
-        var status = row.status;
-
-        blokArray.forEach(function(blokElement) {
-            if (block === blokElement.letter && flatCount === blokElement.number) {
-                durumArray.forEach(function(durum) {
-                    if (status === durum) {
-                        isConflict = true;
-                    }
-                });
-            }
-        });
-    });
-
-    // Çakışma durumu varsa uyarı ver ve işlem yap
-    if (isConflict) {
-        alert(`Çakışma durumu bulundu: Blok ismi: ${block}, Daire sayısı: ${flatCount}, Durum: ${status}`);
-        if (confirm(`Çakışma durumu bulundu: Blok ismi: ${block}, Daire sayısı: ${flatCount}, Durum: ${status}. Bu dairede oturan kullanıcıyı silmek ister misiniz?`)) {
-            if (kisitlamalar(userName /* tc, phoneNumber, userEmail, plate*/)) {
-                demo = 1;
-                saveUserData(userName, tc, phoneNumber, durumArray, userEmail, plate, gender, password, apartman_id, blokArray, openingBalance, balanceType, promise);
-            }
-        }
-    } else {
-        if (kisitlamalar(userName /* tc, phoneNumber, userEmail, plate*/)) {
-            saveUserData(userName, tc, phoneNumber, durumArray, userEmail, plate, gender, password, apartman_id, blokArray, openingBalance, balanceType, promise);
-        }
-    }
+    return blokArray;
 }
-    function saveUserData(userName, tc, phoneNumber, durumArray, userEmail, plate, gender, password, apartman_id, blokArray, openingBalance, balanceType, promise) {
+
+
+    function getDurumArray() {
+        // Durum dizisini oluştur
+        var durumArray = [];
+        selectedDurumArray.forEach(function(durum) {
+            durum.split(',').forEach(function(d) {
+                durumArray.push(d);
+            });
+        });
+        return durumArray;
+    }
+
+    function checkConflict(formData, callback) {
+        var isConflict = false;
+        var lastBlock, lastFlotCount, lastDurum;
+        
+        rowData.forEach(function(row) {
+            var block = row.block;
+            var flatCount = row.flatCount;
+            var status = row.status;
+
+            formData.blokArray.forEach(function(blokElement) {
+                if (block === blokElement.letter && flatCount === blokElement.number) {
+                    lastBlock = blokElement.letter;
+                    lastFlotCount = blokElement.number;
+                    formData.durumArray.forEach(function(durum) {
+                        lastDurum = durum;
+                        if (status === durum) {
+                            isConflict = true;
+                        }
+                    });
+                }
+            });
+        });
+        
+        callback(isConflict, lastBlock, lastFlotCount, lastDurum);
+    }
+    function saveUserData(formData) {
         $.ajax({
             url: 'Controller/Accounts/save_user.php',
             type: 'POST',
             data: {
-                userName: userName,
-                tc: tc,
-                phoneNumber: phoneNumber,
-                durumArray: JSON.stringify(durumArray),
-                userEmail: userEmail,
-                plate: plate,
-                gender: gender,
-                password: password,
-                apartman_id: apartman_id,
-                openingBalance: openingBalance,
-                balanceType: balanceType,
-                promise: promise
+                userName: formData.userName,
+                tc: formData.tc,
+                phoneNumber: formData.phoneNumber,
+                userEmail: formData.userEmail,
+                gender: formData.gender,
+                plate:formData.plate,
+                password: formData.password,
+                openingBalance: formData.openingBalance,
+                balanceStatus: formData.balanceStatus,
+                promise: formData.promise,
+                blokArray: JSON.stringify(formData.blokArray),
+                durumArray: JSON.stringify(formData.durumArray)
             },
-            success: function (response) {
-                
-                sendData(blokArray, durumArray);
+            success: function(response) {
+                alert("Kullanıcı ve daire bilgileri başarıyla güncellendi.");
+                location.reload();
             },
-            error: function (error) {
-                console.error(error);
+            error: function(error) {
+                console.error("AJAX hatası: ", error);
             }
         });
     }
-
-    function sendData(blokArray, durumArray) {
-        $.ajax({
-            url: 'Controller/Accounts/demo.php',
-            type: 'POST',
-            data: {
-                blokArray: JSON.stringify(blokArray),
-                durumArray: JSON.stringify(durumArray)
-            },
-            success: function (secondResponse) {
-                alert("attt");
-                if (demo == 1) {
-                    arsiveUser();
-                } else {
-                    location.reload();
-                }
-            },
-            error: function (secondError) {
-                console.error(secondError);
-            }
-        });
-    }
+});
 
     function arsiveUser() {
         demo = 0;
@@ -1344,92 +1391,84 @@ function validatePhoneNumber(element) {
 
     var checkEdit = true;
     // Checkbox durumuna göre düzenleme fonksiyonlarını etkinleştirme veya devre dışı bırakma
-    document.getElementById("editToggle").addEventListener("change", function () {
-        if (this.checked) {
-            openEdit();
-            disableDemoFunction();
-            checkEdit = false;
-            // Checkbox işaretlendiğinde 2. ve 3. sütunlara "color-new" class'ını ekle
-            var trElements = document.querySelectorAll('.git-ac');
-            $('#guncelleButton').css('display', 'inline-block');
-            trElements.forEach(function (trElement) {
-                var tdElements = trElement.querySelectorAll('td:nth-child(3), td:nth-child(4), td:nth-child(2)');
-                tdElements.forEach(function (tdElement) {
-                    tdElement.classList.add('color-new');
-                });
-            });
-        } else {
-            closeEdit();
-            enableDemoFunction();
-            checkEdit = true;
-            // Checkbox işaretlenmediğinde 2. ve 3. sütunlardan "color-new" class'ını kaldır
-            var trElements = document.querySelectorAll('.git-ac');
-            $('#guncelleButton').css('display', 'none');
-            trElements.forEach(function (trElement) {
-                var tdElements = trElement.querySelectorAll('td:nth-child(3), td:nth-child(4), td:nth-child(2)');
-                tdElements.forEach(function (tdElement) {
-                    tdElement.classList.remove('color-new');
-                });
-            });
-        }
-    });
-    var initiallyVisibleRows = "";
-    document.addEventListener("DOMContentLoaded", function () {
-        initiallyVisibleRows = document.querySelectorAll('.git-ac:not([style*="display: none"])');
+
+    /* Yeni Düzenleme Alanı (Ben ekledim fatih ama problemler olabilir) (ben == yusuf) */
+    document.addEventListener('DOMContentLoaded', () => {
+        const editToggle = document.getElementById('editToggle');
+        
+        // editToggle checkbox'ının durumunu kontrol et ve uygun fonksiyonu çağır
+        editToggle.addEventListener('change', () => {
+            if (editToggle.checked) {
+                checkEdit = false;
+                okuma();
+            } else {
+                iptal();
+            }
+        });
     });
 
-    function openEdit() {
-        initiallyVisibleRows.forEach(function (row) {
-            var editableCells = row.querySelectorAll('td[contenteditable="false"]');
-            editableCells.forEach(function (cell) {
-                cell.setAttribute('contenteditable', 'true');
+    function okuma() {
+    // Tüm .edit-input öğelerine "active" sınıfını ekle
+    const allRows = document.querySelectorAll('.users-table tbody tr');
+    const processedUserIDs = new Set();
+
+    allRows.forEach(row => {
+        const userID = row.getAttribute('data-userid');
+
+        if (!processedUserIDs.has(userID)) {
+            // İlk kez karşılaşılan userID, sadece bu satırın .edit-input öğelerine sınıf ekle
+            const elements = row.querySelectorAll('.edit-input');
+            elements.forEach(element => {
+                element.classList.add('activeEdit');
             });
-        });
-    }
-
-
-    function closeEdit() {
-        var editableCells = document.querySelectorAll('td[contenteditable="true"]');
-        editableCells.forEach(function (cell) {
-            cell.setAttribute('contenteditable', 'false');
-        });
-    }
-
-    function disableDemoFunction() {
-
-
-        var tableTds = document.getElementsByClassName("table_tt");
-        for (var i = 0; i < tableTds.length; i++) {
-            tableTds[i].classList.remove("table_td");
+            processedUserIDs.add(userID);
         }
-    }
+    });
 
-    function enableDemoFunction() {
-        /*  var rows = document.querySelectorAll('.git-ac');
-          rows.forEach(function(row) {
-              row.addEventListener('click', handleClick);
-          });*/
+    // Tüm tablo satırlarına "active" sınıfını ekle 
+    allRows.forEach(row => {
+        row.classList.add('activeEdit');
+    });
 
-        var tableTds = document.getElementsByClassName("table_tt");
-        for (var i = 0; i < tableTds.length; i++) {
-            tableTds[i].classList.add("table_td");
-        }
+    // .table_td sınıfındaki tüm öğelere cursor: inline ekle
+    const tableTdElements = document.querySelectorAll('.table_td');
+    tableTdElements.forEach(element => {
+        element.style.cursor = 'inherit';
+    });
 
-    }
-    /*
-    function handleClick(event) {
-        var isCheckboxClicked = event.target.tagName === 'INPUT' && event.target.getAttribute('type') === 'checkbox';
-    
-        if (isCheckboxClicked) {
-            event.stopPropagation();
-            return;
-        }
-    
-        var userID = this.getAttribute('data-userid');
-        window.location.href = 'index.php?parametre=custom&userID=' + encodeURIComponent(userID);
-    }  */
+    // Butonu görünür yap
+    const guncelleButton = document.getElementById('guncelleButton');
+    guncelleButton.style.display = 'block';
+}
 
-    enableDemoFunction();
+function iptal() {
+    // .edit-input öğelerini seç ve "activeEdit" sınıfını kaldır
+    const elements = document.querySelectorAll('.edit-input');
+    elements.forEach(element => {
+        element.classList.remove('activeEdit');
+    });
+
+    // Tüm tablo satırlarından "activeEdit" sınıfını kaldır
+    const allRows = document.querySelectorAll('.users-table tbody tr');
+    allRows.forEach(row => {
+        row.classList.remove('activeEdit');
+    });
+
+    // .table_td sınıfındaki tüm öğelere cursor: pointer ekle
+    const tableTdElements = document.querySelectorAll('.table_td');
+    tableTdElements.forEach(element => {
+        element.style.cursor = 'pointer';
+    });
+
+    // Butonu görünmez yap
+    const guncelleButton = document.getElementById('guncelleButton');
+    guncelleButton.style.display = 'none';
+
+    location.reload();
+}
+
+
+/* ======================================================== */
 
 
 
@@ -1494,7 +1533,6 @@ function validatePhoneNumber(element) {
                     d: d,
                 },
                 success: function (response) {
-
                     if (response && checkEdit) {
                         window.location.href = "index.php?parametre=custom";
                     }
@@ -1530,3 +1568,66 @@ function validatePhoneNumber(element) {
     dropDownn('daireGrup', 'daireGrupDP', 'daireSearchInput');  
     dropDownn('durum', 'durumDP', 'durumSearch');  
 </script>
+
+<!-- secme Tarihi -->
+<script src="assets/js/mycode/moment.min.js"></script>
+    <script src="assets/js/mycode/moment.js"></script>
+    <script src="assets/js/mycode/lightpick.js"></script>
+
+<script>
+ // yeni eklenen kısım
+moment.locale('tr', {
+    months : [
+        "Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", 
+        "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"
+    ],
+    monthsShort : [
+        "Oca", "Şub", "Mar", "Nis", "May", "Haz", 
+        "Tem", "Ağu", "Eyl", "Eki", "Kas", "Ara"
+    ],
+    weekdays : [
+        "Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"
+    ],
+    weekdaysShort : [
+        "Paz", "Pzt", "Sal", "Çar", "Per", "Cum", "Cmt"
+    ],
+    weekdaysMin : [
+        "Pz", "Pt", "Sa", "Ça", "Pe", "Cu", "Ct"
+    ],
+    longDateFormat : {
+        LT : "HH:mm",
+        LTS : "HH:mm:ss",
+        L : "DD/MM/YYYY",
+        LL : "D MMMM YYYY",
+        LLL : "D MMMM YYYY HH:mm",
+        LLLL : "dddd, D MMMM YYYY HH:mm"
+    }
+});
+
+function tarihSec(veri, day) {
+    var dateFormat = 'DD MMMM YYYY';
+    var picker = new Lightpick({
+        field: document.getElementById(veri),
+        singleDate: true,
+        selectForward: true,
+        selectBackward: false,
+        lang: 'tr',
+        minDate: moment(),
+        repick: true,
+        startDate: moment().add(day, 'days'),
+        onSelect: function(date) {
+            document.getElementById(veri).value = date.format(dateFormat);
+            document.getElementById(veri).setAttribute('data-user-id',  date.format("YYYY-MM-DD"));
+        }
+      
+    });
+
+    // Başlangıç tarihini input alanına yazdır
+    document.getElementById(veri).value = moment().add(day, 'days').format(dateFormat);
+    document.getElementById(veri).setAttribute('data-user-id',  moment().add(day, 'days').format("YYYY-MM-DD"));
+}
+
+// Fonksiyonları çağırma
+tarihSec('datepickerAcilis', 0);
+
+    </script>

@@ -123,6 +123,30 @@ else if($indexx == 'profile'){
     echo "<script>
             localStorage.setItem('selectedLink', 'employee-arsiv');
          </script>";
+}else if($indexx == 'Surveys'){
+    include ("Surveys/index.php");
+    echo "<script>pagename('Anketler');</script>";
+    echo "<script>
+            localStorage.setItem('selectedLink', 'Surveys');
+         </script>";
+}else if($indexx == 'property'){
+    include ("Surveys/surveysProperty.php");
+    echo "<script>pagename('Anket Ayrıntıları');</script>";
+}else if($indexx == 'Announcement'){
+    include ("Announcement/index.php");
+    echo "<script>pagename('Duyurular');</script>";
+    echo "<script>
+            localStorage.setItem('selectedLink', 'Announcement');
+         </script>";
+}else if($indexx == 'AnnouncementProperty'){
+    include ("Announcement/announcementProperty.php");
+    echo "<script>pagename('Duyuru Ayrıntıları');</script>";
+}else if($indexx == 'Phone'){
+    include ("Phone/index.php");
+    echo "<script>pagename('Telefon Rehberi');</script>";
+    echo "<script>
+            localStorage.setItem('selectedLink', 'Phone');
+         </script>";
 }else{
     include ("Dashboard/index.php");
     echo "<script>pagename('ANA SAYFA');</script>";

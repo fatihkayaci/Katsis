@@ -786,6 +786,49 @@ box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
   font-size: 14px;
   border-radius: 1em;
 }
+
+.edit-input {
+  width: 70%;
+  min-width: 120px;
+  border-radius: 4px;
+  border: none;
+  outline: none;
+  background: none;
+  padding: 5px;
+  text-align: left;
+  pointer-events: none;
+  user-select: none;
+  font-weight: 500;
+  color: #67748e;
+  font-family: "poppins-medium";
+}
+
+.edit-input::-webkit-outer-spin-button,
+.edit-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Hide increment buttons in Firefox */
+.edit-input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.edit-input.activeEdit {
+  width: 70%;
+  min-width: 120px;
+  border-radius: 4px;
+  border: 1px solid #b6b6b6;
+  padding: 5px;
+  text-align: center;
+  background-color: #fff;
+  pointer-events: visible;
+  user-select: text;
+  transition: 0.3s;
+}
+.edit-input.activeEdit:focus {
+  border: 1px solid #277CE0;
+}
+
 th:first-child {
   border-radius: 5px 0 0 5px;
   border-left: 1px solid #d2d6da!important;
@@ -861,6 +904,10 @@ table tbody tr:last-child td:last-child {
 }
 
 .users-table .active {
+  background-color: #2f49d11a;
+}
+
+.users-table tbody tr.activeEdit {
   background-color: #2f49d11a;
 }
 
@@ -1027,8 +1074,66 @@ text-transform: none;
   gap: 20px;
 }
 
-.user-name {
+.top-guncelle {
   width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.duzenleBtns {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.duzenleProfil {
+  border: none;
+  outline: none;
+  background: none;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.duzenleProfil i {
+  transition: 0.3s
+}
+#duzenleBtn:hover i {
+  color: #277CE0;
+  transform: scale(1.2);
+}
+
+#iptapBtn:hover i,
+#kaydetBtn:hover i {
+  transform: scale(1.2);
+}
+
+#iptapBtn {
+  display: none;
+}
+
+#iptapBtn i {
+  color: #d63031;
+  transition: 0.3s
+}
+
+#kaydetBtn {
+  display: none;
+}
+
+#kaydetBtn i {
+  color: #40c253;
+  transition: 0.3s
+}
+
+.user-name {
   font-family: 'poppins-regular';
   letter-spacing: 1px;
   margin: 0;
@@ -1082,6 +1187,50 @@ text-transform: none;
   font-weight: 400;
   color: #9fa8b9;
   text-transform: none;
+}
+
+/* input duzenleme alani */
+
+.profile-edit {
+  width: 50%;
+  min-width: 120px;
+  border-radius: 4px;
+  border: none;
+  outline: none;
+  background: none;
+  padding: 5px;
+  text-align: right;
+  pointer-events: none;
+  user-select: none;
+  font-weight: 300;
+  color: #67748e;
+}
+
+.profile-edit::-webkit-outer-spin-button,
+.profile-edit::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Hide increment buttons in Firefox */
+.profile-edit[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.profile-edit.activeEdit {
+  width: 50%;
+  min-width: 120px;
+  border-radius: 4px;
+  border: 1px solid #b6b6b6;
+  padding: 5px;
+  text-align: center;
+  background-color: #fff;
+  pointer-events: visible;
+  user-select: text;
+  transition: 0.3s;
+  font-family: "poppins-medium";
+}
+.profile-edit.activeEdit:focus {
+  border: 1px solid #277CE0;
 }
 
 /* Bolumler Detay profil sayfası */
@@ -1168,6 +1317,18 @@ text-transform: none;
   .profile-area {
     flex: 1 0 100%;
     max-width: 95%;
+  }
+}
+
+@media (max-width: 374px) {
+  .p-new {
+    flex-wrap: wrap;
+  }
+  .p-new p,
+  .p-new input,
+  .profile-edit.activeEdit {
+    width: 100%;
+    text-align: left;
   }
 }
 
@@ -1403,6 +1564,7 @@ border: 1px solid #277CE0;
 .table-blok {
 width: 100%;
 min-width: 0;
+white-space: inherit;
 }
 
 @media (max-width: 350px) {
@@ -1658,6 +1820,18 @@ min-width: 0;
 .header-ico:hover .toggle-icon,
 .header-ico:hover .name-title {
   color: #277CE0 !important;
+}
+
+.nav-link {
+  position: relative;
+}
+
+.abso-ico {
+  position: absolute;
+  right: 0;
+}
+.nav-link-text {
+  line-height: 22.4px;
 }
 /* ====================================== */
 
@@ -1967,6 +2141,7 @@ min-width: 0;
   font-family: 'poppins-medium';
   font-weight: 500;
   padding: 0px 15px;
+  width: 100%;
 }
 
 .kiraci {
@@ -2358,7 +2533,6 @@ min-width: 0;
   display: none;
   margin: 0 20px;
   border-radius: 0 0 8px 8px;
-  border: 1px solid #277CE0;
 }
 
 .dropdown-container a {
@@ -2385,11 +2559,25 @@ min-width: 0;
   outline: none;
   border: none;
   background: none;
+  padding: 0px;
 }
 
 .dropdown-btn.activex {
   border-radius: 8px 8px 0 0;
   transition: 0.3s;
+}
+
+.dropdownUser {
+  border: 1px solid #34A853;
+}
+.dropdownEmployee {
+  border: 1px solid #FFA726;
+}
+.dropdownFinans {
+  border: 1px solid #FFD700;
+}
+.dropdownIletisim {
+  border: 1px solid #277CE0;
 }
 
 .nav-link .fa-angle-right {
@@ -2628,23 +2816,25 @@ min-width: 0;
 }
 
 .fatura_btn {
-  padding: 5px 10px;
+  padding: 10px 10px 10px 15px;
   max-width: 420px;
   transition: 0.3s;
   font-size: 16px;
   cursor: pointer;
-  border-radius: 4px;
-  font-family: 'poppins-medium';
+  border-radius: 8px;
   font-weight: 500;
   background-color: #277CE0;
   color: #fff;
   outline: none;
   border: 1px solid #277CE0;
-  vertical-align: bottom;
 }
 
 .fatura_btn:hover {
   background-color: #1c5aa1;
+}
+
+.oylar_btn {
+  padding: 10px 15px;
 }
 
 .odendi {
@@ -2777,10 +2967,13 @@ min-width: 0;
   gap: 10px;
   width: 100%;
   transition: all 0.3s ease;
-  padding: 5px 0px;
+  padding: 5px 10px;
 }
 .toplu-islem:hover {
   background-color: #f1f1f1;
+}
+#addRowBtn {
+  margin: 10px;
 }
 
 .toplu-islem-inside {
@@ -2897,11 +3090,6 @@ min-width: 0;
   color: #fff;
 }
 
-
-.check-style, .table_tt {
-  width: 5%; /* Eşit genişlikte kalmalarını sağlar */
-}
-
 .center-txt th,
 .center-txt td {
   text-align: center;
@@ -2996,14 +3184,14 @@ min-width: 0;
 .toplu-line > .nav-tabs > li.active a{
   font-family: 'poppins-medium';
   width: 100%;
-  background-color: #277CE0;
+  background-color: #02b7e4;
   box-shadow: 0 1px 3px 0 rgb(0 0 0 / .1), 0 1px 2px -1px rgb(0 0 0 / .1);;
   color: #fff;
   position: relative;
 }
 
 .toplu-line > .nav-tabs > li.active > a > i {
-  color: #277CE0;
+  color: #02b7e4;
 }
 .toplu-line > .tab-content {
   background-color: #fff;
@@ -3068,6 +3256,32 @@ min-width: 0;
 
 .group {
   position: relative;
+}
+
+.trash-k:hover ~ .trashcan {
+ display: flex;
+}
+
+.trashcan {
+  position: absolute;
+  top: 11.45px;
+  right: 20px;
+  transition: 0.3s;
+  border: none;
+  outline: none;
+  background: none;
+  display: none;
+  color: #d63031;
+}
+.trashcan:hover {
+  display: flex;
+}
+.trashcan i {
+  transition: 0.3s;
+}
+.trashcan:hover i {
+  color: #9e2020;
+  transform: scale(1.2);
 }
 
 .absolute-input {
@@ -3228,15 +3442,15 @@ min-width: 0;
   line-height: 18px;
 }
 .yeni-check .yenichk-label:hover span:first-child {
-  border-color: #07f;
+  border-color: #02b7e4;
 }
 .yeni-check .yenichk-inpt {
   position: absolute;
   visibility: hidden;
 }
 .yeni-check .yenichk-inpt:checked + .yenichk-label span:first-child {
-  background: #07f;
-  border-color: #07f;
+  background: #02b7e4;
+  border-color: #02b7e4;
   animation: wave-4 0.4s ease;
 }
 .yeni-check .yenichk-inpt:checked + .yenichk-label span:first-child svg {
@@ -3290,16 +3504,34 @@ min-width: 0;
   }
 }
 @media (max-width: 479px) {
-  .toplu-p {
+  .toplu-p,
+  .tutar-ayar,
+  .gecikmeT {
     flex-direction: column;
   }
+  .gecikmeT {
+    gap: 10px;
+  }  
   .respense-btn {
     width: 100%;
+  }
+  .gelismis-checkbox {
+    margin-top: 10px;
   }
 }
 @media (max-width: 424px) {
   .esit-input {
     flex-direction: column;
+  }
+  .adduser,
+  #tekrar-button {
+    width: 100%;
+  }
+  .respense-btn {
+    margin-right: 0;
+  }
+  .response-ttr {
+    margin-top: 10px;
   }
 }
 @media (max-width: 380px) {
@@ -3320,21 +3552,28 @@ min-width: 0;
 
 /* sayfalar icin buton renkleri */
 
+.mainpopupx button:hover {
+  color: #277CE0;
+}
+
 .bcoc1 {
   border: 1px solid #d2d6da;
   background-color: #277CE0;
   color: #fff;
 }
 .bcoc1:hover {
-  border: 1px solid #66BB6A ;
+  border: 1px solid #174c8a ;
   background-color: #174c8a ;
 }
 
-.mainpopup input:focus {
+.mainpopup input:focus,
+.mainpopup .input:valid {
   border-bottom: 1px solid #277CE0;
 }
-.mainpopup button:hover {
-  color: #277CE0;
+
+.mainSrch:focus {
+  color: #0d0c22;
+  border: 1px solid #277CE0;
 }
 
 /* Kulaanicilar Sayfasi */
@@ -3428,11 +3667,11 @@ min-width: 0;
   position: relative;
   left: 0px;
 }
-.userPopup input:focus {
-  border-bottom: 1px solid #34A853;
+.empPopup input:focus {
+  border-bottom: 1px solid #FFA726;
 }
-.userPopup button:hover {
-  color: #34A853;
+.empPopup button:hover {
+  color: #FFA726;
 }
 
 /* bolum Sayfasi */

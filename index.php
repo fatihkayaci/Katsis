@@ -1,65 +1,69 @@
-
 <?php
-
-//message = '<div class ="alert alert-success" role="alert"> cookkie oluşturuldu</div>';
 session_start();
-
 require_once 'class.user.php';
 $user_login = new USER();
 
-
-if (isset($_COOKIE["cokkiemail"]) && isset($_COOKIE["cokkiepass"])){
-
-  $email = base64_decode($_COOKIE["cokkiemail"]);
-  $upass = base64_decode($_COOKIE["cokkiepass"]);
-  $_SESSION["mail"] =$email;
-  if($user_login->login($email,$upass))
-  {
-    $_SESSION["mail"] =$email;
-    $user_login->redirect('Admin/index');
-  }
-}
-
-if(isset($_POST['btn-login']))
-{
- $email = $_POST['txtemail'];
- $upass = $_POST['txtupass'];
- $remember =trim($_POST["remember"]);
- if(isset($_POST['g-recaptcha-response'])){
-      $captcha=$_POST['g-recaptcha-response'];
-    }
-    if(!$captcha){
-      echo '<h2>Lütfen captcha bölümünü kontrol ediniz!</h2>';
-      header('Location: '.'/katsis');
-    }
+function validateCaptcha($captcha) {
     $secretKey = "6Ld0njYpAAAAAGByIPz8beq8vT-LAt19XUDR-5Hm";
     $ip = $_SERVER['REMOTE_ADDR'];
-    $response=file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".$secretKey."&response=".$captcha."&remoteip=".$ip);
-    $responseKeys = json_decode($response,true);
+    $response = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".$secretKey."&response=".$captcha."&remoteip=".$ip);
+    $responseKeys = json_decode($response, true);
+    return intval($responseKeys["success"]) === 1;
+}
 
- if($user_login->login($email,$upass))
- {
-  if(intval($responseKeys["success"]) !== 1) {
-      echo '<h2>Spam? ! Tekrar kontrol etmelisin.</h2>';
-    }else{
-       if($remember =="on"){
-   //decode64 çözmek için hee!!
-    $emailcokkie= setcookie("cokkiemail", base64_encode($email)
-    , time()+(86400*30));
-    $passcokkie= setcookie("cokkiepass", base64_encode($upass)
-    ,time()+(86400*30));
-  }
-  $_SESSION["mail"] =$email;
+function setCookies($email, $password) {
+    setcookie("cokkiemail", base64_encode($email), time() + (86400 * 30));
+    setcookie("cokkiepass", base64_encode($password), time() + (86400 * 30));
+}
 
-  if($_SESSION['rol'] ==1 ){
-    $user_login->redirect('Admin/index?parametre=dashboard');
-  }else if($_SESSION['rol'] ==3){
-    $user_login->redirect('Kullanici/giris');
-  }
- }
+function redirectUserBasedOnRole($role) {
+    global $user_login;
+    if ($role == 1) {
+        $user_login->redirect('Admin/index?parametre=dashboard');
+    } elseif ($role == 3) {
+        $user_login->redirect('Kullanici/index');
+    } else {
+        echo '<h2>Geçersiz kullanıcı rolü.</h2>';
     }
 }
-?> 
+
+if (isset($_COOKIE["cokkiemail"]) && isset($_COOKIE["cokkiepass"])) {
+    $email = base64_decode($_COOKIE["cokkiemail"]);
+    $upass = base64_decode($_COOKIE["cokkiepass"]);
+    $_SESSION["mail"] = $email;
+    if ($user_login->login($email, $upass)) {
+        $_SESSION["mail"] = $email;
+        redirectUserBasedOnRole($_SESSION['rol']);
+    }
+}
+
+if (isset($_POST['btn-login'])) {
+    $email = $_POST['txtemail'];
+    $upass = $_POST['txtupass'];
+    $remember = trim($_POST["remember"]);
+    
+    if (isset($_POST['g-recaptcha-response'])) {
+        $captcha = $_POST['g-recaptcha-response'];
+    }
+
+    if (!$captcha || !validateCaptcha($captcha)) {
+        echo '<h2>Lütfen captcha bölümünü kontrol ediniz!</h2>';
+        header('Location: /katsis');
+        exit();
+    }
+
+    if ($user_login->login($email, $upass)) {
+     
+        if ($remember == "on") {
+            setCookies($email, $upass);
+        }
+        $_SESSION["mail"] = $email;
+        redirectUserBasedOnRole($_SESSION['rol']);
+    } else {
+        echo '<h2>Geçersiz email veya şifre.</h2>';
+    }
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
