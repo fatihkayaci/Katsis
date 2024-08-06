@@ -22708,7 +22708,7 @@ html {
 
 
 .leftbar .nav-item.active .nav-link-text {
-  font-weight: 600;
+  font-weight: 900;
   font-size: 14px;
 }
 
@@ -22740,7 +22740,7 @@ html {
 }
 /* Finans page */
 .leftbar .finansPage.active {
-  background-color: #FFD700;
+  background-color: #02b7e4;
   font-weight: 600;
 }
 /* Sayac page */
@@ -22758,7 +22758,18 @@ html {
   color: #fff !important;
 }
 
-
+.userHover.active .nav-link-text {
+  color: #34A853 !important;
+}
+.empHover.active .nav-link-text {
+  color: #FFA726 !important;
+}
+.finansHover.active .nav-link-text {
+  color: #02b7e4 !important;
+}
+.mainHover.active .nav-link-text {
+  color: #277CE0 !important;
+}
 
 .userHover:hover {
   background-color: #34A853 !important;
@@ -22767,7 +22778,7 @@ html {
   background-color: #FFA726 !important;
 }
 .finansHover:hover {
-  background-color: #FFD700 !important;
+  background-color: #02b7e4 !important;
 }
 
 

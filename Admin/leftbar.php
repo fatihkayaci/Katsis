@@ -110,17 +110,26 @@ $idapartman =$_SESSION["apartID"];
             <li class="nav-link">
               <div class="nav-ico"></div>
               <span class="nav-link-text">
-              <i class="fa-solid fa-building-user me-2"></i>
+              <i class="fa-solid fa-money-bill me-2"></i>
                 Gelirler
               </span>
             </li>
           </a>
-          <a class="nav-item modul new-radius-btm finansHover" href="index?parametre=employee-arsiv">
+          <a class="nav-item modul new-radius finansHover" href="index?parametre=employee-arsiv">
             <li class="nav-link">
               <div class="nav-ico"></div>
               <span class="nav-link-text">
-              <i class="fa-solid fa-box-archive me-2"></i>
+              <i class="fa-solid fa-hand-holding-dollar me-2"></i>
                 Giderler
+              </span>
+            </li>
+          </a>
+          <a class="nav-item modul new-radius-btm finansHover" href="index?parametre=topluborc">
+            <li class="nav-link">
+              <div class="nav-ico"></div>
+              <span class="nav-link-text">
+              <i class="fa-solid fa-users me-2"></i>
+                Toplu Borç
               </span>
             </li>
           </a>
@@ -145,7 +154,7 @@ $idapartman =$_SESSION["apartID"];
           </li>
         </button>
         <div class="dropdown-container dropdownIletisim">
-          <a class="nav-item modul new-radius"  href="index?parametre=Surveys">
+          <a class="nav-item modul new-radius mainHover"  href="index?parametre=Surveys">
             <li class="nav-link">
               <div class="nav-ico"></div>
               <span class="nav-link-text">
@@ -154,7 +163,7 @@ $idapartman =$_SESSION["apartID"];
               </span>
             </li>
           </a>
-          <a class="nav-item modul new-radius" href="index?parametre=Phone">
+          <a class="nav-item modul new-radius mainHover" href="index?parametre=Phone">
             <li class="nav-link">
               <div class="nav-ico"></div>
               <span class="nav-link-text">
@@ -163,7 +172,7 @@ $idapartman =$_SESSION["apartID"];
               </span>
             </li>
           </a>
-          <a class="nav-item modul new-radius-btm" href="index?parametre=Announcement">
+          <a class="nav-item modul new-radius-btm mainHover" href="index?parametre=Announcement">
             <li class="nav-link">
               <div class="nav-ico"></div>
               <span class="nav-link-text">
@@ -478,7 +487,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const buttonMap = {
             "Accounts": 'kullanici', "Arsiv": 'kullanici', "employee": 'personeller',
-            "employee-arsiv": 'personeller', "income": 'finans', "Surveys": 'iletisim',
+            "employee-arsiv": 'personeller', "income": 'finans', "topluborc": 'finans', "Surveys": 'iletisim',
             "Phone": 'iletisim', "Announcement": 'iletisim'
         };
 

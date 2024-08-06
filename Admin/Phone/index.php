@@ -7,24 +7,23 @@
 
         <hr class="horizontal dark mt-0 w-100">
 
-        <div class="row mt-3">
+        <div class="row mt-2">
             <div class="col-md-6 col-btn">
-
                 <input type="text" class="input" name="userName" id="userName" required></input>
-                <label for="anketSoru">İsim Soyİsim:</label>
+                <label for="anketSoru">Ad Soyad :</label>
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-6 col-btn group">
                 <input class="input" type="text" name="unvan" required>
-                <label for="unvan">Unvan/Görevi:</label>
+                <label for="unvan">Unvan / Görevi :</label>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6 col-btn group">
                 <input class="input" type="text" name="phoneNumber" oninput="validatePhoneNumber(this)" required>
-                <label for="phoneNumber">Telefon Numarası:</label>
+                <label for="phoneNumber">Telefon Numarası :</label>
             </div>
         </div>
 
@@ -78,64 +77,64 @@ try {
     </div>
 
     <hr class="horizontal dark mb-1 w-100">
-<div class="table-overflow">
-    <table id="example" class="users-table">
-        <thead>
-            <tr class="users-table-info">
-                <th class="check-style">
-                    <input id="mainCheckbox" type="checkbox" onclick="toggleAll(this)" />
-                    <label for="mainCheckbox" class="check">
-                        <svg width="18px" height="18px" viewBox="0 0 18 18">
-                            <path
-                                d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z">
-                            </path>
-                            <polyline points="1 9 7 14 15 4"></polyline>
-                        </svg>
-                    </label>
-                </th>
-                <th onclick="sortTable(1)">User Name<i id="icon-table1" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(2)">Unvan/Görevi<i id="icon-table2" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(3)">Telefon Numarası<i id="icon-table3" class="fa-solid fa-sort-down"></i></th>
-            </tr>
-        </thead>
-        <tbody>
+    <div class="table-overflow">
+        <table id="example" class="users-table">
+            <thead>
+                <tr class="users-table-info">
+                    <th class="check-style">
+                        <input id="mainCheckbox" type="checkbox" onclick="toggleAll(this)" />
+                        <label for="mainCheckbox" class="check">
+                            <svg width="18px" height="18px" viewBox="0 0 18 18">
+                                <path
+                                    d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z">
+                                </path>
+                                <polyline points="1 9 7 14 15 4"></polyline>
+                            </svg>
+                        </label>
+                    </th>
+                    <th onclick="sortTable(1)">Ad Soyad<i id="icon-table1" class="fa-solid fa-sort-down"></i></th>
+                    <th onclick="sortTable(2)">Unvan / Görevi<i id="icon-table2" class="fa-solid fa-sort-down"></i></th>
+                    <th onclick="sortTable(3)">Telefon Numarası<i id="icon-table3" class="fa-solid fa-sort-down"></i></th>
+                </tr>
+            </thead>
+            <tbody>
 
-            <?php
-            $i = 0;
-            foreach ($result as $row) {
-                $i++;
-            ?>
-            <tr data-userid="<?php echo $row["phoneID"]; ?>"
-                class="git-ac">
-                <td data-title="Seç" class="check-style">
-                    <!-- Checkbox id'sine $i değerini ekliyoruz -->
-                    <input id="check-<?php echo $row["phoneID"] . '-' . $i; ?>" class="check1" type="checkbox"
-                        onclick="toggleCheckbox(<?php echo $row['phoneID']; ?>, <?php echo $i; ?>)" />
-                    <label for="check-<?php echo $row["phoneID"] . '-' . $i; ?>" class="check">
-                        <svg width="18px" height="18px" viewBox="0 0 18 18">
-                            <path
-                                d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z">
-                            </path>
-                            <polyline points="1 9 7 14 15 4"></polyline>
-                        </svg>
-                    </label>
-                </td>
-                <td data-title="User Name" class="table_tt" contenteditable="false">
-                <input class="edit-input" id="adSoyad" type="text" value="<?php echo $row["userName"]; ?>"></td>
-                <td data-title="Unvan" class="table_tt" contenteditable="false">
-                <input class="edit-input" id="adSoyad" type="text" value="<?php echo $row["unvan"]; ?>"></td>
-                <td data-title="Phone Number" class="table_tt phoneNumber" contenteditable="false">
-                <input class="edit-input" id="adSoyad" type="text" oninput="validatePhoneNumber(this)" value="<?php echo $row["phoneNumber"]; ?>"></td>
+                <?php
+                $i = 0;
+                foreach ($result as $row) {
+                    $i++;
+                ?>
+                <tr data-userid="<?php echo $row["phoneID"]; ?>"
+                    class="git-ac">
+                    <td data-title="Seç" class="check-style">
+                        <!-- Checkbox id'sine $i değerini ekliyoruz -->
+                        <input id="check-<?php echo $row["phoneID"] . '-' . $i; ?>" class="check1" type="checkbox"
+                            onclick="toggleCheckbox(<?php echo $row['phoneID']; ?>, <?php echo $i; ?>)" />
+                        <label for="check-<?php echo $row["phoneID"] . '-' . $i; ?>" class="check">
+                            <svg width="18px" height="18px" viewBox="0 0 18 18">
+                                <path
+                                    d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z">
+                                </path>
+                                <polyline points="1 9 7 14 15 4"></polyline>
+                            </svg>
+                        </label>
+                    </td>
+                    <td data-title="User Name" class="table_tt" contenteditable="false">
+                    <input class="edit-input" id="adSoyad" type="text" value="<?php echo $row["userName"]; ?>"></td>
+                    <td data-title="Unvan" class="table_tt" contenteditable="false">
+                    <input class="edit-input" id="adSoyad" type="text" value="<?php echo $row["unvan"]; ?>"></td>
+                    <td data-title="Phone Number" class="table_tt phoneNumber" contenteditable="false">
+                    <input class="edit-input" id="adSoyad" type="text" oninput="validatePhoneNumber(this)" value="<?php echo $row["phoneNumber"]; ?>"></td>
 
-            </tr>
-            <?php
-            }
-            ?>
+                </tr>
+                <?php
+                }
+                ?>
 
 
-        </tbody>
-    </table>
-</div>
+            </tbody>
+        </table>
+    </div>
 
     <hr class="horizontal dark mb-0 w-100">
 
@@ -184,12 +183,11 @@ try {
 
 <div class="cener-table">
 
-<div class="input-group1">
-            <button class="addAnket btn-custom-outline bcoc1">Rehbere Kişi Ekle</button>
-        </div>
+        
     <div class="input-group-div">
 
         <div class="input-group1">
+            <button class="addAnket btn-custom-outline bcoc1">Rehbere Kişi Ekle</button>
         </div>
 
         <div class="input-group1">
@@ -218,15 +216,15 @@ try {
                         </svg>
                     </label>
                 </th>
-                <th onclick="sortTable(1)">User Name<i id="icon-table1" class="fa-solid fa-sort-down"></i></th>
-                <th onclick="sortTable(2)">Unvan/Görevi<i id="icon-table2" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(1)">Ad Soyad<i id="icon-table1" class="fa-solid fa-sort-down"></i></th>
+                <th onclick="sortTable(2)">Unvan / Görevi<i id="icon-table2" class="fa-solid fa-sort-down"></i></th>
                 <th onclick="sortTable(3)">Telefon Numarası<i id="icon-table3" class="fa-solid fa-sort-down"></i></th>
             </tr>
         </thead>
         <tbody>
             <tr>
                 <td></td>
-                <td colspan="5">Telefon Numarası Bulunamamaktadır.</td>
+                <td colspan="3">Telefon Numarası Bulunamamaktadır.</td>
             </tr>
         </tbody>
     </table>

@@ -45,7 +45,7 @@ try {
             </div>
         </div>
         <div class="input-group1">
-          <button class="btnAddindex btn-custom-outline sayacClr" onclick="okuma()">Sayaç Oku</button>
+          <button class="btnAddindex btn-custom-outline sayacClr me-0" onclick="okuma()">Sayaç Oku</button>
           <button class="saveindesbtn btn-custom-outline sayacClr" onclick="indexSave('<?php echo $tur_php; ?>')">Kaydet</button>
         </div>
   </div>

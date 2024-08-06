@@ -32,19 +32,17 @@ try {
 
         <div class="row mt-3">
             <div class="col-md-6 col-btn">
-                <textarea class="input" name="announcementTitle" id="announcementTitle" required></textarea>
+                <input class="input" name="announcementTitle" id="announcementTitle" required>
                 <label for="announcementTitle">Duyuru Başlığı:</label>
             </div>
         </div>
         <div class="row">
-            <textarea name="announcementContent" id="announcementContent"></textarea>
-        </div>
-        <div class="row mt-3">
             <div class="col-md-6 col-btn">
-                <input type="file" name="announcementFile" id="announcementFile">
-                <label for="announcementFile">Dosya Yükle:</label>
+                <textarea class="input textArea" name="announcementContent" id="announcementContent" required></textarea>
+                <label for="anketSoru">Duyuru Açıklaması :</label>
             </div>
         </div>
+        
         <div class="row" id="lastDate">
             <div class="col-md-6 col">
                 <input class="input" id="datepickerson" name="lastDate" type="text" required="">
@@ -71,11 +69,19 @@ try {
                 </div>
             </div>
         </div>
-
         <div class="row">
-            
+            <div class="col-md-12 col-btn">
+                <p class="text-left">Dosya Ekleme:</p>
+                <div class="upload-box maineupl">
+                    <input type="file" name="announcementFile" id="announcementFile" hidden>
+                    <label for="announcementFile" class="file_label mainupl">Dosya Seçin</label>
+                    <!-- name of file chosen -->
+                    <span id="file-chosen"></span>
+
+                    <button id="upload_btn" class="bcoc1">Gönder</button>
+                </div>
+            </div>
         </div>
-        
 
         <hr class="horizontal dark mt-0 w-100">
 
@@ -896,3 +902,15 @@ tarihSec('datepickerson', 7);
     });
 
     </script>
+
+    <!-- Excel Icin Dosya Secme Script i -->
+
+<script>
+    const actualBtn = document.getElementById('announcementFile');
+
+    const fileChosen = document.getElementById('file-chosen');
+
+    actualBtn.addEventListener('change', function () {
+        fileChosen.textContent = this.files[0].name
+    })
+</script>

@@ -10,7 +10,8 @@
 </head>
 
 <body>
-    <input type="hidden" id="announcementID" value=<?php echo $_SESSION['announcementID'] ?> />
+    <input type="hidden" id="surveysID" value=<?php echo $_SESSION['surveysID'] ?> />
+    <div class="cener-table">
 
     <?php
 
@@ -32,84 +33,105 @@ try {
         }
         ?>
         <!-- profile area -->
-        <div class="review-area">
-            <div class="profile-area">
-                <div class="name-area">
-                    <div class="user-info-top">
-                        <div class="top-guncelle">
-                            <h5 class="user-name">
-                                <input class="profile-edit" id="surveysQuestion" type="text" value="<?= !empty($row["surveysQuestion"]) ? $row["surveysQuestion"] : "-" ?>">
-                            </h5>
-                            <div class="duzenleBtns">
-                                <button class="duzenleProfil" id="iptapBtn" onclick="iptal()" title="İptal"><i class="fa-solid fa-xmark"></i></button>
-                                <button class="duzenleProfil" id="duzenleBtn" onclick="okuma()" title="Profili Düzenle"><i class="fa-solid fa-pen-to-square"></i></button>
-                                <button class="duzenleProfil" id="kaydetBtn" onclick="saveProfil()" title="Kaydet"><i class="fa-solid fa-check"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="review-area mt-0">
+                <div class="borc-info align-items-center">
+                    <div class="toplu-borc-area">
+                        <div class="bilgi-info toplu-flex mt-2">
 
-                <div class="shown-info">
-                    <hr class="horizontal dark m-0 w-100">
-                    <div class="bilgi-p p-new">
-                        <p>Son Tarih</p>
-                        <input class="profile-edit" id="lastDate" type="text" value="<?= tarihDonustur($row["lastDate"]) ?>">
-                    </div>
-                    <hr class="horizontal dark m-0 w-100">
-                    <div class="bilgi-p p-new">
-                        <p>Seçenekler</p>
-                        <div id="dynamic-options">
-                            <!-- Dinamik olarak eklenecek input alanları buraya gelecek -->
-                        </div>
-                    </div>
-                    <div class="col-md-6 col">
-                    <div class="select-div m-0">
-                        <div class="dropdown-nereden">
-                            <div class="group">
-                                <input class="search-selectx input" data-user-id="" type="text" id="kisiler"
-                                    required="" />
-                                <label class="selectx-label" for="kisiler">Kişiler: <?php
-                                if($row["voters"] == 1){
-                                    echo "Tüm Kişiler";
-                                }else if($row["voters"] == 2){
-                                    echo  "Kat Malikleri";
-                                }else if($row["voters"] == 3){
-                                    echo  "Kiracılar";
-                                }else{
-                                    echo " ";
-                                }
-                                ?>
-                                </label>
-                            </div>
+                            <div class="toplu-p b-old mb-4">
+        	                	<h4 class="mt-2 mb-2">Duyuru Ayarları</h4>
+                                <div class="duzenleBtns">
+                                    <button class="duzenleProfil" id="iptapBtn" onclick="iptal()" title="İptal"><i class="fa-solid fa-xmark"></i></button>
+                                    <button class="duzenleProfil" id="duzenleBtn" onclick="okuma()" title="Profili Düzenle"><i class="fa-solid fa-pen-to-square"></i></button>
+                                    <button class="duzenleProfil" id="kaydetBtn" onclick="saveProfil()" title="Kaydet"><i class="fa-solid fa-check"></i></button>
+                                </div>
+        	                </div>
 
-                            <div class="dropdown-content-nereden searchInput-btn" id="kisilerDP">
-                                <div class="dropdown-content-inside-nereden mainpopupx">
-                                    <input type="hidden" id="kisilerSearch" placeholder="Ara...">
-                                    <button data-odeme-durumu="tumkisiler" name="tumkisiler">Tüm Kişiler</button>
-                                    <button data-odeme-durumu="katmaliki" name="katmaliki">Kat Malikleri</button>
-                                    <button data-odeme-durumu="kiraci" name="kiraci">Kiracılar</button>
+                            <div class="toplu-borc-inside">
+                                <div class="toplu-p b-old">
+                                    <div class="esit-veri">
+                                        <p>Duyuru Başlığı :</p>
+                                        <p class="toplu-info">Duyurunun ana başlığıdır.</p>
+                                    </div>
+                                    <div class="esit-input">
+                                        <input class="profile-edit font-inp name-edit" id="surveysQuestion" type="text" value="<?= !empty($row["surveysQuestion"]) ? $row["surveysQuestion"] : "-" ?>">
+                                    </div>
+                                </div>
+                                <hr class="horizontal dark w-100">
+                                <div class="toplu-p b-old">
+                                    <div class="esit-veri">
+                                        <p>Duyuru Açıklaması :</p>
+                                        <p class="toplu-info">Duyurunun anlaşılabilmesi için yazılan açıklamasıdır.</p>
+                                    </div>
+                                    <div class="esit-input">
+                                        <textarea name="aciklama" id="aciklama" class="input font-inp profile-edit textArea1"></textarea>
+                                    </div>
+                                </div>
+                                <hr class="horizontal dark w-100">
+                                <div class="toplu-p b-old">
+                                    <div class="esit-veri">
+                                        <p>Son Cevaplama Tarih :</p>
+                                        <p class="toplu-info">Duyurunun son tarihi göstermektedir.</p>
+                                    </div>
+                                    <div class="esit-input">
+                                        <input class="profile-edit font-inp w-100" id="lastDate" type="text" value="<?= tarihDonustur($row["lastDate"]) ?>">
+                                    </div>
+                                </div>
+                                <hr class="horizontal dark w-100">
+                                <div class="toplu-p b-old">
+                                    <div class="esit-veri">
+                                        <p>Kişiler :</p>
+                                        <p class="toplu-info">Duyuruyu Görüntüleyebilecek kişi grupları.</p>
+                                    </div>
+                                    <div class="esit-input">
+                                        <div class="col-md-12">
+                                            <div class="select-div m-0">
+                                                <div class="dropdown-nereden">
+                                                    <div class="group">
+                                                        <input class="input font-inp profile-edit w-100" data-user-id="" type="text" id="kisiler" value="<?php
+                                                        if($row["voters"] == 1){
+                                                            echo "Tüm Kişiler";
+                                                        }else if($row["voters"] == 2){
+                                                            echo  "Kat Malikleri";
+                                                        }else if($row["voters"] == 3){
+                                                            echo  "Kiracılar";
+                                                        }else{
+                                                            echo " ";
+                                                        }
+                                                        ?>"
+                                                            required="" />
+                                                    </div>
+                                                    
+                                                    <div class="dropdown-content-nereden searchInput-btn" id="kisilerDP">
+                                                        <div class="dropdown-content-inside-nereden mainpopupx">
+                                                            <input type="hidden" id="kisilerSearch" placeholder="Ara...">
+                                                            <button data-odeme-durumu="tumkisiler" name="tumkisiler">Tüm Kişiler</button>
+                                                            <button data-odeme-durumu="katmaliki" name="katmaliki">Kat Malikleri</button>
+                                                            <button data-odeme-durumu="kiraci" name="kiraci">Kiracılar</button>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="horizontal dark w-100">
+                                <hr class="horizontal dark w-100">
+                                <div class="toplu-p b-old">
+                                    <div class="esit-veri">
+                                        <p>Dosya :</p>
+                                        <p class="toplu-info">Yüklenen dosyanız bur alanda gözükecektir.</p>
+                                    </div>
+                                    <div class="esit-input">
+                                        
+                                    </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
-                    <hr class="horizontal dark m-0 w-100">
-                </div>
             </div>
-        </div>
-
-        <script>
-            let options = <?= json_encode($options) ?>;
-            let optionsContainer = document.getElementById('dynamic-options');
-            options.forEach(option => {
-                let input = document.createElement('input');
-                input.className = 'profile-edit';
-                input.type = 'text';
-                input.value = option;
-                optionsContainer.appendChild(input);
-            });
-        </script>
         <?php
     }
 } catch (PDOException $e) {

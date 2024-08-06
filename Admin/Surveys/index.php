@@ -11,7 +11,7 @@
         <div class="row mt-3">
             <div class="col-md-6 col-btn">
 
-                <textarea class="input" name="anketSoru" id="anketSoru" required></textarea>
+                <textarea class="input textArea" name="anketSoru" id="anketSoru" required></textarea>
                 <label for="anketSoru">Anket Sorusu :</label>
             </div>
         </div>

@@ -328,6 +328,11 @@ overflow: auto;
   padding: 0 12px;
 }
 
+.textArea {
+  resize: none;
+  max-height: 40px;
+}
+
 .btn-custom {
   width: 92px;
   height: 40px;
@@ -1219,7 +1224,7 @@ text-transform: none;
 .profile-edit.activeEdit {
   width: 50%;
   min-width: 120px;
-  border-radius: 4px;
+  border-radius: 8px;
   border: 1px solid #b6b6b6;
   padding: 5px;
   text-align: center;
@@ -2574,7 +2579,7 @@ white-space: inherit;
   border: 1px solid #FFA726;
 }
 .dropdownFinans {
-  border: 1px solid #FFD700;
+  border: 1px solid #02b7e4;
 }
 .dropdownIletisim {
   border: 1px solid #277CE0;
@@ -2787,6 +2792,9 @@ white-space: inherit;
   color: #000;
   cursor: pointer;
   transition: 0.3s;
+  pointer-events: all !important;
+  position: relative !important;
+  padding: 0px !important;
 }
 .file_label:hover {
   transform: translateX(10px);
@@ -3545,11 +3553,95 @@ white-space: inherit;
 
 /* ========================================= */
 
+/* anket ayrinti Area */
+
+.anket-area {
+  flex: 1 0 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  min-width: 170px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  background-color: #fff;
+  border-radius: 10px;
+  height: max-content;
+}
+
+.name-edit {
+  width: 50%;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  text-align: right;
+}
+.name-edit.activeEdit {
+  width: 100%;
+  text-align: left;
+}
+
+.textArea1 {
+  resize: none;
+  max-height: 50px;
+  width: 100%;
+}
+.textArea1.activeEdit {
+  text-align: left;
+  width: 100%;
+}
+
+.search-selectx.activeEdit {
+  width: 100%;
+}
+
+.secenek-inpt {
+  width: 100%;
+  margin-bottom: 10px;
+}
+.secenek-inpt.activeEdit {
+  width: 100%;
+}
+
+#dynamic-options {
+  width: 100%;
+}
+
+.new-duzenle {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: end;
+  align-items: end;
+  width: 100%;
+}
+
+.font-inp {
+  font-size: 18px;
+}
+
+@media (max-width: 404px) {
+  .textArea1, #dynamic-options {
+    width: 100% !important;
+  }
+  .textArea1.activeEdit {
+    width: 100% !important;
+  }
+}
+
+/* anket ayrinti Area */
+
+/* ========================================= */
+
 .additional-fields {
   border-radius: 8px;
   background-color: #f3f3f3;
 }
 
+
+/* ========================================= */
+/* ========================================= */
+/* ========================================= */
 /* sayfalar icin buton renkleri */
 
 .mainpopupx button:hover {
@@ -3574,6 +3666,13 @@ white-space: inherit;
 .mainSrch:focus {
   color: #0d0c22;
   border: 1px solid #277CE0;
+}
+
+.maineupl {
+  border: 1px dashed #277CE0;
+}
+.mainUpl:hover {
+  color: #277CE0;
 }
 
 /* Kulaanicilar Sayfasi */

@@ -63,6 +63,21 @@ try {
                         <label for="gender">Cinsiyet</label>
                         <p id="gender"><?php echo $row["gender"]; ?></p>
         		    </div>
+
+                    <div class="bilgi-p">
+                        <label for="gender">Kullanıcı No</label>
+                        <p id="gender"><?php echo $row["gender"]; ?></p>
+        		    </div>
+
+                    <div class="bilgi-p">
+                        <label for="gender">Son Oturum Açma Tarihi</label>
+                        <p id="gender"><?php echo $row["gender"]; ?></p>
+        		    </div>
+
+                    <div class="bilgi-p">
+                        <label for="gender">Parola</label>
+                        <p id="gender"><?php echo $row["gender"]; ?></p>
+        		    </div>
                 </div>
 
         	</div>
@@ -78,61 +93,16 @@ try {
                             
                 			<ul class="nav nav-tabs ">
                 				<li class="active">
-                					<a href="#tab_default_1" data-toggle="tab">Profil</a>
+                					<a href="#tab_default_1" data-toggle="tab">Duyurular</a>
                 				</li>
                 				<li>
-                					<a href="#tab_default_2" data-toggle="tab">Duyurular</a>
-                				</li>
-                				<li>
-                					<a href="#tab_default_3" data-toggle="tab">Ayarlar</a>
+                					<a href="#tab_default_2" data-toggle="tab">Ayarlar</a>
                 				</li>
                 			</ul>
 
                 			<div class="tab-content">
 
                 				<div class="tab-pane active" id="tab_default_1">
-
-                                    <div class="bilgi-info mt-4">
-
-        	                            <div class="bilgi-p b-old">
-        	                            	<h6 class="mt-2 mb-2">Daire Bilgileri</h6>
-        	                            </div>
-
-
-        	                            <div class="bilgi-p b-old">
-        	                            	<p>Daire :</p>
-                                            <p>Daire Yazılacak</p>
-        	                            </div>
-
-                                        <div class="bilgi-p b-old">
-                                            <p>Kullanıcı No :</p>
-                                            <p>Kullanıcı No Yazılacak</p>
-        	                            </div>
-
-                                        <div class="bilgi-p b-old">
-                                            <p>Giriş Tarihi :</p>
-                                            <p>Giriş Tarihi Yazılacak</p>
-        	                            </div>
-
-                                        <div class="bilgi-p b-old">
-                                            <p>Son Oturum Açma Tarihi :</p>
-                                            <p>Son Oturum Açma Tarihi yazılacak</p>
-        	                            </div>
-
-                                        <div class="bilgi-p b-old">
-                                            <p>Parola :</p>
-                                            <p>Parola yazılacak</p>
-        	                            </div>
-
-                                        <div class="bilgi-p b-old">
-                                            <p>Araç Plakası :</p>
-                                            <p>Araç Plakası yazılacak</p>
-        	                            </div>
-                                    </div>
-
-                				</div>
-
-                				<div class="tab-pane" id="tab_default_2">
 
                                     <div class="row todo-div mt-4">
                                         <div id="myDIV" class="to-do">
@@ -167,29 +137,21 @@ try {
 
                 				</div>
 
-                				<div class="tab-pane" id="tab_default_3">  
+                				<div class="tab-pane" id="tab_default_2">
 
-        	                        <form  method="post" action="">
+                                    <form  method="post" action="">
 
         	                        	<div class="row mt-4">
         	                        		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-        	                        			<h6 class="mt-2 mb-2">Daire Bilgileri</h6>
+        	                        			<h6 class="mt-2 mb-2">Kullanıcı Bilgileri</h6>
         	                        		</div>
         	                        		<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-        	                        			<label for="daire">Daire</label>
-        	                        			<input class="form-inpt-duzenle" type="text"  id="daire" name="daire" value="Daire">
+        	                        			<label for="daire">Telefon Numarası</label>
+        	                        			<input class="form-inpt-duzenle" type="text"  id="tel" name="tel" value="Telefon Numarası">
         	                        		</div>
                                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
         	                        			<label for="kullaniciNo">Kullanıcı No</label>
         	                        			<input class="form-inpt-duzenle" type="text"  id="kullaniciNo" name="kullaniciNo" value="Kullanıcı No">
-        	                        		</div>
-                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-        	                        			<label for="giris">Giriş Tarihi</label>
-        	                        			<input class="form-inpt-duzenle" type="text"  id="giris" name="giris" value="giris tarihi">
-        	                        		</div>
-        	                        		<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-        	                        			<label for="oturum">Son Oturum Açma Tarihi</label>
-        	                        			<input class="form-inpt-duzenle" type="oturum"  id="oturum" name="oturum" value="Son Oturum Açma Tarihi">
         	                        		</div>
                                         </div>
         	                        	<div class="row">
